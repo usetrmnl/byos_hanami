@@ -6,10 +6,15 @@ jobs:
       - image: bkuhlmann/alpine-ruby:latest
         environment:
           APP_HOST: 0.0.0.0
-          APP_URL: http://localhost:4567
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          APP_URL: https://localhost
+          DATABASE_URL: sqlite://db/terminus.sqlite
+          IMAGES_ROOT: ~/project/public/assets/images
           HANAMI_ENV: test
     steps:
+      - run:
+          name: SQLite Install
+          command: apk add sqlite
+
       - run:
           name: ImageMagick Install
           command: apk add imagemagick
