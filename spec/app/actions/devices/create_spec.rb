@@ -11,7 +11,9 @@ RSpec.describe Terminus::Actions::Devices::Create, :db do
     it "answers success with valid parameters" do
       response = action.call device: {
         label: "Test",
+        friendly_id: "TEST",
         mac_address: "aa:bb:cc:11:22:33",
+        api_key: "abc123",
         refresh_rate: 123
       }
 

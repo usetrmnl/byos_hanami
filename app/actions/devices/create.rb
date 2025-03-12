@@ -14,7 +14,9 @@ module Terminus
         params do
           required(:device).hash do
             required(:label).filled :string
+            required(:friendly_id).filled :string
             required(:mac_address).filled :string
+            required(:api_key).filled :string
             required(:refresh_rate).filled :integer
           end
         end
@@ -24,9 +26,9 @@ module Terminus
 
           if parameters.valid?
             device = repository.create parameters[:device]
-            response.render show_view, device: repository.find(device.id)
+            response.render show_view, device: repository.find(device.id), layout: false
           else
-            response.render new_view, errors: parameters.errors[:device]
+            response.render new_view, errors: parameters.errors[:device], layout: false
           end
         end
       end
