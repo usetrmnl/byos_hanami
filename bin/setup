@@ -13,13 +13,13 @@ class Runner
 
   def call
     kit.chdir root do
+      setup_development_environment
+      setup_test_environment
+      setup_development_procfile
       step "Installing dependencies...", "bundle install"
       step "Installing packages...", "npm install"
       step "Configuring databases...", "hanami db prepare"
       step "Compiling assets...", "hanami assets compile"
-      setup_development_environment
-      setup_test_environment
-      setup_development_procfile
     end
   end
 
@@ -43,7 +43,7 @@ class Runner
       APP_HOST=0.0.0.0
       APP_URL=http://localhost:4567
       DATABASE_URL=sqlite://db/terminus.sqlite
-      IMAGES_ROOT="#{APP_ROOT}/public/assets/images"
+      IMAGES_ROOT=#{root}/public/assets/images
     BODY
   end
 
@@ -58,7 +58,7 @@ class Runner
       APP_HOST=localhost
       APP_URL=https://localhost:4567
       DATABASE_URL=sqlite://db/terminus.sqlite
-      IMAGES_ROOT="#{APP_ROOT}/tmp/rspec"
+      IMAGES_ROOT=#{root}/tmp/rspec
     BODY
   end
 
