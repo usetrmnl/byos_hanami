@@ -6,8 +6,9 @@ require_relative "initializers/rack_attack"
 
 module Terminus
   # The application base configuration.
+  # :nocov:
   class App < Hanami::App
-    RubyVM::YJIT.enable
+    RubyVM::YJIT.enable if defined? RubyVM::YJIT
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
@@ -21,7 +22,6 @@ module Terminus
     config.middleware.use :body_parser, :json
 
     environment :development do
-      # :nocov:
       config.logger.options[:colorize] = true
 
       config.logger = config.logger.instance.add_backend(
