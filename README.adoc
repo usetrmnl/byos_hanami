@@ -111,9 +111,34 @@ Used for displaying new content to your device. Your device's refresh determines
 .Request
 [%collapsible]
 ====
+*Without Base64 Encryption*
+
 [source,bash]
 ----
 curl "https://localhost:2443/api/display/" \
+     -H 'ID: <redacted>' \
+     -H 'Access-Token: <redacted>' \
+     -H 'Accept: application/json' \
+     -H 'Content-Type: application/json'
+----
+
+*With Base64 Encryption via HTTP Header*
+
+[source,bash]
+----
+curl "https://localhost:2443/api/display/" \
+     -H 'ID: <redacted>' \
+     -H 'Access-Token: <redacted>' \
+     -H 'Accept: application/json' \
+     -H 'Content-Type: application/json' \
+     -H 'BASE64: true'
+----
+
+*With Base64 Encryption via Parameter*
+
+[source,bash]
+----
+curl "https://localhost:2443/api/display/?base_64=true" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
      -H 'Accept: application/json' \
@@ -124,13 +149,30 @@ curl "https://localhost:2443/api/display/" \
 .Response
 [%collapsible]
 ====
+*Without Base64 Encryption*
 [source,json]
 ----
 {
-  "filename": "path.bmp",
+  "filename": "demo.bmp",
   "firmware_url": null,
-  "image_url": "https://localhost:2443/assets/images/generated/path.bmp",
+  "image_url": "https://localhost:2443/assets/images/generated/demo.bmp",
   "refresh_rate": 130,
+  "reset_firmware": false,
+  "special_function": "sleep",
+  "status": 0,
+  "update_firmware": false
+}
+----
+
+*With Base64 Encryption*
+
+[source,json]
+----
+{
+  "filename": "demo.bmp",
+  "firmware_url": null,
+  "image_url": "data:image/bmp;base64,<truncated>",
+  "refresh_rate": 200,
   "reset_firmware": false,
   "special_function": "sleep",
   "status": 0,
