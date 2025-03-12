@@ -98,8 +98,6 @@ To view the app, use either of the following:
 * *Secure*: https://localhost:2443
 * *Insecure*: http://localhost:2300
 
-To use the app, open `http://localhost:4567` in your browser to view the app and manage your device(s).
-
 === APIs
 
 The following APIs are supported. Each uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
@@ -245,7 +243,7 @@ Used for generating new images by supplying HTML content for rendering, screensh
 ====
 [source,bash]
 ----
-curl -X "POST" "http://localhost:4567/api/images" \
+curl -X "POST" "https://localhost:2443/api/images" \
     -H 'ID: <redacted>' \
     -H 'Access-Token: <redacted>' \
     -H 'Accept: application/json' \
@@ -435,9 +433,9 @@ bin/rake
 
 *Local*
 
-. Configure `APP_URL` within `+*.env+` file(s) to where your app is hosted (i.e. `http://192.168.x.x:4567`). 💡 Lack of trailing slash is important.
+. Configure `APP_URL` within `+*.env+` file(s) to where your app is hosted (i.e. `https://192.168.x.x:2443`). 💡 Lack of trailing slash is important.
 . Retrieve your machine's local IP, ex 192.168.x.x (Mac: `ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'`).
-. Point your link:https://github.com/usetrmnl/firmware[forked firmware] `API_BASE_URL` (link:https://github.com/usetrmnl/firmware/blob/2ee0723c66a3468b969c83d7663ffb3f8322ad99/include/config.h#L56[source]) to same value as `APP_URL`.
+. Set `APP_URL` as the Custom Server via the [Firmware's](https://github.com/usetrmnl/firmware) WiFi Captive Portal
 
 *Hosted*
 
