@@ -1,0 +1,35 @@
+html, body {
+  overscroll-behavior: none;
+}
+
+html {
+  accent-color: var(--site-red);
+  background-color: var(--site-white);
+  font-family: var(--site-font-family);
+  scrollbar-color: var(--site-white) var(--site-red);
+  text-size-adjust: none;
+
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--site-blue);
+  text-underline-position: under;
+}
+
+kbd {
+  background-color: oklch(from var(--site-grey) l c h / 0.1);
+  border-radius: 0.2rem;
+  border: 0.1rem solid var(--site-grey);
+  color: var(--site-black);
+  font-size: 0.85em;
+  font-weight: 600;
+  line-height: 1rem;
+  padding: 0.1rem 0.3rem;
+  white-space: nowrap;
+}
