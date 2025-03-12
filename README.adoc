@@ -10,6 +10,7 @@
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sqlite_link: link:https://www.sqlite.org[SQLite]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
+:yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
 
 = Terminus
 
@@ -24,6 +25,7 @@ toc::[]
 * Uses {htmx_link}.
 * Uses {puma_link}.
 * Uses {sqlite_link}.
+* Supports {yjit_link}.
 * Supports {overmind_link}.
 * Supports {docker_link}.
 * Supports {trmnl_link} devices.
@@ -251,20 +253,24 @@ cd terminus
 bin/setup
 ----
 
-You can also use the IRB console for direct access to all objects:
+=== Console
+
+To access the console with direct access to all objects, run:
 
 [source,bash]
 ----
 bin/console
 ----
 
-Once in the console, you can then do the following:
+Once in the console, you can do the following:
 
 [source,ruby]
 ----
-# View all devices.
+# Use a repository.
 repository = Terminus::Repositories::Device.new
-repository.all
+
+repository.all     # View all devices.
+repository.find 1  # Find by Device ID.
 
 # Fetch upcoming render, sorts in descending order by created timestamp.
 Terminus::Images::Fetcher.new.call images_uri: "https://localhost:2443/assets/images"
@@ -316,7 +322,7 @@ When creating images, you might find this HTML template valuable as a starting p
 
 Use of `margin` zero is important to prevent default browser styles from creating borders around your image which will show up when rendered on your device. Otherwise, you have full capabilities to render any kind of page you want using whatever HTML you like. Anything is possible because `Images::Creator` is designed to screenshot your rendered HTML as a 800x480 image to render on your device. If you put all this together, that means you can do this in the console:
 
-.Console Image Generation
+.Image Generation
 [%collapsible]
 ====
 [source,ruby]
@@ -367,6 +373,12 @@ To work within your {docker_link} image, run:
 ----
 bin/docker/console
 ----
+
+=== YJIT
+
+{yjit_link} is enabled by default if detected which means you have built and installed Ruby with YJIT enabled. If you didn't build Ruby with YJIT support, YJIT support will be ignored. That said, we _recommend_ you enable YJIT support since the performance improvements are worth it.
+
+💡 To enable YJIT globally, ensure the `--yjit` flag is added to your `RUBYOPT` environment variable. Example: `export RUBYOPT="--yjit"`.
 
 == Tests
 
