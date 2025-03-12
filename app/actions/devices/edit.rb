@@ -16,7 +16,8 @@ module Terminus
 
           response.render view,
                           device: repository.find(parameters[:id]),
-                          errors: Dry::Core::EMPTY_HASH
+                          errors: Dry::Core::EMPTY_HASH,
+                          layout: false
         end
       end
     end
