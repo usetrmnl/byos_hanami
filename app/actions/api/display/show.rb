@@ -12,9 +12,7 @@ module Terminus
 
           format :json
 
-          # rubocop:todo Naming/VariableNumber
-          params { optional(:base64).filled :integer }
-          # rubocop:enable Naming/VariableNumber
+          params { optional(:base_64).filled :integer }
 
           def initialize(
             fetcher: Terminus::Images::Rotator.new,
@@ -44,9 +42,7 @@ module Terminus
           def load_device(request) = repository.find_by_api_key request.env["HTTP_ACCESS_TOKEN"]
 
           def fetch_image parameters, environment
-            # rubocop:todo Naming/VariableNumber
-            encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base64]) == "true"
-            # rubocop:enable Naming/VariableNumber
+            encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
 
             fetcher.call Pathname(settings.images_root).join("generated"),
                          images_uri: "#{settings.app_url}/assets/images",

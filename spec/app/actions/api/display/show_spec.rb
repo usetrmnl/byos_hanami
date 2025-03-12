@@ -45,10 +45,28 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       )
     end
 
-    it "answers image data for valid access token and base 64 header" do
+    it "answers image data for valid access token and Base 64 header" do
       response = Rack::MockRequest.new(action).get "/api/display",
                                                    "HTTP_ACCESS_TOKEN" => device.api_key,
                                                    "HTTP_BASE64" => "true"
+      payload = JSON response.body, symbolize_names: true
+
+      expect(payload).to include(
+        filename: /.+\.bmp/,
+        firmware_url: nil,
+        image_url: %r(data:image/bmp;base64.+),
+        refresh_rate: 900,
+        reset_firmware: false,
+        special_function: "sleep",
+        status: 0,
+        update_firmware: false
+      )
+    end
+
+    it "answers image data for valid access token and Base 64 parameter" do
+      response = Rack::MockRequest.new(action).get "/api/display",
+                                                   "HTTP_ACCESS_TOKEN" => device.api_key,
+                                                   params: {base_64: true}
       payload = JSON response.body, symbolize_names: true
 
       expect(payload).to include(
