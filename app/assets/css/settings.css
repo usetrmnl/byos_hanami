@@ -1,0 +1,8 @@
+:root {
+  --site-font-family: Verdana;
+
+  --site-z-index-hidden: -10;
+  --site-z-index-tooltip: 10;
+  --site-z-index-navigation: 20;
+  --site-z-index-modal: 100;
+}
