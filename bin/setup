@@ -1,71 +1,78 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require "debug"
-require "refinements/pathname"
+require "fileutils"
+require "pathname"
 
-using Refinements::Pathname
+class Runner
+  def initialize root = Pathname(__dir__).join("..").expand_path, kernel: Kernel, kit: FileUtils
+    @root = root
+    @kernel = kernel
+    @kit = kit
+  end
 
-APP_ROOT = Pathname(__dir__).join("..").expand_path
+  def call
+    kit.chdir root do
+      step "Installing dependencies...", "bundle install"
+      step "Installing packages...", "npm install"
+      step "Configuring databases...", "hanami db prepare"
+      step "Compiling assets...", "hanami assets compile"
+      setup_development_environment
+      setup_test_environment
+      setup_development_procfile
+    end
+  end
 
-Runner = lambda do |*arguments, kernel: Kernel|
-  kernel.system(*arguments) || kernel.abort("\nERROR: Command #{arguments.inspect} failed.")
+  private
+
+  attr_reader :root, :kernel, :kit
+
+  def step(message, *arguments)
+    kernel.puts message
+    kernel.system(*arguments) || kernel.abort("\nERROR: Command #{arguments.inspect} failed.")
+  end
+
+  def setup_development_environment
+    path = root.join ".env.development"
+
+    return kernel.puts ".env.development exists. Skipped." if path.exist?
+
+    kernel.puts "Creawting .env.development..."
+
+    path.write <<~BODY
+      APP_HOST=0.0.0.0
+      APP_URL=http://localhost:4567
+      DATABASE_URL=sqlite://db/terminus.sqlite
+      IMAGES_ROOT="#{APP_ROOT}/public/assets/images"
+    BODY
+  end
+
+  def setup_test_environment
+    path = root.join ".env.test"
+
+    return kernel.puts ".env.test exists. Skipped." if path.exist?
+
+    kernel.puts "Creating .env.test..."
+
+    path.write <<~BODY
+      APP_HOST=localhost
+      APP_URL=https://localhost:4567
+      DATABASE_URL=sqlite://db/terminus.sqlite
+      IMAGES_ROOT="#{APP_ROOT}/tmp/rspec"
+    BODY
+  end
+
+  def setup_development_procfile
+    path = root.join "Procfile.dev"
+
+    return kernel.puts "Procfile.dev exists. Skipped." if path.exist?
+
+    kernel.puts "Creating Procfile.dev..."
+
+    path.write %(web: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- ) +
+               "bundle exec puma --config ./config/puma.rb\n" \
+               "assets: bundle exec hanami assets watch"
+  end
 end
 
-# rubocop:todo Metrics/BlockLength
-APP_ROOT.change_dir do
-  puts "Installing dependencies..."
-  Runner.call "bundle install"
-
-  puts "Installing packages..."
-  Runner.call "npm install"
-
-  puts "Configuring databases..."
-  Runner.call "hanami db prepare"
-
-  puts "Compiling assets..."
-  Runner.call "hanami assets compile"
-
-  APP_ROOT.join(".env.development").then do |path|
-    if path.exist?
-      puts ".env.development exists. Skipped."
-    else
-      puts "Creawting .env.development..."
-
-      path.write <<~BODY
-        APP_HOST=0.0.0.0
-        APP_URL=http://localhost:4567
-        DATABASE_URL=sqlite://db/terminus.sqlite
-        IMAGES_ROOT="#{APP_ROOT}/public/assets/images"
-      BODY
-    end
-  end
-
-  APP_ROOT.join(".env.test").then do |path|
-    if path.exist?
-      puts ".env.test exists. Skipped."
-    else
-      puts "Creating .env.test..."
-
-      path.write <<~BODY
-        APP_HOST=localhost
-        APP_URL=https://localhost:4567
-        DATABASE_URL=sqlite://db/terminus.sqlite
-        IMAGES_ROOT="#{APP_ROOT}/tmp/rspec"
-      BODY
-    end
-  end
-
-  APP_ROOT.join("Procfile.dev").then do |path|
-    if path.exist?
-      puts "Procfile.dev exists. Skipped."
-    else
-      puts "Creating Procfile.dev..."
-
-      path.write %(web: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- ) +
-                 "bundle exec puma --config ./config/puma.rb\n" \
-                 "assets: bundle exec hanami assets watch"
-    end
-  end
-end
-# rubocop:enable Metrics/BlockLength
+Runner.new.call
