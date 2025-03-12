@@ -15,7 +15,9 @@ module Terminus
           required(:id).filled :integer
           required(:device).hash do
             optional(:label).filled :string
+            optional(:friendly_id).filled :string
             optional(:mac_address).filled :string
+            optional(:api_key).filled :string
             optional(:refresh_rate).filled :integer
           end
         end
@@ -36,11 +38,11 @@ module Terminus
         def save device, parameters, response
           id = device.id
           repository.update id, **parameters[:device]
-          response.render show_view, device: repository.find(id)
+          response.render show_view, device: repository.find(id), layout: false
         end
 
         def edit device, parameters, response
-          response.render edit_view, device:, errors: parameters.errors[:device]
+          response.render edit_view, device:, errors: parameters.errors[:device], layout: false
         end
       end
     end
