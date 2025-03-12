@@ -422,6 +422,24 @@ bin/docker/console
 
 💡 To enable YJIT globally, ensure the `--yjit` flag is added to your `RUBYOPT` environment variable. Example: `export RUBYOPT="--yjit"`.
 
+=== CSS
+
+Pure CSS is used since modern CSS is so powerful we don't need to reach for frameworks anymore which also reduces the complexity of this project. The following stylesheets allow you to customize the look and feel of this application as follows:
+
+* *Colors*: Use to customize site colors.
+* *Defaults*: Use to customize HTML element defaults.
+* *Layout*: Use to customize the site layout.
+* *Settings*: Use to customize site settings.
+* *View Transitions*: Use to customize view transitions.
+
+For responsive resolutions, the following measuresments are used:
+
+* *Extra Small*: 300px
+* *Small*: 500px
+* *Medium*: 825px
+* *Large*: 1000px
+* *Extra Large*: 1500px
+
 == Tests
 
 To test, run:
