@@ -30,9 +30,6 @@
                  rel: :manifest,
                  href: assets["manifest.webmanifest"] %>
 
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.conditional.min.css">
-
     <%= tag.link title: "Terminus: Stylesheet", rel: :stylesheet, href: assets["app.css"] %>
 
     <script src="https://unpkg.com/htmx.org@2.0.4"
@@ -46,7 +43,17 @@
     </script>
   </head>
 
-  <body class="container">
-    <%= yield %>
+  <body class="site-page">
+    <header class="site-header">
+      <%= render "../shared/header" %>
+    </header>
+
+    <main class="site-body">
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <%= render "../shared/footer" %>
+    </footer>
   </body>
 </html>
