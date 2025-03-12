@@ -1,0 +1,76 @@
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+}
+
+.button-new {
+  align-self: flex-start;
+  background-color: hsl(102, 73%, 28%);
+  color: white;
+  text-decoration: none;
+}
+
+.link-cancel {
+  color: hsl(4, 73%, 43%);
+}
+
+.site-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: oklch(from var(--site-grey) l c h / 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  .group {
+    border: none;
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @media only screen and (min-width: 825px) {
+      justify-content: space-between;
+    }
+  }
+
+  .label {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 5rem;
+  }
+
+  .value {
+    border-radius: 0.5rem;
+    border: 0.1rem solid var(--site-grey);
+    padding: 0.5rem;
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .accept, .decline {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    text-decoration: underline;
+  }
+
+  .accept {
+    color: var(--site-blue);
+  }
+
+  .decline {
+    color: var(--site-red);
+  }
+}
+
+.site-errors {
+  color: var(--site-red);
+  margin: 1rem 0;
+}
