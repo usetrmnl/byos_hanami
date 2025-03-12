@@ -12,7 +12,7 @@ module Terminus
         def handle request, response
           parameters = request.params
           halt :unprocessable_entity unless parameters.valid?
-          response.render view, device: repository.find(parameters[:id])
+          response.render view, device: repository.find(parameters[:id]), layout: false
         end
       end
     end
