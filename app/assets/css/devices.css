@@ -1,0 +1,61 @@
+.page-devices {
+  display: flex;
+  flex-direction: column;
+
+  .columns, .row {
+    align-items: center;
+    border-radius: 0.5rem;
+    display: grid;
+    gap: 0.5rem;
+    grid-template: 1fr / repeat(auto-fit, minmax(0, 1fr));
+    margin: 0;
+    padding: 0.5rem 1rem;
+  }
+
+  .columns {
+    color: white;
+    background-color: black;
+  }
+
+  .row {
+    width: 100%;
+
+    &:hover {
+      background-color: hsl(213, 79%, 95%);
+    }
+  }
+
+  .devices {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 0 1rem 0;
+    padding: 0;
+  }
+
+  .device {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    flex-direction: column;
+  }
+
+  .label, .value {
+    list-style: none;
+  }
+
+  .label {
+    font-weight: 600;
+  }
+
+  .value {
+    word-break: break-word;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+}
