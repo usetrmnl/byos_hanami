@@ -1,27 +1,60 @@
 <li class="device" hx-ext="remove">
-  <form action="/devices" method="post" class="pico form">
-    <fieldset role="group">
-      <input name="device[label]" placeholder="Label" autocomplete="label">
-      <input name="device[mac_address]" placeholder="MAC Address" autocomplete="mac">
-      <input name="device[refresh_rate]" placeholder="Refresh Rate" autocomplete="refresh_rate">
+  <form action="/devices" method="post" class="site-form">
+    <fieldset role="group" class="group">
+      <label class="label">
+        Label
+        <input name="device[label]"
+               class="value"
+               autocomplete="label">
+      </label>
 
-      <input type="submit"
-             value="Save"
-             hx-post="/devices"
-             hx-trigger="click"
-             hx-target="closest .device"
-             hx-swap="outerHTML swap:0s">
+      <label class="label">
+        Friendly ID
+        <input name="device[friendly_id]"
+               class="value"
+               autocomplete="friendly_id">
+      </label>
 
-      <input type="button" value="Cancel" data-remove="true">
+      <label class="label">
+        MAC Address
+        <input name="device[mac_address]"
+               class="value"
+               autocomplete="mac_address">
+      </label>
 
+      <label class="label">
+        API Key
+        <input name="device[api_key]"
+               type="password"
+               class="value">
+      </label>
+
+      <label class="label">
+        Refresh Rate
+        <input name="device[refresh_rate]"
+               class="value"
+               autocomplete="refresh_rate">
+      </label>
     </fieldset>
 
     <% if errors.any? %>
-      <ul class="form-errors">
+      <ul class="site-errors">
         <% errors.each do |attribute, message| %>
           <li><%= "#{attribute} #{message.first}" %></li>
         <% end %>
       </ul>
     <% end %>
+
+    <div class="form-actions">
+      <input type="submit"
+             value="Save"
+             class="accept"
+             hx-post="/devices"
+             hx-trigger="click"
+             hx-target="closest .device"
+             hx-swap="outerHTML swap:0s">
+
+      <input type="button" value="Cancel" class="decline" data-remove="true">
+    </div>
   </form>
 </li>

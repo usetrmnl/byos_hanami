@@ -1,25 +1,59 @@
 <li class="device">
-  <form action="/devices" method="post" class="pico form">
-    <fieldset role="group">
-      <input name="device[label]"
-             value="<%= device.label %>"
-             placeholder="Label"
-             autocomplete="label">
+  <form action="/devices" method="put" class="site-form">
+    <fieldset role="group" class="group">
+      <label class="label">
+        Label
+        <input name="device[label]"
+               value="<%= device.label %>"
+               class="value"
+               autocomplete="label">
+      </label>
 
-      <input name="device[friendly_id]" value="<%= device.friendly_id %>" disabled>
+      <label class="label">
+        Friendly ID
+        <input name="device[friendly_id]"
+               value="<%= device.friendly_id %>"
+               class="value"
+               autocomplete="friendly_id">
+      </label>
 
-      <input name="device[mac_address]"
-             value="<%= device.mac_address %>"
-             placeholder="MAC Address"
-             autocomplete="mac">
+      <label class="label">
+        MAC Address
+        <input name="device[mac_address]"
+               value="<%= device.mac_address %>"
+               class="value"
+               autocomplete="mac_address">
+      </label>
 
-      <input name="device[refresh_rate]"
-             value="<%= device.refresh_rate %>"
-             placeholder="Refresh Rate"
-             autocomplete="refresh_rate">
+      <label class="label">
+        API Key
+        <input name="device[api_key]"
+               type="password"
+               value="<%= device.api_key %>"
+               class="value">
+      </label>
 
+      <label class="label">
+        Refresh Rate
+        <input name="device[refresh_rate]"
+               value="<%= device.refresh_rate %>"
+               class="value"
+               autocomplete="refresh_rate">
+      </label>
+    </fieldset>
+
+    <% if errors.any? %>
+      <ul class="site-errors">
+        <% errors.each do |attribute, message| %>
+          <li><%= "#{attribute} #{message.first}" %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <div class="form-actions">
       <input type="submit"
              value="Save"
+             class="accept"
              hx-put="/devices/<%= device.id %>"
              hx-trigger="click"
              hx-target="closest .device"
@@ -27,18 +61,11 @@
 
       <input type="button"
              value="Cancel"
+             class="decline"
              hx-get="/devices/<%= device.id %>"
              hx-trigger="click"
              hx-target="closest .device"
              hx-swap="outerHTML swap:0s">
-    </fieldset>
-
-    <% if errors.any? %>
-      <ul class="form-errors">
-        <% errors.each do |attribute, message| %>
-          <li><%= "#{attribute} #{message.first}" %></li>
-        <% end %>
-      </ul>
-    <% end %>
+    </div>
   </form>
 </li>
