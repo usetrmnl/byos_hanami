@@ -41,7 +41,7 @@ class Runner
 
     path.write <<~BODY
       APP_HOST=0.0.0.0
-      APP_URL=http://localhost:4567
+      APP_URL=https://localhost:2443
       DATABASE_URL=sqlite://db/terminus.sqlite
       IMAGES_ROOT=#{root}/public/assets/images
     BODY
@@ -56,7 +56,7 @@ class Runner
 
     path.write <<~BODY
       APP_HOST=localhost
-      APP_URL=https://localhost:4567
+      APP_URL=https://localhost:2443
       DATABASE_URL=sqlite://db/terminus.sqlite
       IMAGES_ROOT=#{root}/tmp/rspec
     BODY
