@@ -1,7 +1,7 @@
 <li class="device">
   <form action="/devices" method="put" class="site-form">
     <fieldset role="group" class="group">
-      <label class="label">
+      <label class="key">
         Label
         <input name="device[label]"
                value="<%= device.label %>"
@@ -9,7 +9,7 @@
                autocomplete="label">
       </label>
 
-      <label class="label">
+      <label class="key">
         Friendly ID
         <input name="device[friendly_id]"
                value="<%= device.friendly_id %>"
@@ -17,7 +17,7 @@
                autocomplete="friendly_id">
       </label>
 
-      <label class="label">
+      <label class="key">
         MAC Address
         <input name="device[mac_address]"
                value="<%= device.mac_address %>"
@@ -25,7 +25,7 @@
                autocomplete="mac_address">
       </label>
 
-      <label class="label">
+      <label class="key">
         API Key
         <input name="device[api_key]"
                type="password"
@@ -33,7 +33,7 @@
                class="value">
       </label>
 
-      <label class="label">
+      <label class="key">
         Refresh Rate
         <input name="device[refresh_rate]"
                value="<%= device.refresh_rate %>"
