@@ -1,6 +1,11 @@
+*.env*
+*.log
 .bundle
+.DS_Store
+coverage
 db/*.sqlite
 node_modules
+Procfile.dev
 public/assets
 public/assets.json
 tmp
