@@ -4,7 +4,7 @@ ruby file: ".ruby-version"
 
 source "https://rubygems.org"
 
-gem "dry-monads", "~> 1.6"
+gem "dry-monads", "~> 1.8"
 gem "dry-schema", "~> 1.13"
 gem "dry-types", "~> 1.7"
 gem "dry-validation", "~> 1.10"

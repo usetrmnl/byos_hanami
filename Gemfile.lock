@@ -482,7 +482,7 @@ DEPENDENCIES
   database_cleaner-sequel (~> 2.0)
   debug (~> 1.10)
   dotenv (~> 3.1)
-  dry-monads (~> 1.6)
+  dry-monads (~> 1.8)
   dry-schema (~> 1.13)
   dry-types (~> 1.7)
   dry-validation (~> 1.10)
