@@ -1,3 +1,14 @@
+.page-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+
+  .label {
+    margin: 0;
+  }
+}
+
 .button {
   padding: 0.5rem 1rem;
   border-radius: 0.2rem;
@@ -18,9 +29,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: oklch(from var(--site-grey) l c h / 0.1);
-  border-radius: 0.5rem;
-  padding: 1rem;
 
   .group {
     border: none;
@@ -29,18 +37,13 @@
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-
-    @media only screen and (min-width: 825px) {
-      justify-content: space-between;
-    }
   }
 
-  .label {
+  .key {
     align-items: center;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    min-width: 5rem;
   }
 
   .value {
