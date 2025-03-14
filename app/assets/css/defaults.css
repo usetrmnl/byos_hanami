@@ -4,11 +4,10 @@ html, body {
 
 html {
   accent-color: var(--site-red);
-  background-color: var(--site-white);
+  background-color: oklch(from var(--site-grey) l c h / 0.2);
   font-family: var(--site-font-family);
   scrollbar-color: var(--site-white) var(--site-red);
   text-size-adjust: none;
-
   -webkit-text-size-adjust: none;
 }
 

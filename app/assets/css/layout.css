@@ -1,6 +1,5 @@
 .site-page {
   align-content: start;
-  background-color: var(--site-color);
   display: grid;
   grid-template: auto 1fr auto / 1fr;
   grid-template-areas:
