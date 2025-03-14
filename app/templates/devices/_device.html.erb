@@ -1,24 +1,46 @@
 <li id="<%= device.id %>" class="device">
-  <ul class="row">
-    <li class="value"><%= device.label %></li>
-    <li class="value"><%= device.friendly_id %></li>
-    <li class="value"><%= device.mac_address %></li>
-    <li class="value"><%= device.refresh_rate %></li>
-    <li class="actions">
-      <a href="/devices/<%= device.id %>/edit"
-         hx-get="/devices/<%= device.id %>/edit"
-         hx-target="closest .device"
-         hx-swap="outerHTML">
-        Edit
-      </a>
+  <%= render :image, uri: device.image_uri %>
 
-      <a href="/devices"
-         class="link-cancel"
-         hx-delete="/devices/<%= device.id %>"
-         hx-target="closest .device"
-         hx-swap="outerHTML">
-        Delete
-      </a>
-    </li>
-  </ul>
+  <h2 class="label"><%= device.label %></h2>
+
+  <div class="measurements">
+    <label class="measurement">
+      <%= tag.meter min: 0,
+                    low: 25,
+                    high: 85,
+                    optimum: 95,
+                    max: 100,
+                    value: device.battery_voltage,
+                    class: :battery %>
+      <%= format_number device.battery_voltage, precision: 0 %>% Battery
+    </label>
+
+    <label class="measurement">
+      <%= tag.meter min: 0,
+                    low: 25,
+                    high: 85,
+                    optimum: 95,
+                    max: 100,
+                    value: device.rssi,
+                    class: :signal %>
+      <%= device.rssi %>% Signal
+    </label>
+  </div>
+
+  <div class="actions">
+    <a href="/devices/<%= device.id %>/edit"
+       hx-get="/devices/<%= device.id %>/edit"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Edit
+    </a>
+
+    <a href="/devices"
+       class="link-cancel"
+       hx-delete="/devices/<%= device.id %>"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
 </li>

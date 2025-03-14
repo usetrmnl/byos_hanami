@@ -1,26 +1,31 @@
-<section class="page page-devices">
-  <h1>Devices</h1>
+<section class="page-devices">
+  <header class="page-header">
+    <h1 class="label">Devices</h1>
 
-  <ul class="columns">
-    <li class="label">Label</li>
-    <li class="label">Friendly ID</li>
-    <li class="label">MAC Address</li>
-    <li class="label">Refresh Rate</li>
-    <li class="label">Actions</li>
-  </ul>
+    <div class="actions">
+      <button class="popover-trigger" popovertarget="popover-shortcuts">⌨️</button>
+
+      <dialog id="popover-shortcuts" class="popover-content" popover="auto">
+        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+          <span aria-hidden=true>❌</span>
+          <span class="screen_reader">Close</span>
+        </button>
+
+        <h3 class="label">Keyboard Shortcuts</h3>
+
+        <ul>
+          <li><kbd>CONTROL + n</kbd>: New device.</li>
+          <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
+        </ul>
+      </dialog>
+
+      <%= device_new %>
+    </div>
+  </header>
 
   <ul class="devices">
     <% devices.each do |device| %>
       <%= device.render :device %>
     <% end %>
   </ul>
-
-  <a href="/devices/new"
-     class="button button-new"
-     hx-get="/devices/new"
-     hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
-     hx-target=".devices"
-     hx-swap="beforeend settle:0.1s">
-    New
-  </a>
 </section>
