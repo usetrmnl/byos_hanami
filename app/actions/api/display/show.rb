@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "initable"
+
 module Terminus
   module Actions
     module API
@@ -8,21 +10,16 @@ module Terminus
         class Show < Terminus::Action
           include Deps[:settings, repository: "repositories.device"]
 
+          include Initable[
+            fetcher: proc { Terminus::Images::Rotator.new },
+            model: Models::API::Responses::Display
+          ]
+
           using Refines::Actions::Response
 
           format :json
 
           params { optional(:base_64).filled :integer }
-
-          def initialize(
-            fetcher: Terminus::Images::Rotator.new,
-            model: Models::API::Responses::Display,
-            **
-          )
-            @fetcher = fetcher
-            @model = model
-            super(**)
-          end
 
           def handle request, response
             device = load_device request
@@ -36,8 +33,6 @@ module Terminus
           end
 
           private
-
-          attr_reader :fetcher, :model
 
           def load_device(request) = repository.find_by_api_key request.env["HTTP_ACCESS_TOKEN"]
 

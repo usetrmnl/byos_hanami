@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "initable"
+
 module Terminus
   module Actions
     module API
@@ -7,6 +9,7 @@ module Terminus
         # The create action.
         class Create < Terminus::Action
           include Deps[:settings]
+          include Initable[creator: proc { Terminus::Images::Creator.new }]
 
           using Refinements::Pathname
           using Refines::Actions::Response
@@ -18,11 +21,6 @@ module Terminus
               required(:content).filled :string
               optional(:file_name).filled :string
             end
-          end
-
-          def initialize(creator: Terminus::Images::Creator.new, **)
-            @creator = creator
-            super(**)
           end
 
           def handle request, response
@@ -38,8 +36,6 @@ module Terminus
           end
 
           private
-
-          attr_reader :creator
 
           def output_path image
             Pathname(settings.images_root).join("generated")

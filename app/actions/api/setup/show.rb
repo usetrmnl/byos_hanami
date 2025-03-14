@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "initable"
+
 module Terminus
   module Actions
     module API
@@ -7,15 +9,11 @@ module Terminus
         # The show action.
         class Show < Terminus::Action
           include Deps[repository: "repositories.device"]
+          include Initable[model: Models::API::Responses::Setup]
 
           using Refines::Actions::Response
 
           format :json
-
-          def initialize(model: Models::API::Responses::Setup, **)
-            @model = model
-            super(**)
-          end
 
           def handle request, response
             device = repository.find_by_mac_address request.env["HTTP_ID"]
@@ -26,10 +24,6 @@ module Terminus
               response.with body: model.new.to_json, status: 404
             end
           end
-
-          private
-
-          attr_reader :model
         end
       end
     end
