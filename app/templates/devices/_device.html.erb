@@ -1,24 +1,58 @@
 <li id="<%= device.id %>" class="device">
-  <ul class="row">
-    <li class="value"><%= device.label %></li>
-    <li class="value"><%= device.friendly_id %></li>
-    <li class="value"><%= device.mac_address %></li>
-    <li class="value"><%= device.refresh_rate %></li>
-    <li class="actions">
-      <a href="/devices/<%= device.id %>/edit"
-         hx-get="/devices/<%= device.id %>/edit"
-         hx-target="closest .device"
-         hx-swap="outerHTML">
-        Edit
-      </a>
+  <img src="/assets/images/generated/trigun.bmp"
+       alt="Screen"
+       class="image"
+       width="200"
+       height="120"
+       loading="lazy">
 
-      <a href="/devices"
-         class="link-cancel"
-         hx-delete="/devices/<%= device.id %>"
-         hx-target="closest .device"
-         hx-swap="outerHTML">
-        Delete
-      </a>
-    </li>
-  </ul>
+  <h2 class="label"><%= device.label %></h2>
+  <h3 class="id"><%= device.friendly_id %></h3>
+
+  <h4 class="key">MAC Address</h4>
+  <p class="value"><%= device.mac_address %></p>
+
+  <h4 class="key">Refresh Rate</h4>
+  <p class="value"><%= device.refresh_rate %></p>
+
+  <div class="measurements">
+    <label class="battery">
+      <meter min="0"
+             low="25"
+             high="85"
+             optimum="95"
+             max="100"
+             value="<%= device.battery_voltage %>">
+      </meter>
+      <%= device.battery_voltage %>% Battery
+    </label>
+
+    <label class="signal">
+      <meter min="0"
+             low="25"
+             high="85"
+             optimum="95"
+             max="100"
+             value="<%= device.rssi %>">
+      </meter>
+      <%= device.rssi %>% Signal
+    </label>
+  </div>
+
+  <div class="actions">
+    <a href="/devices/<%= device.id %>/edit"
+       hx-get="/devices/<%= device.id %>/edit"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Edit
+    </a>
+
+    <a href="/devices"
+       class="link-cancel"
+       hx-delete="/devices/<%= device.id %>"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
 </li>
