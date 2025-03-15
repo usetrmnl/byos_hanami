@@ -3,6 +3,9 @@ inherit_gem:
 
 plugins: rubocop-sequel
 
+Metrics/MethodLength:
+  Exclude:
+    - app/views/helpers.rb
 RSpec/SpecFilePathFormat:
   CustomTransform:
     Terminus: ""
