@@ -12,7 +12,7 @@ module Terminus
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
-    config.inflections { it.acronym "IP" }
+    config.inflections { it.acronym "IP", "SSE" }
 
     config.actions.content_security_policy.then do |csp|
       csp[:manifest_src] = "'self'"

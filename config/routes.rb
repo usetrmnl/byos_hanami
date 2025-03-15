@@ -10,6 +10,8 @@ module Terminus
     post "/api/log", to: "api.log.create", as: :api_log_create
     get "/api/setup/", to: "api.setup.show", as: :api_setup_show
 
+    get "/sse/images/:id", to: "sse.images.show", as: :sse_images_show
+
     get "/devices", to: "devices.index", as: :devices_index
     get "/devices/:id", to: "devices.show", as: :devices_show
     get "/devices/new", to: "devices.new", as: :devices_new
