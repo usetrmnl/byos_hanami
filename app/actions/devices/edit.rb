@@ -14,10 +14,7 @@ module Terminus
 
           halt :unprocessable_entity unless parameters.valid?
 
-          response.render view,
-                          device: repository.find(parameters[:id]),
-                          errors: Dry::Core::EMPTY_HASH,
-                          layout: false
+          response.render view, device: repository.find(parameters[:id]), layout: false
         end
       end
     end
