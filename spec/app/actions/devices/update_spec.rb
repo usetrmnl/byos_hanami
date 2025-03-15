@@ -10,13 +10,18 @@ RSpec.describe Terminus::Actions::Devices::Update, :db do
 
     it "answers success when there are no validation errors" do
       device
-      response = action.call id: device.id, device: {label: "Test Update"}
+      response = action.call id: device.id, device: {label: "Test"}
       expect(response.status).to eq(200)
     end
 
     it "answers errors when fields are missing" do
       response = action.call id: device.id, device: {label: ""}
-      expect(response.body.to_s).to include("label must be filled")
+      expect(response.body.to_s).to include("must be filled")
+    end
+
+    it "answers unprocessable entity for unknown device" do
+      response = action.call id: 99
+      expect(response.status).to eq(422)
     end
   end
 end

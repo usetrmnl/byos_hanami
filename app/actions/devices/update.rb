@@ -26,6 +26,8 @@ module Terminus
           parameters = request.params
           device = repository.find parameters[:id]
 
+          halt :unprocessable_entity unless device
+
           if parameters.valid?
             save device, parameters, response
           else
@@ -41,8 +43,13 @@ module Terminus
           response.render show_view, device: repository.find(id), layout: false
         end
 
+        # :reek:FeatureEnvy
         def edit device, parameters, response
-          response.render edit_view, device:, errors: parameters.errors[:device], layout: false
+          response.render edit_view,
+                          device:,
+                          fields: parameters[:device],
+                          errors: parameters.errors[:device],
+                          layout: false
         end
       end
     end
