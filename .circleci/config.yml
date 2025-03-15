@@ -12,10 +12,6 @@ jobs:
           HANAMI_ENV: test
     steps:
       - run:
-          name: SQLite Install
-          command: apk add sqlite
-
-      - run:
           name: ImageMagick Install
           command: apk add imagemagick
 
