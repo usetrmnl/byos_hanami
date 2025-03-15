@@ -6,7 +6,8 @@ module Terminus
       # The edit view.
       class Edit < Terminus::View
         expose :device
-        expose :errors
+        expose :fields, default: Dry::Core::EMPTY_HASH
+        expose :errors, default: Dry::Core::EMPTY_HASH
       end
     end
   end
