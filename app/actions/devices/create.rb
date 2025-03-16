@@ -28,8 +28,19 @@ module Terminus
             device = repository.create parameters[:device]
             response.render show_view, device: repository.find(device.id), layout: false
           else
-            response.render new_view, errors: parameters.errors[:device], layout: false
+            render_new response, parameters
           end
+        end
+
+        private
+
+        # :reek:FeatureEnvy
+        def render_new response, parameters
+          response.render new_view,
+                          device: nil,
+                          fields: parameters[:device],
+                          errors: parameters.errors[:device],
+                          layout: false
         end
       end
     end
