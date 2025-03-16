@@ -6,7 +6,7 @@ module Terminus
       # The new action.
       class New < Terminus::Action
         def handle *, response
-          response.render view, errors: Dry::Core::EMPTY_HASH, layout: false
+          response.render view, layout: false
         end
       end
     end
