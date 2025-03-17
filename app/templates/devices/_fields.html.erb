@@ -1,0 +1,52 @@
+<fieldset role="group" class="group">
+  <%= scope(:form_field, key: :label, errors:).render do %>
+    <label class="key">
+      Label
+      <%= tag.input name: "device[label]",
+                    value: field_for(:label, fields, device),
+                    class: :value,
+                    autocomplete: :label %>
+    </label>
+  <% end %>
+
+  <%= scope(:form_field, key: :friendly_id, errors:).render do %>
+    <label class="key">
+      Friendly ID
+      <%= tag.input name: "device[friendly_id]",
+                    value: field_for(:friendly_id, fields, device),
+                    class: :value,
+                    autocomplete: :friendly_id %>
+    </label>
+  <% end %>
+
+  <%= scope(:form_field, key: :mac_address, errors:).render do %>
+    <label class="key">
+      MAC Address
+      <%= tag.input name: "device[mac_address]",
+                    value: field_for(:mac_address, fields, device),
+                    class: :value,
+                    autocomplete: :mac_address %>
+    </label>
+  <% end %>
+
+  <%= scope(:form_field, key: :api_key, errors:).render do %>
+    <label class="key">
+      API Key
+      <%= tag.input name: "device[api_key]",
+                    type: :password,
+                    value: field_for(:api_key, fields, device),
+                    class: :value %>
+    </label>
+  <% end %>
+
+  <%= scope(:form_field, key: :refresh_rate, errors:).render do %>
+    <label class="key">
+      Refresh Rate
+      <%= tag.input name: "device[refresh_rate]",
+                    value: field_for(:refresh_rate, fields, device),
+                    class: :value,
+                    autocomplete: :refresh_rate %>
+    </label>
+  <% end %>
+</fieldset>
+
