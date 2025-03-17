@@ -284,6 +284,12 @@ GEM
     parser (3.3.7.1)
       ast (~> 2.4.1)
       racc
+    pipeable (1.2.0)
+      containable (~> 1.1)
+      dry-monads (~> 1.6)
+      marameters (~> 4.1)
+      refinements (~> 13.0)
+      zeitwerk (~> 2.7)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -503,6 +509,7 @@ DEPENDENCIES
   launchy (~> 3.1)
   localhost (~> 1.3)
   mini_magick (~> 5.2)
+  pipeable (~> 1.2)
   puma (~> 6.6)
   rack-attack (~> 6.7)
   rack-test (~> 2.2)
@@ -622,6 +629,7 @@ CHECKSUMS
   optparse (0.6.0) sha256=25e90469c1cd44048a89dc01c1dde9d5f0bdf717851055fb18237780779b068c
   parallel (1.26.3) sha256=d86babb7a2b814be9f4b81587bf0b6ce2da7d45969fab24d8ae4bf2bb4d4c7ef
   parser (3.3.7.1) sha256=7dbe61618025519024ac72402a6677ead02099587a5538e84371b76659e6aca1
+  pipeable (1.2.0) sha256=2fa1e91a5b5fc77ddda6484d727b70b679c5b13c21946517a3f7e6b89a8cf902
   pp (0.6.2) sha256=947ec3120c6f92195f8ee8aa25a7b2c5297bb106d83b41baa02983686577b6ff
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.3.0) sha256=b11620829831b1cb7e6c9b46c81ff8a6e36ccb3f888f164485eb7351f386273a
