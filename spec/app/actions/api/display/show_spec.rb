@@ -7,6 +7,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
   subject(:action) { described_class.new settings: }
 
+  include_context "with firmware headers"
   include_context "with temporary directory"
 
   let(:settings) { Hanami.app[:settings] }
@@ -15,6 +16,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     let(:device) { Factory[:device] }
 
     before do
+      firmware_headers["HTTP_ACCESS_TOKEN"] = device.api_key
       allow(settings).to receive(:images_root).and_return(temp_dir)
 
       SPEC_ROOT.join("support/fixtures/test.bmp")
@@ -22,15 +24,12 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     end
 
     it "answers 200 OK status with valid parameters" do
-      response = Rack::MockRequest.new(action).get "/api/display",
-                                                   "HTTP_ACCESS_TOKEN" => device.api_key
-
+      response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
       expect(response.status).to eq(200)
     end
 
     it "answers image for valid access token" do
-      response = Rack::MockRequest.new(action).get "/api/display",
-                                                   "HTTP_ACCESS_TOKEN" => device.api_key
+      response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
       payload = JSON response.body, symbolize_names: true
 
       expect(payload).to include(
@@ -46,9 +45,8 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     end
 
     it "answers image data for valid access token and Base 64 header" do
-      response = Rack::MockRequest.new(action).get "/api/display",
-                                                   "HTTP_ACCESS_TOKEN" => device.api_key,
-                                                   "HTTP_BASE64" => "true"
+      firmware_headers["HTTP_BASE64"] = "true"
+      response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
       payload = JSON response.body, symbolize_names: true
 
       expect(payload).to include(
@@ -65,7 +63,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
     it "answers image data for valid access token and Base 64 parameter" do
       response = Rack::MockRequest.new(action).get "/api/display",
-                                                   "HTTP_ACCESS_TOKEN" => device.api_key,
+                                                   **firmware_headers,
                                                    params: {base_64: true}
       payload = JSON response.body, symbolize_names: true
 

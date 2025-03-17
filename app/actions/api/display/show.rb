@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/monads"
 require "initable"
 
 module Terminus
@@ -8,7 +9,12 @@ module Terminus
       module Display
         # The show action.
         class Show < Terminus::Action
-          include Deps[:settings, repository: "repositories.device"]
+          include Dry::Monads[:result]
+          include Deps[
+            :settings,
+            repository: "repositories.device",
+            synchronizer: "aspects.synchronizers.device"
+          ]
 
           include Initable[
             fetcher: proc { Terminus::Images::Rotator.new },
@@ -22,19 +28,17 @@ module Terminus
           params { optional(:base_64).filled :integer }
 
           def handle request, response
-            device = load_device request
+            environment = request.env
 
-            if device
-              record = build_record fetch_image(request.params, request.env), device
-              response.with body: record.to_json, status: 200
-            else
-              response.with body: model[status: 404].to_json, status: 404
+            case synchronizer.call environment
+              in Success(device)
+                record = build_record fetch_image(request.params, environment), device
+                response.with body: record.to_json, status: 200
+              else response.with body: model[status: 404].to_json, status: 404
             end
           end
 
           private
-
-          def load_device(request) = repository.find_by_api_key request.env["HTTP_ACCESS_TOKEN"]
 
           def fetch_image parameters, environment
             encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
