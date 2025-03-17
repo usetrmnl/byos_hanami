@@ -7,6 +7,17 @@ RSpec.describe Terminus::Repositories::Device, :db do
 
   let(:device) { Factory[:device] }
 
+  describe "#all" do
+    it "answers all records" do
+      device
+      expect(repository.all).to contain_exactly(device)
+    end
+
+    it "answers empty array when records don't exist" do
+      expect(repository.all).to eq([])
+    end
+  end
+
   describe "#find" do
     it "answers record by ID" do
       expect(repository.find(device.id)).to eq(device)
@@ -41,14 +52,12 @@ RSpec.describe Terminus::Repositories::Device, :db do
     end
   end
 
-  describe "#all" do
-    it "answers all records" do
+  describe "#update_by_api_key" do
+    it "updates record" do
       device
-      expect(repository.all).to contain_exactly(device)
-    end
+      update = repository.update_by_api_key device.api_key, label: "Update", friendly_id: "ABCDEF"
 
-    it "answers empty array when records don't exist" do
-      expect(repository.all).to eq([])
+      expect(update).to have_attributes(label: "Update", friendly_id: "ABCDEF")
     end
   end
 end
