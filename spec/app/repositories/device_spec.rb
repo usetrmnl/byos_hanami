@@ -15,6 +15,10 @@ RSpec.describe Terminus::Repositories::Device, :db do
     it "answers nil for unknown ID" do
       expect(repository.find(13)).to be(nil)
     end
+
+    it "answers nil for nil ID" do
+      expect(repository.find(nil)).to be(nil)
+    end
   end
 
   describe "#find_by_api_key" do

@@ -6,7 +6,7 @@ module Terminus
     class Device < DB::Repository[:devices]
       commands :create, update: :by_pk, delete: :by_pk
 
-      def find(id) = devices.by_pk(id).one
+      def find(id) = (devices.by_pk(id).one if id)
 
       def find_by_api_key value
         devices.where { api_key.ilike "%#{value}%" }
