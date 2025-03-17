@@ -519,6 +519,7 @@ DEPENDENCIES
   sequel (~> 5.89)
   simplecov (~> 0.22)
   sqlite3 (~> 2.5)
+  versionaire (~> 14.1)
 
 CHECKSUMS
   addressable (2.8.7) sha256=462986537cf3735ab5f3c0f557f14155d778f4b43ea4f485a9deb9c8f7c58232

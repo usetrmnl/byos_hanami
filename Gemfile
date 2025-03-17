@@ -25,6 +25,7 @@ gem "rom", "~> 5.4"
 gem "rom-sql", "~> 3.7"
 gem "sequel", "~> 5.89"
 gem "sqlite3", "~> 2.5"
+gem "versionaire", "~> 14.1"
 
 group :quality do
   gem "caliber", "~> 0.74"
