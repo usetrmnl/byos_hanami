@@ -7,30 +7,11 @@ module Terminus
   module Views
     # The view helpers.
     module Helpers
+      extend Hanami::View::Helpers::TagHelper
+
       using Refinements::Hash
 
-      def search path
-        tag.input(
-          id: "search",
-          type: "search",
-          name: "query",
-          value: "",
-          **HTMX[
-            get: path,
-            trigger: "search, keyup delay:200ms changed",
-            target: "next .tasks",
-            push_url: true,
-            indicator: ".loader"
-          ]
-        )
-      end
-
-      # :reek:UtilityFunction
-      def field_for key, attributes, record = nil
-        return attributes[key] unless record
-
-        attributes.fetch_value key, record.public_send(key)
-      end
+      module_function
 
       def device_new
         path = routes.path :devices_new
@@ -44,20 +25,6 @@ module Terminus
             trigger: "click, keyup[ctrlKey&&key=='n'] from:body",
             target: ".devices",
             swap: "beforeend settle:0.1s"
-          ]
-        )
-      end
-
-      def device_save verb, path
-        tag.input(
-          type: :submit,
-          value: "Save",
-          class: :accept,
-          **HTMX[
-            verb => path,
-            trigger: "click, keyup[ctrlKey&&key=='s'] from:closest .device",
-            target: "closest .device",
-            swap: "outerHTML swap:0s"
           ]
         )
       end
@@ -79,6 +46,28 @@ module Terminus
       def device_form_remove
         tag.input type: :button, value: "Cancel", class: :decline, data: {remove: true}
       end
+
+      def device_save verb, path
+        tag.input(
+          type: :submit,
+          value: "Save",
+          class: :accept,
+          **HTMX[
+            verb => path,
+            trigger: "click, keyup[ctrlKey&&key=='s'] from:closest .device",
+            target: "closest .device",
+            swap: "outerHTML swap:0s"
+          ]
+        )
+      end
+
+      def field_for key, attributes, record = nil
+        return attributes[key] unless record
+
+        attributes.fetch_value key, record.public_send(key)
+      end
+
+      def human_at(at) = at.strftime "%B %d %Y at %H:%M %Z"
     end
   end
 end
