@@ -1,0 +1,8 @@
+<% path = "/devices/#{device.id}/edit" %>
+
+<a href="<%= path %>"
+   hx-get="<%= path %>"
+   hx-target="closest .device"
+   hx-swap="outerHTML">
+  Edit
+</a>
