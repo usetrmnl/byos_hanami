@@ -43,6 +43,8 @@ module Terminus
           end
         end
 
+        def dimensions = "#{width}x#{height}"
+
         def image_uri
           fetcher.call(
             Pathname(settings.images_root).join("generated"),

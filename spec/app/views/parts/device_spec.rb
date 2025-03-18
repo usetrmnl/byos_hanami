@@ -32,6 +32,20 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     end
   end
 
+  describe "#dimensions" do
+    it "answers default width and height" do
+      expect(part.dimensions).to eq("0x0")
+    end
+
+    context "with custom dimensions" do
+      let(:device) { Factory[:device, width: 800, height: 480] }
+
+      it "answers custom width and height" do
+        expect(part.dimensions).to eq("800x480")
+      end
+    end
+  end
+
   describe "#battery_percentage" do
     it "answers zero when zero" do
       allow(device).to receive(:battery).and_return(0)
