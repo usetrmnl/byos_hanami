@@ -6,24 +6,24 @@
   <div class="measurements">
     <label class="measurement">
       <%= tag.meter min: 0,
-                    low: 25,
-                    high: 85,
+                    low: 10,
+                    high: 90,
                     optimum: 95,
                     max: 100,
-                    value: device.battery,
+                    value: device.battery_percentage,
                     class: :battery %>
-      <%= format_number device.battery, precision: 0 %>% Battery
+      <%= format_number device.battery_percentage, precision: 0 %>% Battery
     </label>
 
     <label class="measurement">
       <%= tag.meter min: 0,
-                    low: 25,
-                    high: 85,
+                    low: 10,
+                    high: 90,
                     optimum: 95,
                     max: 100,
-                    value: device.signal,
+                    value: device.signal_percentage,
                     class: :signal %>
-      <%= device.signal %>% Signal
+      <%= device.signal_percentage %>% Signal
     </label>
   </div>
 
