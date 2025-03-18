@@ -50,9 +50,21 @@
       border-radius: 0.5rem 0.5rem 0 0;
     }
 
+    .details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem 1rem 1rem;
+    }
+
     .label {
       margin: 0;
       font-size: 1.5rem;
+    }
+
+    .value {
+      margin: 0;
+      word_break: break-word;
     }
 
     .measurements {
