@@ -17,6 +17,7 @@ module Terminus
     get "/devices/:id/edit", to: "devices.edit", as: :devices_edit
     put "/devices/:id", to: "devices.update", as: :devices_update
     delete "/devices/:id", to: "devices.delete", as: :devices_delete
+    get "/devices/info/:id", to: "devices.info.show", as: :devices_info_show
 
     slice(:health, at: "/up") { root to: "show" }
 
