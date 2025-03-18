@@ -3,7 +3,14 @@ inherit_gem:
 
 plugins: rubocop-sequel
 
+Metrics/CyclomaticComplexity:
+  AllowedMethods:
+    - battery_percentage
+    - signal_percentage
 Metrics/MethodLength:
+  AllowedMethods:
+    - battery_percentage
+    - signal_percentage
   Exclude:
     - app/views/helpers.rb
 RSpec/SpecFilePathFormat:

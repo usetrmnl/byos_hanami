@@ -14,3 +14,5 @@ detectors:
     exclude:
       - Terminus::Images::Greyscaler#convert
       - Terminus::Images::Screensaver#save
+      - Terminus::Views::Parts::Device#battery_percentage
+      - Terminus::Views::Parts::Device#signal_percentage
