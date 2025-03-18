@@ -4,14 +4,9 @@
   "description": "A TRMNL server.",
   "icons": [
     {
-      "src": "https://alchemists.io/images/projects/hanamismith/icons/small.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "https://alchemists.io/images/projects/hanamismith/icons/large.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "https://usetrmnl.com/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
     }
   ],
   "display": "standalone",
