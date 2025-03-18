@@ -1,5 +1,5 @@
 <li class="device" hx-ext="remove">
-  <%= render :image, uri: "/assets/images/setup/logo.bmp" %>
+  <%= render :image, uri: assets["logo/salmon.svg"]%>
 
   <form action="/devices" method="post" class="page-form">
     <%= render :fields, device:, fields: fields.value, errors: %>
