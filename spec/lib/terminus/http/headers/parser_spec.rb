@@ -19,9 +19,9 @@ RSpec.describe Terminus::HTTP::Headers::Parser do
           mac_address: "A1:B2:C3:D4:E5:F6",
           access_token: "abc123",
           refresh_rate: 25,
-          battery_voltage: 4.74,
+          battery: 4.74,
           firmware_version: Version("1.2.3"),
-          rssi: -54,
+          signal: -54,
           width: 800,
           height: 480
         ]

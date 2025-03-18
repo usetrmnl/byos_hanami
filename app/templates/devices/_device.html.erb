@@ -10,9 +10,9 @@
                     high: 85,
                     optimum: 95,
                     max: 100,
-                    value: device.battery_voltage,
+                    value: device.battery,
                     class: :battery %>
-      <%= format_number device.battery_voltage, precision: 0 %>% Battery
+      <%= format_number device.battery, precision: 0 %>% Battery
     </label>
 
     <label class="measurement">
@@ -21,9 +21,9 @@
                     high: 85,
                     optimum: 95,
                     max: 100,
-                    value: device.rssi,
+                    value: device.signal,
                     class: :signal %>
-      <%= device.rssi %>% Signal
+      <%= device.signal %>% Signal
     </label>
   </div>
 
