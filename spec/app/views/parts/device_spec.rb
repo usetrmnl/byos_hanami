@@ -28,7 +28,7 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     end
 
     it "answers URI" do
-      expect(part.image_uri).to eq("https://localhost:2443/assets/images/generated/test.bmp")
+      expect(part.image_uri).to eq("/assets/images/generated/test.bmp")
     end
   end
 

@@ -46,7 +46,7 @@ module Terminus
         def image_uri
           fetcher.call(
             Pathname(settings.images_root).join("generated"),
-            images_uri: "https://localhost:2443/assets/images"
+            images_uri: "/assets/images"
           )[:image_url]
         end
       end
