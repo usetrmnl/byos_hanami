@@ -1,0 +1,76 @@
+<li id="<%= device.id %>" class="device">
+  <%= render "devices/image", uri: device.image_uri %>
+
+  <h2 class="label"><%= device.label %></h2>
+
+  <div class="measurements">
+    <label class="measurement">
+      <%= tag.meter min: 0,
+                    low: 10,
+                    high: 90,
+                    optimum: 95,
+                    max: 100,
+                    value: device.battery_percentage,
+                    class: :battery %>
+      <%= format_number device.battery_percentage, precision: 0 %>% Battery
+    </label>
+
+    <label class="measurement">
+      <%= tag.meter min: 0,
+                    low: 10,
+                    high: 90,
+                    optimum: 95,
+                    max: 100,
+                    value: device.signal_percentage,
+                    class: :signal %>
+      <%= device.signal_percentage %>% Signal
+    </label>
+  </div>
+
+  <div class="details">
+    <h3 class="key">ID</h3>
+    <p class="value"><%= device.id %></p>
+
+    <h3 class="key">Label</h3>
+    <p class="value"><%= device.label %></p>
+
+    <h3 class="key">Friendly ID</h3>
+    <p class="value"><%= device.friendly_id %></p>
+
+    <h3 class="key">MAC Address</h3>
+    <p class="value"><%= device.mac_address %></p>
+
+    <h3 class="key">API Key</h3>
+    <p class="value"><%= device.api_key %></p>
+
+    <h3 class="key">Refresh Rate</h3>
+    <p class="value"><%= device.refresh_rate %></p>
+
+    <h3 class="key">Dimensions</h3>
+    <p class="value"><%= device.dimensions %></p>
+
+    <h3 class="key">Firmware</h3>
+    <p class="value"><%= device.firmware_version %></p>
+
+    <h3 class="key">Firmware Beta</h3>
+    <p class="value"><%= device.firmware_beta %></p>
+
+    <h3 class="key">Created</h3>
+    <p class="value"><%= human_at device.created_at %></p>
+
+    <h3 class="key">Updated</h3>
+    <p class="value"><%= human_at device.updated_at %></p>
+  </div>
+
+  <div class="actions">
+    <a href="/devices/<%= device.id %>"
+       hx-get="/devices/<%= device.id %>"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Collapse
+    </a>
+
+    <%= render "devices/edit_link", device: %>
+    <%= render "devices/delete_link", device: %>
+  </div>
+</li>
