@@ -16,3 +16,6 @@ Metrics/MethodLength:
 RSpec/SpecFilePathFormat:
   CustomTransform:
     Terminus: ""
+Style/IpAddresses:
+  Exclude:
+    - spec/**/*

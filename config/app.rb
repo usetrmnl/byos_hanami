@@ -12,6 +12,8 @@ module Terminus
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
+    config.inflections { it.acronym "IP" }
+
     config.actions.content_security_policy.then do |csp|
       csp[:manifest_src] = "'self'"
       csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://unpkg.com/"
