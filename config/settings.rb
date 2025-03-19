@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
+require "terminus/ip_finder"
+
 module Terminus
   # The application base settings.
   class Settings < Hanami::Settings
-    setting :app_host, constructor: Types::Params::String
-    setting :app_url, constructor: Types::Params::String
-    setting :images_root, constructor: Types::Params::String
+    setting :api_uri,
+            constructor: Types::Params::String,
+            default: "http://#{IPFinder.new.wired}:2300"
+
+    setting :images_root,
+            constructor: Types::Params::String,
+            default: Hanami.app.root.join("public/assets/images").to_s
   end
 end
