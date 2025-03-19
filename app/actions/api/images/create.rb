@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "initable"
+require "refinements/pathname"
 
 module Terminus
   module Actions
