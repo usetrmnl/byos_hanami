@@ -1,0 +1,18 @@
+.page-dashboard {
+  .widgets {
+    display: grid;
+    grid-template: 1fr / repeat(auto-fit, minmax(0, 1fr));
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .box {
+    background-color: var(--site-white);
+    border-radius: 0.5rem;
+  }
+
+  .label {
+    font-weight: 600;
+  }
+}
