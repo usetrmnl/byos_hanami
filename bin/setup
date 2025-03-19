@@ -38,13 +38,7 @@ class Runner
     return kernel.puts ".env.development exists. Skipped." if path.exist?
 
     kernel.puts "Creawting .env.development..."
-
-    path.write <<~BODY
-      APP_HOST=0.0.0.0
-      APP_URL=https://localhost:2443
-      DATABASE_URL=sqlite://db/terminus.sqlite
-      IMAGES_ROOT=#{root}/public/assets/images
-    BODY
+    path.write "DATABASE_URL=sqlite://db/terminus.sqlite"
   end
 
   def setup_test_environment
@@ -53,13 +47,7 @@ class Runner
     return kernel.puts ".env.test exists. Skipped." if path.exist?
 
     kernel.puts "Creating .env.test..."
-
-    path.write <<~BODY
-      APP_HOST=localhost
-      APP_URL=https://localhost:2443
-      DATABASE_URL=sqlite://db/terminus.sqlite
-      IMAGES_ROOT=#{root}/tmp/rspec
-    BODY
+    path.write "DATABASE_URL=sqlite://db/terminus.sqlite"
   end
 
   def setup_development_procfile
