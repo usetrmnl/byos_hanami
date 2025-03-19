@@ -1,5 +1,27 @@
-<h1>Dashboard</h1>
+<section class="page-dashboard">
+  <header class="page-header">
+    <h1 class="label">Dashboard</h1>
+  </header>
 
-<p>Welcome to the Build Your Own Server (BYOS) application where you can customize and expand upon what's provided here to your hearts content. Anything is possible. Enjoy!</p>
+  <div class="widgets">
+    <fieldset class="box">
+      <legend class="label">Devices</legend>
 
-<p>To start, visit <a href="/devices">Devices</a> to configure, connect, and maintaining your own devices.</p>
+      <ul class="list">
+        <% devices.each do |device| %>
+          <%= tag.li device.label %>
+        <% end %>
+      </ul>
+    </fieldset>
+
+    <fieldset class="box">
+      <legend class="label">IP Addresses</legend>
+
+      <ul class="list">
+        <% ip_addresses.each do |ip_address| %>
+          <%= tag.li ip_address %>
+        <% end %>
+      </ul>
+    </fieldset>
+  </div>
+</section>
