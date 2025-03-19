@@ -5,23 +5,55 @@
 
   <div class="widgets">
     <fieldset class="box">
-      <legend class="label">Devices</legend>
+      <legend class="label">
+        Devices
+        <button class="popover-trigger" popovertarget="popover-devices">ℹ️</button>
+      </legend>
 
       <ul class="list">
         <% devices.each do |device| %>
           <%= tag.li device.label %>
         <% end %>
       </ul>
+
+      <dialog id="popover-devices" class="popover-content" popover="auto">
+        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+          <span aria-hidden=true>❌</span>
+          <span class="screen_reader">Close</span>
+        </button>
+
+        <h3 class="label">Devices</h3>
+
+        <p>These are your currently registered devices.</p>
+      </dialog>
     </fieldset>
 
     <fieldset class="box">
-      <legend class="label">IP Addresses</legend>
+      <legend class="label">
+        IP Addresses
+        <button class="popover-trigger" popovertarget="popover-ip-addresses">ℹ️</button>
+      </legend>
 
       <ul class="list">
-        <% ip_addresses.each do |ip_address| %>
-          <%= tag.li ip_address %>
+        <% ip_addresses.each do |ip| %>
+          <%= tag.li ip.address_with_kind %>
         <% end %>
+
+        <li><%= api_uri %> (API)</li>
       </ul>
+
+      <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
+        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+          <span aria-hidden=true>❌</span>
+          <span class="screen_reader">Close</span>
+        </button>
+
+        <h3 class="label">IP Addresses</h3>
+
+        <p>These are the Internet Protocol (IP) addresses of your local server. Use these to connect to your device. Use the API address to connect your device since you HTTPS isn't supported as of yet.</p>
+
+        <p>💡 Prefer wired over wireless since the former is likely not to change on you as much.</p>
+      </dialog>
     </fieldset>
   </div>
 </section>
