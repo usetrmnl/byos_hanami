@@ -61,5 +61,10 @@ RSpec.describe Terminus::HTTP::Headers::Model do
         height: 480
       )
     end
+
+    it "answers empty hash when attributes don't exist" do
+      record = described_class.new
+      expect(record.device_attributes).to eq({})
+    end
   end
 end

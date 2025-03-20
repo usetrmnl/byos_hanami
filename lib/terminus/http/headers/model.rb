@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "refinements/hash"
+
 module Terminus
   module HTTP
     module Headers
@@ -18,21 +20,17 @@ module Terminus
 
       # Models the HTTP headers for quick access of attributes.
       Model = Struct.new(*KEY_MAP.values) do
+        using Refinements::Hash
+
         def self.for(headers, key_map: KEY_MAP) = new(**headers.transform_keys(key_map))
 
         def initialize(**)
           super
-
-          self[:battery] ||= 0
-          self[:signal] ||= 0
-          self[:width] ||= 0
-          self[:height] ||= 0
-
           freeze
         end
 
         def device_attributes
-          {battery:, firmware_version: firmware_version.to_s, signal:, width:, height:}
+          {battery:, firmware_version: firmware_version.to_s, signal:, width:, height:}.compress
         end
       end
     end

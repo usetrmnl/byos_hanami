@@ -12,7 +12,6 @@ detectors:
     enabled: false
   TooManyStatements:
     exclude:
-      - Terminus::HTTP::Headers::Model#initialize
       - Terminus::Images::Greyscaler#convert
       - Terminus::Images::Screensaver#save
       - Terminus::Views::Parts::Device#battery_percentage
