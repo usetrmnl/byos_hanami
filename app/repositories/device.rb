@@ -24,9 +24,11 @@ module Terminus
       end
 
       def update_by_api_key(value, **attributes)
-        devices.where { api_key.ilike "%#{value}%" }
-               .command(:update)
-               .call(**attributes)
+        relation = devices.where { api_key.ilike "%#{value}%" }
+
+        return relation.one if attributes.empty?
+
+        relation.command(:update).call(**attributes)
       end
     end
   end

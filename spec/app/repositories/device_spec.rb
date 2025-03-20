@@ -53,11 +53,18 @@ RSpec.describe Terminus::Repositories::Device, :db do
   end
 
   describe "#update_by_api_key" do
-    it "updates record" do
+    it "updates record with attributes" do
       device
       update = repository.update_by_api_key device.api_key, label: "Update", friendly_id: "ABCDEF"
 
       expect(update).to have_attributes(label: "Update", friendly_id: "ABCDEF")
+    end
+
+    it "answers record without updates for no attributes" do
+      device
+      update = repository.update_by_api_key device.api_key
+
+      expect(update).to eq(device)
     end
   end
 end
