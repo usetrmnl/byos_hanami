@@ -7,7 +7,9 @@
     <fieldset class="box">
       <legend class="label">
         Devices
-        <button class="popover-trigger" popovertarget="popover-devices">ℹ️</button>
+        <button id="devices-help" class="popover-trigger" popovertarget="popover-devices">
+          ℹ️
+        </button>
       </legend>
 
       <ul class="list">
@@ -17,7 +19,7 @@
       </ul>
 
       <dialog id="popover-devices" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <button class="close" popovertarget="popover-devices" popovertargetaction="hide">
           <span aria-hidden=true>❌</span>
           <span class="screen_reader">Close</span>
         </button>
@@ -43,7 +45,7 @@
       </ul>
 
       <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <button class="close" popovertarget="popover-ip-addresses" popovertargetaction="hide">
           <span aria-hidden=true>❌</span>
           <span class="screen_reader">Close</span>
         </button>
