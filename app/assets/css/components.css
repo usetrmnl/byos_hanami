@@ -27,6 +27,7 @@
 
   border-radius: 0.5rem;
   padding: 2rem;
+  max-width: calc(100vw - 20%);
 
   .label {
     text-align: center;
