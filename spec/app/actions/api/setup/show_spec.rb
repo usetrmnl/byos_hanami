@@ -7,36 +7,48 @@ RSpec.describe Terminus::Actions::API::Setup::Show, :db do
 
   describe "#call" do
     let(:device) { Factory[:device] }
+    let(:repository) { Terminus::Repositories::Device.new }
 
-    it "answers registered device with valid ID" do
+    context "with no devices" do
+      let(:mac_address) { "aa:bb:cc:00:11:22" }
+      let(:response) { Rack::MockRequest.new(action).get "/api/setup", "HTTP_ID" => mac_address }
+      let(:payload) { JSON response.body, symbolize_names: true }
+      let(:device) { repository.find_by_mac_address mac_address }
+
+      it "registers new device for MAC address" do
+        expect(payload).to eq(
+          status: 200,
+          api_key: device.api_key,
+          friendly_id: device.friendly_id,
+          image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
+          message: "Welcome to TRMNL BYOS."
+        )
+      end
+
+      it "creates device with generated defaults" do
+        response
+
+        expect(device).to have_attributes(
+          label: "TRMNL",
+          friendly_id: /[A-Z0-9]{6}/,
+          mac_address:,
+          api_key: /[a-z0-9]{20}/i,
+          setup_at: instance_of(Time)
+        )
+      end
+    end
+
+    it "answers existing device for MAC address" do
       response = Rack::MockRequest.new(action).get "/api/setup", "HTTP_ID" => device.mac_address
       payload = JSON response.body, symbolize_names: true
 
       expect(payload).to eq(
         status: 200,
-        api_key: "abc123",
-        friendly_id: "ABC123",
-        image_url: %(#{Hanami.app[:settings].api_uri}/images/setup/logo.bmp),
-        message: "Welcome to TRMNL BYOS"
+        api_key: device.api_key,
+        friendly_id: device.friendly_id,
+        image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
+        message: "Welcome to TRMNL BYOS."
       )
-    end
-
-    it "answers device that couldn't be registered with invalid ID" do
-      response = Rack::MockRequest.new(action).get "/api/setup", "HTTP_ID" => "bogus"
-      payload = JSON response.body, symbolize_names: true
-
-      expect(payload).to eq(
-        status: 404,
-        api_key: nil,
-        friendly_id: nil,
-        image_url: nil,
-        message: "MAC Address not registered."
-      )
-    end
-
-    it "answers not found for no MAC address" do
-      response = action.call Hash.new
-      expect(response.status).to eq(404)
     end
   end
 end
