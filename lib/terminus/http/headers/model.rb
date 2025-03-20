@@ -17,8 +17,19 @@ module Terminus
       }.freeze
 
       # Models the HTTP headers for quick access of attributes.
-      Model = Data.define(*KEY_MAP.values) do
+      Model = Struct.new(*KEY_MAP.values) do
         def self.for(headers, key_map: KEY_MAP) = new(**headers.transform_keys(key_map))
+
+        def initialize(**)
+          super
+
+          self[:battery] ||= 0
+          self[:signal] ||= 0
+          self[:width] ||= 0
+          self[:height] ||= 0
+
+          freeze
+        end
 
         def device_attributes
           {battery:, firmware_version: firmware_version.to_s, signal:, width:, height:}

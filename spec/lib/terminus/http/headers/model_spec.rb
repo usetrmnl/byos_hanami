@@ -45,6 +45,12 @@ RSpec.describe Terminus::HTTP::Headers::Model do
     end
   end
 
+  describe "#initialize" do
+    it "is frozen" do
+      expect(described_class.new.frozen?).to be(true)
+    end
+  end
+
   describe "#device_attributes" do
     it "answers device attributes" do
       expect(record.device_attributes).to eq(
