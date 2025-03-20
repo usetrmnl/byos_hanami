@@ -10,8 +10,8 @@ module Terminus
           def self.for device
             new api_key: device.api_key,
                 friendly_id: device.friendly_id,
-                image_url: %(#{Hanami.app[:settings].api_uri}/images/setup/logo.bmp),
-                message: "Welcome to TRMNL BYOS",
+                image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
+                message: "Welcome to TRMNL BYOS.",
                 status: 200
           end
 
