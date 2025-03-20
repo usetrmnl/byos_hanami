@@ -22,6 +22,7 @@ toc::[]
 
 * Allows you to run your own server.
 * Built atop {ruby_link} and {hanami_link}.
+* Provides automatic detection of your server's IP address.
 * Uses {htmx_link}.
 * Uses {puma_link}.
 * Uses {sqlite_link}.
@@ -44,7 +45,7 @@ The following is a high level overview you can use to compare/contrast when deci
 [options="header"]
 |===
 |                                   | Terminus | Hosted
-| Dashboard                         | 🟡       | 🟢
+| Dashboard                         | 🟢       | 🟢
 | Plugins                           | ⚪️       | 🟢
 | Playlists                         | 🟡       | 🟢
 | Playlist Previews                 | ⚪️       | 🟢
@@ -52,7 +53,7 @@ The following is a high level overview you can use to compare/contrast when deci
 | Devices                           | 🟢       | 🟢
 | Account                           | 🔴       | 🟢
 | JSON Data API                     | 🟢       | 🟢
-| Open Source Components            | 🟡       | 🟡
+| Open Source Components            | 🟢       | 🟡
 | Docker                            | 🟢       | 🔴
 |===
 
@@ -98,6 +99,14 @@ To view the app, use either of the following:
 * *Secure*: https://localhost:2443
 * *Insecure*: http://localhost:2300
 
+=== Configuration
+
+There are a few environment variables you can use to customize behavior:
+
+* `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
+* `DATABASE_URL`: Necessary to connect to your SQLite database. Defaults to the `db` folder but can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
+* `IMAGES_ROOT`: The root location for all generated images. Defaults to `public/assets/images`.
+
 === APIs
 
 The following APIs are supported. Each uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
@@ -142,6 +151,17 @@ curl "https://localhost:2443/api/display/?base_64=true" \
      -H 'Accept: application/json' \
      -H 'Content-Type: application/json'
 ----
+
+Both the `ID` and `Access-Token` HTTP headers are required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
+
+* `HTTP_BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
+* `HTTP_FW_VERSION`: The firmware version (i.e. `1.2.3`).
+* `HTTP_HOST`: The host (usually the IP address).
+* `HTTP_REFRESH_RATE`: The refresh rate as saved on the device. Example: 100.
+* `HTTP_RSSI`: The signal strength (usually -100 to 100).
+* `HTTP_USER_AGENT`: The device name.
+* `HTTP_WIDTH`: The device width. Example: 800.
+* `HTTP_HEIGHT`: :The device height. Example: 480.
 ====
 
 .Response
@@ -236,7 +256,7 @@ Logs details and answers a HTTP 204 status with no content.
 
 ==== Images
 
-Used for generating new images by supplying HTML content for rendering, screenshotting, and greyscaling to render properly on your device.
+Used for generating new images by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device.
 
 .Request
 [%collapsible]
@@ -426,11 +446,14 @@ Pure CSS is used since modern CSS is so powerful we don't need to reach for fram
 
 * *Colors*: Use to customize site colors.
 * *Defaults*: Use to customize HTML element defaults.
-* *Layout*: Use to customize the site layout.
 * *Settings*: Use to customize site settings.
+* *Layout*: Use to customize the site layout.
+* *Components*: Use to customize general site components.
 * *View Transitions*: Use to customize view transitions.
+* *Dashboard*: Use to customize the dashboard page.
+* *Devices*: Use to customize the devices page.
 
-For responsive resolutions, the following measuresments are used:
+For responsive resolutions, the following measurements are used:
 
 * *Extra Small*: 300px
 * *Small*: 500px
@@ -448,14 +471,6 @@ bin/rake
 ----
 
 == Deployment
-
-*Local*
-
-. Configure `APP_URL` within `+*.env+` file(s) to where your app is hosted (i.e. `https://192.168.x.x:2443`). 💡 Lack of trailing slash is important.
-. Retrieve your machine's local IP, ex 192.168.x.x (Mac: `ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'`).
-. Set `APP_URL` as the Custom Server via the [Firmware's](https://github.com/usetrmnl/firmware) WiFi Captive Portal
-
-*Hosted*
 
 More details to be provided soon.
 
