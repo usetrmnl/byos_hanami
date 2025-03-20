@@ -13,7 +13,7 @@ RSpec.describe Terminus::Models::API::Responses::Setup, :db do
         described_class[
           api_key: "abc123",
           friendly_id: "ABC123",
-          image_url: %(#{ENV.fetch "APP_URL"}/images/setup/logo.bmp),
+          image_url: %(#{Hanami.app[:settings].api_uri}/images/setup/logo.bmp),
           message: "Welcome to TRMNL BYOS",
           status: 200
         ]

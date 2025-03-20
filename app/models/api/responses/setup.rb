@@ -7,10 +7,10 @@ module Terminus
       module Responses
         # Models data for API setup responses.
         Setup = Struct.new :api_key, :friendly_id, :image_url, :message, :status do
-          def self.for device, environment: ENV
+          def self.for device
             new api_key: device.api_key,
                 friendly_id: device.friendly_id,
-                image_url: %(#{environment.fetch "APP_URL"}/images/setup/logo.bmp),
+                image_url: %(#{Hanami.app[:settings].api_uri}/images/setup/logo.bmp),
                 message: "Welcome to TRMNL BYOS",
                 status: 200
           end

@@ -35,7 +35,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: nil,
-        image_url: %r(https://localhost/assets/images/generated/.+\.bmp),
+        image_url: %r(http://.+/assets/images/generated/.+\.bmp),
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",

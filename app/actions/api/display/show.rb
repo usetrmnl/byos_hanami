@@ -44,7 +44,7 @@ module Terminus
             encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
 
             fetcher.call Pathname(settings.images_root).join("generated"),
-                         images_uri: "#{settings.app_url}/assets/images",
+                         images_uri: "#{settings.api_uri}/assets/images",
                          encryption:
           end
 
