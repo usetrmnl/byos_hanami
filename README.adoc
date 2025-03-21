@@ -105,7 +105,7 @@ There are a few environment variables you can use to customize behavior:
 
 * `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
 * `DATABASE_URL`: Necessary to connect to your SQLite database. Defaults to the `db` folder but can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
-* `IMAGES_ROOT`: The root location for all generated images. Defaults to `public/assets/images`.
+* `GENERATED_ROOT`: The root location for all generated images. Defaults to `public/assets/generated`.
 
 === APIs
 
@@ -173,7 +173,7 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
 {
   "filename": "demo.bmp",
   "firmware_url": null,
-  "image_url": "https://localhost:2443/assets/images/generated/demo.bmp",
+  "image_url": "https://localhost:2443/assets/generated/demo.bmp",
   "refresh_rate": 130,
   "reset_firmware": false,
   "special_function": "sleep",
@@ -224,7 +224,7 @@ curl "https://localhost:2443/api/setup/" \
 {
   "api_key": "<redacted>",
   "friendly_id": "ABC123",
-  "image_url": "https://localhost:2443/images/setup/logo.bmp",
+  "image_url": "https://localhost:2443/assets/setup.bmp",
   "message": "Welcome to TRMNL BYOS",
   "status": 200
 }
@@ -275,6 +275,8 @@ curl -X "POST" "https://localhost:2443/api/images" \
  }
 }'
 ----
+
+The `ID` header is your device's MAC address. You can obtain this information from the UI.
 ====
 
 .Response
@@ -283,7 +285,7 @@ curl -X "POST" "https://localhost:2443/api/images" \
 [source,json]
 ----
 {
-  "path": "$HOME/Engineering/terminus/public/assets/images/generated/test.bmp"
+  "path": "$HOME/Engineering/terminus/public/assets/generated/test.bmp"
 }
 ----
 ====
@@ -298,7 +300,7 @@ curl -X "POST" "https://localhost:2443/api/images" \
 }
 ----
 
-If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/images/generated`.
+If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/generated`.
 
 💡 The `ID` is your device's MAC and the `Access-Token` is your device API Key.
 
@@ -332,18 +334,18 @@ repository = Terminus::Repositories::Device.new
 repository.all     # View all devices.
 repository.find 1  # Find by Device ID.
 
-# Fetch upcoming render, sorts in descending order by created timestamp.
-Terminus::Images::Fetcher.new.call images_uri: "https://localhost:2443/assets/images"
+# Fetch next image. Sorts in descending order by created timestamp.
+Terminus::Aspects::Images::Fetcher.new.call images_uri: "https://localhost:2443/assets"
 
 # To generate image with random name.
 creator = Terminus::Images::Creator.new
 creator.call "<p>Test</p>",
-             Pathname(Hanami.app[:settings].images_root).join("generated/%<name>s.bmp")
-#<Pathname:terminus/public/assets/images/generated/f5af3f06-775f-4ae9-8bb1-246d9a5200c9.bmp>
+             Pathname(Hanami.app[:settings].generated_root).join("%<name>s.bmp")
+#<Pathname:terminus/public/assets/generated/f5af3f06-775f-4ae9-8bb1-246d9a5200c9.bmp>
 
 # To generate image with specific name.
-creator.call "<p>Test.</p>", Pathname.pwd.join("demo.bmp")
-#<Pathname:terminus/public/assets/images/generated/demo.bmp>
+creator.call "<p>Test.</p>", Pathname(Hanami.app[:settings].generated_root).join("demo.bmp")
+#<Pathname:terminus/public/assets/generated/demo.bmp>
 ----
 
 When creating images, you might find this HTML template valuable as a starting point as this let's you use the full capabilities of HTML to create new images for your device.
@@ -389,7 +391,7 @@ Use of `margin` zero is important to prevent default browser styles from creatin
 ----
 creator = Terminus::Images::Creator.new
 
-creator.call(<<~CONTENT, Pathname(Hanami.app[:settings].images_root).join("generated/%<name>s.bmp"))
+creator.call(<<~CONTENT, Pathname(Hanami.app[:settings].generated_root).join("generated/%<name>s.bmp"))
   <!DOCTYPE html>
 
   <html lang="en">
@@ -418,7 +420,7 @@ CONTENT
 ----
 ====
 
-The above will create a new image in the `public/images/generated` folder of this application which will eventually render on your device. 🎉
+The above will create a new image in the `public/generated` folder of this application which will eventually render on your device. 🎉
 
 To build a {docker_link} image, run:
 
@@ -442,7 +444,7 @@ bin/docker/console
 
 === CSS
 
-Pure CSS is used since modern CSS is so powerful we don't need to reach for frameworks anymore which also reduces the complexity of this project. The following stylesheets allow you to customize the look and feel of this application as follows:
+Pure CSS is used in order to avoid pulling in complicated frameworks. The following stylesheets allow you to customize the look and feel of this application as follows:
 
 * *Colors*: Use to customize site colors.
 * *Defaults*: Use to customize HTML element defaults.
