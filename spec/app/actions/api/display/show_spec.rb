@@ -5,7 +5,9 @@ require "hanami_helper"
 RSpec.describe Terminus::Actions::API::Display::Show, :db do
   using Refinements::Pathname
 
-  subject(:action) { described_class.new settings: }
+  subject :action do
+    described_class.new settings:, fetcher: Terminus::Aspects::Images::Rotator.new(settings:)
+  end
 
   include_context "with firmware headers"
   include_context "with temporary directory"
@@ -17,10 +19,9 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
     before do
       firmware_headers["HTTP_ACCESS_TOKEN"] = device.api_key
-      allow(settings).to receive(:images_root).and_return(temp_dir)
+      allow(settings).to receive(:generated_root).and_return(temp_dir)
 
-      SPEC_ROOT.join("support/fixtures/test.bmp")
-               .copy temp_dir.join("generated/test.bmp").make_ancestors
+      SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
     end
 
     it "answers 200 OK status with valid parameters" do
@@ -35,7 +36,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: nil,
-        image_url: %r(http://.+/assets/images/generated/.+\.bmp),
+        image_url: %r(http://.+/assets/generated/.+\.bmp),
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",

@@ -17,7 +17,7 @@ module Terminus
           ]
 
           include Initable[
-            fetcher: proc { Terminus::Images::Rotator.new },
+            fetcher: proc { Terminus::Aspects::Images::Rotator.new },
             model: Models::API::Responses::Display
           ]
 
@@ -42,10 +42,7 @@ module Terminus
 
           def fetch_image parameters, environment
             encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
-
-            fetcher.call Pathname(settings.images_root).join("generated"),
-                         images_uri: "#{settings.api_uri}/assets/images",
-                         encryption:
+            fetcher.call images_uri: "#{settings.api_uri}/assets", encryption:
           end
 
           def build_record image, device
