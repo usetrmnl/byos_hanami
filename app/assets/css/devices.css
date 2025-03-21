@@ -64,7 +64,7 @@
 
     .value {
       margin: 0;
-      word_break: break-word;
+      word-break: break-word;
     }
 
     .measurements {
