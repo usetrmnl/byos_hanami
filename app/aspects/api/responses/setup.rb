@@ -1,8 +1,7 @@
-# auto_register: false
 # frozen_string_literal: true
 
 module Terminus
-  module Models
+  module Aspects
     module API
       module Responses
         # Models data for API setup responses.
@@ -15,7 +14,7 @@ module Terminus
                 status: 200
           end
 
-          def initialize **arguments
+          def initialize(**)
             super
 
             self[:message] ||= "MAC Address not registered."

@@ -10,7 +10,7 @@ module Terminus
         # The show action.
         class Show < Terminus::Action
           include Deps[repository: "repositories.device"]
-          include Initable[randomizer: SecureRandom, model: Models::API::Responses::Setup]
+          include Initable[randomizer: SecureRandom, model: Aspects::API::Responses::Setup]
 
           format :json
 

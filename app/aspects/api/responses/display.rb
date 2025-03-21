@@ -1,8 +1,7 @@
-# auto_register: false
 # frozen_string_literal: true
 
 module Terminus
-  module Models
+  module Aspects
     module API
       module Responses
         # Models data for API display responses.
@@ -16,7 +15,7 @@ module Terminus
           :status,
           :update_firmware
         ) do
-          def initialize **arguments
+          def initialize(**)
             super
             apply_defaults
             freeze

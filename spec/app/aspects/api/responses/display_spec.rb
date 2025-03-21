@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Models::API::Responses::Display do
+RSpec.describe Terminus::Aspects::API::Responses::Display do
   subject(:model) { described_class.new }
 
   describe "#initialize" do

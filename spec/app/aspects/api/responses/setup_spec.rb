@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Models::API::Responses::Setup, :db do
+RSpec.describe Terminus::Aspects::API::Responses::Setup, :db do
   subject(:model) { described_class.new }
 
   describe ".for" do
