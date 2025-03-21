@@ -3,11 +3,14 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Actions::API::Images::Create do
-  subject(:action) { described_class.new }
-
-  let(:path) { Bundler.root.join "public/assets/images/generated/rspec_test.bmp" }
+  subject(:action) { described_class.new settings: }
 
   include_context "with temporary directory"
+
+  let(:settings) { Hanami.app[:settings] }
+  let(:path) { temp_dir.join "rspec_test.bmp" }
+
+  before { allow(settings).to receive(:generated_root).and_return temp_dir }
 
   describe "#call" do
     it "creates image with random name" do
