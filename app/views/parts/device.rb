@@ -8,7 +8,7 @@ module Terminus
     module Parts
       # The device presenter.
       class Device < Hanami::View::Part
-        include Initable[fetcher: proc { Terminus::Images::Fetcher.new }]
+        include Initable[fetcher: proc { Terminus::Aspects::Images::Fetcher.new }]
         include Deps[:settings]
 
         def battery_percentage
@@ -45,12 +45,7 @@ module Terminus
 
         def dimensions = "#{width}x#{height}"
 
-        def image_uri
-          fetcher.call(
-            Pathname(settings.images_root).join("generated"),
-            images_uri: "/assets/images"
-          )[:image_url]
-        end
+        def image_uri = fetcher.call(images_uri: "/assets")[:image_url]
       end
     end
   end
