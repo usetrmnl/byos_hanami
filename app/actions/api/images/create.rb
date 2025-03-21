@@ -39,9 +39,8 @@ module Terminus
           private
 
           def output_path image
-            Pathname(settings.images_root).join("generated")
-                                          .mkpath
-                                          .join %(#{image.fetch :file_name, "%<name>s"}.bmp)
+            Pathname(settings.generated_root).mkpath
+                                             .join %(#{image.fetch :file_name, "%<name>s"}.bmp)
           end
         end
       end
