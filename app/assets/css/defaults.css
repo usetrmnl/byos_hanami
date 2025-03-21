@@ -21,6 +21,12 @@ a {
   text-underline-position: under;
 }
 
+img {
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
 kbd {
   background-color: oklch(from var(--site-grey) l c h / 0.1);
   border-radius: 0.2rem;

@@ -38,7 +38,11 @@
 
 .site-body {
   grid-area: site-body;
-  margin: 0 calc(20vw - 1rem);
+  margin: 0 1rem;
+
+  @media only screen and (min-width: 825px) {
+    margin: 0 calc(20vw - 1rem);
+  }
 }
 
 .site-footer {
