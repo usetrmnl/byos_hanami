@@ -24,9 +24,21 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
     end
 
-    it "answers 200 OK status with valid parameters" do
+    it "answers payload with valid parameters and full dependencies" do
+      action = described_class.new(settings:)
       response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
-      expect(response.status).to eq(200)
+      payload = JSON response.body, symbolize_names: true
+
+      expect(payload).to include(
+        filename: /.+\.bmp/,
+        firmware_url: nil,
+        image_url: %r(http://.+/assets/generated/.+\.bmp),
+        refresh_rate: 900,
+        reset_firmware: false,
+        special_function: "sleep",
+        status: 0,
+        update_firmware: false
+      )
     end
 
     it "answers image for valid access token" do
@@ -78,6 +90,11 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         status: 0,
         update_firmware: false
       )
+    end
+
+    it "answers 200 OK status with valid parameters" do
+      response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
+      expect(response.status).to eq(200)
     end
 
     it "answers not found for index with invalid access token" do

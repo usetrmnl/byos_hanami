@@ -17,7 +17,7 @@ module Terminus
           ]
 
           include Initable[
-            fetcher: proc { Terminus::HTTP::Images::Rotator.new },
+            fetcher: proc { Terminus::Aspects::Images::Rotator.new },
             model: Aspects::API::Responses::Display
           ]
 
