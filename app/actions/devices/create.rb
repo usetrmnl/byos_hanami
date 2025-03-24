@@ -18,6 +18,7 @@ module Terminus
             required(:mac_address).filled :string
             required(:api_key).filled :string
             required(:refresh_rate).filled :integer
+            required(:image_timeout).filled :integer
           end
         end
 

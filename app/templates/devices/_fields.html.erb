@@ -48,5 +48,14 @@
                     autocomplete: :refresh_rate %>
     </label>
   <% end %>
-</fieldset>
 
+  <%= scope(:form_field, key: :image_timeout, errors:).render do %>
+    <label class="key">
+      Image Timeout
+      <%= tag.input name: "device[image_timeout]",
+                    value: field_for(:image_timeout, fields, device),
+                    class: :value,
+                    autocomplete: :image_timeout %>
+    </label>
+  <% end %>
+</fieldset>
