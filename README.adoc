@@ -88,7 +88,7 @@ To launch the server, run:
 
 [source,bash]
 ----
-bundle exec hanami assets compile
+bin/hanami assets compile
 bundle exec puma --config ./config/puma.rb
 ----
 
@@ -177,7 +177,6 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
   "refresh_rate": 130,
   "reset_firmware": false,
   "special_function": "sleep",
-  "status": 0,
   "update_firmware": false
 }
 ----
@@ -193,7 +192,6 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
   "refresh_rate": 200,
   "reset_firmware": false,
   "special_function": "sleep",
-  "status": 0,
   "update_firmware": false
 }
 ----
@@ -209,10 +207,9 @@ Uses for new device setup and then never used after.
 [source,bash]
 ----
 curl "https://localhost:2443/api/setup/" \
-    -H 'ID: <redacted>' \
-    -H 'Access-Token: <redacted>' \
-    -H 'Accept: application/json' \
-    -H 'Content-Type: application/json'
+     -H 'ID: <redacted>' \
+     -H 'Accept: application/json' \
+     -H 'Content-Type: application/json'
 ----
 ====
 
@@ -225,8 +222,7 @@ curl "https://localhost:2443/api/setup/" \
   "api_key": "<redacted>",
   "friendly_id": "ABC123",
   "image_url": "https://localhost:2443/assets/setup.bmp",
-  "message": "Welcome to TRMNL BYOS",
-  "status": 200
+  "message": "Welcome to TRMNL BYOS"
 }
 ----
 ====
