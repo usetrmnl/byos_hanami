@@ -14,8 +14,7 @@ RSpec.describe Terminus::Aspects::API::Responses::Setup, :db do
           api_key: "abc123",
           friendly_id: "ABC123",
           image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
-          message: "Welcome to TRMNL BYOS.",
-          status: 200
+          message: "Welcome to TRMNL BYOS."
         ]
       )
     end
@@ -27,8 +26,7 @@ RSpec.describe Terminus::Aspects::API::Responses::Setup, :db do
         api_key: nil,
         friendly_id: nil,
         image_url: nil,
-        message: "MAC Address not registered.",
-        status: 404
+        message: "MAC Address not registered."
       )
     end
 
@@ -45,8 +43,7 @@ RSpec.describe Terminus::Aspects::API::Responses::Setup, :db do
         api_key: nil,
         friendly_id: nil,
         image_url: nil,
-        message: "MAC Address not registered.",
-        status: 404
+        message: "MAC Address not registered."
       )
     end
   end

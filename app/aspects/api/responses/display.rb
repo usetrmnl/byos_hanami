@@ -12,7 +12,6 @@ module Terminus
           :refresh_rate,
           :reset_firmware,
           :special_function,
-          :status,
           :update_firmware
         ) do
           def initialize(**)
@@ -30,7 +29,6 @@ module Terminus
             self[:reset_firmware] ||= false
             self[:update_firmware] ||= false
             self[:special_function] ||= "sleep"
-            self[:status] ||= 404
           end
         end
       end

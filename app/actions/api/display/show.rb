@@ -34,7 +34,7 @@ module Terminus
               in Success(device)
                 record = build_record fetch_image(request.params, environment), device
                 response.with body: record.to_json, status: 200
-              else response.with body: model[status: 404].to_json, status: 404
+              else response.with body: model.new.to_json, status: 404
             end
           end
 
@@ -46,11 +46,7 @@ module Terminus
           end
 
           def build_record image, device
-            model[
-              **image.slice(:image_url, :filename),
-              refresh_rate: device.refresh_rate,
-              status: 0
-            ]
+            model[**image.slice(:image_url, :filename), refresh_rate: device.refresh_rate]
           end
         end
       end

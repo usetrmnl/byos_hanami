@@ -17,7 +17,6 @@ RSpec.describe Terminus::Actions::API::Setup::Show, :db do
 
       it "registers new device for MAC address" do
         expect(payload).to eq(
-          status: 200,
           api_key: device.api_key,
           friendly_id: device.friendly_id,
           image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
@@ -43,7 +42,6 @@ RSpec.describe Terminus::Actions::API::Setup::Show, :db do
       payload = JSON response.body, symbolize_names: true
 
       expect(payload).to eq(
-        status: 200,
         api_key: device.api_key,
         friendly_id: device.friendly_id,
         image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),

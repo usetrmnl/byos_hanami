@@ -36,7 +36,6 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
-        status: 0,
         update_firmware: false
       )
     end
@@ -52,7 +51,6 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
-        status: 0,
         update_firmware: false
       )
     end
@@ -69,7 +67,6 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
-        status: 0,
         update_firmware: false
       )
     end
@@ -87,7 +84,6 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
-        status: 0,
         update_firmware: false
       )
     end

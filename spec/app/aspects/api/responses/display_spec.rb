@@ -14,7 +14,6 @@ RSpec.describe Terminus::Aspects::API::Responses::Display do
         refresh_rate: 300,
         reset_firmware: false,
         special_function: "sleep",
-        status: 404,
         update_firmware: false
       )
     end
@@ -35,7 +34,6 @@ RSpec.describe Terminus::Aspects::API::Responses::Display do
         refresh_rate: 300,
         reset_firmware: false,
         special_function: "sleep",
-        status: 404,
         update_firmware: false
       )
     end
