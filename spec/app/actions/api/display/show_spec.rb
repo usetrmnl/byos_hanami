@@ -33,11 +33,33 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         filename: /.+\.bmp/,
         firmware_url: nil,
         image_url: %r(http://.+/assets/generated/.+\.bmp),
+        image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
         update_firmware: false
       )
+    end
+
+    context "with custom device attributes" do
+      let(:device) { Factory[:device, image_timeout: 10, refresh_rate: 20] }
+
+      it "answers payload with custom device attributes" do
+        action = described_class.new(settings:)
+        response = Rack::MockRequest.new(action).get "/api/display", firmware_headers
+        payload = JSON response.body, symbolize_names: true
+
+        expect(payload).to include(
+          filename: /.+\.bmp/,
+          firmware_url: nil,
+          image_url: %r(http://.+/assets/generated/.+\.bmp),
+          image_url_timeout: 10,
+          refresh_rate: 20,
+          reset_firmware: false,
+          special_function: "sleep",
+          update_firmware: false
+        )
+      end
     end
 
     it "answers image for valid access token" do
@@ -48,6 +70,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         filename: /.+\.bmp/,
         firmware_url: nil,
         image_url: %r(http://.+/assets/generated/.+\.bmp),
+        image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
@@ -64,6 +87,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         filename: /.+\.bmp/,
         firmware_url: nil,
         image_url: %r(data:image/bmp;base64.+),
+        image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
@@ -81,6 +105,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         filename: /.+\.bmp/,
         firmware_url: nil,
         image_url: %r(data:image/bmp;base64.+),
+        image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
