@@ -9,6 +9,7 @@ module Terminus
           :filename,
           :firmware_url,
           :image_url,
+          :image_url_timeout,
           :refresh_rate,
           :reset_firmware,
           :special_function,
@@ -25,6 +26,7 @@ module Terminus
           private
 
           def apply_defaults
+            self[:image_url_timeout] ||= 0
             self[:refresh_rate] ||= 300
             self[:reset_firmware] ||= false
             self[:update_firmware] ||= false
