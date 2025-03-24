@@ -5,7 +5,7 @@ module Health
   module Views
     # The slice view context.
     class Context < Hanami::View::Context
-      include Deps[app_assets: "app.assets"]
+      include Deps[main_assets: "main.assets"]
     end
   end
 end
