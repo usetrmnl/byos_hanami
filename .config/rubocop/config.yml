@@ -3,6 +3,9 @@ inherit_gem:
 
 plugins: rubocop-sequel
 
+Metrics/BlockLength:
+  Exclude:
+    - config/db/migrate/*
 Metrics/CyclomaticComplexity:
   AllowedMethods:
     - battery_percentage
