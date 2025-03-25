@@ -6,9 +6,9 @@
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
 :overmind_link: link:https://github.com/DarthSim/overmind[Overmind]
+:postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
-:sqlite_link: link:https://www.sqlite.org[SQLite]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
 
@@ -23,9 +23,9 @@ toc::[]
 * Allows you to run your own server.
 * Built atop {ruby_link} and {hanami_link}.
 * Provides automatic detection of your server's IP address.
-* Uses {htmx_link}.
+* Uses {postgres_link}.
 * Uses {puma_link}.
-* Uses {sqlite_link}.
+* Uses {htmx_link}.
 * Supports {yjit_link}.
 * Supports {overmind_link}.
 * Supports {docker_link}.
@@ -66,6 +66,7 @@ video::3xehPW-PCOM[youtube,role=video]
 == Requirements
 
 . {ruby_link}.
+. {postgres_link}.
 . {hanami_link}.
 . {overmind_link} (optional).
 . {docker_link} (optional).
@@ -104,7 +105,7 @@ To view the app, use either of the following:
 There are a few environment variables you can use to customize behavior:
 
 * `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
-* `DATABASE_URL`: Necessary to connect to your SQLite database. Defaults to the `db` folder but can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
+* `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `GENERATED_ROOT`: The root location for all generated images. Defaults to `public/assets/generated`.
 
 === APIs
@@ -327,13 +328,14 @@ Once in the console, you can do the following:
 [source,ruby]
 ----
 # Use a repository.
-repository = Terminus::Repositories::Device.new
+repository = Hanami.app["repositories.device"]
 
 repository.all     # View all devices.
 repository.find 1  # Find by Device ID.
 
 # Fetch next image. Sorts in descending order by created timestamp.
-Terminus::Aspects::Images::Fetcher.new.call images_uri: "https://localhost:2443/assets"
+fetcher = Hanami.app["aspects.images.fetcher"]
+fetcher.call images_uri: "https://localhost:2443/assets"
 
 # To generate image with random name.
 creator = Terminus::Images::Creator.new
