@@ -13,6 +13,7 @@ RUN <<STEPS
 STEPS
 
 ENV RACK_ENV=production
+ENV HANAMI_ENV=production
 ENV BUNDLE_DEPLOYMENT=1
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV BUNDLE_WITHOUT="development:quality:test:tools"
