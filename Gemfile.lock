@@ -56,7 +56,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     debug_inspector (1.2.0)
-    diff-lcs (1.6.0)
+    diff-lcs (1.6.1)
     docile (1.4.1)
     dotenv (3.1.7)
     dry-auto_inject (1.1.0)
@@ -90,13 +90,13 @@ GEM
       dry-configurable (~> 1.0, < 2)
       dry-core (~> 1.0, < 2)
       dry-events (~> 1.0, < 2)
-    dry-schema (1.13.4)
+    dry-schema (1.14.1)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 1.0, >= 1.0.1)
-      dry-core (~> 1.0, < 2)
-      dry-initializer (~> 3.0)
-      dry-logic (>= 1.4, < 2)
-      dry-types (>= 1.7, < 2)
+      dry-core (~> 1.1)
+      dry-initializer (~> 3.2)
+      dry-logic (~> 1.5)
+      dry-types (~> 1.8)
       zeitwerk (~> 2.6)
     dry-struct (1.8.0)
       dry-core (~> 1.1)
@@ -117,11 +117,11 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
-    dry-validation (1.10.0)
+    dry-validation (1.11.1)
       concurrent-ruby (~> 1.0)
-      dry-core (~> 1.0, < 2)
-      dry-initializer (~> 3.0)
-      dry-schema (>= 1.12, < 2)
+      dry-core (~> 1.1)
+      dry-initializer (~> 3.2)
+      dry-schema (~> 1.14)
       zeitwerk (~> 2.6)
     erubi (1.13.1)
     etcher (3.1.0)
@@ -247,7 +247,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    localhost (1.4.0)
+    localhost (1.4.1)
     logger (1.6.6)
     marameters (4.2.0)
       refinements (~> 13.0)
@@ -263,21 +263,21 @@ GEM
       hansi (~> 0.2.0)
       mustermann (= 3.0.3)
     nio4r (2.7.4)
-    nokogiri (1.18.5-aarch64-linux-gnu)
+    nokogiri (1.18.6-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.5-aarch64-linux-musl)
+    nokogiri (1.18.6-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.5-arm-linux-gnu)
+    nokogiri (1.18.6-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.5-arm-linux-musl)
+    nokogiri (1.18.6-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.5-arm64-darwin)
+    nokogiri (1.18.6-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.5-x86_64-darwin)
+    nokogiri (1.18.6-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.5-x86_64-linux-gnu)
+    nokogiri (1.18.6-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.5-x86_64-linux-musl)
+    nokogiri (1.18.6-x86_64-linux-musl)
       racc (~> 1.4)
     optparse (0.6.0)
     parallel (1.26.3)
@@ -315,8 +315,8 @@ GEM
       logger
     rdoc (6.13.0)
       psych (>= 4.0.0)
-    reek (6.4.0)
-      dry-schema (~> 1.13.0)
+    reek (6.5.0)
+      dry-schema (~> 1.13)
       logger (~> 1.6)
       parser (~> 3.3.0)
       rainbow (>= 2.0, < 4.0)
@@ -388,7 +388,7 @@ GEM
       rubocop-ast (>= 1.38.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.41.0)
+    rubocop-ast (1.42.0)
       parser (>= 3.3.7.2)
     rubocop-capybara (2.22.1)
       lint_roller (~> 1.1)
@@ -516,7 +516,7 @@ DEPENDENCIES
   rack-attack (~> 6.7)
   rack-test (~> 2.2)
   rake (~> 13.2)
-  reek (~> 6.4)
+  reek (~> 6.5)
   refinements (~> 13.0)
   repl_type_completor (~> 0.1)
   rerun (~> 0.14)
@@ -552,7 +552,7 @@ CHECKSUMS
   date (3.4.1) sha256=bf268e14ef7158009bfeaec40b5fa3c7271906e88b196d958a89d4b408abe64f
   debug (1.10.0) sha256=11e28ca74875979e612444104f3972bd5ffb9e79179907d7ad46dba44bd2e7a4
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
-  diff-lcs (1.6.0) sha256=a1e7f7b272962f8fc769358ad00001b87cdcf32ba349d6c70c6b544613d2da2e
+  diff-lcs (1.6.1) sha256=12a5a83f3e37a8e2f4427268e305914d5f1879f22b4e73bb1a09f76a3dd86cd4
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   dotenv (3.1.7) sha256=c670df478675d23889e657beaca6fb423228f75ce9f052a0690c0d0daa333cf3
   dry-auto_inject (1.1.0) sha256=f9276cb5d15a3ef138e1f1149e289e287f636de57ef4a6decd233542eb708f78
@@ -567,12 +567,12 @@ CHECKSUMS
   dry-logic (1.6.0) sha256=da6fedbc0f90fc41f9b0cc7e6f05f5d529d1efaef6c8dcc8e0733f685745cea2
   dry-monads (1.8.2) sha256=662e0b4515bc41048e0e2c033db86327839649a53bff383489096e47a71f22b0
   dry-monitor (1.0.1) sha256=4ac8ed1f85b14bfde1aa0bce9496d7d2fc699c5a4a1131010c8014d5f9e7a309
-  dry-schema (1.13.4) sha256=caeb644de0be412d347eb4a6d91c56ceef8ec22cfceb98e80d03d354954b1d2a
+  dry-schema (1.14.1) sha256=2fcd7539a7099cacae6a22f6a3a2c1846fe5afeb1c841cde432c89c6cb9b9ff1
   dry-struct (1.8.0) sha256=74c38b559924fb6462ac43ec780c4533a082d7b1d238a8d7857b773b3b8e2966
   dry-system (1.2.2) sha256=cb346c1ad79de6d5f281a4d7893ce186c0b1b26c13a1330539b705289cc47e79
   dry-transformer (1.0.1) sha256=6a2a6184ece8e347ebb1315fe3224ac19f42ca157db0f59cd5a69aeb76f73d76
   dry-types (1.8.2) sha256=c84e9ada69419c727c3b12e191e0ed7d2c6d58d040d55e79ea16e0ebf8b3ec0f
-  dry-validation (1.10.0) sha256=352afd75629772570f54f03d3e7847ac345e628bf345874d49f1dabacc8ceaac
+  dry-validation (1.11.1) sha256=70900bb5a2d911c8aab566d3e360c6bff389b8bf92ea8e04885ce51c41ff8085
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   etcher (3.1.0) sha256=fabdd9274180f7df653705499ef41eaa5fee84afb79a98bc97d548936e961584
   faker (3.5.1) sha256=1ad1fbea279d882f486059c23fe3ddb816ccd1d7052c05a45014b4450d859bfc
@@ -611,7 +611,7 @@ CHECKSUMS
   launchy (3.1.1) sha256=72b847b5cc961589dde2c395af0108c86ff0119f42d4648d25b5440ebb10059e
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   listen (3.9.0) sha256=db9e4424e0e5834480385197c139cb6b0ae0ef28cc13310cfd1ca78377d59c67
-  localhost (1.4.0) sha256=66faa5caee8c7f9a66cf089011bff82e6e302ab159ff5866a1691074e774c692
+  localhost (1.4.1) sha256=9899d517cfe777ab9f0a63d644627e03262f5f6fa53b0a67e5720f37a483205b
   logger (1.6.6) sha256=dd618d24e637715472732e7eed02e33cfbdf56deaad225edd0f1f89d38024017
   marameters (4.2.0) sha256=a0a4896226989cec8b419d585bdb344ab36669fe2b41f9d8a8f4ef18e8efb1b9
   matrix (0.4.2) sha256=71083ccbd67a14a43bfa78d3e4dc0f4b503b9cc18e5b4b1d686dc0f9ef7c4cc0
@@ -620,14 +620,14 @@ CHECKSUMS
   mustermann (3.0.3) sha256=d1f8e9ba2ddaed47150ddf81f6a7ea046826b64c672fbc92d83bce6b70657e88
   mustermann-contrib (3.0.3) sha256=858035bfe0425d3cbf2cc2ff5bc2cda23426c1a70530881054f0341e07699d34
   nio4r (2.7.4) sha256=d95dee68e0bb251b8ff90ac3423a511e3b784124e5db7ff5f4813a220ae73ca9
-  nokogiri (1.18.5-aarch64-linux-gnu) sha256=3f12540863e45db38236257be30a8605cd1d2d074c38a63c6f1307fd968a477c
-  nokogiri (1.18.5-aarch64-linux-musl) sha256=296a9e346d9a816526ee0944b5df26e947d91ec09225897bf2fc14561e8861ca
-  nokogiri (1.18.5-arm-linux-gnu) sha256=25fc71081c671fc4e983eac76ad1b3c8ee2707c467dcdb96a066f749f978eaba
-  nokogiri (1.18.5-arm-linux-musl) sha256=8682d38ac2015ffa3b0c23925c579ced7e455f16931130ab434f26ff1c2846fa
-  nokogiri (1.18.5-arm64-darwin) sha256=df7731e550a7653c003ed142cc8bc3c611c15fae3b7be4ff317b61dfe32842d9
-  nokogiri (1.18.5-x86_64-darwin) sha256=28659cf43eedb652ae2fb94a8c7a14d368b6944db97e63b4158c8d5d5b4f49d8
-  nokogiri (1.18.5-x86_64-linux-gnu) sha256=195f4a139961f3c892ac22fda6ae4e665919e6573149f0adc786adc8c20402be
-  nokogiri (1.18.5-x86_64-linux-musl) sha256=8c2786d259e3c73687f8c595e1ab040a66809799ad066dad8eb492fd58f4f8fd
+  nokogiri (1.18.6-aarch64-linux-gnu) sha256=1b11f9a814068282cc2b47ebe61395b2a69d1918092d2ca3bd664074f72540e9
+  nokogiri (1.18.6-aarch64-linux-musl) sha256=797662f201c37a8feac3bd5b0c0e3447053bc71e6633d273fefd4c68b03e6a54
+  nokogiri (1.18.6-arm-linux-gnu) sha256=2da07a07ef4c9d9e9da809b3dc0937ed90b031e32c2c658d9918941b85d68b95
+  nokogiri (1.18.6-arm-linux-musl) sha256=e8ae1c9a4d8cfa7a92d632a6f596a88235ebe66d4b70418543378ba16c601f70
+  nokogiri (1.18.6-arm64-darwin) sha256=727a441d179d934b4b7c73e0e28e6723ee46463d96bb0cc6e2e33a13540962c4
+  nokogiri (1.18.6-x86_64-darwin) sha256=fb72568c97ccd90a8d68cb765b0ff0720b109bd62e3babbf372e854ef8fef995
+  nokogiri (1.18.6-x86_64-linux-gnu) sha256=df065db6ba6e1e80f76ef04f860fcf260cc24685125fe33cdc3d1572a1c66b71
+  nokogiri (1.18.6-x86_64-linux-musl) sha256=75ec7a93cec54687aa63b2eaf830dc4ac5b4f3d8c969f20c035e67c9e6a30cef
   optparse (0.6.0) sha256=25e90469c1cd44048a89dc01c1dde9d5f0bdf717851055fb18237780779b068c
   parallel (1.26.3) sha256=d86babb7a2b814be9f4b81587bf0b6ce2da7d45969fab24d8ae4bf2bb4d4c7ef
   parser (3.3.7.2) sha256=c71de9076be0b84459a268581b5aa75e5eeaac892b564430371d1f8eb55fb65f
@@ -648,7 +648,7 @@ CHECKSUMS
   rb-inotify (0.11.1) sha256=a0a700441239b0ff18eb65e3866236cd78613d6b9f78fea1f9ac47a85e47be6e
   rbs (3.9.1) sha256=d01baaad9d6b14a9bb87a5d0385b0ac6b273af0e105c83ed176292f32c49f3d5
   rdoc (6.13.0) sha256=32c2139ae43ed91b7c43032fe5423d21d57718829cc5a11e5c9710d2aa5e0329
-  reek (6.4.0) sha256=80f9a14979aa3ffaecfb2b8b10bdf87fcd8a0fca47c36823e2a4e1e62f1ddd47
+  reek (6.5.0) sha256=d26d3a492773b2bbc228888067a21afe33ac07954a17dbd64cdeae42c4c69be1
   refinements (13.1.0) sha256=404c0b303bdff10737e3e3b075a7d4fe1c2bb8c3c0b4923dc8e770b7c4f9a56f
   regexp_parser (2.10.0) sha256=cb6f0ddde88772cd64bff1dbbf68df66d376043fe2e66a9ef77fcb1b0c548c61
   reline (0.6.0) sha256=57620375dcbe56ec09bac7192bfb7460c716bbf0054dc94345ecaa5438e539d2
@@ -668,7 +668,7 @@ CHECKSUMS
   rspec-mocks (3.13.2) sha256=2327335def0e1665325a9b617e3af9ae20272741d80ac550336309a7c59abdef
   rspec-support (3.13.2) sha256=cea3a2463fd9b84b9dcc9685efd80ea701aa8f7b3decb3b3ce795ed67737dbec
   rubocop (1.74.0) sha256=06138a35d7d11c963d5abc0148b355e3999007cb0225a619940db0e75521379b
-  rubocop-ast (1.41.0) sha256=0eeff9ad3743f42823e3c687cbc15f8c552ff63c9f8e3d35fbafe746977c7c0d
+  rubocop-ast (1.42.0) sha256=f7ebbddc15508a3146cb1f307f5fd2461d67dea1ca70d416fb9ff87eea830cb3
   rubocop-capybara (2.22.1) sha256=ced88caef23efea53f46e098ff352f8fc1068c649606ca75cb74650970f51c0c
   rubocop-disable_syntax (0.2.0) sha256=1e61645773b3fc2f74e995ec65f605f7db59437c274fdfd4f385f60bf86af73e
   rubocop-packaging (0.6.0) sha256=fb92bd0fb48e6f8cdb1648d2249b0cd51c2497dcc87340132d22f01edbf558a7
