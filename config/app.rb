@@ -12,6 +12,12 @@ module Terminus
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
+    prepare_container do |container|
+      container.config.component_dirs.dir "app" do |dir|
+        dir.memoize = -> component { component.key.start_with? "repositories." }
+      end
+    end
+
     config.inflections { it.acronym "IP" }
 
     config.actions.content_security_policy.then do |csp|
