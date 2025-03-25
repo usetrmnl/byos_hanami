@@ -12,7 +12,7 @@ module Terminus
         HTTP_HOST: :host,
         HTTP_ID: :mac_address,
         HTTP_REFRESH_RATE: :refresh_rate,
-        HTTP_RSSI: :signal,
+        HTTP_RSSI: :wifi,
         HTTP_USER_AGENT: :user_agent,
         HTTP_WIDTH: :width,
         HTTP_HEIGHT: :height
@@ -30,7 +30,7 @@ module Terminus
         end
 
         def device_attributes
-          {battery:, firmware_version: firmware_version.to_s, signal:, width:, height:}.compress
+          {battery:, firmware_version: firmware_version.to_s, wifi:, width:, height:}.compress
         end
       end
     end

@@ -18,7 +18,7 @@ RSpec.describe Terminus::Aspects::Synchronizers::Device, :db do
           have_attributes(
             battery: 4.74,
             firmware_version: "1.2.3",
-            signal: -54,
+            wifi: -54,
             width: 800,
             height: 480
           )

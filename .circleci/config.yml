@@ -5,11 +5,11 @@ jobs:
     docker:
       - image: bkuhlmann/alpine-ruby:latest
         environment:
-          APP_HOST: 0.0.0.0
-          APP_URL: https://localhost
-          DATABASE_URL: sqlite://db/terminus.sqlite
-          IMAGES_ROOT: ~/project/public/assets/images
           HANAMI_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+      - image: postgres:latest
+        environment:
+          POSTGRES_PASSWORD: postgres
     steps:
       - run:
           name: ImageMagick Install

@@ -16,7 +16,7 @@ RSpec.describe Terminus::HTTP::Headers::Model do
       refresh_rate: 25,
       battery: 4.74,
       firmware_version: Version("1.2.3"),
-      signal: -40,
+      wifi: -40,
       width: 800,
       height: 480
     ]
@@ -37,7 +37,7 @@ RSpec.describe Terminus::HTTP::Headers::Model do
           refresh_rate: "25",
           battery: "4.74",
           firmware_version: "1.2.3",
-          signal: "-54",
+          wifi: "-54",
           width: "800",
           height: "480"
         ]
@@ -56,7 +56,7 @@ RSpec.describe Terminus::HTTP::Headers::Model do
       expect(record.device_attributes).to eq(
         battery: 4.74,
         firmware_version: "1.2.3",
-        signal: -40,
+        wifi: -40,
         width: 800,
         height: 480
       )

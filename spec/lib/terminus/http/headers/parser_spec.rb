@@ -21,7 +21,7 @@ RSpec.describe Terminus::HTTP::Headers::Parser do
           refresh_rate: 25,
           battery: 4.74,
           firmware_version: Version("1.2.3"),
-          signal: -54,
+          wifi: -54,
           width: 800,
           height: 480
         ]

@@ -27,8 +27,8 @@ module Terminus
           end
         end
 
-        def signal_percentage
-          case signal
+        def wifi_percentage
+          case wifi
             when 0 then 0
             when ..-91 then 10
             when -90..-81 then 20
