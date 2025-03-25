@@ -46,7 +46,7 @@ module Terminus
           end
 
           def build_record image, device
-            model[**image.slice(:image_url, :filename), **device.display_attributes]
+            model[**image.slice(:image_url, :filename), **device.as_api_display]
           end
         end
       end

@@ -4,7 +4,7 @@ module Terminus
   module Structs
     # The device struct.
     class Device < DB::Struct
-      def display_attributes = {image_url_timeout: image_timeout, refresh_rate: refresh_rate}
+      def as_api_display = {image_url_timeout: image_timeout, refresh_rate: refresh_rate}
     end
   end
 end
