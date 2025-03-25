@@ -34,7 +34,7 @@ module Terminus
 
       config.logger = config.logger.instance.add_backend(
         colorize: false,
-        stream: Hanami.app.root.join("log/development.log")
+        stream: root.join("log/development.log")
       )
     end
   end
