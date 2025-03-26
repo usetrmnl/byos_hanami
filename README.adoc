@@ -239,11 +239,39 @@ Uses for logging information about your server and/or device. Mostly used for de
 ====
 [source,bash]
 ----
+## Logs
 curl -X "POST" "https://localhost:2443/api/log" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
      -H 'Accept: application/json' \
-     -H 'Content-Type: application/json'
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "log": {
+    "logs_array": [
+      {
+        "log_id": 1,
+        "creation_timestamp": 1742022123,
+        "log_message": "returned code is not OK: 404",
+        "log_codeline": 597,
+        "device_status_stamp": {
+          "wifi_status": "connected",
+          "wakeup_reason": "timer",
+          "current_fw_version": "1.4.7",
+          "free_heap_size": 160656,
+          "special_function": "none",
+          "refresh_rate": 30,
+          "battery_voltage": 4.772,
+          "time_since_last_sleep_start": 31,
+          "wifi_rssi_level": -54
+        },
+        "additional_info": {
+          "retry_attempt": 1
+        },
+        "log_sourcefile": "src/bl.cpp"
+      }
+    ]
+  }
+}'
 ----
 ====
 
