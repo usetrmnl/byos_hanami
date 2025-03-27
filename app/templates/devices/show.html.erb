@@ -1,1 +1,58 @@
-<%= device.render :device %>
+<section class="page-devices">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
+      <li class="breadcrumb"><%= device.label %></li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <figure class="site-figure">
+      <%= render :image, uri: device.image_uri %>
+    </figure>
+
+    <div class="page-actions">
+      <%= link_to "Logs", "/devices/#{device.id}/logs" %>
+      <%= render "edit_link", device: %>
+      <%= render "delete_link", device: %>
+    </div>
+
+    <dl class="site-definition-list">
+      <dt class="key">ID</dt>
+      <dd class="value"><%= device.id %></dd>
+
+      <dt class="key">Label</dt>
+      <dd class="value"><%= device.label %></dd>
+
+      <dt class="key">Friendly ID</dt>
+      <dd class="value"><%= device.friendly_id %></dd>
+
+      <dt class="key">MAC Address</dt>
+      <dd class="value"><%= device.mac_address %></dd>
+
+      <dt class="key">API Key</dt>
+      <dd class="value"><%= device.api_key %></dd>
+
+      <dt class="key">Refresh Rate</dt>
+      <dd class="value"><%= device.refresh_rate %></dd>
+
+      <dt class="key">Image Timeout</dt>
+      <dd class="value"><%= device.image_timeout %></dd>
+
+      <dt class="key">Dimensions</dt>
+      <dd class="value"><%= device.dimensions %></dd>
+
+      <dt class="key">Firmware</dt>
+      <dd class="value"><%= device.firmware_version %></dd>
+
+      <dt class="key">Firmware Beta</dt>
+      <dd class="value"><%= device.firmware_beta %></dd>
+
+      <dt class="key">Created</dt>
+      <dd class="value"><%= human_at device.created_at %></dd>
+
+      <dt class="key">Updated</dt>
+      <dd class="value"><%= human_at device.updated_at %></dd>
+    </dl>
+  </div>
+</section>

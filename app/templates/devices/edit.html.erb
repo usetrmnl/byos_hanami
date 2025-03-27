@@ -1,12 +1,23 @@
-<li class="device">
-  <%= render :image, uri: device.image_uri %>
+<section class="page-devices">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
+      <li class="breadcrumb"><%= device.label %> Edit</li>
+    </ul>
+  </header>
 
-  <form action="/devices" method="put" class="page-form">
-    <%= render :fields, device:, fields: fields.value, errors: %>
+  <div class="page-body">
+    <figure class="site-figure">
+      <%= render :image, uri: device.image_uri %>
+    </figure>
 
-    <div class="form-actions">
-      <%= device_save :put, "/devices/#{device.id}" %>
-      <%= device_form_cancel "/devices/#{device.id}" %>
-    </div>
-  </form>
-</li>
+    <form action="/devices" method="put" class="page-form">
+      <%= render :fields, device:, fields: fields.value, errors: %>
+
+      <div class="form-actions">
+        <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
+        <%= render "cancel_link", path: "/devices/#{device.id}" %>
+      </div>
+    </form>
+  </div>
+</section>

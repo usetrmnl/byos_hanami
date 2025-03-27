@@ -1,12 +1,23 @@
-<li class="device" hx-ext="remove">
-  <%= render :image, uri: assets["logo/salmon.svg"]%>
+<section class="page-devices">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
+      <li class="breadcrumb">New</li>
+    </ul>
+  </header>
 
-  <form action="/devices" method="post" class="page-form">
-    <%= render :fields, device:, fields: fields.value, errors: %>
+  <div class="page-body">
+    <figure class="site-figure">
+      <%= render :image, uri: assets["logo/salmon.svg"]%>
+    </figure>
 
-    <div class="form-actions">
-      <%= device_save :post, "/devices" %>
-      <%= device_form_remove %>
-    </div>
-  </form>
-</li>
+    <form action="/devices" method="post" class="page-form">
+      <%= render :fields, device:, fields: fields.value, errors: %>
+
+      <div class="form-actions">
+        <%= render "save_button", verb: :post, path: "/devices" %>
+        <%= render "cancel_link", path: "/devices" %>
+      </div>
+    </form>
+  </div>
+</section>
