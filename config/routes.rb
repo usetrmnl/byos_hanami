@@ -21,6 +21,7 @@ module Terminus
     get "/devices/info/:id", to: "devices.info.show", as: :devices_info_show
 
     get "/devices/:device_id/logs", to: "devices.logs.index", as: :devices_logs_index
+    get "/devices/:device_id/logs/:id", to: "devices.logs.show", as: :devices_logs_show
 
     slice(:health, at: "/up") { root to: "show" }
 
