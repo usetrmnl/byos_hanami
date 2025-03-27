@@ -1,0 +1,60 @@
+<section class="page-devices">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
+      <li class="breadcrumb"><%= link_to device.label, "/devices/#{device.id}", class: :link %></li>
+      <li class="breadcrumb"><%= link_to "Logs", "/devices/#{device.id}/logs", class: :link %></li>
+      <li class="breadcrumb">Log</li>
+    </ul>
+  </header>
+
+  <dl class="site-definition-list">
+    <dt class="key">ID</dt>
+    <dd class="value"><%= log.id %></dd>
+
+    <dt class="key">External ID</dt>
+    <dd class="value"><%= log.external_id %></dd>
+
+    <dt class="key">Message</dt>
+    <dd class="value"><%= log.message %></dd>
+
+    <dt class="key">Battery</dt>
+    <dd class="value"><%= log.battery_voltage %></dd>
+
+    <dt class="key">WiFi</dt>
+    <dd class="value"><%= log.wifi_signal %></dd>
+
+    <dt class="key">WiFi Status</dt>
+    <dd class="value"><%= log.wifi_status %></dd>
+
+    <dt class="key">Sleep Duration</dt>
+    <dd class="value"><%= log.sleep_duration %></dd>
+
+    <dt class="key">Special Function</dt>
+    <dd class="value"><%= log.special_function %></dd>
+
+    <dt class="key">Wake Reason</dt>
+    <dd class="value"><%= log.wake_reason %></dd>
+
+    <dt class="key">Refresh Rate</dt>
+    <dd class="value"><%= log.refresh_rate %></dd>
+
+    <dt class="key">Free Heap Size</dt>
+    <dd class="value"><%= log.free_heap_size %></dd>
+
+    <dt class="key">Firmware</dt>
+    <dd class="value"><%= log.firmware_version %></dd>
+
+    <dt class="key">Retries</dt>
+    <dd class="value"><%= log.retry %></dd>
+
+    <dt class="key">Source</dt>
+    <dd class="value"><%= log.source_path %>:<%= log.source_line %></dd>
+
+    <dt class="key">Created</dt>
+    <dd class="value"><%= human_at log.created_at %></dd>
+
+    <dt class="key">Updated</dt>
+    <dd class="value"><%= human_at log.updated_at %></dd>
+  </dl>
+</section>
