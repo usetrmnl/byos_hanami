@@ -6,13 +6,8 @@
   <%= render "measurements", device: %>
 
   <div class="actions">
-    <a href="/devices/info/<%= device.id %>"
-       hx-get="/devices/info/<%= device.id %>"
-       hx-target="closest .device"
-       hx-swap="outerHTML">
-      Expand
-    </a>
-
+    <%= link_to "View", "/devices/#{device.id}" %>
+    <%= link_to "Logs", "/devices/#{device.id}/logs" %>
     <%= render "edit_link", device: %>
     <%= render "delete_link", device: %>
   </div>
