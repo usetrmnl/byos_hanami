@@ -18,6 +18,28 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
     end
   end
 
+  describe "#all_by_device" do
+    let(:other_log) { Factory[:device_log, device:] }
+    let(:device) { Factory[:device] }
+
+    it "answers records" do
+      log
+      other_log
+
+      expect(repository.all_by_device(device.id)).to contain_exactly(
+        have_attributes(
+          id: other_log.id,
+          device_id: device.id
+        )
+      )
+    end
+
+    it "answers empty array when records don't exist" do
+      log
+      expect(repository.all_by_device(device.id)).to eq([])
+    end
+  end
+
   describe "#find" do
     it "answers record by ID" do
       expect(repository.find(log.id)).to eq(log)

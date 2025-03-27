@@ -8,7 +8,13 @@ module Terminus
 
       def all
         device_logs.combine(:device)
-                   .order { created_at.asc }
+                   .order { created_at.desc }
+                   .to_a
+      end
+
+      def all_by_device id
+        device_logs.where(device_id: id)
+                   .order { created_at.desc }
                    .to_a
       end
 
