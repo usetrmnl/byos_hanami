@@ -1,0 +1,8 @@
+<input type="submit"
+       value="Save"
+       class="accept"
+       <%= "hx-#{verb}=#{path}" %>
+       hx-trigger="click, keyup[ctrlKey&&key=='s'] from:closest .device"
+       hx-target="closest .page-devices"
+       hx-swap="outerHTML"
+       hx-push-url="true">
