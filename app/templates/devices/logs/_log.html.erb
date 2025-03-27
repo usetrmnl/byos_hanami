@@ -1,0 +1,7 @@
+<tr>
+  <%= tag.td log.created_at.strftime "%Y-%m-%d %I:%M:%S %p" %>
+  <td><%= link_to log.id, "/devices/#{device.id}/logs/#{log.id}" %></td>
+  <%= tag.td log.message, class: "text-left" %>
+  <%= tag.td log.refresh_rate %>
+  <%= tag.td log.retry %>
+</tr>

@@ -1,0 +1,34 @@
+<section class="page-devices">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
+      <li class="breadcrumb"><%= link_to device.label, "/devices/#{device.id}", class: :link %></li>
+      <li class="breadcrumb">Logs</li>
+    </ul>
+  </header>
+
+  <% if logs.any? %>
+    <table class="site-table">
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>ID</th>
+          <th>Message</th>
+          <th>Refresh Rate</th>
+          <th>Retries</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% logs.each do |log| %>
+          <%= log.render :log, device: %>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="page-empty">
+      <span class="icon">🌌</span>
+      <p class="message">All is quiet.</p>
+    </div>
+  <% end %>
+</section>
