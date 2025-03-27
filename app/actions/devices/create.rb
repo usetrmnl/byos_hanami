@@ -8,7 +8,7 @@ module Terminus
         include Deps[
           repository: "repositories.device",
           new_view: "views.devices.new",
-          show_view: "views.devices.show"
+          index_view: "views.devices.index"
         ]
 
         params do
@@ -26,14 +26,21 @@ module Terminus
           parameters = request.params
 
           if parameters.valid?
-            device = repository.create parameters[:device]
-            response.render show_view, device: repository.find(device.id), layout: false
+            repository.create parameters[:device]
+            response.render index_view, **view_settings(request, parameters)
           else
             render_new response, parameters
           end
         end
 
         private
+
+        def view_settings request, _parameters
+          settings = {devices: repository.all}
+
+          settings[:layout] = false if request.env.key? "HTTP_HX_REQUEST"
+          settings
+        end
 
         # :reek:FeatureEnvy
         def render_new response, parameters
