@@ -14,6 +14,7 @@ STEPS
 
 ENV RACK_ENV=production
 ENV HANAMI_ENV=production
+ENV HANAMI_SERVE_ASSETS=true
 ENV BUNDLE_DEPLOYMENT=1
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV BUNDLE_WITHOUT="development:quality:test:tools"
@@ -22,14 +23,22 @@ FROM base AS build
 
 RUN <<STEPS
   apt-get update -qq \
-  && apt-get install --no-install-recommends -y build-essential git pkg-config \
+  && apt-get install --no-install-recommends -y build-essential \
+  git \
+  libpq-dev \
+  libyaml-dev \
+  nodejs \
+  npm \
+  pkg-config \
+  postgresql-client \
   && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
-COPY .ruby-version Gemfile Gemfile.lock ./
+COPY .ruby-version Gemfile Gemfile.lock .node-version package.json package-lock.json ./
 
 RUN <<STEPS
   bundle install
+  npm install
   rm -rf "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 STEPS
 
@@ -39,6 +48,7 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /app /app
 
 RUN <<STEPS
+  bundle exec hanami assets compile
   mkdir -p /app/log
   mkdir -p /app/tmp
 STEPS
@@ -50,3 +60,7 @@ RUN groupadd --system --gid 1000 app && \
 USER 1000:1000
 
 ENTRYPOINT ["/app/bin/docker/entrypoint"]
+
+EXPOSE 80
+
+CMD ["bundle", "exec", "hanami", "server", "--host", "0.0.0.0", "--port", "80"]
