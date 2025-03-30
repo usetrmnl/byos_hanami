@@ -1,10 +1,12 @@
 .page-devices {
+  margin-bottom: 2rem;
+
   .columns, .row {
     align-items: center;
     border-radius: 0.5rem;
     display: grid;
     gap: 0.5rem;
-    grid-template: 1fr / repeat(auto-fit, minmax(0, 1fr));
+    grid-template: 1fr / repeat(auto-fit, 1fr);
     margin: 0;
     padding: 0.5rem 1rem;
   }
@@ -71,6 +73,7 @@
     .measurements {
       align-items: center;
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       justify-content: space-evenly;
     }
@@ -91,7 +94,10 @@
     .actions {
       align-items: space-between;
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
+      justify-content: space-evenly;
+      padding: 0 1rem;
     }
   }
 }

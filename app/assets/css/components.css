@@ -83,24 +83,32 @@
   }
 }
 
+.site-container {
+  overflow-x: scroll;
+  width: 90vw;
+
+  @media only screen and (min-width: 825px) {
+    width: initial;
+  }
+}
+
 .site-definition-list {
   display: grid;
   grid-template: auto / auto 1fr;
 
-  .key, .value {
-    padding: 0.5rem;
-  }
-
   .key {
+    align-content: center;
     background-color: var(--site-black);
     color: var(--site-white);
-    text-align: right;
     font-weight: 600;
-    align-content: center;
+    padding: 0 1rem;
+    text-align: right;
   }
 
   .value {
     border-bottom: 0.1rem solid var(--site-black);
+    padding: 0.5rem;
+    word-break: break-word;
   }
 }
 
@@ -116,8 +124,6 @@
 }
 
 .site-table {
-  margin-bottom: 2rem;
-
   .text-left {
     text-align: left;
   }
@@ -170,8 +176,9 @@
 .page-header {
   align-items: center;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  gap: 1.5rem;
+  justify-content: space-between;
   margin: 2rem 0;
 
   @media only screen and (min-width: 825px) {
