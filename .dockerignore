@@ -1,6 +1,3 @@
-# Assets
-/node_modules/
-
 # Bin
 /bin
 !/bin/console
@@ -8,6 +5,12 @@
 
 # Bundler
 /.bundle
+
+# Circle CI
+/.circleci
+
+# CTags
+/tags
 
 # Database
 /db/*.sqlite
@@ -18,6 +21,9 @@
 # Docker
 /.dockerignore
 /Dockerfile*
+
+# Documentation
+/*.adoc
 
 # Environment
 /.env*
@@ -31,6 +37,21 @@
 
 # Log
 /log/
+
+# Node
+/node_modules/
+
+# Overmind
+/.overmind.sock
+
+# Reek
+/.reek.yml
+
+# RSpec
+/spec
+
+# SimpleCov
+/coverage
 
 # Temp
 /tmp/
