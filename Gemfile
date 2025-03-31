@@ -55,6 +55,7 @@ group :test do
   gem "capybara", "~> 3.40"
   gem "cuprite", "~> 0.15"
   gem "database_cleaner-sequel", "~> 2.0"
+  gem "http-fake", "~> 4.1"
   gem "launchy", "~> 3.1"
   gem "rack-test", "~> 2.2"
   gem "rom-factory", "~> 0.13"

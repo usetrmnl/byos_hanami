@@ -13,6 +13,7 @@ end
 Bundler.require :tools
 
 require "dry/monads"
+require "http/fake"
 require "refinements"
 
 SPEC_ROOT = Pathname(__dir__).realpath.freeze
