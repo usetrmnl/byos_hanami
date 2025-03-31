@@ -10,23 +10,25 @@
   </header>
 
   <% if logs.any? %>
-    <table class="site-table">
-      <thead>
-        <tr>
-          <th>Created</th>
-          <th>ID</th>
-          <th>Message</th>
-          <th>Refresh Rate</th>
-          <th>Retries</th>
-        </tr>
-      </thead>
+    <div class="site-container">
+      <table class="site-table">
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>ID</th>
+            <th>Message</th>
+            <th>Refresh Rate</th>
+            <th>Retries</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <% logs.each do |log| %>
-          <%= log.render :log, device: %>
-        <% end %>
-      </tbody>
-    </table>
+        <tbody>
+          <% logs.each do |log| %>
+            <%= log.render :log, device: %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     <div class="page-empty">
       <span class="icon">🌌</span>
