@@ -58,6 +58,7 @@ GEM
     debug_inspector (1.2.0)
     diff-lcs (1.6.1)
     docile (1.4.1)
+    domain_name (0.6.20240107)
     dotenv (3.1.7)
     dry-auto_inject (1.1.0)
       dry-core (~> 1.1)
@@ -147,6 +148,9 @@ GEM
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
     ffi (1.17.1-x86_64-linux-musl)
+    ffi-compiler (1.3.2)
+      ffi (>= 1.15.5)
+      rake
     git-lint (9.2.0)
       cogger (~> 1.0)
       containable (~> 1.1)
@@ -222,6 +226,15 @@ GEM
     htmx (2.1.0)
       refinements (~> 13.0)
       zeitwerk (~> 2.7)
+    http (5.2.0)
+      addressable (~> 2.8)
+      base64 (~> 0.1)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.5.0)
+    http-cookie (1.0.8)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -247,6 +260,9 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    llhttp-ffi (0.5.1)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
     localhost (1.4.2)
     logger (1.7.0)
     marameters (4.2.0)
@@ -502,6 +518,7 @@ DEPENDENCIES
   hanami-view (~> 2.2.0)
   hanami-webconsole (~> 2.2.0)
   htmx (~> 2.1)
+  http (~> 5.2)
   infusible (~> 4.2)
   initable (~> 0.3)
   irb-kit (~> 1.1)
@@ -551,6 +568,7 @@ CHECKSUMS
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
   diff-lcs (1.6.1) sha256=12a5a83f3e37a8e2f4427268e305914d5f1879f22b4e73bb1a09f76a3dd86cd4
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
+  domain_name (0.6.20240107) sha256=5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933
   dotenv (3.1.7) sha256=c670df478675d23889e657beaca6fb423228f75ce9f052a0690c0d0daa333cf3
   dry-auto_inject (1.1.0) sha256=f9276cb5d15a3ef138e1f1149e289e287f636de57ef4a6decd233542eb708f78
   dry-cli (1.2.0) sha256=8c97df3b290ee6354ee2025a5f0a67226b381627de32741d06f35ea0887cd95b
@@ -582,6 +600,7 @@ CHECKSUMS
   ffi (1.17.1-x86_64-darwin) sha256=0036199c290462dd7f03bc22933644c1685b7834a21788062bd5df48c72aa7a6
   ffi (1.17.1-x86_64-linux-gnu) sha256=8c0ade2a5d19f3672bccfe3b58e016ae5f159e3e2e741c856db87fcf07c903d0
   ffi (1.17.1-x86_64-linux-musl) sha256=3a343086820c96d6fbea4a5ef807fb69105b2b8174678f103b3db210c3f78401
+  ffi-compiler (1.3.2) sha256=a94f3d81d12caf5c5d4ecf13980a70d0aeaa72268f3b9cc13358bcc6509184a0
   git-lint (9.2.0) sha256=29907d33c388a462036fdb83095646bd38499d0e70d4e35d5a8cdcb8d1353a95
   gitt (4.2.0) sha256=0fda1fb1242a400b37a94551f1ce4f698322ed952ddb83b8f8e644f57a9efe9e
   hanami (2.2.1) sha256=bef14f84916ad3a1244728df206bbd2ae6f307af945e3a2fd44cfe3a639c6cd5
@@ -596,6 +615,9 @@ CHECKSUMS
   hanami-webconsole (2.2.0) sha256=486fba76c2664a63fcd30729d9c97a763264944dc120ff6b3ad1e29ad06e0931
   hansi (0.2.1) sha256=7e27dfd729f1692a3a7690fc0ef3af9d5e3cfc0285bb135cae7e56180e4805db
   htmx (2.1.0) sha256=b8e904e381767e1e1fdcb6822779588409b1da5a42129603967c63d0d9fff08c
+  http (5.2.0) sha256=b99ed3c65376e0fd8107647fbaf5a8ab4f66c347d1271fb74cea757e209c6115
+  http-cookie (1.0.8) sha256=b14fe0445cf24bf9ae098633e9b8d42e4c07c3c1f700672b09fbfe32ffd41aa6
+  http-form_data (2.3.0) sha256=cc4eeb1361d9876821e31d7b1cf0b68f1cf874b201d27903480479d86448a5f3
   i18n (1.14.7) sha256=ceba573f8138ff2c0915427f1fc5bdf4aa3ab8ae88c8ce255eb3ecf0a11a5d0f
   ice_nine (0.11.2) sha256=5d506a7d2723d5592dc121b9928e4931742730131f22a1a37649df1c1e2e63db
   infusible (4.2.0) sha256=59394b711c336ecaf48d37155ca47517817bef41333433546a8b550dc937a32b
@@ -608,6 +630,7 @@ CHECKSUMS
   launchy (3.1.1) sha256=72b847b5cc961589dde2c395af0108c86ff0119f42d4648d25b5440ebb10059e
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   listen (3.9.0) sha256=db9e4424e0e5834480385197c139cb6b0ae0ef28cc13310cfd1ca78377d59c67
+  llhttp-ffi (0.5.1) sha256=9a25a7fc19311f691a78c9c0ac0fbf4675adbd0cca74310228fdf841018fa7bc
   localhost (1.4.2) sha256=a6b2b84c8fc719a1dd4161cf5d8df446d824f74f5482e74988d534f93faa6481
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   marameters (4.2.0) sha256=a0a4896226989cec8b419d585bdb344ab36669fe2b41f9d8a8f4ef18e8efb1b9
