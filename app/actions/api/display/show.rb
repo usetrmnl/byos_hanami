@@ -18,7 +18,7 @@ module Terminus
 
           include Initable[
             fetcher: proc { Terminus::Aspects::Images::Rotator.new },
-            model: Aspects::API::Responses::Display
+            model: Endpoints::Display::Response
           ]
 
           using Refines::Actions::Response
