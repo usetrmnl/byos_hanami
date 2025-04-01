@@ -133,7 +133,8 @@ CREATE TABLE public.devices (
     height integer DEFAULT 0 NOT NULL,
     setup_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    proxy boolean
 );
 
 
@@ -228,4 +229,5 @@ SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (filename) VALUES
 ('20250305150912_create_devices.rb'),
-('20250324153748_create_device_logs.rb');
+('20250324153748_create_device_logs.rb'),
+('20250401150503_add_device_proxy_column.rb');
