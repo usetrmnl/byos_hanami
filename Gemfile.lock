@@ -482,6 +482,7 @@ DEPENDENCIES
   amazing_print (~> 1.7)
   caliber (~> 0.74)
   capybara (~> 3.40)
+  cogger (~> 1.1)
   cuprite (~> 0.15)
   database_cleaner-sequel (~> 2.0)
   debug (~> 1.10)
