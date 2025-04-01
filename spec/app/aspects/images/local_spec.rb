@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Images::Fetcher do
+RSpec.describe Terminus::Aspects::Images::Local do
   using Refinements::Pathname
 
   subject(:fetcher) { described_class.new settings: }

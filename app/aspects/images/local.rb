@@ -8,7 +8,7 @@ module Terminus
   module Aspects
     module Images
       # Fetches image for rendering on device screen.
-      class Fetcher
+      class Local
         include Initable[encryptions: [:base_64]]
         include Deps[:settings, :assets]
 

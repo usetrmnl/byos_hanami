@@ -7,7 +7,7 @@ module Terminus
       class Rotator
         include Deps[:settings]
 
-        def initialize(toucher: Terminus::Images::Toucher, fetcher: Fetcher.new, **)
+        def initialize(toucher: Terminus::Images::Toucher, fetcher: Local.new, **)
           @toucher = toucher
           @fetcher = fetcher
           super(**)

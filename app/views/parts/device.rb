@@ -8,7 +8,7 @@ module Terminus
     module Parts
       # The device presenter.
       class Device < Hanami::View::Part
-        include Initable[fetcher: proc { Terminus::Aspects::Images::Fetcher.new }]
+        include Initable[fetcher: proc { Terminus::Aspects::Images::Local.new }]
         include Deps[:settings]
 
         def battery_percentage
