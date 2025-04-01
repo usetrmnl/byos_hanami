@@ -502,6 +502,7 @@ DEPENDENCIES
   hanami-view (~> 2.2.0)
   hanami-webconsole (~> 2.2.0)
   htmx (~> 2.1)
+  infusible (~> 4.2)
   initable (~> 0.3)
   irb-kit (~> 1.1)
   launchy (~> 3.1)
