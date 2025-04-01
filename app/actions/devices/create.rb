@@ -11,16 +11,7 @@ module Terminus
           index_view: "views.devices.index"
         ]
 
-        params do
-          required(:device).hash do
-            required(:label).filled :string
-            required(:friendly_id).filled :string
-            required(:mac_address).filled :string
-            required(:api_key).filled :string
-            required(:refresh_rate).filled :integer
-            required(:image_timeout).filled :integer
-          end
-        end
+        params { required(:device).hash Contracts::API::Device }
 
         def handle request, response
           parameters = request.params

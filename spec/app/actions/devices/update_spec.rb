@@ -8,10 +8,11 @@ RSpec.describe Terminus::Actions::Devices::Update, :db do
   describe "#call" do
     let(:device) { Factory[:device] }
 
-    it "answers success when there are no validation errors" do
+    it "updates existing device" do
       device
-      response = action.call id: device.id, device: {label: "Test"}
-      expect(response.status).to eq(200)
+      response = action.call id: device.id, device: device.to_h.merge(label: "Test")
+
+      expect(response.body.first).to include(%(<dd class="value">Test</dd>))
     end
 
     it "answers errors when fields are missing" do

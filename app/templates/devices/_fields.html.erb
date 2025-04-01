@@ -29,6 +29,17 @@
     </label>
   <% end %>
 
+  <%= scope(:form_field, key: :proxy, errors:).render do %>
+    <label class="key">
+      Proxy
+      <%= tag.input name: "device[proxy]",
+                    type: :checkbox,
+                    checked: field_for(:proxy, fields, device),
+                    switch: true,
+                    class: :value %>
+    </label>
+  <% end %>
+
   <%= scope(:form_field, key: :api_key, errors:).render do %>
     <label class="key">
       API Key

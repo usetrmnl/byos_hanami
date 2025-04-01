@@ -13,14 +13,7 @@ module Terminus
 
         params do
           required(:id).filled :integer
-          required(:device).hash do
-            optional(:label).filled :string
-            optional(:friendly_id).filled :string
-            optional(:mac_address).filled :string
-            optional(:api_key).filled :string
-            optional(:refresh_rate).filled :integer
-            optional(:image_timeout).filled :integer
-          end
+          required(:device).hash Contracts::API::Device
         end
 
         def handle request, response
