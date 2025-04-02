@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "refinements/pathname"
+
 module Terminus
   module Aspects
     module Screens
