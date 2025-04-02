@@ -5,6 +5,7 @@ Factory.define :device do |factory|
   factory.label "Test"
   factory.api_key "abc123"
   factory.mac_address "aa:bb:cc:00:11:22"
+  factory.proxy false
   factory.created_at { Time.now }
   factory.updated_at { Time.now }
 end
