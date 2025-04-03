@@ -24,7 +24,7 @@ RSpec.describe Terminus::Endpoints::CurrentScreen::Requester do
 
     it "answers failure when attributes are missing" do
       response = described_class.new.call access_token: "secret"
-      expect(response).to be_failure(Terminus::Endpoints::CurrentScreen::Contract.call({}))
+      expect(response).to match(Failure(be_a(HTTP::Response)))
     end
   end
 end
