@@ -40,10 +40,10 @@
 
       <ul class="list">
         <% ip_addresses.each do |ip| %>
-          <%= tag.li ip.address_with_kind %>
+          <%= tag.li ip.address_with_kind, class: "site-secret" %>
         <% end %>
 
-        <li><%= api_uri %> (API)</li>
+        <li class="site-secret"><%= api_uri %> (API)</li>
       </ul>
 
       <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
