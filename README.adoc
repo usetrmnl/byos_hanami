@@ -106,7 +106,7 @@ There are a few environment variables you can use to customize behavior:
 
 * `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
-* `GENERATED_ROOT`: The root location for all generated images. Defaults to `public/assets/generated`.
+* `SCREENS_ROOT`: The root location for all device screens (images). Defaults to `public/assets/screens`.
 
 === APIs
 
@@ -174,7 +174,7 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
 {
   "filename": "demo.bmp",
   "firmware_url": null,
-  "image_url": "https://localhost:2443/assets/generated/demo.bmp",
+  "image_url": "https://localhost:2443/assets/screens/demo.bmp",
   "image_url_timeout": 0,
   "refresh_rate": 130,
   "reset_firmware": false,
@@ -312,13 +312,13 @@ The `ID` header is your device's MAC address. You can obtain this information fr
 [source,json]
 ----
 {
-  "path": "$HOME/Engineering/terminus/public/assets/generated/test.bmp"
+  "path": "$HOME/Engineering/terminus/public/assets/screens/test.bmp"
 }
 ----
 ====
 
 
-💡 The images API supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated images:
+💡 The images API supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
 
 [source,css]
 ----
@@ -327,7 +327,7 @@ The `ID` header is your device's MAC address. You can obtain this information fr
 }
 ----
 
-If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/generated`.
+If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 
 💡 The `ID` is your device's MAC and the `Access-Token` is your device API Key.
 
@@ -361,19 +361,19 @@ repository = Hanami.app["repositories.device"]
 repository.all     # View all devices.
 repository.find 1  # Find by Device ID.
 
-# Fetch next image. Sorts in descending order by created timestamp.
-fetcher = Hanami.app["aspects.images.fetcher"]
+# Fetch next device screen. Sorts in descending order by modified timestamp.
+fetcher = Hanami.app["aspects.screens.local"]
 fetcher.call images_uri: "https://localhost:2443/assets"
 
-# To generate image with random name.
-creator = Terminus::Images::Creator.new
+# Generate device screen with random name.
+creator = Terminus::Screens::Creator.new
 creator.call "<p>Test</p>",
-             Pathname(Hanami.app[:settings].generated_root).join("%<name>s.bmp")
-#<Pathname:terminus/public/assets/generated/f5af3f06-775f-4ae9-8bb1-246d9a5200c9.bmp>
+             Pathname(Hanami.app[:settings].screens_root).join("%<name>s.bmp")
+#<Pathname:terminus/public/assets/screens/f5af3f06-775f-4ae9-8bb1-246d9a5200c9.bmp>
 
 # To generate image with specific name.
-creator.call "<p>Test.</p>", Pathname(Hanami.app[:settings].generated_root).join("demo.bmp")
-#<Pathname:terminus/public/assets/generated/demo.bmp>
+creator.call "<p>Test.</p>", Pathname(Hanami.app[:settings].screens_root).join("demo.bmp")
+#<Pathname:terminus/public/assets/screens/demo.bmp>
 ----
 
 When creating images, you might find this HTML template valuable as a starting point as this let's you use the full capabilities of HTML to create new images for your device.
@@ -410,16 +410,16 @@ When creating images, you might find this HTML template valuable as a starting p
 ----
 ====
 
-Use of `margin` zero is important to prevent default browser styles from creating borders around your image which will show up when rendered on your device. Otherwise, you have full capabilities to render any kind of page you want using whatever HTML you like. Anything is possible because `Images::Creator` is designed to screenshot your rendered HTML as a 800x480 image to render on your device. If you put all this together, that means you can do this in the console:
+Use of `margin` zero is important to prevent default browser styles from creating borders around your image which will show up when rendered on your device. Otherwise, you have full capabilities to render any kind of page you want using whatever HTML you like. Anything is possible because `Terminus::Screens::Creator` is designed to screenshot your rendered HTML as a 800x480 image to render on your device. If you put all this together, that means you can do this in the console:
 
 .Image Generation
 [%collapsible]
 ====
 [source,ruby]
 ----
-creator = Terminus::Images::Creator.new
+creator = Terminus::Screens::Creator.new
 
-creator.call(<<~CONTENT, Pathname(Hanami.app[:settings].generated_root).join("generated/%<name>s.bmp"))
+creator.call(<<~CONTENT, Pathname(Hanami.app[:settings].screens_root).join("screens/%<name>s.bmp"))
   <!DOCTYPE html>
 
   <html lang="en">
@@ -448,7 +448,7 @@ CONTENT
 ----
 ====
 
-The above will create a new image in the `public/generated` folder of this application which will eventually render on your device. 🎉
+The above will create a new image in the `public/screens` folder of this application which will eventually render on your device. 🎉
 
 To build a {docker_link} image, run:
 
