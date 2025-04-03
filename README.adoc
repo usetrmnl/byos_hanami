@@ -46,13 +46,14 @@ The following is a high level overview you can use to compare/contrast when deci
 |===
 |                                   | Terminus | Hosted
 | Dashboard                         | 🟢       | 🟢
-| Plugins                           | ⚪️       | 🟢
-| Playlists                         | 🟡       | 🟢
-| Playlist Previews                 | ⚪️       | 🟢
-| Recipes                           | 🔴       | 🟢
+| Auto-Provisioning                 | 🟢       | 🟢
 | Devices                           | 🟢       | 🟢
-| Account                           | 🔴       | 🟢
 | JSON Data API                     | 🟢       | 🟢
+| Image Previews                    | ⚪️       | 🟢
+| Playlists                         | 🟡       | 🟢
+| Plugins                           | ⚪️       | 🟢
+| Recipes                           | 🔴       | 🟢
+| Account                           | 🔴       | 🟢
 | Open Source Components            | 🟢       | 🟡
 | Docker                            | 🟢       | 🔴
 |===
@@ -107,6 +108,17 @@ There are a few environment variables you can use to customize behavior:
 * `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `SCREENS_ROOT`: The root location for all device screens (images). Defaults to `public/assets/screens`.
+
+=== Device Provisioning
+
+There are a couple of ways you can provision a device with this server.
+
+The first is automatic which happens immediately after you have successfully used the WiFi captive portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI, and it'll be reconfigured for you automatically when the device next makes a xref:_display[Display API] request.
+
+
+The second way is to manually add your device via the UI. At a minimum, you only need to know your device's MAC Address when entering your device information within the UI.
+
+That's it!
 
 === APIs
 
@@ -502,7 +514,19 @@ bin/rake
 
 == Deployment
 
-More details to be provided soon.
+{docker_link} is supported both for production and development purposes. Each is explained below.
+
+=== Development
+
+To develop with Docker, there is a `.devcontainer` folder that should provide the initial foundation from which to customize further for your needs.
+
+=== Production
+
+To build an image for production purpose, use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
+
+* `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
+* `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
+* `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
 
 == Credits
 
