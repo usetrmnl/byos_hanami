@@ -11,7 +11,7 @@ RSpec.describe Terminus::Endpoints::Display::Requester do
     include_context "with fake HTTP display"
 
     it "answers success" do
-      response = requester.call access_token: "secret"
+      response = requester.call api_key: "secret"
       expect(response).to be_success(
         Terminus::Endpoints::Display::Response[
           filename: "test.bmp",
@@ -26,7 +26,7 @@ RSpec.describe Terminus::Endpoints::Display::Requester do
     end
 
     it "answers failure when attributes are missing" do
-      response = described_class.new.call access_token: "secret"
+      response = described_class.new.call api_key: "secret"
 
       expect(response).to be_failure(
         Terminus::Endpoints::Display::Contract.call({reset_firmware: true})

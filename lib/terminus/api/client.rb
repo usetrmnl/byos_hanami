@@ -11,14 +11,14 @@ module Terminus
       include Terminus::Dependencies[:http]
       include Dry::Monads[:result]
 
-      def get path, access_token: nil, **parameters
-        call __method__, path, access_token: access_token, params: parameters
+      def get path, api_key: nil, **parameters
+        call __method__, path, api_key: api_key, params: parameters
       end
 
       private
 
       def call method, path, **options
-        headers = settings.headers.merge "Access-Token" => options.delete(:access_token)
+        headers = settings.headers.merge "Access-Token" => options.delete(:api_key)
 
         http.headers(headers)
             .public_send(method, "#{settings.api_uri}/#{path}", options)

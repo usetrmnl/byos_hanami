@@ -6,7 +6,7 @@ module Terminus
   module HTTP
     module Headers
       KEY_MAP = {
-        HTTP_ACCESS_TOKEN: :access_token,
+        HTTP_ACCESS_TOKEN: :api_key,
         HTTP_BATTERY_VOLTAGE: :battery,
         HTTP_FW_VERSION: :firmware_version,
         HTTP_HOST: :host,

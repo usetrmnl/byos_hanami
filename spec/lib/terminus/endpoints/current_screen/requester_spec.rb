@@ -11,7 +11,7 @@ RSpec.describe Terminus::Endpoints::CurrentScreen::Requester do
     include_context "with fake HTTP current screen"
 
     it "answers success" do
-      response = requester.call access_token: "secret"
+      response = requester.call api_key: "secret"
 
       expect(response).to be_success(
         Terminus::Endpoints::CurrentScreen::Response[
@@ -23,7 +23,7 @@ RSpec.describe Terminus::Endpoints::CurrentScreen::Requester do
     end
 
     it "answers failure when attributes are missing" do
-      response = described_class.new.call access_token: "secret"
+      response = described_class.new.call api_key: "secret"
       expect(response).to match(Failure(be_a(HTTP::Response)))
     end
   end

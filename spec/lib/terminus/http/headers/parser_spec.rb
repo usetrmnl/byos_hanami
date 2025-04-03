@@ -17,7 +17,7 @@ RSpec.describe Terminus::HTTP::Headers::Parser do
           host: "https://localhost",
           user_agent: "ESP32HTTPClient",
           mac_address: "A1:B2:C3:D4:E5:F6",
-          access_token: "abc123",
+          api_key: "abc123",
           refresh_rate: 25,
           battery: 4.74,
           firmware_version: Version("1.2.3"),

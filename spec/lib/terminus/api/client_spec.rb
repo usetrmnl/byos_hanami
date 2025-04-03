@@ -11,7 +11,7 @@ RSpec.describe Terminus::API::Client do
     include_context "with fake HTTP current screen"
 
     it "answers success response" do
-      response = client.get "current_screen", access_token: "secret"
+      response = client.get "current_screen", api_key: "secret"
       payload = response.fmap(&:parse).bind(&:symbolize_keys!)
 
       expect(payload).to eq(

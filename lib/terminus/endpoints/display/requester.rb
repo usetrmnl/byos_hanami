@@ -10,8 +10,8 @@ module Terminus
         include Dependencies[:client, contract: "contracts.display", response: "responses.display"]
         include Pipeable
 
-        def call access_token:
-          pipe client.get("display", access_token:),
+        def call api_key:
+          pipe client.get("display", api_key:),
                try(:parse, catch: JSON::ParserError),
                validate(contract, as: :to_h),
                to(response, :for)

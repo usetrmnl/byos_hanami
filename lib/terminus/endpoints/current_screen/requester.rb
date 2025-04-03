@@ -15,8 +15,8 @@ module Terminus
 
         include Pipeable
 
-        def call access_token:
-          pipe client.get("current_screen", access_token:),
+        def call api_key:
+          pipe client.get("current_screen", api_key:),
                try(:parse, catch: JSON::ParserError),
                validate(contract, as: :to_h),
                to(response, :for)

@@ -26,7 +26,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     it "requests image for device API key" do
       poller.call
-      expect(endpoint).to have_received(:call).with access_token: "abc123"
+      expect(endpoint).to have_received(:call).with api_key: "abc123"
     end
 
     it "downloads image" do

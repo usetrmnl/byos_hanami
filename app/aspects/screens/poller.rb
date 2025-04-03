@@ -29,7 +29,7 @@ module Terminus
         end
 
         def process device
-          endpoint.call(access_token: device.api_key)
+          endpoint.call(api_key: device.api_key)
                   .bind do |response|
                     downloader.call response.image_url, response.filename
                   end
