@@ -123,6 +123,15 @@
   }
 }
 
+.site-secret {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+
+  &:hover, &:focus, &:active {
+    filter: blur(0);
+  }
+}
+
 .site-table {
   .text-left {
     text-align: left;
@@ -217,17 +226,19 @@
   }
 
   .form-field {
+    align-items: center;
     display: flex;
     flex-direction: column;
     margin: 0;
+    gap: 1rem;
   }
 
   .key {
     align-items: center;
     display: flex;
-    flex-direction: column;
     font-weight: 600;
     gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .value {
@@ -239,6 +250,7 @@
   .form-actions {
     display: flex;
     align-items: center;
+    gap: 1rem;
   }
 
   .accept, .decline {
