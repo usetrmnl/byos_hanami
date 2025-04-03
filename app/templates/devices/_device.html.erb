@@ -9,6 +9,14 @@
     <%= link_to "View", "/devices/#{device.id}" %>
     <%= link_to "Logs", "/devices/#{device.id}/logs" %>
     <%= render "edit_link", device: %>
-    <%= render "delete_link", device: %>
+
+    <a href="/devices"
+       class="link-cancel"
+       hx-delete="/devices/<%= device.id %>"
+       hx-confirm="Are you sure you want to delete this device?"
+       hx-target="closest .device"
+       hx-swap="outerHTML">
+      Delete
+    </a>
   </div>
 </li>

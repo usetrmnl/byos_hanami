@@ -1,72 +1,117 @@
 <fieldset role="group" class="group">
   <%= scope(:form_field, key: :label, errors:).render do %>
-    <label class="key">
-      Label
-      <%= tag.input name: "device[label]",
-                    value: field_for(:label, fields, device),
-                    class: :value,
-                    autocomplete: :label %>
-    </label>
+    <label class="key" for="device[label]">Label</label>
+
+    <%= tag.input name: "device[label]",
+                  value: field_for(:label, fields, device),
+                  class: :value,
+                  autocomplete: :label %>
   <% end %>
 
   <%= scope(:form_field, key: :friendly_id, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[friendly_id]">
       Friendly ID
-      <%= tag.input name: "device[friendly_id]",
-                    value: field_for(:friendly_id, fields, device),
-                    class: :value,
-                    autocomplete: :friendly_id %>
+      <%= render "field_popover_trigger", name: "friendly_id" %>
     </label>
+
+    <%= tag.input name: "device[friendly_id]",
+                  value: field_for(:friendly_id, fields, device),
+                  class: :value,
+                  autocomplete: :friendly_id %>
   <% end %>
+
+  <%= render "field_popover_content",
+             name: "friendly_id",
+             label: "Friendly ID",
+             body: "Provides a way to uniquely identify your device." %>
 
   <%= scope(:form_field, key: :mac_address, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[mac_address]">
       MAC Address
-      <%= tag.input name: "device[mac_address]",
-                    value: field_for(:mac_address, fields, device),
-                    class: :value,
-                    autocomplete: :mac_address %>
+      <%= render "field_popover_trigger", name: "mac_address" %>
     </label>
+
+    <%= tag.input name: "device[mac_address]",
+                  type: :password,
+                  value: field_for(:mac_address, fields, device),
+                  class: :value,
+                  autocomplete: :mac_address %>
   <% end %>
+
+  <%= render "field_popover_content",
+             name: "mac_address",
+             label: "MAC Address",
+             body: "Uniquely identifies your device when communicating over the network." %>
 
   <%= scope(:form_field, key: :proxy, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[proxy]">
       Proxy
-      <%= tag.input name: "device[proxy]",
-                    type: :checkbox,
-                    checked: field_for(:proxy, fields, device),
-                    switch: true,
-                    class: :value %>
+      <%= render "field_popover_trigger", name: "proxy" %>
     </label>
+
+    <%= tag.input name: "device[proxy]",
+                  type: :checkbox,
+                  checked: field_for(:proxy, fields, device),
+                  switch: true,
+                  class: :value %>
   <% end %>
+
+  <%= render "field_popover_content",
+             name: "proxy",
+             label: "Proxy",
+             body: "Allows you to display remote images generated via your TRMNL account when enabled. This includes locally generated images but the remote images will take precedence. Your MAC address and API key must be identical both locally and remotely for this to work." %>
 
   <%= scope(:form_field, key: :api_key, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[api_key]">
       API Key
-      <%= tag.input name: "device[api_key]",
-                    type: :password,
-                    value: field_for(:api_key, fields, device),
-                    class: :value %>
+      <%= render "field_popover_trigger", name: "api_key" %>
     </label>
+
+    <%= tag.input name: "device[api_key]",
+                  type: :password,
+                  value: field_for(:api_key, fields, device),
+                  class: :value %>
+
   <% end %>
+
+  <%= render "field_popover_content",
+             name: "api_key",
+             label: "API Key",
+             body: "Used for API requests to authenticate between server and device." %>
 
   <%= scope(:form_field, key: :refresh_rate, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[refresh_rate]">
       Refresh Rate
-      <%= tag.input name: "device[refresh_rate]",
-                    value: field_for(:refresh_rate, fields, device),
-                    class: :value,
-                    autocomplete: :refresh_rate %>
+      <%= render "field_popover_trigger", name: "refresh_rate" %>
     </label>
+
+    <%= tag.input name: "device[refresh_rate]",
+                  type: :number,
+                  value: field_for(:refresh_rate, fields, device),
+                  class: :value,
+                  autocomplete: :refresh_rate %>
   <% end %>
 
+  <%= render "field_popover_content",
+             name: "refresh_rate",
+             label: "Refresh Rate",
+             body: "The time, in seconds, until the next image is displayed on your device." %>
+
   <%= scope(:form_field, key: :image_timeout, errors:).render do %>
-    <label class="key">
+    <label class="key" for="device[image_timeout]">
       Image Timeout
-      <%= tag.input name: "device[image_timeout]",
-                    value: field_for(:image_timeout, fields, device),
-                    class: :value,
-                    autocomplete: :image_timeout %>
+      <%= render "field_popover_trigger", name: "image_timeout" %>
     </label>
+
+    <%= tag.input name: "device[image_timeout]",
+                  type: :number,
+                  value: field_for(:image_timeout, fields, device),
+                  class: :value,
+                  autocomplete: :image_timeout %>
   <% end %>
+
+  <%= render "field_popover_content",
+             name: "image_timeout",
+             label: "Image Timeout",
+             body: "The time, in seconds, to fetch the image before timing out (useful if you are making an external request for an image)." %>
 </fieldset>
