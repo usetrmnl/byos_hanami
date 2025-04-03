@@ -59,7 +59,8 @@ class Runner
 
     path.write %(web: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- ) +
                "bundle exec puma --config ./config/puma.rb\n" \
-               "assets: bundle exec hanami assets watch"
+               "assets: bundle exec hanami assets watch\n" \
+               "poller: bin/screen_poller"
   end
 end
 
