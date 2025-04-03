@@ -31,7 +31,7 @@ module Terminus
           image_url = if encryptable? encryption
                         "data:image/bmp;base64,#{Base64.strict_encode64 image_path.read}"
                       else
-                        "#{images_uri}/generated/#{filename}"
+                        "#{images_uri}/screens/#{filename}"
                       end
 
           {filename:, image_url:}
@@ -39,7 +39,7 @@ module Terminus
 
         def encryptable?(value) = encryptions.include?(value) && value == :base_64
 
-        def root_path = Pathname settings.generated_root
+        def root_path = Pathname settings.screens_root
 
         def default = {filename: "empty_state", image_url: assets["setup.bmp"].url}
       end

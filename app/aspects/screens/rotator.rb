@@ -15,7 +15,7 @@ module Terminus
 
         def call images_uri:, encryption: nil
           fetcher.call(images_uri:, encryption:)
-                 .tap { toucher.call settings.generated_root }
+                 .tap { toucher.call settings.screens_root }
         end
 
         private

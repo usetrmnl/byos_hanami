@@ -11,7 +11,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
 
   let(:settings) { Hanami.app[:settings] }
 
-  before { allow(settings).to receive(:generated_root).and_return temp_dir }
+  before { allow(settings).to receive(:screens_root).and_return temp_dir }
 
   describe "#call" do
     let(:fixture_path) { SPEC_ROOT.join "support/fixtures/test.bmp" }
@@ -30,7 +30,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
 
       expect(local.call(images_uri:)).to eq(
         filename: "test.bmp",
-        image_url: "https://localhost/assets/generated/test.bmp"
+        image_url: "https://localhost/assets/screens/test.bmp"
       )
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
 
       expect(local.call(images_uri:, encryption: :bogus)).to eq(
         filename: "test.bmp",
-        image_url: "https://localhost/assets/generated/test.bmp"
+        image_url: "https://localhost/assets/screens/test.bmp"
       )
     end
   end

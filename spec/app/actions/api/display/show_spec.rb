@@ -19,7 +19,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
     before do
       firmware_headers["HTTP_ACCESS_TOKEN"] = device.api_key
-      allow(settings).to receive(:generated_root).and_return(temp_dir)
+      allow(settings).to receive(:screens_root).and_return(temp_dir)
 
       SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
     end
@@ -32,7 +32,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: nil,
-        image_url: %r(http://.+/assets/generated/.+\.bmp),
+        image_url: %r(http://.+/assets/screens/.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
@@ -52,7 +52,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         expect(payload).to include(
           filename: /.+\.bmp/,
           firmware_url: nil,
-          image_url: %r(http://.+/assets/generated/.+\.bmp),
+          image_url: %r(http://.+/assets/screens/.+\.bmp),
           image_url_timeout: 10,
           refresh_rate: 20,
           reset_firmware: false,
@@ -69,7 +69,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: nil,
-        image_url: %r(http://.+/assets/generated/.+\.bmp),
+        image_url: %r(http://.+/assets/screens/.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,

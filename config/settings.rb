@@ -9,8 +9,8 @@ module Terminus
             constructor: Types::Params::String,
             default: "http://#{IPFinder.new.wired}:2300"
 
-    setting :generated_root,
+    setting :screens_root,
             constructor: Types::Params::String,
-            default: Hanami.app.root.join("public/assets/generated").to_s
+            default: Hanami.app.root.join("public/assets/screens").to_s
   end
 end

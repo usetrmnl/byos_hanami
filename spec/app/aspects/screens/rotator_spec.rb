@@ -11,10 +11,10 @@ RSpec.describe Terminus::Aspects::Screens::Rotator do
 
   let(:settings) { Hanami.app[:settings] }
 
-  before { allow(settings).to receive(:generated_root).and_return temp_dir }
+  before { allow(settings).to receive(:screens_root).and_return temp_dir }
 
   describe "#call" do
-    let(:images_uri) { "https://test.io/images" }
+    let(:images_uri) { "https://test.io/assets" }
 
     it "answers oldest image" do
       skip "Doesn't work on CI." if ENV["CI"]
@@ -24,7 +24,7 @@ RSpec.describe Terminus::Aspects::Screens::Rotator do
 
       expect(rotator.call(images_uri:)).to eq(
         filename: "two.bmp",
-        image_url: "https://test.io/images/generated/two.bmp"
+        image_url: "https://test.io/assets/screens/two.bmp"
       )
     end
 

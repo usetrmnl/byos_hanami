@@ -10,7 +10,7 @@ RSpec.describe Terminus::Actions::API::Images::Create do
   let(:settings) { Hanami.app[:settings] }
   let(:path) { temp_dir.join "rspec_test.bmp" }
 
-  before { allow(settings).to receive(:generated_root).and_return temp_dir }
+  before { allow(settings).to receive(:screens_root).and_return temp_dir }
 
   describe "#call" do
     it "creates image with random name" do

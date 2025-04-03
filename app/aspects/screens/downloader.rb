@@ -18,12 +18,12 @@ module Terminus
           at = oldest_at
 
           get(uri).fmap do |content|
-            Pathname(settings.generated_root).join(file_name).write(content).touch at
+            Pathname(settings.screens_root).join(file_name).write(content).touch at
           end
         end
 
         def oldest_at
-          oldest_file = Pathname(settings.generated_root).files.min_by(&:mtime)
+          oldest_file = Pathname(settings.screens_root).files.min_by(&:mtime)
 
           return Time.now unless oldest_file
 
