@@ -11,15 +11,15 @@ RSpec.describe Terminus::Actions::Devices::New do
       expect(response.status).to eq(200)
     end
 
+    it "renders defaults" do
+      device = {mac_address: "aa:bb:cc:11:22:33"}
+      response = Rack::MockRequest.new(action).post "", params: {device:}
+
+      expect(response.body).to include(%(name="device[label]" value="TRMNL"))
+    end
+
     it "renders htmx response" do
-      device = {
-        label: "Test",
-        friendly_id: "ABC123",
-        mac_address: "aa:bb:cc:11:22:33",
-        api_key: "abc",
-        refresh_rate: 100,
-        image_timeout: 100
-      }
+      device = {mac_address: "aa:bb:cc:11:22:33"}
 
       response = Rack::MockRequest.new(action)
                                   .post "", "HTTP_HX_REQUEST" => "true", params: {device:}
