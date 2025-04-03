@@ -9,8 +9,8 @@ module Terminus
       module Setup
         # The show action.
         class Show < Terminus::Action
-          include Deps[repository: "repositories.device"]
-          include Initable[randomizer: SecureRandom, model: Aspects::API::Responses::Setup]
+          include Deps[repository: "repositories.device", device_builder: "aspects.devices.builder"]
+          include Initable[model: Aspects::API::Responses::Setup]
 
           format :json
 
@@ -24,17 +24,8 @@ module Terminus
           private
 
           def create_device mac_address, firmware_version
-            repository.create label: "TRMNL",
-                              friendly_id: generate_friendly_id,
-                              mac_address:,
-                              api_key: generate_api_key,
-                              firmware_version:,
-                              setup_at: Time.now
+            repository.create device_builder.call.merge(mac_address:, firmware_version:)
           end
-
-          def generate_friendly_id = randomizer.hex(3).upcase
-
-          def generate_api_key = randomizer.alphanumeric 20
         end
       end
     end
