@@ -6,7 +6,7 @@ require "refinements/pathname"
 
 module Terminus
   module Aspects
-    module Images
+    module Screens
       # Fetches image for rendering on device screen.
       class Local
         include Initable[encryptions: [:base_64]]

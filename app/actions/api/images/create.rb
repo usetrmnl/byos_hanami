@@ -10,7 +10,7 @@ module Terminus
         # The create action.
         class Create < Terminus::Action
           include Deps[:settings]
-          include Initable[creator: proc { Terminus::Images::Creator.new }]
+          include Initable[creator: proc { Terminus::Screens::Creator.new }]
 
           using Refinements::Pathname
           using Refines::Actions::Response

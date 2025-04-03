@@ -3,7 +3,7 @@
 require "securerandom"
 
 module Terminus
-  module Images
+  module Screens
     Randomizer = proc { SecureRandom.uuid }
   end
 end

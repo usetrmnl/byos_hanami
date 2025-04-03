@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
+require "mini_magick"
 
-RSpec.describe Terminus::Images::Creator do
-  subject(:creator) { described_class.new }
+RSpec.describe Terminus::Screens::Screensaver do
+  subject(:screensaver) { described_class.new }
 
   include_context "with temporary directory"
 
@@ -25,23 +26,17 @@ RSpec.describe Terminus::Images::Creator do
       CONTENT
     end
 
-    let(:path) { temp_dir.join "test.bmp" }
+    let(:path) { temp_dir.join "test.jpeg" }
 
     it "creates screenshot" do
-      creator.call content, path
+      screensaver.call content, path
       image = MiniMagick::Image.open path
 
-      expect(image).to have_attributes(
-        width: 800,
-        height: 480,
-        type: "BMP3",
-        exif: {},
-        data: hash_including("depth" => 1, "baseDepth" => 1)
-      )
+      expect(image).to have_attributes(width: 800, height: 480, type: "JPEG", exif: {})
     end
 
     it "answers image path" do
-      expect(creator.call(content, path)).to eq(path)
+      expect(screensaver.call(content, path)).to be(path)
     end
   end
 end

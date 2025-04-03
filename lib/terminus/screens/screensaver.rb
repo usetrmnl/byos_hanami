@@ -3,7 +3,7 @@
 require "ferrum"
 
 module Terminus
-  module Images
+  module Screens
     # Saves web page as screenshot.
     class Screensaver
       SETTINGS = {

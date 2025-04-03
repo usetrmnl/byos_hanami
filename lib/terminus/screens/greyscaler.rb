@@ -3,7 +3,7 @@
 require "mini_magick"
 
 module Terminus
-  module Images
+  module Screens
     # Converts image to greyscale BMP image.
     class Greyscaler
       def initialize randomizer: Randomizer, client: MiniMagick

@@ -6,13 +6,13 @@ detectors:
   FeatureEnvy:
     exclude:
       - Terminus::Actions::API::Images::Create#handle
-      - Terminus::Images::Greyscaler#convert
-      - Terminus::Images::Screensaver#save
+      - Terminus::Screens::Greyscaler#convert
+      - Terminus::Screens::Screensaver#save
   LongParameterList:
     enabled: false
   TooManyStatements:
     exclude:
-      - Terminus::Images::Greyscaler#convert
-      - Terminus::Images::Screensaver#save
+      - Terminus::Screens::Greyscaler#convert
+      - Terminus::Screens::Screensaver#save
       - Terminus::Views::Parts::Device#battery_percentage
       - Terminus::Views::Parts::Device#wifi_percentage

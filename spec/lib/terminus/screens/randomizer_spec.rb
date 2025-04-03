@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Images::Randomizer do
+RSpec.describe Terminus::Screens::Randomizer do
   subject(:randomizer) { described_class }
 
   it "answers UUID by default" do

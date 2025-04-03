@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Images::Toucher do
+RSpec.describe Terminus::Screens::Toucher do
   using Refinements::Pathname
 
   subject(:toucher) { described_class }

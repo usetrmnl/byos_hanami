@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Terminus
-  module Images
+  module Screens
     # Creates device image.
     class Creator
       def initialize screensaver: Screensaver.new, greyscaler: Greyscaler.new

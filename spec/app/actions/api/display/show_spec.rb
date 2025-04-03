@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
   using Refinements::Pathname
 
   subject :action do
-    described_class.new settings:, fetcher: Terminus::Aspects::Images::Rotator.new(settings:)
+    described_class.new settings:, fetcher: Terminus::Aspects::Screens::Rotator.new(settings:)
   end
 
   include_context "with firmware headers"

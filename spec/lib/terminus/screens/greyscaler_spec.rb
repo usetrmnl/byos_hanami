@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Images::Greyscaler do
+RSpec.describe Terminus::Screens::Greyscaler do
   subject(:greyscaler) { described_class.new randomizer: proc { "abc123" } }
 
   include_context "with temporary directory"

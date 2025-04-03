@@ -2,12 +2,12 @@
 
 module Terminus
   module Aspects
-    module Images
+    module Screens
       # Rotates and fetches images for rendering on a device.
       class Rotator
         include Deps[:settings]
 
-        def initialize(toucher: Terminus::Images::Toucher, fetcher: Local.new, **)
+        def initialize(toucher: Terminus::Screens::Toucher, fetcher: Local.new, **)
           @toucher = toucher
           @fetcher = fetcher
           super(**)

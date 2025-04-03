@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Images::Rotator do
+RSpec.describe Terminus::Aspects::Screens::Rotator do
   using Refinements::Pathname
 
   subject(:rotator) { described_class.new settings: }
