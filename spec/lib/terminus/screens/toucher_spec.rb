@@ -21,7 +21,7 @@ RSpec.describe Terminus::Screens::Toucher do
       all.each(&:touch)
       toucher.call temp_dir
 
-      expect(all.sort_by(&:ctime)).to eq([two, three, one])
+      expect(all.sort_by(&:mtime)).to eq([two, three, one])
     end
 
     it "answers last file created as latest file" do
@@ -31,7 +31,7 @@ RSpec.describe Terminus::Screens::Toucher do
       toucher.call temp_dir
       toucher.call temp_dir
 
-      expect(all.sort_by(&:ctime)).to eq([three, one, two])
+      expect(all.sort_by(&:mtime)).to eq([three, one, two])
     end
   end
 end

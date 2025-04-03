@@ -22,7 +22,7 @@ module Terminus
 
         # :reek:TooManyStatements
         def last_generated_image images_uri, encryption
-          image_path = root_path.files("*.bmp").max_by(&:ctime)
+          image_path = root_path.files("*.bmp").max_by(&:mtime)
 
           return unless image_path
 

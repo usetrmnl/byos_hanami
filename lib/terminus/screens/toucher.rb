@@ -7,6 +7,6 @@ module Terminus
   module Screens
     using Refinements::Pathname
 
-    Toucher = -> root { Pathname(root).files.min_by(&:ctime).touch }
+    Toucher = -> root { Pathname(root).files.min_by(&:mtime).touch }
   end
 end
