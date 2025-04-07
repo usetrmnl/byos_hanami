@@ -7,7 +7,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
   let(:repository) { instance_double Terminus::Repositories::Device, all: devices }
   let(:devices) { [Factory[:device, api_key: "abc123", proxy: true]] }
-  let(:kernel) { class_double Kernel, sleep: nil }
+  let(:kernel) { class_spy Kernel, sleep: nil }
 
   let :endpoint do
     instance_spy Terminus::Endpoints::Display::Requester,
@@ -23,6 +23,20 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
   describe "#call" do
     before { allow(kernel).to receive(:loop).and_yield }
+
+    it "prints that it's shutting down when CONTROL+C is used" do
+      allow(kernel).to receive(:trap).and_yield
+      poller.call
+
+      expect(kernel).to have_received(:puts).with(/shutting down/)
+    end
+
+    it "gracefully exists when CONTROL+C is used" do
+      allow(kernel).to receive(:trap).and_yield
+      poller.call
+
+      expect(kernel).to have_received(:exit)
+    end
 
     it "requests image for device API key" do
       poller.call

@@ -16,13 +16,25 @@ module Terminus
         ]
 
         def call
+          watch_for_shudown
+          keep_alive
+        end
+
+        private
+
+        def watch_for_shudown
+          kernel.trap "INT" do
+            kernel.puts "Gracefully shutting down polling..."
+            kernel.exit
+          end
+        end
+
+        def keep_alive
           kernel.loop do
             process_devices
             kernel.sleep seconds
           end
         end
-
-        private
 
         def process_devices
           repository.all.select(&:proxy).each { |device| process device }
