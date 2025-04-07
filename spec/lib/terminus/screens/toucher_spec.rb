@@ -33,5 +33,10 @@ RSpec.describe Terminus::Screens::Toucher do
 
       expect(all.sort_by(&:mtime)).to eq([three, one, two])
     end
+
+    it "answers nil if there is nothing to touch" do
+      toucher.call temp_dir
+      expect(toucher.call(temp_dir)).to be(nil)
+    end
   end
 end

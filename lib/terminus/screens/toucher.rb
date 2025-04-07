@@ -3,10 +3,12 @@
 require "refinements/pathname"
 
 module Terminus
-  # Touches the oldest file to make it the latest file.
+  # Makes the oldest file the newest file.
   module Screens
     using Refinements::Pathname
 
-    Toucher = -> root { Pathname(root).files.min_by(&:mtime).touch }
+    Toucher = lambda do |root|
+      Pathname(root).files.min_by(&:mtime).then { it.touch if it }
+    end
   end
 end
