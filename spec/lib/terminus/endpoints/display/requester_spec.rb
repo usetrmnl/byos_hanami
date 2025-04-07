@@ -5,11 +5,12 @@ require "hanami_helper"
 RSpec.describe Terminus::Endpoints::Display::Requester do
   subject(:requester) { described_class.new client: }
 
+  include_context "with library dependencies"
+  include_context "with fake HTTP display"
+
   let(:client) { Terminus::API::Client.new http: }
 
   describe "#call" do
-    include_context "with fake HTTP display"
-
     it "answers success" do
       response = requester.call api_key: "secret"
       expect(response).to be_success(
@@ -25,12 +26,24 @@ RSpec.describe Terminus::Endpoints::Display::Requester do
       )
     end
 
-    it "answers failure when attributes are missing" do
-      response = described_class.new.call api_key: "secret"
+    context "with failure" do
+      let :http do
+        HTTP::Fake::Client.new do
+          get "/api/display" do
+            headers["Content-Type"] = "application/json"
+            status 404
 
-      expect(response).to be_failure(
-        Terminus::Endpoints::Display::Contract.call({reset_firmware: true})
-      )
+            <<~JSON
+              {"error": "Danger!"}
+            JSON
+          end
+        end
+      end
+
+      it "answers failure response" do
+        response = described_class.new(client:).call api_key: "secret"
+        expect(response).to match(Failure(be_a(HTTP::Response)))
+      end
     end
   end
 end
