@@ -15,6 +15,12 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
   describe "#call" do
     before { allow(settings).to receive(:screens_root).and_return temp_dir }
 
+    it "creates root directory when it doesn't exist" do
+      temp_dir.rmdir
+      downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
+      expect(temp_dir.exist?).to be(true)
+    end
+
     it "downloads file" do
       downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
       expect(temp_dir.join("test.png").exist?).to be(true)

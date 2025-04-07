@@ -18,7 +18,7 @@ module Terminus
           at = oldest_at
 
           get(uri).fmap do |content|
-            Pathname(settings.screens_root).join(file_name).write(content).touch at
+            Pathname(settings.screens_root).mkpath.join(file_name).write(content).touch at
           end
         end
 
