@@ -12,5 +12,9 @@ module Terminus
     setting :screens_root,
             constructor: Types::Params::String,
             default: Hanami.app.root.join("public/assets/screens").to_s
+
+    setting :firmware_root,
+            constructor: Types::Params::String,
+            default: Hanami.app.root.join("public/assets/firmware").to_s
   end
 end
