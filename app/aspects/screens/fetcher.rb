@@ -7,8 +7,8 @@ require "refinements/pathname"
 module Terminus
   module Aspects
     module Screens
-      # Fetches image for rendering on device screen.
-      class Local
+      # Fetches latest image for rendering on device screen.
+      class Fetcher
         include Initable[encryptions: [:base_64]]
         include Deps[:settings, :assets]
 

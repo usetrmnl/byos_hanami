@@ -2,10 +2,10 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Local do
+RSpec.describe Terminus::Aspects::Screens::Fetcher do
   using Refinements::Pathname
 
-  subject(:local) { described_class.new settings: }
+  subject(:fetcher) { described_class.new settings: }
 
   include_context "with temporary directory"
 
@@ -18,7 +18,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
     let(:images_uri) { "https://localhost/assets" }
 
     it "answers default image" do
-      expect(local.call(images_uri:)).to match(
+      expect(fetcher.call(images_uri:)).to match(
         filename: "empty_state",
         image_url: %r(/assets/setup.*\.bmp)
       )
@@ -28,7 +28,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
       path = temp_dir.join "test.bmp"
       fixture_path.copy path
 
-      expect(local.call(images_uri:)).to eq(
+      expect(fetcher.call(images_uri:)).to eq(
         filename: "test.bmp",
         image_url: "https://localhost/assets/screens/test.bmp"
       )
@@ -38,7 +38,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
       path = temp_dir.join "test.bmp"
       fixture_path.copy path
 
-      expect(local.call(images_uri:, encryption: :base_64)).to match(
+      expect(fetcher.call(images_uri:, encryption: :base_64)).to match(
         filename: "test.bmp",
         image_url: %r(data:image/bmp;base64,.+)
       )
@@ -48,7 +48,7 @@ RSpec.describe Terminus::Aspects::Screens::Local do
       path = temp_dir.join "test.bmp"
       fixture_path.copy path
 
-      expect(local.call(images_uri:, encryption: :bogus)).to eq(
+      expect(fetcher.call(images_uri:, encryption: :bogus)).to eq(
         filename: "test.bmp",
         image_url: "https://localhost/assets/screens/test.bmp"
       )
