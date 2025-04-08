@@ -59,5 +59,27 @@
         <p>💡 Prefer wired over wireless since the former is likely not to change on you as much.</p>
       </dialog>
     </fieldset>
+
+    <fieldset class="box">
+      <legend class="label">
+        Firmware
+        <button class="popover-trigger" popovertarget="popover-firmware">ℹ️</button>
+      </legend>
+
+      <ul class="list">
+        <li><%= link_to firmware_path.basename(".bin"), firmware_path %></li>
+      </ul>
+
+      <dialog id="popover-firmware" class="popover-content" popover="auto">
+        <button class="close" popovertarget="popover-firmware" popovertargetaction="hide">
+          <span aria-hidden=true>❌</span>
+          <span class="screen_reader">Close</span>
+        </button>
+
+        <h3 class="label">Firmware</h3>
+
+        <p>Displays the latest firmware version. Automatically updates when a new version is detected.</p>
+      </dialog>
+    </fieldset>
   </div>
 </section>
