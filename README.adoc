@@ -120,6 +120,17 @@ The second way is to manually add your device via the UI. At a minimum, you only
 
 That's it!
 
+=== Background Pollers
+
+There are two background pollers that cache data from the remote link:https://usetrmnl.com[Core] server for improved performance:
+
+* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. This checks for updates every 12 hours.
+* *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. This checks for updates every 5 minutes.
+
+Both of these processes can be configured to use different polling intervals by passing in a different value in seconds (i.e. `<poller>.new seconds: 60`). You can do this by modifying each script.
+
+Each process runs in the background and are automatically configured in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
+
 === APIs
 
 The following APIs are supported. Each uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
@@ -374,7 +385,7 @@ repository.all     # View all devices.
 repository.find 1  # Find by Device ID.
 
 # Fetch next device screen. Sorts in descending order by modified timestamp.
-fetcher = Hanami.app["aspects.screens.local"]
+fetcher = Hanami.app["aspects.screens.fetcher"]
 fetcher.call images_uri: "https://localhost:2443/assets"
 
 # Generate device screen with random name.
