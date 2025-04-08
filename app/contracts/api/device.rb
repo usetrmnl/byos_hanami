@@ -13,12 +13,17 @@ module Terminus
         required(:refresh_rate).filled :integer
         required(:image_timeout).filled :integer
         optional(:proxy).filled :bool
+        optional(:firmware_update).filled :bool
 
         after :value_coercer do |result|
           next unless result.output
-          next result if result.key? :proxy
 
-          result.to_h.tap { it[:proxy] = false }
+          attributes = result.to_h
+
+          attributes[:proxy] = false unless result.key? :proxy
+          attributes[:firmware_update] = false unless result.key? :firmware_update
+
+          attributes
         end
       end
     end

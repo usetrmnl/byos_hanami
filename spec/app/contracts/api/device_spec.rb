@@ -14,7 +14,8 @@ RSpec.describe Terminus::Contracts::API::Device do
         api_key: "secret",
         refresh_rate: 100,
         image_timeout: 0,
-        proxy: "on"
+        proxy: "on",
+        firmware_update: "on"
       }
     end
 
@@ -29,6 +30,15 @@ RSpec.describe Terminus::Contracts::API::Device do
     it "answers false when proxy key is missing" do
       attributes.delete :proxy
       expect(described_class.call(attributes).to_h).to include(proxy: false)
+    end
+
+    it "answers true when firmware update is truthy" do
+      expect(described_class.call(attributes).to_h).to include(firmware_update: true)
+    end
+
+    it "answers false when firmware update key is missing" do
+      attributes.delete :firmware_update
+      expect(described_class.call(attributes).to_h).to include(firmware_update: false)
     end
   end
 end
