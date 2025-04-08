@@ -38,7 +38,7 @@ module Terminus
           end
         end
 
-        def path(payload) = settings.firmware_root.join "#{payload.version}.bin"
+        def path(payload) = Pathname(settings.firmware_root).join "#{payload.version}.bin"
       end
     end
   end
