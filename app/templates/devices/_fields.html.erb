@@ -43,23 +43,6 @@
              label: "MAC Address",
              body: "Uniquely identifies your device when communicating over the network." %>
 
-  <%= scope(:form_field, key: :proxy, errors:).render do %>
-    <label class="key" for="device[proxy]">
-      Proxy
-      <%= render "field_popover_trigger", name: "proxy" %>
-    </label>
-
-    <%= tag.input name: "device[proxy]",
-                  type: :checkbox,
-                  checked: field_for(:proxy, fields, device),
-                  switch: true,
-                  class: :value %>
-  <% end %>
-
-  <%= render "field_popover_content",
-             name: "proxy",
-             label: "Proxy",
-             body: "Allows you to display remote images generated via your TRMNL account when enabled. This includes locally generated images but the remote images will take precedence. Your MAC address and API key must be identical both locally and remotely for this to work." %>
 
   <%= scope(:form_field, key: :api_key, errors:).render do %>
     <label class="key" for="device[api_key]">
@@ -78,6 +61,42 @@
              name: "api_key",
              label: "API Key",
              body: "Used for API requests to authenticate between server and device." %>
+
+  <%= scope(:form_field, key: :firmware_update, errors:).render do %>
+    <label class="key" for="device[firmware_update]">
+      Firmware Update
+      <%= render "field_popover_trigger", name: "firmware_update" %>
+    </label>
+
+    <%= tag.input name: "device[firmware_update]",
+                  type: :checkbox,
+                  checked: field_for(:firmware_update, fields, device),
+                  switch: true,
+                  class: :value %>
+  <% end %>
+
+  <%= render "field_popover_content",
+             name: "firmware_update",
+             label: "Firmware Update",
+             body: "When enabled, allows your device to be automatically updated when a new firmware version is available. At the moment, you'll want to immediately disable this once you see your device being updated or it'll go into an infinite update loop. This due to a firmware bug." %>
+
+  <%= scope(:form_field, key: :proxy, errors:).render do %>
+    <label class="key" for="device[proxy]">
+      Proxy
+      <%= render "field_popover_trigger", name: "proxy" %>
+    </label>
+
+    <%= tag.input name: "device[proxy]",
+                  type: :checkbox,
+                  checked: field_for(:proxy, fields, device),
+                  switch: true,
+                  class: :value %>
+  <% end %>
+
+  <%= render "field_popover_content",
+             name: "proxy",
+             label: "Proxy",
+             body: "Allows you to display remote images generated via your TRMNL account when enabled. This includes locally generated images but the remote images will take precedence. Your MAC address and API key must be identical both locally and remotely for this to work." %>
 
   <%= scope(:form_field, key: :refresh_rate, errors:).render do %>
     <label class="key" for="device[refresh_rate]">
