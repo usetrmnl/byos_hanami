@@ -9,17 +9,16 @@ module Terminus
       module Display
         # The show action.
         class Show < Terminus::Action
-          include Dry::Monads[:result]
           include Deps[
             :settings,
             repository: "repositories.device",
+            image_fetcher: "aspects.screens.rotator",
+            firmware_fetcher: "aspects.firmware.fetcher",
             synchronizer: "aspects.synchronizers.device"
           ]
 
-          include Initable[
-            fetcher: proc { Terminus::Aspects::Screens::Rotator.new },
-            model: Endpoints::Display::Response
-          ]
+          include Initable[model: Endpoints::Display::Response]
+          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 
@@ -42,11 +41,21 @@ module Terminus
 
           def fetch_image parameters, environment
             encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
-            fetcher.call images_uri: "#{settings.api_uri}/assets", encryption:
+            image_fetcher.call images_uri: "#{settings.api_uri}/assets", encryption:
+          end
+
+          def fetch_firmware
+            firmware_fetcher.call
+                            .relative_path_from(config.public_directory)
+                            .then { |relative_path| "#{settings.api_uri}/#{relative_path}" }
           end
 
           def build_record image, device
-            model[**image.slice(:image_url, :filename), **device.as_api_display]
+            model[
+              firmware_url: fetch_firmware,
+              **image.slice(:image_url, :filename),
+              **device.as_api_display
+            ]
           end
         end
       end

@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
   using Refinements::Pathname
 
   subject :action do
-    described_class.new settings:, fetcher: Terminus::Aspects::Screens::Rotator.new(settings:)
+    described_class.new settings:, image_fetcher: Terminus::Aspects::Screens::Rotator.new(settings:)
   end
 
   include_context "with firmware headers"
@@ -19,8 +19,8 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
     before do
       firmware_headers["HTTP_ACCESS_TOKEN"] = device.api_key
-      allow(settings).to receive(:screens_root).and_return(temp_dir)
-
+      allow(settings).to receive_messages(screens_root: temp_dir, firmware_root: temp_dir)
+      temp_dir.join("0.0.0.bin").touch
       SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
     end
 
@@ -31,7 +31,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
       expect(payload).to include(
         filename: /.+\.bmp/,
-        firmware_url: nil,
+        firmware_url: /.*0\.0\.0\.bin/,
         image_url: %r(http://.+/assets/screens/.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
@@ -51,7 +51,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
         expect(payload).to include(
           filename: /.+\.bmp/,
-          firmware_url: nil,
+          firmware_url: /.*0\.0\.0\.bin/,
           image_url: %r(http://.+/assets/screens/.+\.bmp),
           image_url_timeout: 10,
           refresh_rate: 20,
@@ -68,7 +68,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
       expect(payload).to include(
         filename: /.+\.bmp/,
-        firmware_url: nil,
+        firmware_url: /.*0\.0\.0\.bin/,
         image_url: %r(http://.+/assets/screens/.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
@@ -85,7 +85,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
       expect(payload).to include(
         filename: /.+\.bmp/,
-        firmware_url: nil,
+        firmware_url: /.*0\.0\.0\.bin/,
         image_url: %r(data:image/bmp;base64.+),
         image_url_timeout: 0,
         refresh_rate: 900,
@@ -103,7 +103,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
 
       expect(payload).to include(
         filename: /.+\.bmp/,
-        firmware_url: nil,
+        firmware_url: /\d+\.\d+\.\d+\.bin/,
         image_url: %r(data:image/bmp;base64.+),
         image_url_timeout: 0,
         refresh_rate: 900,
