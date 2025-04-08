@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Firmware::Finder do
+RSpec.describe Terminus::Aspects::Firmware::Fetcher do
   using Refinements::Pathname
 
   subject(:finder) { described_class.new settings: }

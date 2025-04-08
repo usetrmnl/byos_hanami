@@ -5,8 +5,8 @@ require "refinements/pathname"
 module Terminus
   module Aspects
     module Firmware
-      # Finds latest firmware download.
-      class Finder
+      # Fetches latest firmware download.
+      class Fetcher
         include Deps[:settings]
 
         using Refinements::Pathname

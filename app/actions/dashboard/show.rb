@@ -10,7 +10,7 @@ module Terminus
         include Deps[
           :settings,
           device_repository: "repositories.device",
-          firmware_finder: "aspects.firmware.finder"
+          firmware_fetcher: "aspects.firmware.fetcher"
         ]
 
         include Initable[ip_finder: proc { Terminus::IPFinder.new }]
@@ -25,7 +25,7 @@ module Terminus
 
         private
 
-        def firmware_path = firmware_finder.call.relative_path_from config.public_directory
+        def firmware_path = firmware_fetcher.call.relative_path_from config.public_directory
       end
     end
   end

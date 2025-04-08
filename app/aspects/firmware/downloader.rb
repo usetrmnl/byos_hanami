@@ -7,7 +7,7 @@ module Terminus
     module Firmware
       # A basic file downloader for firmware.
       class Downloader
-        include Deps[:settings, finder: "aspects.firmware.finder"]
+        include Deps[:settings, fetcher: "aspects.firmware.fetcher"]
         include Dependencies[:http]
         include Dry::Monads[:result]
         include Initable[endpoint: proc { Terminus::Endpoints::Firmware::Requester.new }]
@@ -19,7 +19,7 @@ module Terminus
 
           case result
             in Success(payload)
-              return Success(path(payload)) if finder.call.name.to_s == payload.version
+              return Success(path(payload)) if fetcher.call.name.to_s == payload.version
 
               save payload
             else result
