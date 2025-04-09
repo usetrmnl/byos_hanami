@@ -6,7 +6,7 @@ require "refinements/pathname"
 module Terminus
   module Actions
     module API
-      module Images
+      module Screens
         # The create action.
         class Create < Terminus::Action
           include Deps[:settings]

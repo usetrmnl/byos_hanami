@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Actions::API::Images::Create do
+RSpec.describe Terminus::Actions::API::Screens::Create do
   subject(:action) { described_class.new settings: }
 
   include_context "with temporary directory"
