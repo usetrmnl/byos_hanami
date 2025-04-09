@@ -34,7 +34,7 @@ RSpec.configure do |config|
   config.include Dry::Monads[:result]
   config.include Rack::Test::Methods, type: :request
 
-  config.include_context "with Hanami application", type: :request
+  config.include_context "with main application", type: :request
 
   databases = proc do
     Hanami.app.slices.with_nested.prepend(Hanami.app).each.with_object Set.new do |slice, dbs|
