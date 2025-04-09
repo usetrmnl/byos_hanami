@@ -60,10 +60,6 @@ The following is a high level overview you can use to compare/contrast when deci
 
 The goal isn't for BYOS to match parity with our hosted solution but to provide enough of a pleasant solution for your own customized experience. There are trade offs either way but we've got you covered for whatever path you wish to travel. 🎉
 
-== Screencasts
-
-video::3xehPW-PCOM[youtube,role=video]
-
 == Requirements
 
 . {ruby_link}.
@@ -196,8 +192,8 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
 ----
 {
   "filename": "demo.bmp",
-  "firmware_url": null,
-  "image_url": "https://localhost:2443/assets/screens/demo.bmp",
+  "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
+  "image_url": "https://localhost:2443/assets/screens/A1B2C3D4E5F6/demo.bmp",
   "image_url_timeout": 0,
   "refresh_rate": 130,
   "reset_firmware": false,
@@ -212,7 +208,7 @@ Both the `ID` and `Access-Token` HTTP headers are required for all of these API 
 ----
 {
   "filename": "demo.bmp",
-  "firmware_url": null,
+  "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
   "image_url": "data:image/bmp;base64,<truncated>",
   "image_url_timeout": 0,
   "refresh_rate": 200,
@@ -381,12 +377,12 @@ Once in the console, you can do the following:
 # Use a repository.
 repository = Hanami.app["repositories.device"]
 
-repository.all     # View all devices.
-repository.find 1  # Find by Device ID.
+repository.all              # View all devices.
+device = repository.find 1  # Find by Device ID.
 
 # Fetch next device screen. Sorts in descending order by modified timestamp.
 fetcher = Hanami.app["aspects.screens.fetcher"]
-fetcher.call images_uri: "https://localhost:2443/assets"
+fetcher.call device.slug
 
 # Generate device screen with random name.
 creator = Terminus::Screens::Creator.new
