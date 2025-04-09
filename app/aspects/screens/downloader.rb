@@ -9,7 +9,7 @@ module Terminus
       class Downloader
         include Deps[:settings]
         include Dependencies[client: :http]
-        include Initable[offset: 10] # Seconds.
+        include Initable[seconds: 10]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
@@ -27,7 +27,7 @@ module Terminus
 
           return Time.now unless oldest_file
 
-          oldest_file.mtime - offset
+          oldest_file.mtime - seconds
         end
 
         def get uri
