@@ -14,16 +14,15 @@ module Terminus
 
         using Refinements::Pathname
 
-        def call uri, file_name
-          at = oldest_at
+        def call uri, path
+          asset_path = Pathname(settings.screens_root).join(path).make_ancestors
+          at = oldest_at asset_path
 
-          get(uri).fmap do |content|
-            Pathname(settings.screens_root).mkpath.join(file_name).write(content).touch at
-          end
+          get(uri).fmap { |content| asset_path.write(content).touch at }
         end
 
-        def oldest_at
-          oldest_file = Pathname(settings.screens_root).files.min_by(&:mtime)
+        def oldest_at path
+          oldest_file = path.parent.files.min_by(&:mtime)
 
           return Time.now unless oldest_file
 

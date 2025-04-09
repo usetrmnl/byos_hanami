@@ -3,10 +3,8 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Poller, :db do
-  subject(:poller) { described_class.new repository:, endpoint:, downloader:, kernel: }
+  subject(:poller) { described_class.new endpoint:, downloader:, kernel: }
 
-  let(:repository) { instance_double Terminus::Repositories::Device, all: devices }
-  let(:devices) { [Factory[:device, api_key: "abc123", proxy: true]] }
   let(:kernel) { class_spy Kernel, sleep: nil }
 
   let :endpoint do
@@ -22,7 +20,12 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
   let(:downloader) { instance_spy Terminus::Aspects::Screens::Downloader }
 
   describe "#call" do
-    before { allow(kernel).to receive(:loop).and_yield }
+    let(:devices) { [Factory[:device, api_key: "abc123", proxy: true]] }
+
+    before do
+      devices
+      allow(kernel).to receive(:loop).and_yield
+    end
 
     it "prints that it's shutting down when CONTROL+C is used" do
       allow(kernel).to receive(:trap).and_yield
@@ -45,7 +48,11 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     it "downloads image" do
       poller.call
-      expect(downloader).to have_received(:call).with "https://test.io/test.bmp", "test.bmp"
+
+      expect(downloader).to have_received(:call).with(
+        "https://test.io/test.bmp",
+        "#{devices.first.slug}/test.bmp"
+      )
     end
 
     context "with no devices" do

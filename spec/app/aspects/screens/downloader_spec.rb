@@ -17,25 +17,30 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
 
     it "creates root directory when it doesn't exist" do
       temp_dir.rmdir
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
-      expect(temp_dir.exist?).to be(true)
+      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
+
+      expect(temp_dir.join("abc").exist?).to be(true)
     end
 
     it "downloads file" do
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
-      expect(temp_dir.join("test.png").exist?).to be(true)
+      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
+      expect(temp_dir.join("abc/test.png").exist?).to be(true)
     end
 
     it "marks downloaded file older than oldest file" do
-      temp_dir.join("test.txt").write("test").touch Time.new(2000, 1, 1, 0, 0, 0)
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
+      temp_dir.join("abc/test.txt").make_ancestors.write("test").touch Time.new(2000, 1, 1, 0, 0, 0)
+      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
 
-      expect(temp_dir.join("test.png").mtime.year).to eq(1999)
+      expect(temp_dir.join("abc/test.png").mtime.year).to eq(1999)
     end
 
-    it "answers output path" do
-      result = downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
+    it "answers nested output path" do
+      result = downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
+      expect(result).to be_success(temp_dir.join("abc/test.png"))
+    end
 
+    it "answers non-nested output path" do
+      result = downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
       expect(result).to be_success(temp_dir.join("test.png"))
     end
 

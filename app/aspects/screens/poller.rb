@@ -41,7 +41,7 @@ module Terminus
         def process device
           endpoint.call(api_key: device.api_key)
                   .bind do |response|
-                    downloader.call response.image_url, response.filename
+                    downloader.call response.image_url, "#{device.slug}/#{response.filename}"
                   end
         end
       end
