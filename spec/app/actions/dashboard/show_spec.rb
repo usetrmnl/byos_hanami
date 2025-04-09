@@ -22,7 +22,7 @@ RSpec.describe Terminus::Actions::Dashboard::Show, :db do
 
     it "lists IP addresses" do
       response = action.call Hash.new
-      expect(response.body.first).to include(/\d+\.\d+\.\d+ \(wired\)/)
+      expect(response.body.first).to include(%r(<li.+\d+\.\d+\.\d+.+</li>))
     end
 
     it "lists firmware" do
