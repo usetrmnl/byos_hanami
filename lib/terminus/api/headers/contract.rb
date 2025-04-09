@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Terminus
-  module HTTP
+  module API
     module Headers
       Contract = Dry::Schema.Params do
         required(:HTTP_ACCESS_TOKEN).maybe :string

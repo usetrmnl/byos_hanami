@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::HTTP::Headers::Contract do
+RSpec.describe Terminus::API::Headers::Contract do
   using Versionaire::Cast
 
   subject(:contract) { described_class }

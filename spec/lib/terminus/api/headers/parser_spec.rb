@@ -3,7 +3,7 @@
 require "hanami_helper"
 require "versionaire"
 
-RSpec.describe Terminus::HTTP::Headers::Parser do
+RSpec.describe Terminus::API::Headers::Parser do
   using Versionaire::Cast
 
   subject(:parser) { described_class.new }
@@ -13,7 +13,7 @@ RSpec.describe Terminus::HTTP::Headers::Parser do
   describe "#call" do
     it "answers header record when success" do
       expect(parser.call(firmware_headers)).to be_success(
-        Terminus::HTTP::Headers::Model[
+        Terminus::API::Headers::Model[
           host: "https://localhost",
           user_agent: "ESP32HTTPClient",
           mac_address: "A1:B2:C3:D4:E5:F6",
@@ -32,7 +32,7 @@ RSpec.describe Terminus::HTTP::Headers::Parser do
       firmware_headers.delete "HTTP_ID"
 
       expect(parser.call(firmware_headers)).to be_failure(
-        Terminus::HTTP::Headers::Contract.call(firmware_headers)
+        Terminus::API::Headers::Contract.call(firmware_headers)
       )
     end
   end

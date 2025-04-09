@@ -3,7 +3,7 @@
 require "refinements/hash"
 
 module Terminus
-  module HTTP
+  module API
     module Headers
       KEY_MAP = {
         HTTP_ACCESS_TOKEN: :api_key,

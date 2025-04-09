@@ -4,11 +4,11 @@ require "initable"
 require "pipeable"
 
 module Terminus
-  module HTTP
+  module API
     module Headers
       # Parses firmware specific HTTP headers.
       class Parser
-        include Initable[contract: proc { Terminus::HTTP::Headers::Contract }, model: Model]
+        include Initable[contract: proc { Terminus::API::Headers::Contract }, model: Model]
         include Pipeable
 
         def call(headers) = pipe headers, validate(contract, as: :to_h), to(model, :for)

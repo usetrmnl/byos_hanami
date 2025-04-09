@@ -9,7 +9,7 @@ module Terminus
     module Synchronizers
       # Updates device based on firmware header information.
       class Device
-        include Initable[firmware_parser: proc { Terminus::HTTP::Headers::Parser.new }]
+        include Initable[firmware_parser: proc { Terminus::API::Headers::Parser.new }]
         include Deps[:settings, repository: "repositories.device"]
         include Pipeable
         include Dry::Monads[:result]
