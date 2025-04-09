@@ -11,45 +11,41 @@ RSpec.describe Terminus::Aspects::Screens::Rotator do
 
   let(:settings) { Hanami.app[:settings] }
 
-  before { allow(settings).to receive(:screens_root).and_return temp_dir }
+  before do
+    allow(settings).to receive_messages screens_root: temp_dir, api_uri: "https://localhost"
+  end
 
   describe "#call" do
-    let(:images_uri) { "https://test.io/assets" }
+    before do
+      temp_dir.join("abc/one.bmp").make_ancestors.touch
+      temp_dir.join("abc/two.bmp").make_ancestors.touch
+    end
 
     it "answers oldest image" do
       skip "Doesn't work on CI." if ENV["CI"]
 
-      temp_dir.join("one.bmp").touch
-      temp_dir.join("two.bmp").touch
-
-      expect(rotator.call(images_uri:)).to eq(
+      expect(rotator.call("abc")).to eq(
         filename: "two.bmp",
-        image_url: "https://test.io/assets/screens/two.bmp"
+        image_url: "https://localhost/assets/screens/abc/two.bmp"
       )
     end
 
     it "answers oldest image with encryption" do
       skip "Doesn't work on CI." if ENV["CI"]
 
-      temp_dir.join("one.bmp").touch
-      temp_dir.join("two.bmp").touch
-
-      expect(rotator.call(images_uri:, encryption: :base_64)).to eq(
+      expect(rotator.call("abc", encryption: :base_64)).to eq(
         filename: "two.bmp",
         image_url: "data:image/bmp;base64,"
       )
     end
 
     it "updates oldest image as newest image" do
-      temp_dir.join("one.bmp").touch
-      temp_dir.join("two.bmp").touch
+      rotator.call "abc"
 
-      rotator.call(images_uri:)
-
-      expect(temp_dir.files.sort_by(&:mtime)).to eq(
+      expect(temp_dir.join("abc").files.sort_by(&:mtime)).to eq(
         [
-          temp_dir.join("two.bmp"),
-          temp_dir.join("one.bmp")
+          temp_dir.join("abc/two.bmp"),
+          temp_dir.join("abc/one.bmp")
         ]
       )
     end

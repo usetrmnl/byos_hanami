@@ -18,10 +18,11 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     let(:device) { Factory[:device] }
 
     before do
-      firmware_headers["HTTP_ACCESS_TOKEN"] = device.api_key
       allow(settings).to receive_messages(screens_root: temp_dir, firmware_root: temp_dir)
       temp_dir.join("0.0.0.bin").touch
-      SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
+
+      SPEC_ROOT.join("support/fixtures/test.bmp")
+               .copy temp_dir.join("#{device.slug}/test.bmp").make_ancestors
     end
 
     it "answers payload with valid parameters and full dependencies" do
@@ -32,7 +33,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: /.*0\.0\.0\.bin/,
-        image_url: %r(http://.+/assets/screens/.+\.bmp),
+        image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
@@ -52,7 +53,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         expect(payload).to include(
           filename: /.+\.bmp/,
           firmware_url: /.*0\.0\.0\.bin/,
-          image_url: %r(http://.+/assets/screens/.+\.bmp),
+          image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
           image_url_timeout: 10,
           refresh_rate: 20,
           reset_firmware: false,
@@ -69,7 +70,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: /.*0\.0\.0\.bin/,
-        image_url: %r(http://.+/assets/screens/.+\.bmp),
+        image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,

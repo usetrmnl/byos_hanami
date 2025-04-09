@@ -14,34 +14,25 @@ module Terminus
 
         using Refinements::Pathname
 
-        def call images_uri:, encryption: nil
-          last_generated_image(images_uri, encryption) || default
+        def call slug, encryption: nil
+          image_path = Pathname(settings.screens_root).join(slug).files("*.bmp").max_by(&:mtime)
+
+          return default unless image_path
+
+          {filename: image_path.basename.to_s, image_url: image_url(slug, image_path, encryption)}
         end
 
         private
 
-        # :reek:TooManyStatements
-        def last_generated_image images_uri, encryption
-          image_path = root_path.files("*.bmp").max_by(&:mtime)
-
-          return unless image_path
-
-          filename = image_path.basename.to_s
-
-          image_url = if encryptable? encryption
-                        "data:image/bmp;base64,#{Base64.strict_encode64 image_path.read}"
-                      else
-                        "#{images_uri}/screens/#{filename}"
-                      end
-
-          {filename:, image_url:}
+        def image_url slug, image_path, encryption
+          if encryptions.include?(encryption) && encryption == :base_64
+            "data:image/bmp;base64,#{Base64.strict_encode64 image_path.read}"
+          else
+            "#{settings.api_uri}/assets/screens/#{slug}/#{image_path.basename}"
+          end
         end
 
-        def encryptable?(value) = encryptions.include?(value) && value == :base_64
-
-        def root_path = Pathname settings.screens_root
-
-        def default = {filename: "empty_state", image_url: assets["setup.bmp"].url}
+        def default = {filename: "empty_state", image_url: "#{settings.api_uri}/assets/setup.bmp"}
       end
     end
   end

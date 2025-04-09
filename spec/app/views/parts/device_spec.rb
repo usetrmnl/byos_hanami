@@ -22,11 +22,13 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
   describe "#image_uri" do
     before do
       allow(settings).to receive(:screens_root).and_return(temp_dir)
-      SPEC_ROOT.join("support/fixtures/test.bmp").copy temp_dir.join("test.bmp")
+
+      SPEC_ROOT.join("support/fixtures/test.bmp")
+               .copy temp_dir.join(device.slug, "test.bmp").make_ancestors
     end
 
     it "answers URI" do
-      expect(part.image_uri).to eq("/assets/screens/test.bmp")
+      expect(part.image_uri).to eq("/assets/screens/#{device.slug}/test.bmp")
     end
   end
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/core"
 require "dry/monads"
 require "initable"
 
@@ -40,8 +41,10 @@ module Terminus
           private
 
           def fetch_image parameters, environment
-            encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
-            image_fetcher.call images_uri: "#{settings.api_uri}/assets", encryption:
+            encrypted, mac_address = environment.values_at "HTTP_BASE64", "HTTP_ID"
+            encryption = :base_64 if (encrypted || parameters[:base_64]) == "true"
+
+            image_fetcher.call mac_address.tr(":", Dry::Core::EMPTY_STRING), encryption:
           end
 
           def fetch_firmware

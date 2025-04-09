@@ -10,9 +10,9 @@ module Terminus
         include Deps[:settings, "aspects.screens.fetcher"]
         include Initable[toucher: proc { Terminus::Screens::Toucher }]
 
-        def call images_uri:, encryption: nil
-          fetcher.call(images_uri:, encryption:)
-                 .tap { toucher.call settings.screens_root }
+        def call slug, encryption: nil
+          fetcher.call(slug, encryption:)
+                 .tap { toucher.call Pathname(settings.screens_root).join(slug) }
         end
       end
     end

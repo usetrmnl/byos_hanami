@@ -11,46 +11,44 @@ RSpec.describe Terminus::Aspects::Screens::Fetcher do
 
   let(:settings) { Hanami.app[:settings] }
 
-  before { allow(settings).to receive(:screens_root).and_return temp_dir }
+  before { allow(settings).to receive_messages screens_root: temp_dir, api_uri: "https://localhost" }
 
   describe "#call" do
     let(:fixture_path) { SPEC_ROOT.join "support/fixtures/test.bmp" }
-    let(:images_uri) { "https://localhost/assets" }
+    let(:asset_path) { temp_dir.join(slug).mkpath.join "test.bmp" }
+    let(:slug) { "abc" }
 
     it "answers default image" do
-      expect(fetcher.call(images_uri:)).to match(
+      expect(fetcher.call(slug)).to match(
         filename: "empty_state",
-        image_url: %r(/assets/setup.*\.bmp)
+        image_url: "https://localhost/assets/setup.bmp"
       )
     end
 
     it "answers generated image without encryption" do
-      path = temp_dir.join "test.bmp"
-      fixture_path.copy path
+      fixture_path.copy asset_path
 
-      expect(fetcher.call(images_uri:)).to eq(
+      expect(fetcher.call(slug)).to eq(
         filename: "test.bmp",
-        image_url: "https://localhost/assets/screens/test.bmp"
+        image_url: "https://localhost/assets/screens/abc/test.bmp"
       )
     end
 
     it "answers generated image with encryption" do
-      path = temp_dir.join "test.bmp"
-      fixture_path.copy path
+      fixture_path.copy asset_path
 
-      expect(fetcher.call(images_uri:, encryption: :base_64)).to match(
+      expect(fetcher.call(slug, encryption: :base_64)).to match(
         filename: "test.bmp",
         image_url: %r(data:image/bmp;base64,.+)
       )
     end
 
     it "answers generated image without encryption when given invalid encryption" do
-      path = temp_dir.join "test.bmp"
-      fixture_path.copy path
+      fixture_path.copy asset_path
 
-      expect(fetcher.call(images_uri:, encryption: :bogus)).to eq(
+      expect(fetcher.call(slug, encryption: :bogus)).to eq(
         filename: "test.bmp",
-        image_url: "https://localhost/assets/screens/test.bmp"
+        image_url: "https://localhost/assets/screens/abc/test.bmp"
       )
     end
   end
