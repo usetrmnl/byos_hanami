@@ -5,12 +5,10 @@ module Terminus
     module Screens
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
-        include Deps[repository: "repositories.device"]
+        include Deps["aspects.screens.downloader", repository: "repositories.device"]
 
-        # :nocov:
         include Initable[
           endpoint: proc { Terminus::Endpoints::Display::Requester.new },
-          downloader: proc { Terminus::Aspects::Screens::Downloader.new },
           kernel: Kernel,
           seconds: 300
         ]
@@ -24,7 +22,7 @@ module Terminus
 
         def watch_for_shudown
           kernel.trap "INT" do
-            kernel.puts "Gracefully shutting down polling..."
+            kernel.puts "Gracefully shutting down screen polling..."
             kernel.exit
           end
         end

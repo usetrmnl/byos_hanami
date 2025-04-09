@@ -8,12 +8,9 @@ module Terminus
         class Create < Terminus::Action
           include Deps[
             :logger,
+            transformer: "aspects.api.transformers.firmware_log",
             device_repository: "repositories.device",
-            log_repository: "repositories.device_log"
-          ]
-
-          include Initable[
-            transformer: proc { Terminus::Aspects::API::Transformers::FirmwareLog.new }
+            log_repository: "repositories.device_log",
           ]
 
           format :json
