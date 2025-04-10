@@ -249,6 +249,41 @@ curl "https://localhost:2443/api/setup/" \
 ----
 ====
 
+==== Screens
+
+Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device.
+
+.Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+    -H 'Access-Token: <redacted>' \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d $'{
+ "image": {
+   "content": "<p>Test</p>"
+   "file_name": "test"
+ }
+}'
+----
+
+The `Access-Token` is your device's MAC address. You can obtain this information from the UI.
+====
+
+.Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/test.bmp"
+}
+----
+====
+
 ==== Logs
 
 Uses for logging information about your server and/or device. Mostly used for debugging purposes.
@@ -299,43 +334,6 @@ curl -X "POST" "https://localhost:2443/api/log" \
 ====
 Logs details and answers a HTTP 204 status with no content.
 ====
-
-==== Images
-
-Used for generating new images by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device.
-
-.Request
-[%collapsible]
-====
-[source,bash]
-----
-curl -X "POST" "https://localhost:2443/api/images" \
-    -H 'ID: <redacted>' \
-    -H 'Access-Token: <redacted>' \
-    -H 'Accept: application/json' \
-    -H 'Content-Type: application/json' \
-    -d $'{
- "image": {
-   "content": "<p>Test</p>"
-   "file_name": "test"
- }
-}'
-----
-
-The `ID` header is your device's MAC address. You can obtain this information from the UI.
-====
-
-.Response
-[%collapsible]
-====
-[source,json]
-----
-{
-  "path": "$HOME/Engineering/terminus/public/assets/screens/test.bmp"
-}
-----
-====
-
 
 💡 The images API supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
 
