@@ -2,26 +2,52 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Actions::API::Screens::Create do
+RSpec.describe Terminus::Actions::API::Screens::Create, :db do
   subject(:action) { described_class.new settings: }
 
   include_context "with main application"
 
-  let(:path) { temp_dir.join "rspec_test.bmp" }
-
   describe "#call" do
+    let(:device) { Factory[:device] }
+    let(:path) { temp_dir.join device.slug, "rspec_test.bmp" }
+
     it "creates image with random name" do
-      body = {image: {content: "<p>Test</p>"}}
-      payload = JSON action.call(body).body.first, symbolize_names: true
+      response = Rack::MockRequest.new(action)
+                                  .request "GET",
+                                           "",
+                                           "HTTP_ACCESS_TOKEN" => device.api_key,
+                                           params: {image: {content: "<p>Test</p>"}}
+
+      payload = JSON response.body, symbolize_names: true
 
       expect(Pathname(payload[:path]).exist?).to be(true)
     end
 
     it "creates image with custom name" do
-      body = {image: {content: "<p>Test</p>", file_name: "rspec_test"}}
-      payload = JSON action.call(body).body.first, symbolize_names: true
+      response = Rack::MockRequest.new(action)
+                                  .request "GET",
+                                           "",
+                                           "HTTP_ACCESS_TOKEN" => device.api_key,
+                                           params: {
+                                             image: {
+                                               content: "<p>Test</p>",
+                                               filename: "rspec_test"
+                                             }
+                                           }
+
+      payload = JSON response.body, symbolize_names: true
 
       expect(Pathname(payload[:path]).exist?).to be(true)
+    end
+
+    it "answers bad request for unknown device" do
+      response = Rack::MockRequest.new(action)
+                                  .request "GET",
+                                           "",
+                                           "HTTP_ACCESS_TOKEN" => "bogus",
+                                           params: {image: {content: "<p>Test</p>"}}
+
+      expect(response.status).to eq(400)
     end
 
     it "answers bad request for no body" do
