@@ -3,7 +3,7 @@
 module Terminus
   # The application base routes.
   class Routes < Hanami::Routes
-    get "/", to: "dashboard.show"
+    get "/", to: "dashboard.show", as: :root
 
     get "/api/display/", to: "api.display.show", as: :api_display_show
     post "/api/screens", to: "api.screens.create", as: :api_screens_create
