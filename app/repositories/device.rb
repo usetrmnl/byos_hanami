@@ -14,11 +14,15 @@ module Terminus
       def find(id) = (devices.by_pk(id).one if id)
 
       def find_by_api_key value
+        return unless value
+
         devices.where { api_key.ilike "%#{value}%" }
                .one
       end
 
       def find_by_mac_address value
+        return unless value
+
         devices.where { mac_address.ilike "%#{value}%" }
                .one
       end

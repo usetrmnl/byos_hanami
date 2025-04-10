@@ -40,6 +40,10 @@ RSpec.describe Terminus::Repositories::Device, :db do
     it "answers nil for unknown ID" do
       expect(repository.find_by_api_key(13)).to be(nil)
     end
+
+    it "answers nil for nil" do
+      expect(repository.find_by_api_key(nil)).to be(nil)
+    end
   end
 
   describe "#find_by_mac_address" do
@@ -49,6 +53,10 @@ RSpec.describe Terminus::Repositories::Device, :db do
 
     it "answers nil for unknown ID" do
       expect(repository.find_by_mac_address(13)).to be(nil)
+    end
+
+    it "answers nil for nil" do
+      expect(repository.find_by_mac_address(nil)).to be(nil)
     end
   end
 
