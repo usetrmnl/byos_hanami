@@ -7,13 +7,7 @@ RSpec.describe Terminus::Aspects::Screens::Rotator do
 
   subject(:rotator) { described_class.new settings: }
 
-  include_context "with temporary directory"
-
-  let(:settings) { Hanami.app[:settings] }
-
-  before do
-    allow(settings).to receive_messages screens_root: temp_dir, api_uri: "https://localhost"
-  end
+  include_context "with main application"
 
   describe "#call" do
     before do

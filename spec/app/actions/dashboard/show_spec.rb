@@ -7,9 +7,7 @@ RSpec.describe Terminus::Actions::Dashboard::Show, :db do
 
   subject(:action) { described_class.new settings: }
 
-  include_context "with temporary directory"
-
-  let(:settings) { Hanami.app[:settings] }
+  include_context "with main application"
 
   describe "#call" do
     let(:device) { Factory[:device] }
@@ -27,7 +25,6 @@ RSpec.describe Terminus::Actions::Dashboard::Show, :db do
 
     it "lists firmware" do
       temp_dir.join("0.0.0.bin").touch
-      allow(settings).to receive(:firmware_root).and_return temp_dir
       response = action.call Hash.new
 
       expect(response.body.first).to include(%(<a href="../tmp/rspec/0.0.0.bin">0.0.0</a>))

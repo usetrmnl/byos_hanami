@@ -5,16 +5,13 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::Downloader do
   using Refinements::Pathname
 
-  subject(:downloader) { described_class.new client: }
+  subject(:downloader) { described_class.new settings:, client: }
 
-  include_context "with temporary directory"
+  include_context "with main application"
 
   let(:client) { HTTP }
-  let(:settings) { Hanami.app[:settings] }
 
   describe "#call" do
-    before { allow(settings).to receive(:screens_root).and_return temp_dir }
-
     it "creates root directory when it doesn't exist" do
       temp_dir.rmdir
       downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"

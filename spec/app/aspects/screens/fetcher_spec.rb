@@ -7,11 +7,7 @@ RSpec.describe Terminus::Aspects::Screens::Fetcher do
 
   subject(:fetcher) { described_class.new settings: }
 
-  include_context "with temporary directory"
-
-  let(:settings) { Hanami.app[:settings] }
-
-  before { allow(settings).to receive_messages screens_root: temp_dir, api_uri: "https://localhost" }
+  include_context "with main application"
 
   describe "#call" do
     let(:fixture_path) { SPEC_ROOT.join "support/fixtures/test.bmp" }

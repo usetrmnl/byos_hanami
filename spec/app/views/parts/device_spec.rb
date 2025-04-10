@@ -7,7 +7,8 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
 
   subject(:part) { described_class.new settings:, value: device, rendering: view.new.rendering }
 
-  let(:settings) { Hanami.app[:settings] }
+  include_context "with main application"
+
   let(:device) { Factory[:device] }
 
   let :view do
@@ -17,12 +18,8 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     end
   end
 
-  include_context "with temporary directory"
-
   describe "#image_uri" do
     before do
-      allow(settings).to receive(:screens_root).and_return(temp_dir)
-
       SPEC_ROOT.join("support/fixtures/test.bmp")
                .copy temp_dir.join(device.slug, "test.bmp").make_ancestors
     end

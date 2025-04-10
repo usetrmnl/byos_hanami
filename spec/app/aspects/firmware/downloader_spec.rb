@@ -7,10 +7,8 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
 
   subject(:downloader) { described_class.new http:, endpoint: }
 
+  include_context "with main application"
   include_context "with library dependencies"
-  include_context "with temporary directory"
-
-  let(:settings) { Hanami.app[:settings] }
 
   let :endpoint do
     instance_double Terminus::Endpoints::Firmware::Requester,
@@ -23,8 +21,6 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
   end
 
   describe "#call" do
-    before { allow(settings).to receive(:firmware_root).and_return temp_dir }
-
     context "with success" do
       let(:http) { HTTP }
 

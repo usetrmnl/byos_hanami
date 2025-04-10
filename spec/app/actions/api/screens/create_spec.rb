@@ -5,12 +5,9 @@ require "hanami_helper"
 RSpec.describe Terminus::Actions::API::Screens::Create do
   subject(:action) { described_class.new settings: }
 
-  include_context "with temporary directory"
+  include_context "with main application"
 
-  let(:settings) { Hanami.app[:settings] }
   let(:path) { temp_dir.join "rspec_test.bmp" }
-
-  before { allow(settings).to receive(:screens_root).and_return temp_dir }
 
   describe "#call" do
     it "creates image with random name" do

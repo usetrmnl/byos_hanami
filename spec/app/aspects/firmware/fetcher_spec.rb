@@ -7,11 +7,7 @@ RSpec.describe Terminus::Aspects::Firmware::Fetcher do
 
   subject(:finder) { described_class.new settings: }
 
-  include_context "with temporary directory"
-
-  let(:settings) { Hanami.app[:settings] }
-
-  before { allow(settings).to receive(:firmware_root).and_return temp_dir }
+  include_context "with main application"
 
   describe "#call" do
     it "answers latest firmware version" do

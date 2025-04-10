@@ -9,8 +9,8 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     described_class.new settings:, image_fetcher: Terminus::Aspects::Screens::Rotator.new(settings:)
   end
 
+  include_context "with main application"
   include_context "with firmware headers"
-  include_context "with temporary directory"
 
   let(:settings) { Hanami.app[:settings] }
 
@@ -18,7 +18,6 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
     let(:device) { Factory[:device] }
 
     before do
-      allow(settings).to receive_messages(screens_root: temp_dir, firmware_root: temp_dir)
       temp_dir.join("0.0.0.bin").touch
 
       SPEC_ROOT.join("support/fixtures/test.bmp")
@@ -33,7 +32,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: /.*0\.0\.0\.bin/,
-        image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
+        image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
@@ -53,7 +52,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
         expect(payload).to include(
           filename: /.+\.bmp/,
           firmware_url: /.*0\.0\.0\.bin/,
-          image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
+          image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
           image_url_timeout: 10,
           refresh_rate: 20,
           reset_firmware: false,
@@ -70,7 +69,7 @@ RSpec.describe Terminus::Actions::API::Display::Show, :db do
       expect(payload).to include(
         filename: /.+\.bmp/,
         firmware_url: /.*0\.0\.0\.bin/,
-        image_url: %r(http://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
+        image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
         image_url_timeout: 0,
         refresh_rate: 900,
         reset_firmware: false,
