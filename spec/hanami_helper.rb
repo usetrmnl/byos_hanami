@@ -34,7 +34,11 @@ RSpec.configure do |config|
   config.include Dry::Monads[:result]
   config.include Rack::Test::Methods, type: :request
 
+  config.define_derived_metadata(file_path: %r(/spec/features/)) { it[:type] = :feature }
+  config.define_derived_metadata(file_path: %r(/spec/requests/)) { it[:type] = :request }
+
   config.include_context "with main application", type: :request
+  config.include_context "with main application", type: :feature
 
   databases = proc do
     Hanami.app.slices.with_nested.prepend(Hanami.app).each.with_object Set.new do |slice, dbs|
