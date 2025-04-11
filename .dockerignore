@@ -1,6 +1,7 @@
 # Bin
 /bin
 !/bin/console
+!/bin/pollers
 !/bin/docker/entrypoint
 
 # Bundler
@@ -43,6 +44,9 @@
 
 # Overmind
 /.overmind.sock
+
+# Procfile
+Procfile.dev
 
 # Reek
 /.reek.yml
