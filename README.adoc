@@ -467,20 +467,6 @@ CONTENT
 
 The above will create a new image in the `public/screens` folder of this application which will eventually render on your device. 🎉
 
-To build a {docker_link} image, run:
-
-[source,bash]
-----
-bin/docker/build
-----
-
-To work within your {docker_link} image, run:
-
-[source,bash]
-----
-bin/docker/console
-----
-
 === YJIT
 
 {yjit_link} is enabled by default if detected which means you have built and installed Ruby with YJIT enabled. If you didn't build Ruby with YJIT support, YJIT support will be ignored. That said, we _recommend_ you enable YJIT support since the performance improvements are worth it.
