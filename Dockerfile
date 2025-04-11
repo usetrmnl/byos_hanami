@@ -30,7 +30,6 @@ RUN <<STEPS
   nodejs \
   npm \
   pkg-config \
-  postgresql-client \
   && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
@@ -55,7 +54,7 @@ STEPS
 
 RUN groupadd --system --gid 1000 app && \
     useradd app --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R app:app log tmp
+    chown -R app:app public log tmp
 
 USER 1000:1000
 
