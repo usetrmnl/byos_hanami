@@ -513,6 +513,7 @@ DEPENDENCIES
   dry-schema (~> 1.13)
   dry-types (~> 1.7)
   dry-validation (~> 1.10)
+  ferrum (~> 0.15)
   git-lint (~> 9.0)
   hanami (~> 2.2.0)
   hanami-assets (~> 2.2.0)
