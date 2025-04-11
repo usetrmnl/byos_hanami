@@ -8,7 +8,7 @@ WORKDIR /app
 
 RUN <<STEPS
   apt-get update -qq \
-  && apt-get install --no-install-recommends -y curl libjemalloc2 \
+  && apt-get install --no-install-recommends -y curl libjemalloc2 postgresql-client \
   && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
@@ -43,12 +43,12 @@ RUN <<STEPS
 STEPS
 
 COPY . .
+RUN bundle exec hanami assets compile
 FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /app /app
 
 RUN <<STEPS
-  bundle exec hanami assets compile
   mkdir -p /app/log
   mkdir -p /app/tmp
 STEPS
@@ -61,6 +61,6 @@ USER 1000:1000
 
 ENTRYPOINT ["/app/bin/docker/entrypoint"]
 
-EXPOSE 80
+EXPOSE 2300
 
-CMD ["bundle", "exec", "hanami", "server", "--host", "0.0.0.0", "--port", "80"]
+CMD ["bundle", "exec", "puma", "--config", "./config/puma.rb"]

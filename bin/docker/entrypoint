@@ -6,4 +6,6 @@ $VERBOSE = true
 path = Dir["/usr/lib/*/libjemalloc.so.2"]
 ENV["LD_PRELOAD"] = path.first unless ENV.key?("LD_PRELOAD") && path.empty?
 
+system "bundle exec hanami db prepare"
+
 system ARGV.join(" ")
