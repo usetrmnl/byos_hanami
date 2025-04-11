@@ -2,6 +2,7 @@ organization:
   label: "TRMNL"
   uri: "https://usetrmnl.com"
 project:
+  name: "byos_hanami"
   owner: "usetrmnl"
   uri:
     icon: "%<organization_uri>s/favicon.ico"
