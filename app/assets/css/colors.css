@@ -2,7 +2,8 @@
   --site-black: oklch(0% 0% 0deg);
   --site-red: oklch(53% 54% 29deg);
   --site-white: oklch(100% 0% 90deg);
-  --site-grey: oklch(70% 6% 260deg);
+  --site-lightgrey: oklch(93% 0% 0deg);
+  --site-darkgrey: oklch(47% 0% 0deg);
   --site-green: oklch(65% 35% 155deg);
   --site-blue: oklch(61% 54% 258deg);
 }
