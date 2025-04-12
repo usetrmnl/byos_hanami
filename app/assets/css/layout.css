@@ -10,15 +10,14 @@
 }
 
 .site-header {
-  background-color: var(--site-black);
-  color: var(--site-white);
+  color: var(--site-black);
   grid-area: site-header;
 
   .navigation {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1.5rem 4rem 1rem 4rem;
   }
 
   .list {
@@ -27,13 +26,27 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 1rem;
   }
 
   .link {
     display: flex;
-    color: var(--site-white);
+    color: var(--site-black);
+    font-size: 0.95em;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 20px;
   }
+
+  .link-home {
+    font-size: 1.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .link:hover {
+  background-color: var(--site-lightgrey);
+  }
+
 }
 
 .site-body {

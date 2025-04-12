@@ -158,10 +158,10 @@
 
   tbody {
     tr {
-      background-color: oklch(from var(--site-grey) l c h / 0.15);
+      background-color: oklch(from var(--site-lightgrey) l c h / 0.15);
 
       &:hover {
-        background-color: oklch(from var(--site-grey) l c h / 0.2);
+        background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
       }
 
       &:last-child {
@@ -241,7 +241,7 @@
 
   .value {
     border-radius: 0.5rem;
-    border: 0.1rem solid var(--site-grey);
+    border: 0.1rem solid var(--site-lightgrey);
     padding: 0.3rem;
   }
 

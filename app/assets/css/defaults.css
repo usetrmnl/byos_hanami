@@ -4,11 +4,17 @@ html, body {
 
 html {
   accent-color: var(--site-red);
-  background-color: oklch(from var(--site-grey) l c h / 0.2);
+  background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
   font-family: var(--site-font-family);
   scrollbar-color: var(--site-white) var(--site-red);
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
+}
+
+h1, h2 {
+  font-family: var(--site-heading-font-family);
+  font-weight: 300;
+  font-size: 2.75em;
 }
 
 body {
@@ -28,9 +34,9 @@ img {
 }
 
 kbd {
-  background-color: oklch(from var(--site-grey) l c h / 0.1);
+  background-color: oklch(from var(--site-lightgrey) l c h / 0.1);
   border-radius: 0.2rem;
-  border: 0.1rem solid var(--site-grey);
+  border: 0.1rem solid var(--site-lightgrey);
   color: var(--site-black);
   font-size: 0.85em;
   font-weight: 600;
