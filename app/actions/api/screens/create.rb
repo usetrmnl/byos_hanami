@@ -43,9 +43,10 @@ module Terminus
           end
 
           def output_path slug, image
-            Pathname(settings.screens_root).join(slug)
-                                           .mkpath
-                                           .join %(#{image.fetch :file_name, "%<name>s"}.bmp)
+            settings.screens_root
+                    .join(slug)
+                    .mkpath
+                    .join %(#{image.fetch :file_name, "%<name>s"}.bmp)
           end
         end
       end

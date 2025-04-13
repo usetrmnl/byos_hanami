@@ -11,8 +11,7 @@ module Terminus
         include Initable[toucher: proc { Terminus::Screens::Toucher }]
 
         def call slug, encryption: nil
-          fetcher.call(slug, encryption:)
-                 .tap { toucher.call Pathname(settings.screens_root).join(slug) }
+          fetcher.call(slug, encryption:).tap { toucher.call settings.screens_root.join(slug) }
         end
       end
     end

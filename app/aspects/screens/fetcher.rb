@@ -15,7 +15,7 @@ module Terminus
         using Refinements::Pathname
 
         def call slug, encryption: nil
-          image_path = Pathname(settings.screens_root).join(slug).files("*.bmp").max_by(&:mtime)
+          image_path = settings.screens_root.join(slug).files("*.bmp").max_by(&:mtime)
 
           return default unless image_path
 

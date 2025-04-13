@@ -11,7 +11,7 @@ module Terminus
 
         using Refinements::Pathname
 
-        def call = Pathname(settings.firmware_root).then { |root| root.files("*.bin").last || root }
+        def call = settings.firmware_root.then { |root| root.files("*.bin").last || root }
       end
     end
   end

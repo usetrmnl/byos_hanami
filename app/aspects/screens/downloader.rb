@@ -15,7 +15,7 @@ module Terminus
         using Refinements::Pathname
 
         def call uri, path
-          asset_path = Pathname(settings.screens_root).join(path).make_ancestors
+          asset_path = settings.screens_root.join(path).make_ancestors
           at = oldest_at asset_path
 
           get(uri).fmap { |content| asset_path.write(content).touch at }
