@@ -1,13 +1,18 @@
 .button {
   padding: 0.5rem 1rem;
-  border-radius: 0.2rem;
+  border-radius: 1.5rem;
 }
 
 .button-new {
   align-self: flex-start;
-  background-color: hsl(102, 73%, 28%);
+  background-color: var(--site-orange);
   color: white;
   text-decoration: none;
+}
+
+.button-new:hover{
+  background-color: var(--site-white);
+  color: var(--site-orange);
 }
 
 .link-cancel {

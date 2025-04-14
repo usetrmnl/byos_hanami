@@ -44,7 +44,7 @@
   }
 
   .link:hover {
-  background-color: var(--site-lightgrey);
+    background-color: oklch(from var(--site-lightgrey) l c h / 0.5);
   }
 
 }
