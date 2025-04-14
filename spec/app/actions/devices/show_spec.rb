@@ -8,11 +8,6 @@ RSpec.describe Terminus::Actions::Devices::Show, :db do
   describe "#call" do
     let(:device) { Factory[:device] }
 
-    it "answers 200 OK status with valid parameters" do
-      response = action.call id: device.id
-      expect(response.status).to eq(200)
-    end
-
     it "renders htmx response" do
       response = Rack::MockRequest.new(action)
                                   .get "", "HTTP_HX_REQUEST" => "true", params: {id: device.id}

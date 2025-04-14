@@ -13,7 +13,7 @@ RSpec.describe "/api/setup", :db do
     let(:device) { repository.find_by_mac_address mac_address }
 
     it "answers device/image details for new device" do
-      get routes.path(:api_setup_show), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
+      get routes.path(:api_setup), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
 
       expect(json_payload).to eq(
         api_key: device.api_key,
@@ -24,7 +24,7 @@ RSpec.describe "/api/setup", :db do
     end
 
     it "creates device" do
-      get routes.path(:api_setup_show), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
+      get routes.path(:api_setup), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
 
       expect(device).to have_attributes(
         label: "TRMNL",
@@ -38,7 +38,7 @@ RSpec.describe "/api/setup", :db do
   end
 
   it "answers existing device for MAC address" do
-    get routes.path(:api_setup_show), {}, "HTTP_ID" => device.mac_address
+    get routes.path(:api_setup), {}, "HTTP_ID" => device.mac_address
 
     expect(json_payload).to eq(
       api_key: device.api_key,

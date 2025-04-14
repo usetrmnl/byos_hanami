@@ -16,7 +16,7 @@
 
       <ul class="list">
         <% devices.each do |device| %>
-          <%= tag.li link_to(device.label, routes.path(:devices_show, id: device.id)) %>
+          <%= tag.li link_to(device.label, routes.path(:device_show, id: device.id)) %>
         <% end %>
       </ul>
 

@@ -9,7 +9,7 @@ RSpec.describe "Device Logs", :db do
 
   it "views device logs", :aggregate_failures do
     device_log
-    visit routes.path(:devices_index)
+    visit routes.path(:devices)
     click_link "Logs"
 
     expect(page).to have_content("Danger!")
