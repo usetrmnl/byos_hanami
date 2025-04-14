@@ -23,8 +23,17 @@ body {
 }
 
 a {
-  color: var(--site-blue);
+  color: var(--site-orange);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
   text-underline-position: under;
+}
+
+li {
+  margin-bottom: 0.4rem;
 }
 
 img {

@@ -95,9 +95,10 @@
       align-items: space-between;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 2rem;
       justify-content: space-evenly;
-      padding: 0 1rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem 0 1rem;
     }
   }
 }
