@@ -23,6 +23,8 @@ module Terminus
     get "/devices/:device_id/logs", to: "devices.logs.index", as: :devices_logs
     get "/devices/:device_id/logs/:id", to: "devices.logs.show", as: :device_log_show
 
+    get "/editor", to: "editor.show", as: :editor
+
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt"]
