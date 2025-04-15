@@ -1,0 +1,28 @@
+<% content_for :title, "Editor | Terminus" %>
+
+<section class="page-devices">
+  <header class="page-header">
+    <h1 class="label">Editor</h1>
+  </header>
+
+  <div class="page-body page-editor">
+    <figure class="site-figure terminal"
+            hx-ext="sse"
+            sse-connect="/preview/<%= id %>"
+            sse-swap="preview">
+    </figure>
+
+    <p>Use the text area below to design custom screens for your device using pure HTML/CSS. Changes are applied automatically as you make edits. Enjoy!</p>
+
+    <form action="/editor" method="post" class="form">
+      <%= tag.input name: "template[id]", type: :hidden, value: id %>
+      <textarea name="template[content]"
+                class="source"
+                hx-post="/editor"
+                hx-trigger="load, keyup delay:200ms"
+                hx-swap="textContent">
+        <%= render :default_content %>
+      </textarea>
+    </form>
+  </div>
+</section>
