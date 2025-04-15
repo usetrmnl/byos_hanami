@@ -1,0 +1,29 @@
+.page-editor {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .terminal {
+    box-shadow:
+      0.7px 0.7px 0.7px rgba(0, 0, 0, 0.022),
+      1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
+      3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
+      7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
+      20px 20px 20px rgba(0, 0, 0, 0.07)
+    ;
+    border-width: 2rem 2rem 4rem 2rem;
+  }
+
+  .form {
+    width: 100%;
+  }
+
+  .source {
+    box-sizing: border-box;
+    height: 40vh;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1rem;
+    font-family: monospace;
+  }
+}
