@@ -17,7 +17,7 @@ RSpec.describe Terminus::Aspects::Screens::Fetcher do
     it "answers default image" do
       expect(fetcher.call(slug)).to match(
         filename: "empty_state",
-        image_url: "https://localhost/assets/setup.bmp"
+        image_url: "https://localhost/assets/trmnl.svg"
       )
     end
 
