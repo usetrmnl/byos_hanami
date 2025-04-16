@@ -24,6 +24,7 @@ module Terminus
     get "/devices/:device_id/logs/:id", to: "devices.logs.show", as: :device_log_show
 
     get "/editor", to: "editor.show", as: :editor
+    post "/editor", to: "editor.create", as: :editor_create
 
     slice(:health, at: "/up") { root to: "show" }
 
