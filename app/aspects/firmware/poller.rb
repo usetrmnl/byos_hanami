@@ -7,7 +7,7 @@ module Terminus
       class Poller
         def initialize downloader: Terminus::Aspects::Firmware::Downloader.new,
                        kernel: Kernel,
-                       seconds: 43_200 # Half day (60 * 60 * 12).
+                       seconds: 21_600 # Six hours (60 * 60 * 6).
           @downloader = downloader
           @kernel = kernel
           @seconds = seconds
