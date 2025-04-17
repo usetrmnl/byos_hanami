@@ -113,14 +113,11 @@
 }
 
 .site-figure {
+  border-radius: 0.5rem;
+  border: 1rem solid var(--site-black);
   display: flex;
   justify-content: center;
   margin: 0;
-
-  .image {
-    border-radius: 0.5rem;
-    border: 1rem solid var(--site-black);
-  }
 }
 
 .site-secret {
@@ -204,6 +201,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  margin: 0 1rem;
 }
 
 .page-actions {
