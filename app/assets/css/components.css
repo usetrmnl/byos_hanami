@@ -63,22 +63,28 @@
   align-items: center;
   border-radius: 0.5rem;
   display: flex;
-  flex-direction: column;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
 
-  @media only screen and (min-width: 825px) {
-    flex-direction: row;
+  @media only screen and (min-width: 480px) {
+    font-size: 1rem;
   }
 
   .breadcrumb {
-    @media only screen and (min-width: 825px) {
+    &:not(:last-child)::after {
+      content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' viewBox='0 0 20 20'><path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m9 5 7 7-7 7'/></svg>");
+      margin-left: 0.4rem;
+    };
+
+    @media only screen and (min-width: 480px) {
       &:not(:last-child)::after {
-        content: "/";
-        margin-left: 0.5rem;
+        content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 20 20'><path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m9 5 7 7-7 7'/></svg>");
+        margin-left: 0.4rem;
       }
     }
   }
