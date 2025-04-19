@@ -18,12 +18,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 4rem 1rem 4rem;
+
+     @media only screen and (max-width: 480px) {
+    padding: 1.5rem 1rem 1rem 1rem;
+    }
   }
 
   .list {
     align-items: center;
     display: flex;
     list-style: none;
+    gap: 0.3rem;
     margin: 0;
     padding: 0;
   }
@@ -31,7 +36,8 @@
   .link {
     display: flex;
     color: var(--site-black);
-    font-size: 0.95em;
+    font-size: 0.9em;
+    font-weight: 500;
     text-decoration: none;
     padding: 8px;
     border-radius: 20px;
