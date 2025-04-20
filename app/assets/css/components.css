@@ -225,6 +225,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+
+  @media only screen and (min-width: 480px) {
+    width: 50%;
+  }
 
   .group {
     border: none;
@@ -235,25 +240,41 @@
   }
 
   .form-field {
-    align-items: center;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     margin: 0;
-    gap: 1rem;
+    padding: 0.2rem;
+    gap: 0.2rem;
   }
 
   .key {
-    align-items: center;
     display: flex;
-    font-weight: 600;
-    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
     flex-wrap: wrap;
+    padding: 0rem 0rem 0.1rem 0.3rem;
   }
 
   .value {
-    border-radius: 0.5rem;
-    border: 0.1rem solid var(--site-lightgrey);
-    padding: 0.3rem;
+    width: 100%;
+    border-radius: 0.7rem;
+    border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
+    padding: 0.9rem 0.6rem 0.9rem 0.6rem;
+    outline: none;
+  }
+
+  .value:focus {
+    border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
+  }
+
+  .checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
+    background-color: oklch(from var(--site-white) l c h / 0.5);
+    accent-color: oklch(from var(--site-orange) l c h / 0.5);
+
   }
 
   .form-actions {
@@ -263,19 +284,33 @@
   }
 
   .accept, .decline {
-    background: none;
     border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
     cursor: pointer;
     font-size: 1rem;
-    text-decoration: underline;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.1), 0 4px 12px 0 rgba(0,0,0,0.1);
   }
 
   .accept {
-    color: var(--site-blue);
+    background: var(--site-orange);
+    color: var(--site-white);
+  }
+
+  .accept:hover{
+    background-color: var(--site-darkorange);
   }
 
   .decline {
-    color: var(--site-red);
+    background: var(--site-white);
+    color: var(--site-black);
+  }
+
+  .decline:hover{
+    background-color: oklch(from var(--site-white) l c h / 0.2);
   }
 
   .error {

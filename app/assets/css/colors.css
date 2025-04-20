@@ -7,4 +7,5 @@
   --site-green: oklch(65% 35% 155deg);
   --site-blue: oklch(61% 54% 258deg);
   --site-orange: oklch(0.69 0.1855 32.11);
+  --site-darkorange: oklch(0.61 0.1931 37.38);
 }
