@@ -506,6 +506,10 @@ For responsive resolutions, the following measurements are used:
 * *Large*: 1000px
 * *Extra Large*: 1500px
 
+=== HTML/CSS Sanitization
+
+The link:https://github.com/rgrove/sanitize[Santize] gem is used to sanitize HTML/CSS when using the console, API, or UI. All of this configured via the `Terminus::Sanitizer` class which defaults to the `Sanitize::Config::RELAXED` style with additional support for `style` and `source` elements. If you find elements being stripped from your HTML/CSS content, this is why. Feel free to open an link:https://github.com/usetrmnl/byos_hanami/issues[issue] if you need additional support.
+
 == Tests
 
 To test, run:
