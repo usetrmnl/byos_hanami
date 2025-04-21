@@ -1,0 +1,42 @@
+name: "terminus"
+
+services:
+  web:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
+    ports:
+      - "2300:2300"
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+
+  database:
+    image: postgres:17.4
+    restart: unless-stopped
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+
+volumes:
+  database-data:
