@@ -1,11 +1,13 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
+require "pathname"
+
 $VERBOSE = true
 
 path = Dir["/usr/lib/*/libjemalloc.so.2"]
 ENV["LD_PRELOAD"] = path.first unless ENV.key?("LD_PRELOAD") && path.empty?
 
-system "bundle exec hanami db prepare"
+Pathname(".overmind.sock").tap { it.delete if it.exist? }
 
 system ARGV.join(" ")
