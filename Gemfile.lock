@@ -44,6 +44,7 @@ GEM
     containable (1.2.0)
       concurrent-ruby (~> 1.3)
     core (2.2.0)
+    crass (1.0.6)
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
@@ -449,6 +450,9 @@ GEM
       refinements (~> 13.0)
       xdg (~> 9.0)
       zeitwerk (~> 2.7)
+    sanitize (7.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.16.8)
     sequel (5.91.0)
       bigdecimal
     simplecov (0.22.0)
@@ -553,6 +557,7 @@ DEPENDENCIES
   rom-sql (~> 3.7)
   rspec (~> 3.13)
   rubocop-sequel (~> 0.3)
+  sanitize (~> 7.0)
   sequel (~> 5.89)
   simplecov (~> 0.22)
   versionaire (~> 14.1)
@@ -573,6 +578,7 @@ CHECKSUMS
   concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
   containable (1.2.0) sha256=c7c5209dd375d914ae68129388a6e019d1f1b6ab5a4278e6eaaaae29c3a01b01
   core (2.2.0) sha256=f396aa51af0ba84b9ccb77e07cd54a3c3154bbed95b0defe743e9f03dab5e2e3
+  crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
   cuprite (0.15.1) sha256=0b3a25b2e408b345dfa0bae8bc5e7f021f913737c746edece9ca9fbb57eba259
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
   database_cleaner-sequel (2.0.2) sha256=f1e6566a1a34d7425ff94b447e2c16181bc215555aff3dfe463b7977b621d4bf
@@ -720,6 +726,7 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   runcom (12.2.0) sha256=a4243c54ce7476ce693d99639b85fed1a0e17d35612cd18f6fee0348dc6f8647
+  sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
   sequel (5.91.0) sha256=2fb40258af4652ee834da32ea99fc8810fad0eaa203e4d6604b02c0afb89c64d
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.1) sha256=5dab0b7ee612e60e9887ad57693832fdf4695b4c0c859eaea5f95c18791ef10b
