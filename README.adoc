@@ -106,6 +106,7 @@ There are a few environment variables you can use to customize behavior:
 * `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `FIRMWARE_ROOT`: The root location for firmware updates. Defaults to `public/assets/firmware`.
+* `PREVIEWS_ROOT`: The root location for all device screen preview images when designing new screens. Defaults to `public/assets/previews`
 * `SCREENS_ROOT`: The root location for all device screens (images). Defaults to `public/assets/screens`.
 
 === Device Provisioning
@@ -132,7 +133,14 @@ Each process runs in the background and are automatically configured in both the
 
 === APIs
 
-The following APIs are supported. Each uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
+This section documents all supported API endpoints. Each endpoint uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
+
+Some endpoints use either the HTTP `ID`, `Access-Token` or both headers. These break down as follows:
+
+* `ID`: Your device's MAC address.
+* `Access-Token`: Your device's API key.
+
+See each endpoint for further details.
 
 ==== Display
 
@@ -177,14 +185,14 @@ curl "https://localhost:2443/api/display/?base_64=true" \
 
 Both the `ID` and `Access-Token` HTTP headers are required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
 
-* `HTTP_BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
-* `HTTP_FW_VERSION`: The firmware version (i.e. `1.2.3`).
-* `HTTP_HOST`: The host (usually the IP address).
-* `HTTP_REFRESH_RATE`: The refresh rate as saved on the device. Example: 100.
-* `HTTP_RSSI`: The signal strength (usually -100 to 100).
-* `HTTP_USER_AGENT`: The device name.
-* `HTTP_WIDTH`: The device width. Example: 800.
-* `HTTP_HEIGHT`: :The device height. Example: 480.
+* `BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
+* `FW_VERSION`: The firmware version (i.e. `1.2.3`).
+* `HOST`: The host (usually the IP address).
+* `REFRESH_RATE`: The refresh rate as saved on the device. Example: 100.
+* `RSSI`: The signal strength (usually -100 to 100).
+* `USER_AGENT`: The device name.
+* `WIDTH`: The device width. Example: 800.
+* `HEIGHT`: :The device height. Example: 480.
 ====
 
 .Response
@@ -256,6 +264,17 @@ curl "https://localhost:2443/api/setup/" \
 
 Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device.
 
+This endpoint supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
+
+[source,css]
+----
+* {
+  margin: 0;
+}
+----
+
+🎗️ You can use the UI Editor to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
+
 .Request
 [%collapsible]
 ====
@@ -274,6 +293,8 @@ curl -X "POST" "https://localhost:2443/api/screens" \
 ----
 
 The `Access-Token` is your device's MAC address. You can obtain this information from the UI.
+
+If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 ====
 
 .Response
@@ -289,7 +310,7 @@ The `Access-Token` is your device's MAC address. You can obtain this information
 
 ==== Logs
 
-Uses for logging information about your server and/or device. Mostly used for debugging purposes.
+Used for logging information about your server and/or device. Mostly used for debugging purposes.
 
 .Request
 [%collapsible]
@@ -337,19 +358,6 @@ curl -X "POST" "https://localhost:2443/api/log" \
 ====
 Logs details and answers a HTTP 204 status with no content.
 ====
-
-💡 The images API supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
-
-[source,css]
-----
-* {
-  margin: 0;
-}
-----
-
-If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
-
-💡 The `ID` is your device's MAC and the `Access-Token` is your device API Key.
 
 == Development
 
@@ -507,13 +515,13 @@ To test, run:
 bin/rake
 ----
 
-== Deployment
+== Docker
 
 {docker_link} is supported both for production and development purposes. Each is explained below.
 
 === Development
 
-To develop with Docker, there is a `.devcontainer` folder that should provide the initial foundation from which to customize further for your needs.
+To develop with Docker, you can use the same tooling as explained below in the _Production_ section below by using Docker Compose to manage all services while running and using each locally.
 
 === Production
 
@@ -522,6 +530,8 @@ To build an image for production purpose, use the `Dockerfile` and `bin/docker` 
 * `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
 * `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
 * `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
+
+There is also a `compose.yml` in the root of this project that configures both the web (Hanami) and database (PostgreSQL) services for quickly launching the entire stack. Run `docker-compose up` from the root of this project to launch the entire stack.
 
 == Credits
 
