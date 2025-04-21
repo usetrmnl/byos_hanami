@@ -3,6 +3,7 @@
 require "cogger"
 require "containable"
 require "http"
+require "sanitize"
 
 module Terminus
   # Registers application dependencies.
@@ -14,6 +15,7 @@ module Terminus
       HTTP
     end
 
+    register(:sanitizer) { Sanitizer.new }
     register(:logger) { Cogger.new id: :terminus, formatter: :json }
   end
 end
