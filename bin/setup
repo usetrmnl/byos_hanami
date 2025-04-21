@@ -3,6 +3,7 @@
 
 require "fileutils"
 require "pathname"
+require "securerandom"
 
 class Runner
   def initialize root = Pathname(__dir__).join("..").expand_path, kernel: Kernel, kit: FileUtils
@@ -38,7 +39,13 @@ class Runner
     return kernel.puts ".env.development exists. Skipped." if path.exist?
 
     kernel.puts "Creating .env.development..."
-    path.write "DATABASE_URL=postgres://localhost/terminus_development"
+
+    path.write <<~CONTENT
+      DATABASE_URL="postgres://localhost/terminus_development"
+      PG_DATABASE="terminus"
+      PG_PASSWORD="#{SecureRandom.hex 15}"
+      PG_USER="terminus"
+    CONTENT
   end
 
   def setup_test_environment
