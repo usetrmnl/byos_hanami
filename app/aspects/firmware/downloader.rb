@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "refinements/pathname"
+require "trmnl/api"
 
 module Terminus
   module Aspects
@@ -10,7 +11,7 @@ module Terminus
         include Deps[:settings, fetcher: "aspects.firmware.fetcher"]
         include Dependencies[:http]
         include Dry::Monads[:result]
-        include Initable[endpoint: proc { Terminus::Endpoints::Firmware::Requester.new }]
+        include Initable[endpoint: proc { TRMNL::API::Endpoints::Firmware.new }]
 
         using Refinements::Pathname
 

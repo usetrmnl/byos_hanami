@@ -3,6 +3,7 @@
 require "dry/core"
 require "dry/monads"
 require "initable"
+require "trmnl/api"
 
 module Terminus
   module Actions
@@ -18,7 +19,7 @@ module Terminus
             synchronizer: "aspects.synchronizers.device"
           ]
 
-          include Initable[model: Endpoints::Display::Response]
+          include Initable[model: TRMNL::API::Models::Display]
           include Dry::Monads[:result]
 
           using Refines::Actions::Response

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "trmnl/api"
+
 module Terminus
   module Aspects
     module Screens
@@ -8,7 +10,7 @@ module Terminus
         include Deps["aspects.screens.downloader", repository: "repositories.device"]
 
         include Initable[
-          endpoint: proc { Terminus::Endpoints::Display::Requester.new },
+          endpoint: proc { TRMNL::API::Endpoints::Display.new },
           kernel: Kernel,
           seconds: 300
         ]
@@ -39,10 +41,9 @@ module Terminus
         end
 
         def process device
-          endpoint.call(api_key: device.api_key)
-                  .bind do |response|
-                    downloader.call response.image_url, "#{device.slug}/#{response.filename}"
-                  end
+          endpoint.call(token: device.api_key).bind do |response|
+            downloader.call response.image_url, "#{device.slug}/#{response.filename}"
+          end
         end
       end
     end

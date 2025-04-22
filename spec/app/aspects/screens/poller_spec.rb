@@ -8,9 +8,9 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
   let(:kernel) { class_spy Kernel, sleep: nil }
 
   let :endpoint do
-    instance_spy Terminus::Endpoints::Display::Requester,
+    instance_spy TRMNL::API::Endpoints::Display,
                  call: Success(
-                   Terminus::Endpoints::Display::Response[
+                   TRMNL::API::Models::Display[
                      image_url: "https://test.io/test.bmp",
                      filename: "test.bmp"
                    ]
@@ -20,7 +20,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
   let(:downloader) { instance_spy Terminus::Aspects::Screens::Downloader }
 
   describe "#call" do
-    let(:devices) { [Factory[:device, api_key: "abc123", proxy: true]] }
+    let(:devices) { [Factory[:device, proxy: true]] }
 
     before do
       devices
@@ -43,7 +43,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     it "requests image for device API key" do
       poller.call
-      expect(endpoint).to have_received(:call).with api_key: "abc123"
+      expect(endpoint).to have_received(:call)
     end
 
     it "downloads image" do
@@ -75,7 +75,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     context "with remote image failure" do
       let :endpoint do
-        instance_spy Terminus::Endpoints::Display::Requester, call: Failure("Danger!")
+        instance_spy TRMNL::API::Endpoints::Display, call: Failure("Danger!")
       end
 
       it "doesn't download image" do

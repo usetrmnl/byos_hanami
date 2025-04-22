@@ -11,9 +11,9 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
   include_context "with library dependencies"
 
   let :endpoint do
-    instance_double Terminus::Endpoints::Firmware::Requester,
+    instance_double TRMNL::API::Endpoints::Firmware,
                     call: Success(
-                      Terminus::Endpoints::Firmware::Response[
+                      TRMNL::API::Models::Firmware[
                         url: "https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.4.8.bin",
                         version: "1.4.8"
                       ]
@@ -45,7 +45,7 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
 
     context "with endpoint failure" do
       let :endpoint do
-        instance_double Terminus::Endpoints::Firmware::Requester, call: Failure(message: "Danger!")
+        instance_double TRMNL::API::Endpoints::Firmware, call: Failure(message: "Danger!")
       end
 
       let(:http) { HTTP }
