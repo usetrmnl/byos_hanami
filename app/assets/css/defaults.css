@@ -53,3 +53,11 @@ kbd {
   padding: 0.1rem 0.3rem;
   white-space: nowrap;
 }
+
+dd{
+  margin-inline-start: 0px;
+}
+
+dl{
+  margin-block-start: 0px;
+}
