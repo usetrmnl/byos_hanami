@@ -17,6 +17,7 @@ module Terminus
               device_status_stamp_battery_voltage: :battery_voltage,
               device_status_stamp_current_fw_version: :firmware_version,
               device_status_stamp_free_heap_size: :free_heap_size,
+              device_status_stamp_max_alloc_size: :max_alloc_size,
               device_status_stamp_refresh_rate: :refresh_rate,
               device_status_stamp_special_function: :special_function,
               device_status_stamp_time_since_last_sleep_start: :sleep_duration,

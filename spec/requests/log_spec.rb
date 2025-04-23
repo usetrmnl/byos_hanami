@@ -30,6 +30,7 @@ RSpec.describe "/api/log", :db do
               battery_voltage: 4.772,
               current_fw_version: "1.2.3",
               free_heap_size: 160656,
+              max_alloc_size: 990000,
               refresh_rate: 30,
               special_function: "none",
               time_since_last_sleep_start: 31,
