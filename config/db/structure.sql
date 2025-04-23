@@ -95,7 +95,8 @@ CREATE TABLE public.device_logs (
     battery_voltage double precision DEFAULT 0 NOT NULL,
     free_heap_size integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    max_alloc_size integer DEFAULT 0 NOT NULL
 );
 
 
@@ -232,4 +233,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250305150912_create_devices.rb'),
 ('20250324153748_create_device_logs.rb'),
 ('20250401150503_add_device_proxy_column.rb'),
-('20250408143435_add_device_firmware_update_column.rb');
+('20250408143435_add_device_firmware_update_column.rb'),
+('20250423143027_add_device_log_max_alloc_size.rb');
