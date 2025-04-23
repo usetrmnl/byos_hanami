@@ -77,13 +77,13 @@
 
   .breadcrumb {
     &:not(:last-child)::after {
-      content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' viewBox='0 0 20 20'><path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m9 5 7 7-7 7'/></svg>");
+      content: url("../images/icons/breadcrumb.svg");
       margin-left: 0.4rem;
     };
 
     @media only screen and (min-width: 480px) {
       &:not(:last-child)::after {
-        content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 20 20'><path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m9 5 7 7-7 7'/></svg>");
+        content: url("../images/icons/breadcrumb.svg");
         margin-left: 0.4rem;
       }
     }
