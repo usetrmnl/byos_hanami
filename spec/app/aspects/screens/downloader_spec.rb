@@ -24,6 +24,11 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
       expect(temp_dir.join("abc/test.png").exist?).to be(true)
     end
 
+    it "applies correct file extension" do
+      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test"
+      expect(temp_dir.join("abc/test.png").exist?).to be(true)
+    end
+
     it "marks downloaded file older than oldest file" do
       temp_dir.join("abc/test.txt").make_ancestors.write("test").touch Time.new(2000, 1, 1, 0, 0, 0)
       downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
@@ -44,6 +49,17 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
     it "answers failure when image can't be downloaded" do
       code = downloader.call("https://test.io/bogus.png", "bogus.png").alt_map { it.status.code }
       expect(code).to be_failure(404)
+    end
+
+    context "with invalid download" do
+      let(:client) { class_spy HTTP, get: response }
+      let(:response) { instance_double HTTP::Response, body: "", status: }
+      let(:status) { instance_double HTTP::Response::Status, success?: true }
+
+      it "answers failure" do
+        result = downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
+        expect(result).to be_failure(%(Unable to analyze image: #{temp_dir.join "test.png"}.))
+      end
     end
   end
 end

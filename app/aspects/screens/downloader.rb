@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "dry/core"
+require "dry/monads"
+require "mini_magick"
 require "refinements/pathname"
 
 module Terminus
@@ -9,31 +12,40 @@ module Terminus
       class Downloader
         include Deps[:settings]
         include Dependencies[client: :http]
-        include Initable[seconds: 10]
+        include Initable[seconds: 10, imager: MiniMagick::Image]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
 
         def call uri, path
           asset_path = settings.screens_root.join(path).make_ancestors
-          at = oldest_at asset_path
 
-          get(uri).fmap { |content| asset_path.write(content).touch at }
+          get(uri).fmap { |content| asset_path.write(content) }
+                  .bind { |full_path| rename full_path }
+                  .fmap { |full_path| full_path.touch oldest_at(asset_path) }
         end
 
-        def oldest_at path
-          oldest_file = path.parent.files.min_by(&:mtime)
+        private
 
-          return Time.now unless oldest_file
+        def rename path
+          type = imager.open(path)
+                       .data
+                       .fetch("mimeType", Dry::Core::EMPTY_STRING)
+                       .sub "image/", Dry::Core::EMPTY_STRING
 
-          oldest_file.mtime - seconds
+          updated_path = path.sub_ext ".#{type}"
+          path.rename updated_path
+          Success updated_path
+        rescue Errno::ENOENT, MiniMagick::Error
+          Failure "Unable to analyze image: #{path}."
         end
+
+        def oldest_at(path) = path.parent.files.min_by(&:mtime).mtime - seconds
 
         def get uri
-          client.get(uri)
-                .then do |response|
-                  response.status.success? ? Success(response) : Failure(response)
-                end
+          client.get(uri).then do |response|
+            response.status.success? ? Success(response) : Failure(response)
+          end
         end
       end
     end
