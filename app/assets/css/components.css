@@ -96,11 +96,8 @@
 
 .site-container {
   overflow-x: scroll;
-  width: 90vw;
-
-  @media only screen and (min-width: 825px) {
-    width: initial;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .site-definition-list {
