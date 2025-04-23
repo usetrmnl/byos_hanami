@@ -32,7 +32,7 @@ module Terminus
           end
         end
 
-        def default = {filename: "empty_state", image_url: "#{settings.api_uri}/assets/trmnl.svg"}
+        def default = {filename: "empty_state", image_url: "#{settings.api_uri}/assets/setup.svg"}
       end
     end
   end
