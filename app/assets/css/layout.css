@@ -73,7 +73,7 @@
   gap: 1rem;
   grid-area: site-footer;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 1.5rem 4rem 1rem 4rem;
 
  @media only screen and (max-width: 480px) {
@@ -91,13 +91,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  .description {
-    margin: 0;
-    padding: 0;
-    font-family: var(--site-heading-font-family);
-    font-size: 0.9rem;
   }
 
   .socials {
