@@ -527,9 +527,9 @@ bin/rake
 
 link:https://docs.docker.com/compose[Docker Compose] support is provided so you can quickly spin up the images and containers for running this application either in development or production. Full details are captured in the `compose.yml` at the root of this project. The `compose.yml` can also be configured via the following environment variables:
 
-* `POSTGRES_USER`: Your PostgreSQL user name.
-* `POSTGRES_DB`: Your PostgreSQL database name.
-* `POSTGRES_PASSWORD`: Your PostgreSQL password.
+* `PG_USER`: Your PostgreSQL user name.
+* `PG_DATABASE`: Your PostgreSQL database name.
+* `PG_PASSWORD`: Your PostgreSQL password.
 
 💡 The above is automatically generated for you when running `bin/setup` with safe default values but customization is definitely encouraged.
 
