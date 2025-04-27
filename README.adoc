@@ -286,7 +286,7 @@ curl -X "POST" "https://localhost:2443/api/screens" \
     -H 'Content-Type: application/json' \
     -d $'{
  "image": {
-   "content": "<p>Test</p>"
+   "content": "<p>Test</p>",
    "file_name": "test"
  }
 }'
