@@ -124,7 +124,7 @@ That's it!
 
 There are two background pollers that cache data from the remote link:https://usetrmnl.com[Core] server for improved performance:
 
-* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. This checks for updates every 12 hours.
+* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. This checks for updates every six hours.
 * *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. This checks for updates every 5 minutes.
 
 Both of these processes can be configured to use different polling intervals by passing in a different value in seconds (i.e. `<poller>.new seconds: 60`). You can do this by modifying each script.
@@ -286,7 +286,7 @@ curl -X "POST" "https://localhost:2443/api/screens" \
     -H 'Content-Type: application/json' \
     -d $'{
  "image": {
-   "content": "<p>Test</p>"
+   "content": "<p>Test</p>",
    "file_name": "test"
  }
 }'
