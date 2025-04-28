@@ -51,7 +51,7 @@ The following is a high level overview you can use to compare/contrast when deci
 | Auto-Provisioning                 | 🟢       | 🟢
 | Devices                           | 🟢       | 🟢
 | JSON Data API                     | 🟢       | 🟢
-| Image Previews                    | ⚪️       | 🟢
+| Image Previews                    | 🟢       | 🟢
 | Playlists                         | 🟡       | 🟢
 | Plugins                           | 🟢       | 🟢
 | Recipes                           | 🟢       | 🟢
