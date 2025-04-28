@@ -16,6 +16,6 @@ module Terminus
     end
 
     register(:sanitizer) { Sanitizer.new }
-    register(:logger) { Cogger.new id: :terminus, formatter: :json }
+    register(:logger) { Cogger.new id: :terminus, formatter: :detail }
   end
 end
