@@ -30,13 +30,17 @@ module Terminus
         private
 
         def save payload
-          response = http.get payload.url
+          get(payload.url).fmap { |content| path(payload).make_ancestors.write(content) }
+        end
 
-          if response.status.success?
-            Success path(payload).make_ancestors.write(response.body.to_s)
-          else
-            Failure response
+        def get uri
+          http.get(uri).then do |response|
+            content = response.body.to_s
+
+            response.status.success? ? Success(content) : Failure(content)
           end
+        rescue OpenSSL::SSL::SSLError => error
+          Failure error.message
         end
 
         def path(payload) = settings.firmware_root.join "#{payload.version}.bin"

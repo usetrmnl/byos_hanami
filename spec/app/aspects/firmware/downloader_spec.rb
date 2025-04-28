@@ -55,14 +55,19 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
       let :response do
         HTTP::Response.new uri: "https://test.io/test",
                            verb: :get,
-                           body: "",
+                           body: "Danger!",
                            status: 404,
                            version: 1.0
       end
 
       it "answers failure when image can't be downloaded" do
-        expect(downloader.call).to be_failure(response)
+        expect(downloader.call).to be_failure("Danger!")
       end
+    end
+
+    it "answers failure with SSL error" do
+      allow(http).to receive(:get).and_raise(OpenSSL::SSL::SSLError, "Danger!")
+      expect(downloader.call).to be_failure("Danger!")
     end
   end
 end

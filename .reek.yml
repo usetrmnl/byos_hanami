@@ -12,6 +12,7 @@ detectors:
     enabled: false
   TooManyStatements:
     exclude:
+      - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Screens::Greyscaler#convert
       - Terminus::Screens::Screensaver#save
       - Terminus::Views::Parts::Device#battery_percentage
