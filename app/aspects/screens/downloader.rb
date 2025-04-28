@@ -36,7 +36,7 @@ module Terminus
           updated_path = path.sub_ext ".#{type}"
           path.rename updated_path
           Success updated_path
-        rescue Errno::ENOENT, MiniMagick::Error
+        rescue Errno::ENOENT, OpenSSL::SSL::SSLError, MiniMagick::Error
           Failure "Unable to analyze image: #{path}."
         end
 
