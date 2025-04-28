@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/monads"
 require "trmnl/api"
 
 module Terminus
@@ -7,7 +8,8 @@ module Terminus
     module Screens
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
-        include Deps["aspects.screens.downloader", repository: "repositories.device"]
+        include Deps["aspects.screens.downloader", :logger, repository: "repositories.device"]
+        include Dry::Monads[:result]
 
         include Initable[
           endpoint: proc { TRMNL::API::Endpoints::Display.new },
@@ -42,7 +44,15 @@ module Terminus
 
         def process device
           endpoint.call(token: device.api_key).bind do |response|
-            downloader.call response.image_url, "#{device.slug}/#{response.filename}"
+            log downloader.call(response.image_url, "#{device.slug}/#{response.filename}")
+          end
+        end
+
+        def log result
+          case result
+            in Success(path) then logger.info "Downloaded: #{path}."
+            in Failure(message) then logger.error message
+            else logger.error "Unable to download firmware."
           end
         end
       end

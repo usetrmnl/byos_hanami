@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
+require "dry/monads"
+require "initable"
+
 module Terminus
   module Aspects
     module Firmware
       # Polls the Core Firmware API on a scheduled interval for new firmware versions.
       class Poller
-        def initialize downloader: Terminus::Aspects::Firmware::Downloader.new,
-                       kernel: Kernel,
-                       seconds: 21_600 # Six hours (60 * 60 * 6).
-          @downloader = downloader
-          @kernel = kernel
-          @seconds = seconds
-        end
+        include Deps["aspects.firmware.downloader", :logger]
+        include Initable[kernel: Kernel, seconds: 21_600] # Six hours (60 * 60 * 6).
+        include Dry::Monads[:result]
 
         def call
           watch_for_shudown
@@ -19,8 +18,6 @@ module Terminus
         end
 
         private
-
-        attr_reader :downloader, :kernel, :seconds
 
         def watch_for_shudown
           kernel.trap "INT" do
@@ -31,8 +28,16 @@ module Terminus
 
         def keep_alive
           kernel.loop do
-            downloader.call
+            download
             kernel.sleep seconds
+          end
+        end
+
+        def download
+          case downloader.call
+            in Success(path) then logger.info "Downloaded: #{path}."
+            in Failure(message) then logger.error message
+            else logger.error "Unable to download firmware."
           end
         end
       end

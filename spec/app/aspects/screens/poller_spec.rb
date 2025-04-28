@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Poller, :db do
-  subject(:poller) { described_class.new endpoint:, downloader:, kernel: }
+  subject(:poller) { described_class.new endpoint:, downloader:, kernel:, logger: }
 
   let(:kernel) { class_spy Kernel, sleep: nil }
 
@@ -18,6 +18,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
   end
 
   let(:downloader) { instance_spy Terminus::Aspects::Screens::Downloader }
+  let(:logger) { instance_spy Dry::Logger::Dispatcher }
 
   describe "#call" do
     let(:devices) { [Factory[:device, proxy: true]] }
@@ -53,6 +54,27 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
         "https://test.io/test.bmp",
         "#{devices.first.slug}/test.bmp"
       )
+    end
+
+    it "logs successful file download" do
+      allow(downloader).to receive(:call).and_return(Success("test/path"))
+      poller.call
+
+      expect(logger).to have_received(:info).with("Downloaded: test/path.")
+    end
+
+    it "logs download failure" do
+      allow(downloader).to receive(:call).and_return(Failure("Danger!"))
+      poller.call
+
+      expect(logger).to have_received(:error).with("Danger!")
+    end
+
+    it "logs download failure for unknown type" do
+      allow(downloader).to receive(:call).and_return("Danger!")
+      poller.call
+
+      expect(logger).to have_received(:error).with("Unable to download firmware.")
     end
 
     context "with no devices" do
