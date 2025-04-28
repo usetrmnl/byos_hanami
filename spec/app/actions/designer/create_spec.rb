@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Actions::Editor::Create do
+RSpec.describe Terminus::Actions::Designer::Create do
   subject(:action) { described_class.new }
 
   include_context "with main application"
@@ -33,7 +33,7 @@ RSpec.describe Terminus::Actions::Editor::Create do
 
     it "renders show view when form is submitted" do
       response = Rack::MockRequest.new(action).post "", params: parameters
-      expect(response.body).to include("Welcome to the Terminus editor!")
+      expect(response.body).to include("Welcome to the Terminus designer!")
     end
 
     it "answers unprocessable content with invalid parameters" do

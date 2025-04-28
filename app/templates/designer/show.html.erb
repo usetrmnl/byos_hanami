@@ -1,23 +1,23 @@
-<% content_for :title, "Editor | Terminus" %>
+<% content_for :title, "Designer | Terminus" %>
 
 <section class="page-devices">
   <header class="page-header">
-    <h1 class="label">Editor</h1>
+    <h1 class="label">Designer</h1>
     <p class="page-subheader">Use the text area below to design custom screens for your device using pure HTML/CSS. Changes are applied automatically as you make edits. Enjoy!</p>
   </header>
 
-  <div class="page-editor">
+  <div class="page-designer">
     <figure class="site-figure terminal"
             hx-ext="sse"
             sse-connect="/preview/<%= id %>"
             sse-swap="preview">
     </figure>
 
-    <form action="/editor" method="post" class="form">
+    <form action="/designer" method="post" class="form">
       <%= tag.input name: "template[id]", type: :hidden, value: id %>
       <textarea name="template[content]"
                 class="source"
-                hx-post="/editor"
+                hx-post="/designer"
                 hx-trigger="load, keyup delay:200ms"
                 hx-swap="textContent">
         <%= render :default_content %>

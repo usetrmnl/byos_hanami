@@ -2,10 +2,10 @@
 
 module Terminus
   module Actions
-    module Editor
+    module Designer
       # The create action.
       class Create < Terminus::Action
-        include Deps[:settings, show_view: "views.editor.show"]
+        include Deps[:settings, show_view: "views.designer.show"]
         include Initable[creator: proc { Terminus::Screens::Creator.new }]
 
         params do

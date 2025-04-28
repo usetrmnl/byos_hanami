@@ -23,8 +23,8 @@ module Terminus
     get "/devices/:device_id/logs", to: "devices.logs.index", as: :devices_logs
     get "/devices/:device_id/logs/:id", to: "devices.logs.show", as: :device_log_show
 
-    get "/editor", to: "editor.show", as: :editor
-    post "/editor", to: "editor.create", as: :editor_create
+    get "/designer", to: "designer.show", as: :designer
+    post "/designer", to: "designer.create", as: :designer_create
 
     slice(:health, at: "/up") { root to: "show" }
 

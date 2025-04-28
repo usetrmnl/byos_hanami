@@ -2,7 +2,7 @@
 
 module Terminus
   module Views
-    module Editor
+    module Designer
       # The show view.
       class Show < Terminus::View
         expose :id

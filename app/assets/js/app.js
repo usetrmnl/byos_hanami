@@ -6,4 +6,4 @@ import "../css/layout.css";
 import "../css/components.css";
 import "../css/dashboard.css";
 import "../css/devices.css";
-import "../css/editor.css";
+import "../css/designer.css";

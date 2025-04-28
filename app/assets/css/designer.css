@@ -1,4 +1,4 @@
-.page-editor {
+.page-designer {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -17,8 +17,7 @@
       1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
       3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
       7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
-      20px 20px 20px rgba(0, 0, 0, 0.07)
-    ;
+      20px 20px 20px rgba(0, 0, 0, 0.07);
     border-width: 1rem 1rem 1.8rem 1rem;
   }
 
@@ -26,8 +25,8 @@
     width: 100%;
 
     @media only screen and (min-width: 825px) {
-    width: 80%;
-  }
+      width: 80%;
+    }
   }
 
   .source {
@@ -41,10 +40,9 @@
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
     outline: none;
     min-height: 34rem;
-  }
 
-   .source:focus {
-    border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
+    &:focus {
+      border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
+    }
   }
-
 }

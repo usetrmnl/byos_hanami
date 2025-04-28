@@ -2,7 +2,7 @@
 
 module Terminus
   module Actions
-    module Editor
+    module Designer
       # The show action.
       class Show < Terminus::Action
         def handle _request, response
