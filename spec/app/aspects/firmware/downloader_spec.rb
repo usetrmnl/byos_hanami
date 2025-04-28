@@ -10,35 +10,31 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
   include_context "with main application"
   include_context "with library dependencies"
 
+  let(:http) { HTTP }
+
   let :endpoint do
     instance_double TRMNL::API::Endpoints::Firmware,
                     call: Success(
                       TRMNL::API::Models::Firmware[
-                        url: "https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.4.8.bin",
-                        version: "1.4.8"
+                        url: "https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.5.2.bin",
+                        version: "1.5.2"
                       ]
                     )
   end
 
   describe "#call" do
-    context "with success" do
-      let(:http) { HTTP }
+    it "makes root directory if path doesn't exist" do
+      downloader.call
+      expect(temp_dir.exist?).to be(true)
+    end
 
-      it "makes root directory if path doesn't exist" do
-        downloader.call
-        expect(temp_dir.exist?).to be(true)
-      end
-
-      it "answers download path" do
-        expect(downloader.call).to be_success(temp_dir.join("1.4.8.bin"))
-      end
+    it "answers download path" do
+      expect(downloader.call).to be_success(temp_dir.join("1.5.2.bin"))
     end
 
     context "with existing version" do
-      let(:http) { HTTP }
-
       it "answers path" do
-        path = temp_dir.join("1.4.8.bin").touch
+        path = temp_dir.join("1.5.2.bin").touch
         expect(downloader.call).to be_success(path)
       end
     end
@@ -47,8 +43,6 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
       let :endpoint do
         instance_double TRMNL::API::Endpoints::Firmware, call: Failure(message: "Danger!")
       end
-
-      let(:http) { HTTP }
 
       it "answers failure when image can't be downloaded" do
         expect(downloader.call).to be_failure(message: "Danger!")
