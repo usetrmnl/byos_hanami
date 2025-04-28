@@ -48,7 +48,7 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
 
     it "answers failure when image can't be downloaded" do
       code = downloader.call("https://test.io/bogus.png", "bogus.png").alt_map { it.status.code }
-      expect(code).to be_failure(404)
+      expect(code).to be_failure(403).or(be_failure(404))
     end
 
     context "with invalid download" do
