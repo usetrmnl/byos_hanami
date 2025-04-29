@@ -8,11 +8,42 @@
   background-color: var(--site-orange);
   color: white;
   text-decoration: none;
+
+  &:hover {
+    background-color: var(--site-white);
+    color: var(--site-orange);
+  }
 }
 
-.button-new:hover{
-  background-color: var(--site-white);
-  color: var(--site-orange);
+.button-accept, .button-decline {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.1), 0 4px 12px 0 rgba(0,0,0,0.1);
+}
+
+.button-accept {
+  background: var(--site-orange);
+  color: var(--site-white);
+
+  &:hover {
+    background-color: var(--site-darkorange);
+  }
+}
+
+.button-decline {
+  background: var(--site-white);
+  color: var(--site-black);
+
+  &:hover {
+    background-color: oklch(from var(--site-white) l c h / 0.2);
+    text-decoration: none;
+  }
 }
 
 .link-cancel {
@@ -156,6 +187,8 @@
 }
 
 .site-table {
+  width: 100%;
+
   .text-left {
     text-align: left;
   }
@@ -225,12 +258,12 @@
 
 .page-subheader {
   display: flex;
- justify-content: center;
- text-align: center;
+  justify-content: center;
+  text-align: center;
   max-width: 80%;
   font-size: 0.9rem;
 
-   @media only screen and (min-width: 825px) {
+  @media only screen and (min-width: 825px) {
     justify-content: end;
     text-align: right;
     max-width: 50%;
@@ -328,19 +361,19 @@
   .accept {
     background: var(--site-orange);
     color: var(--site-white);
-  }
 
-  .accept:hover{
-    background-color: var(--site-darkorange);
+    &:hover {
+      background-color: var(--site-darkorange);
+    }
   }
 
   .decline {
     background: var(--site-white);
     color: var(--site-black);
-  }
 
-  .decline:hover{
-    background-color: oklch(from var(--site-white) l c h / 0.2);
+    &:hover {
+      background-color: oklch(from var(--site-white) l c h / 0.2);
+    }
   }
 
   .error {
@@ -353,6 +386,33 @@
       font-size: 0.9rem;
       padding: 0.2rem 0 0.1rem 0.3rem;
       margin: 0;
+    }
+  }
+}
+
+.page-loader {
+  animation: spin 1.5s linear infinite;
+  border-radius: 50%;
+  border: 0.3rem solid var(--site-lightgrey);
+  border-top: 0.3rem solid var(--site-green);
+  height: 0.75rem;
+  width: 1.7rem;
+}
+
+.page-search {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+
+  .value {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
+    padding: 0.7rem 0.4rem;
+    outline: none;
+
+    &:focus {
+      border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
     }
   }
 }
