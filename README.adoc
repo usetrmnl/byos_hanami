@@ -156,7 +156,6 @@ Used for displaying new content to your device. Your device's refresh determines
 curl "https://localhost:2443/api/display/" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
-     -H 'Accept: application/json' \
      -H 'Content-Type: application/json'
 ----
 
@@ -167,7 +166,6 @@ curl "https://localhost:2443/api/display/" \
 curl "https://localhost:2443/api/display/" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
-     -H 'Accept: application/json' \
      -H 'Content-Type: application/json' \
      -H 'BASE64: true'
 ----
@@ -179,7 +177,6 @@ curl "https://localhost:2443/api/display/" \
 curl "https://localhost:2443/api/display/?base_64=true" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
-     -H 'Accept: application/json' \
      -H 'Content-Type: application/json'
 ----
 
@@ -241,7 +238,6 @@ Uses for new device setup and then never used after.
 ----
 curl "https://localhost:2443/api/setup/" \
      -H 'ID: <redacted>' \
-     -H 'Accept: application/json' \
      -H 'Content-Type: application/json'
 ----
 ====
@@ -282,7 +278,6 @@ This endpoint supports full HTML so you can supply CSS styles, full DOM, etc. At
 ----
 curl -X "POST" "https://localhost:2443/api/screens" \
     -H 'Access-Token: <redacted>' \
-    -H 'Accept: application/json' \
     -H 'Content-Type: application/json' \
     -d $'{
  "image": {
@@ -321,7 +316,6 @@ Used for logging information about your server and/or device. Mostly used for de
 curl -X "POST" "https://localhost:2443/api/log" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
-     -H 'Accept: application/json' \
      -H 'Content-Type: application/json' \
      -d $'{
   "log": {
@@ -334,8 +328,9 @@ curl -X "POST" "https://localhost:2443/api/log" \
         "device_status_stamp": {
           "wifi_status": "connected",
           "wakeup_reason": "timer",
-          "current_fw_version": "1.4.7",
+          "current_fw_version": "1.5.2",
           "free_heap_size": 160656,
+          "max_alloc_size": 200000,
           "special_function": "none",
           "refresh_rate": 30,
           "battery_voltage": 4.772,
