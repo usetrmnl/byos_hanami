@@ -1,0 +1,23 @@
+<search>
+  <%= tag.form(action: routes.path(:device_logs, device_id: device.id), method: :get, class: "page-search") do %>
+    <input id="search"
+           type="search"
+           name="query"
+           value=""
+           class="value"
+           hx-get="<%= routes.path :device_logs, device_id: device.id %>"
+           hx-trigger="search, keyup delay:200ms changed"
+           hx-select=".logs"
+           hx-target="next .logs"
+           hx-swap="outerHTML"
+           hx-push-url="true"
+           hx-indicator=".page-loader"/>
+
+      <div class="page-loader htmx-indicator"></div>
+      <input type="submit" value="Search" class="button-accept"/>
+
+      <%= link_to "Clear",
+          routes.path(:device_logs, device_id: device.id),
+          class: "button-decline" %>
+  <% end %>
+</search>

@@ -20,7 +20,7 @@ module Terminus
     put "/devices/:id", to: "devices.update", as: :device_update
     delete "/devices/:id", to: "devices.delete", as: :device_delete
 
-    get "/devices/:device_id/logs", to: "devices.logs.index", as: :devices_logs
+    get "/devices/:device_id/logs", to: "devices.logs.index", as: :device_logs
     get "/devices/:device_id/logs/:id", to: "devices.logs.show", as: :device_log_show
     delete "/devices/:device_id/logs/:id", to: "devices.logs.delete", as: :device_log_delete
 
