@@ -19,24 +19,30 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
   end
 
   describe "#all_by_device" do
-    let(:other_log) { Factory[:device_log, device:] }
-    let(:device) { Factory[:device] }
-
     it "answers records" do
-      log
-      other_log
-
-      expect(repository.all_by_device(device.id)).to contain_exactly(
-        have_attributes(
-          id: other_log.id,
-          device_id: device.id
-        )
+      expect(repository.all_by_device(log.device_id)).to contain_exactly(
+        have_attributes(id: log.id, device_id: log.device_id)
       )
     end
 
     it "answers empty array when records don't exist" do
-      log
-      expect(repository.all_by_device(device.id)).to eq([])
+      expect(repository.all_by_device(13)).to eq([])
+    end
+  end
+
+  describe "#all_by_message" do
+    it "answers records for device ID and message" do
+      expect(repository.all_by_message(log.device_id, "danger")).to contain_exactly(
+        have_attributes(id: log.id, device_id: log.device_id, message: "Danger!")
+      )
+    end
+
+    it "answers empty array for invalid device ID and valid message" do
+      expect(repository.all_by_message(13, "Danger!")).to eq([])
+    end
+
+    it "answers empty array for valid device ID and invalid message" do
+      expect(repository.all_by_message(log.device_id, "bogus")).to eq([])
     end
   end
 
@@ -51,6 +57,23 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
 
     it "answers nil for nil ID" do
       expect(repository.find(nil)).to be(nil)
+    end
+  end
+
+  describe "#delete_by_device" do
+    it "deletes record when given device and record IDs" do
+      repository.delete_by_device log.device_id, log.id
+      expect(repository.find(log.id)).to be(nil)
+    end
+
+    it "doesn't delete record for invalid device ID and valid log ID" do
+      repository.delete_by_device nil, log.id
+      expect(repository.find(log.id)).to eq(log)
+    end
+
+    it "doesn't delete record for valid device ID and invalid log ID" do
+      repository.delete_by_device log.device_id, 13
+      expect(repository.find(log.id)).to eq(log)
     end
   end
 end
