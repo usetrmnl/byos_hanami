@@ -31,8 +31,7 @@ RSpec.describe "/api/setup", :db do
         friendly_id: /[A-Z0-9]{6}/,
         mac_address:,
         firmware_version: "1.2.3",
-        api_key: /[a-z0-9]{20}/i,
-        setup_at: instance_of(Time)
+        api_key: /[a-z0-9]{20}/i
       )
     end
   end

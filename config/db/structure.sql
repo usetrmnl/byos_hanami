@@ -132,7 +132,6 @@ CREATE TABLE public.devices (
     image_timeout integer DEFAULT 0 NOT NULL,
     width integer DEFAULT 0 NOT NULL,
     height integer DEFAULT 0 NOT NULL,
-    setup_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     proxy boolean,
@@ -234,4 +233,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250324153748_create_device_logs.rb'),
 ('20250401150503_add_device_proxy_column.rb'),
 ('20250408143435_add_device_firmware_update_column.rb'),
-('20250423143027_add_device_log_max_alloc_size.rb');
+('20250423143027_add_device_log_max_alloc_size.rb'),
+('20250429114320_remove_device_setup_at_column.rb');
