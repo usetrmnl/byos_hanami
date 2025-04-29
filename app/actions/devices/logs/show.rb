@@ -8,7 +8,7 @@ module Terminus
         class Show < Terminus::Action
           include Deps[
             device_repository: "repositories.device",
-            log_repository: "repositories.device_log"
+            repository: "repositories.device_log"
           ]
 
           params do
@@ -20,7 +20,7 @@ module Terminus
             parameters = request.params
 
             device = device_repository.find parameters[:device_id]
-            log = log_repository.find parameters[:id]
+            log = repository.find parameters[:id]
 
             response.render view, device:, log:
           end
