@@ -101,4 +101,11 @@
       padding: 0.5rem 1rem 0 1rem;
     }
   }
+
+  .log {
+    &.htmx-swapping {
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+    }
+  }
 }
