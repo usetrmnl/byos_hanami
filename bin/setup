@@ -14,13 +14,13 @@ class Runner
 
   def call
     kit.chdir root do
+      setup_environment
       setup_development_environment
       setup_test_environment
       setup_development_procfile
       step "Installing dependencies...", "bundle install"
       step "Installing packages...", "npm install"
       step "Configuring databases...", "hanami db prepare"
-      step "Compiling assets...", "hanami assets compile"
     end
   end
 
@@ -33,19 +33,27 @@ class Runner
     kernel.system(*arguments) || kernel.abort("\nERROR: Command #{arguments.inspect} failed.")
   end
 
+  def setup_environment
+    path = root.join ".env"
+
+    return kernel.puts ".env exists. Skipped." if path.exist?
+
+    kernel.puts "Creating .env..."
+
+    path.write <<~CONTENT
+      PG_DATABASE=terminus
+      PG_PASSWORD=#{SecureRandom.hex 15}
+      PG_USER=terminus
+    CONTENT
+  end
+
   def setup_development_environment
     path = root.join ".env.development"
 
     return kernel.puts ".env.development exists. Skipped." if path.exist?
 
     kernel.puts "Creating .env.development..."
-
-    path.write <<~CONTENT
-      DATABASE_URL="postgres://localhost/terminus_development"
-      PG_DATABASE="terminus"
-      PG_PASSWORD="#{SecureRandom.hex 15}"
-      PG_USER="terminus"
-    CONTENT
+    path.write %(DATABASE_URL="postgres://localhost/terminus_development")
   end
 
   def setup_test_environment
