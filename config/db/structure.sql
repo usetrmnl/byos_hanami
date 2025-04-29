@@ -234,4 +234,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250401150503_add_device_proxy_column.rb'),
 ('20250408143435_add_device_firmware_update_column.rb'),
 ('20250423143027_add_device_log_max_alloc_size.rb'),
-('20250429114320_remove_device_setup_at_column.rb');
+('20250429114320_remove_device_setup_at_column.rb'),
+('20250429115049_change_device_column_text_types.rb');
