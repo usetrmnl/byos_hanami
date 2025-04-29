@@ -1,7 +1,18 @@
-<tr>
+<tr class="log">
   <%= tag.td log.created_at.strftime "%Y-%m-%d %I:%M:%S %p" %>
   <td><%= link_to log.id, "/devices/#{device.id}/logs/#{log.id}" %></td>
   <%= tag.td log.message, class: "text-left" %>
   <%= tag.td log.refresh_rate %>
   <%= tag.td log.retry %>
+
+  <td class="actions">
+    <a href="/devices/<%= device.id %>/logs/<%= log.id %>"
+       class="link-cancel"
+       hx-delete="/devices/<%= device.id %>/logs/<%= log.id %>"
+       hx-confirm="Are you sure you want to delete this device log?"
+       hx-target="closest .log"
+       hx-swap="outerHTML swap:0.5s">
+      Delete
+    </a>
+  </td>
 </tr>
