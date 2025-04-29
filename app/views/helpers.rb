@@ -19,7 +19,7 @@ module Terminus
         attributes.fetch_value key, record.public_send(key)
       end
 
-      def human_at(at) = at.strftime "%B %d %Y at %H:%M %Z"
+      def human_at(at) = (at.strftime "%B %d %Y at %H:%M %Z" if at)
     end
   end
 end
