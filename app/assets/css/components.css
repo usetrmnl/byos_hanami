@@ -51,7 +51,7 @@
 }
 
 .popover-trigger {
-  cursor: help;
+  cursor: pointer;
   border: none;
   background: none;
 }

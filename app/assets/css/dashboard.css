@@ -25,6 +25,7 @@
   }
 
   .label {
+    display: flex;
     font-weight: 400;
   }
 }

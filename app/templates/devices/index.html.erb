@@ -2,25 +2,29 @@
 
 <section class="page-devices">
   <header class="page-header">
-    <h1 class="label">Devices</h1>
+    <h1 class="label">
+      Devices
+
+      <button class="popover-trigger" popovertarget="popover-shortcuts">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-shortcuts" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Keyboard Shortcuts</h3>
+
+      <ul>
+        <li><kbd>CONTROL + n</kbd>: New device.</li>
+        <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
+      </ul>
+    </dialog>
 
     <div class="actions">
-      <button class="popover-trigger" popovertarget="popover-shortcuts">⌨️</button>
-
-      <dialog id="popover-shortcuts" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
-          <span aria-hidden=true>❌</span>
-          <span class="screen_reader">Close</span>
-        </button>
-
-        <h3 class="label">Keyboard Shortcuts</h3>
-
-        <ul>
-          <li><kbd>CONTROL + n</kbd>: New device.</li>
-          <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
-        </ul>
-      </dialog>
-
       <a href="/devices/new"
          class="button button-new"
          hx-get="/devices/new"
