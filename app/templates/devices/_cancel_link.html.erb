@@ -1,9 +1,1 @@
-<a href="<%= path %>"
-   class="decline"
-   hx-get="<%= path %>"
-   hx-trigger="click"
-   hx-target="closest .page-devices"
-   hx-swap="outerHTML"
-   hx-push-url="true">
-   Cancel
-</a>
+<%= link_to "Cancel", routes.path(:devices), class: :decline %>
