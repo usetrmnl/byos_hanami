@@ -9,7 +9,8 @@
   </ul>
 
   <ul class="list">
-    <li><a href="/devices" class="link">Devices</a></li>
-    <li><a href="/designer" class="link">Designer</a></li>
+    <li><%= link_to "Dashboard", routes.path(:root), class: :link %></li>
+    <li><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+    <li><%= link_to "Designer", routes.path(:designer), class: :link %></li>
   </ul>
 </nav>
