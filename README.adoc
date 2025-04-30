@@ -124,12 +124,21 @@ That's it!
 
 There are two background pollers that cache data from the remote link:https://usetrmnl.com[Core] server for improved performance:
 
-* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. This checks for updates every six hours.
-* *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. This checks for updates every 5 minutes.
+* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. By default, this checks for updates every six hours.
+* *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. By default, this checks for updates every five minutes.
 
-Both of these processes can be configured to use different polling intervals by passing in a different value in seconds (i.e. `<poller>.new seconds: 60`). You can do this by modifying each script.
+Both of these processes can be configured to use different polling intervals by passing in a different value in seconds. You can do this by modifying each script. Example:
 
-Each process runs in the background and are automatically configured in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
+[source,ruby]
+----
+# bin/pollers/firmware
+poller.call seconds: 60
+
+# bin/pollers/screen
+poller.call seconds: 30
+----
+
+Each automatically run in the background as separate processes in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
 
 === APIs
 
