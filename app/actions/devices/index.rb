@@ -22,7 +22,7 @@ module Terminus
         private
 
         def load_devices query
-          query.empty? ? repository.all : repository.find_all_by_label(query)
+          query.empty? ? repository.all : repository.all_by_label(query)
         end
 
         def add_htmx_headers response, query

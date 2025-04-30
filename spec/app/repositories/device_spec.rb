@@ -32,13 +32,13 @@ RSpec.describe Terminus::Repositories::Device, :db do
     end
   end
 
-  describe "#find_all_by_label" do
+  describe "#all_by_label" do
     it "answers record for label" do
-      expect(repository.find_all_by_label(device.label)).to contain_exactly(device)
+      expect(repository.all_by_label(device.label)).to contain_exactly(device)
     end
 
     it "empty array for unknown label" do
-      expect(repository.find_all_by_label("bogus")).to eq([])
+      expect(repository.all_by_label("bogus")).to eq([])
     end
   end
 
