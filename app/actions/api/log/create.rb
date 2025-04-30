@@ -10,7 +10,7 @@ module Terminus
             :logger,
             transformer: "aspects.api.transformers.firmware_log",
             device_repository: "repositories.device",
-            log_repository: "repositories.device_log",
+            log_repository: "repositories.device_log"
           ]
 
           format :json
