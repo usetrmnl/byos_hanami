@@ -18,7 +18,7 @@
 
       <div class="form-actions">
         <%= render "save_button", verb: :post, path: "/devices" %>
-        <%= render "cancel_link" %>
+        <%= link_to "Cancel", routes.path(:devices), class: :decline %>
       </div>
     </form>
   </div>

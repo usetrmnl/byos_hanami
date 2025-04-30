@@ -18,7 +18,16 @@
 
       <div class="form-actions">
         <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
-        <%= render "cancel_link" %>
+
+        <a href="<%= routes.path :device_show, id: device.id %>"
+           class="decline"
+           hx-get="<%= routes.path :device_show, id: device.id %>"
+           hx-trigger="click"
+           hx-target="closest .page-devices"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+           Cancel
+        </a>
       </div>
     </form>
   </div>
