@@ -20,7 +20,7 @@
         <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
 
         <a href="<%= routes.path :device_show, id: device.id %>"
-           class="decline"
+           class="button-decline"
            hx-get="<%= routes.path :device_show, id: device.id %>"
            hx-trigger="click"
            hx-target="closest .page-devices"

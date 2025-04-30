@@ -33,7 +33,7 @@
       <%= render :search, query: %>
 
       <a href="/devices/new"
-         class="button button-new"
+         class="button-accept"
          hx-get="/devices/new"
          hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
          hx-target="closest .page-devices"
