@@ -9,17 +9,13 @@ module Terminus
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
         include Deps["aspects.screens.downloader", :logger, repository: "repositories.device"]
+        include Initable[endpoint: proc { TRMNL::API::Endpoints::Display.new }, kernel: Kernel]
         include Dry::Monads[:result]
 
-        include Initable[
-          endpoint: proc { TRMNL::API::Endpoints::Display.new },
-          kernel: Kernel,
-          seconds: 300
-        ]
-
-        def call
+        # Seconds equates to five minutes (60 * 5).
+        def call seconds: 300
           watch_for_shudown
-          keep_alive
+          keep_alive seconds
         end
 
         private
@@ -31,7 +27,7 @@ module Terminus
           end
         end
 
-        def keep_alive
+        def keep_alive seconds
           kernel.loop do
             process_devices
             kernel.sleep seconds

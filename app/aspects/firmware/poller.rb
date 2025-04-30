@@ -9,12 +9,13 @@ module Terminus
       # Polls the Core Firmware API on a scheduled interval for new firmware versions.
       class Poller
         include Deps["aspects.firmware.downloader", :logger]
-        include Initable[kernel: Kernel, seconds: 21_600] # Six hours (60 * 60 * 6).
+        include Initable[kernel: Kernel]
         include Dry::Monads[:result]
 
-        def call
+        # Seconds equates to six hours (60 * 60 * 6).
+        def call seconds: 21_600
           watch_for_shudown
-          keep_alive
+          keep_alive seconds
         end
 
         private
@@ -26,7 +27,7 @@ module Terminus
           end
         end
 
-        def keep_alive
+        def keep_alive seconds
           kernel.loop do
             download
             kernel.sleep seconds
