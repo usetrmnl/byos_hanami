@@ -16,15 +16,22 @@
         <span class="screen_reader">Close</span>
       </button>
 
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by device label using partial or full label.</p>
+
       <h3 class="label">Keyboard Shortcuts</h3>
 
       <ul>
         <li><kbd>CONTROL + n</kbd>: New device.</li>
         <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
       </ul>
+
     </dialog>
 
     <div class="actions">
+      <%= render :search %>
+
       <a href="/devices/new"
          class="button button-new"
          hx-get="/devices/new"
@@ -37,9 +44,16 @@
     </div>
   </header>
 
-  <ul class="devices">
-    <% devices.each do |device| %>
-      <%= device.render :device %>
-    <% end %>
-  </ul>
+  <% if devices.any? %>
+    <ul class="devices">
+      <% devices.each do |device| %>
+        <%= device.render :device %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="page-empty">
+      <span class="icon">🌌</span>
+      <p class="message">No devices found.</p>
+    </div>
+  <% end %>
 </section>

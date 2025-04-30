@@ -7,17 +7,25 @@ module Terminus
       class Index < Terminus::Action
         include Deps[repository: "repositories.device"]
 
+        params { optional(:query).filled :string }
+
         def handle request, response
-          response.render view, **view_settings(request)
+          query = request.params[:query]
+
+          if request.get_header("HTTP_HX_TRIGGER") == "search"
+            add_htmx_headers response, query
+            response.render view, devices: repository.find_all_by_label(query), layout: false
+          else
+            response.render view, devices: repository.all
+          end
         end
 
         private
 
-        def view_settings request
-          settings = {devices: repository.all}
+        def add_htmx_headers response, query
+          return unless query
 
-          settings[:layout] = false if request.env.key? "HTTP_HX_REQUEST"
-          settings
+          response.headers["HX-Push-Url"] = routes.path :devices, query:
         end
       end
     end

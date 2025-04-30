@@ -4,7 +4,6 @@
 }
 
 .button-new {
-  align-self: flex-start;
   background-color: var(--site-orange);
   color: white;
   text-decoration: none;
@@ -253,6 +252,12 @@
 
   .label {
     margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 }
 
