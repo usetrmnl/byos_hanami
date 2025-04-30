@@ -13,6 +13,12 @@ module Terminus
 
       def find(id) = (devices.by_pk(id).one if id)
 
+      def find_all_by_label value
+        devices.where { label.ilike "%#{value}%" }
+               .order { created_at.asc }
+               .to_a
+      end
+
       def find_by_api_key value
         return unless value
 

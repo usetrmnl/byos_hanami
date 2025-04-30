@@ -32,6 +32,16 @@ RSpec.describe Terminus::Repositories::Device, :db do
     end
   end
 
+  describe "#find_all_by_label" do
+    it "answers record for label" do
+      expect(repository.find_all_by_label(device.label)).to contain_exactly(device)
+    end
+
+    it "empty array for unknown label" do
+      expect(repository.find_all_by_label("bogus")).to eq([])
+    end
+  end
+
   describe "#find_by_api_key" do
     it "answers record for API key" do
       expect(repository.find_by_api_key(device.api_key)).to eq(device)
