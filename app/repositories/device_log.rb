@@ -12,8 +12,8 @@ module Terminus
                    .to_a
       end
 
-      def all_by_device device_id
-        device_logs.where(device_id:)
+      def all_by_device id
+        device_logs.where(device_id: id)
                    .order { created_at.desc }
                    .to_a
       end
@@ -27,7 +27,7 @@ module Terminus
 
       def find(id) = (device_logs.combine(:device).by_pk(id).one if id)
 
-      def delete_by_device(device_id, id) = device_logs.where(device_id: device_id, id: id).delete
+      def delete_by_device(device_id, id) = device_logs.where(device_id:, id:).delete
     end
   end
 end
