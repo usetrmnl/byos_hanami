@@ -8,11 +8,11 @@
       <li class="breadcrumb">Logs</li>
     </ul>
 
-    <%= render :search, device: %>
+    <%= render :search, device:, query: %>
   </header>
 
-  <% if logs.any? %>
-    <div class="site-container">
+  <div class="site-container">
+    <% if logs.any? %>
       <table class="site-table">
         <thead>
           <tr>
@@ -25,17 +25,14 @@
           </tr>
         </thead>
 
-        <tbody class="logs">
+        <tbody>
           <% logs.each do |log| %>
             <%= log.render :log, device: %>
           <% end %>
         </tbody>
       </table>
-    </div>
-  <% else %>
-    <div class="page-empty">
-      <span class="icon">🌌</span>
-      <p class="message">All is quiet.</p>
-    </div>
-  <% end %>
+    <% else %>
+      <%= render "shared/empty", message: "No logs found." %>
+    <% end %>
+  </div>
 </section>

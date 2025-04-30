@@ -30,7 +30,7 @@
     </dialog>
 
     <div class="actions">
-      <%= render :search %>
+      <%= render :search, query: %>
 
       <a href="/devices/new"
          class="button button-new"
@@ -51,9 +51,8 @@
       <% end %>
     </ul>
   <% else %>
-    <div class="page-empty">
-      <span class="icon">🌌</span>
-      <p class="message">No devices found.</p>
+    <div class="devices">
+      <%= render "shared/empty", message: "No devices found." %>
     </div>
   <% end %>
 </section>

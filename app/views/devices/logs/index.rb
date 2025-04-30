@@ -8,6 +8,7 @@ module Terminus
         class Index < Terminus::View
           expose :device
           expose :logs
+          expose :query
         end
       end
     end

@@ -6,6 +6,7 @@ module Terminus
       # The index view.
       class Index < Terminus::View
         expose :devices
+        expose :query
       end
     end
   end

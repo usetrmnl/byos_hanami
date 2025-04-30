@@ -2,7 +2,7 @@
   <%= tag.form(action: routes.path(:devices), method: :get, class: "page-search") do %>
     <input id="search"
            name="query"
-           value=""
+           value="<%= query %>"
            class="value"
            hx-get="<%= routes.path :devices %>"
            hx-trigger="search, keyup delay:200ms changed"

@@ -8,6 +8,12 @@ RSpec.describe Terminus::Actions::Devices::Logs::Index, :db do
   describe "#call" do
     let(:device_log) { Factory[:device_log] }
 
+    it "answers unprocessable entity status when required parameters are missing" do
+      response = Rack::MockRequest.new(action).get ""
+
+      expect(response.status).to eq(422)
+    end
+
     it "renders standard response with search results" do
       response = Rack::MockRequest.new(action).get "", params: {device_id: device_log.device_id}
 
@@ -21,7 +27,7 @@ RSpec.describe Terminus::Actions::Devices::Logs::Index, :db do
                                                      query: "bogus"
                                                    }
 
-      expect(response.body).to include("All is quiet")
+      expect(response.body).to include("No logs found.")
     end
 
     it "renders htmx response with search results" do
@@ -40,7 +46,7 @@ RSpec.describe Terminus::Actions::Devices::Logs::Index, :db do
                                                      query: "bogus"
                                                    }
 
-      expect(response.body).to include("All is quiet")
+      expect(response.body).to include("No logs found.")
     end
   end
 end
