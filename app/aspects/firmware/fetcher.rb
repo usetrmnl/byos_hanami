@@ -15,7 +15,12 @@ module Terminus
 
         def call
           settings.firmware_root.files("*.bin").reverse.map do |path|
-            model[path: build_relative(path), uri: build_uri(path), version: path.name.to_s]
+            model[
+              path: build_relative(path),
+              size: path.size,
+              uri: build_uri(path),
+              version: path.name.to_s
+            ]
           end
         end
 

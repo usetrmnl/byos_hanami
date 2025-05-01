@@ -11,18 +11,20 @@ RSpec.describe Terminus::Aspects::Firmware::Fetcher do
 
   describe "#call" do
     it "answers records in descending order" do
-      temp_dir.join("1.0.0.bin").touch
+      temp_dir.join("1.0.0.bin").write("For size test.")
       temp_dir.join("1.0.1.bin").touch
 
       expect(fetcher.call).to eq(
         [
           Terminus::Aspects::Firmware::Model[
             path: Pathname("1.0.1.bin"),
+            size: 0,
             uri: "https://localhost/1.0.1.bin",
             version: "1.0.1"
           ],
           Terminus::Aspects::Firmware::Model[
             path: Pathname("1.0.0.bin"),
+            size: 14,
             uri: "https://localhost/1.0.0.bin",
             version: "1.0.0"
           ]
