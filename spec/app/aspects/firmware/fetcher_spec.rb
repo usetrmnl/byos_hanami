@@ -5,20 +5,33 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Firmware::Fetcher do
   using Refinements::Pathname
 
-  subject(:finder) { described_class.new settings: }
+  subject(:fetcher) { described_class.new settings:, public_root: temp_dir }
 
   include_context "with main application"
 
   describe "#call" do
-    it "answers latest firmware version" do
-      temp_dir.join("1.0.1.bin").touch
+    it "answers records in descending order" do
       temp_dir.join("1.0.0.bin").touch
+      temp_dir.join("1.0.1.bin").touch
 
-      expect(finder.call).to eq(temp_dir.join("1.0.1.bin"))
+      expect(fetcher.call).to eq(
+        [
+          Terminus::Aspects::Firmware::Model[
+            path: Pathname("1.0.1.bin"),
+            uri: "https://localhost/1.0.1.bin",
+            version: "1.0.1"
+          ],
+          Terminus::Aspects::Firmware::Model[
+            path: Pathname("1.0.0.bin"),
+            uri: "https://localhost/1.0.0.bin",
+            version: "1.0.0"
+          ]
+        ]
+      )
     end
 
-    it "answers root path when no files exist" do
-      expect(finder.call).to be(temp_dir)
+    it "answers empty array when there are no files" do
+      expect(fetcher.call).to eq([])
     end
   end
 end
