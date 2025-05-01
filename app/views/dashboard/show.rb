@@ -8,7 +8,7 @@ module Terminus
         expose :api_uri
         expose :devices
         expose :ip_addresses
-        expose :firmware_path
+        expose :firmwares
       end
     end
   end

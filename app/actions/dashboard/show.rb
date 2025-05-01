@@ -19,13 +19,9 @@ module Terminus
           response.render view,
                           api_uri: settings.api_uri,
                           devices: device_repository.all,
-                          firmware_path:,
+                          firmwares: firmware_fetcher.call,
                           ip_addresses: ip_finder.all
         end
-
-        private
-
-        def firmware_path = firmware_fetcher.call.relative_path_from config.public_directory
       end
     end
   end

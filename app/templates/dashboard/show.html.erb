@@ -71,7 +71,9 @@
       </legend>
 
       <ul class="list">
-        <li><%= link_to firmware_path.basename(".bin"), firmware_path %></li>
+        <% firmwares.each do |record| %>
+          <li><%= link_to record.version, record.path %></li>
+        <% end %>
       </ul>
 
       <dialog id="popover-firmware" class="popover-content" popover="auto">
