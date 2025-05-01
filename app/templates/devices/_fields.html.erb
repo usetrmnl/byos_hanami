@@ -78,7 +78,7 @@
   <%= render "field_popover_content",
              name: "firmware_update",
              label: "Firmware Update",
-             body: "When enabled, allows your device to be automatically updated when a new firmware version is available. At the moment, you'll want to immediately disable this once you see your device being updated or it'll go into an infinite update loop. This due to a firmware bug." %>
+             body: "When enabled, allows your device to be automatically updated when a new firmware version is available." %>
 
   <%= scope(:form_field, key: :proxy, errors:).render do %>
     <label class="key" for="device[proxy]">
