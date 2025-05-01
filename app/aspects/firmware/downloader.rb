@@ -20,7 +20,7 @@ module Terminus
 
           case result
             in Success(payload)
-              return Success(path(payload)) if fetcher.call.name.to_s == payload.version
+              return Success(path(payload)) if latest_firmware_version == payload.version
 
               save payload
             else result
@@ -28,6 +28,10 @@ module Terminus
         end
 
         private
+
+        def path(payload) = settings.firmware_root.join "#{payload.version}.bin"
+
+        def latest_firmware_version = fetcher.call.first.then { it.version if it }
 
         def save payload
           get(payload.url).fmap { |content| path(payload).make_ancestors.write(content) }
@@ -42,8 +46,6 @@ module Terminus
         rescue OpenSSL::SSL::SSLError => error
           Failure error.message
         end
-
-        def path(payload) = settings.firmware_root.join "#{payload.version}.bin"
       end
     end
   end
