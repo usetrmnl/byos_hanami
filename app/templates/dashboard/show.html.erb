@@ -19,18 +19,18 @@
           <%= tag.li link_to(device.label, routes.path(:device_show, id: device.id)) %>
         <% end %>
       </ul>
-
-      <dialog id="popover-devices" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-devices" popovertargetaction="hide">
-          <span aria-hidden=true>❌</span>
-          <span class="screen_reader">Close</span>
-        </button>
-
-        <h3 class="label">Devices</h3>
-
-        <p>These are your currently registered devices.</p>
-      </dialog>
     </fieldset>
+
+    <dialog id="popover-devices" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-devices" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Devices</h3>
+
+      <p>These are your currently registered devices.</p>
+    </dialog>
 
     <fieldset class="box">
       <legend class="label">
@@ -47,20 +47,20 @@
 
         <li class="site-secret"><%= api_uri %> (API)</li>
       </ul>
-
-      <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-ip-addresses" popovertargetaction="hide">
-          <span aria-hidden=true>❌</span>
-          <span class="screen_reader">Close</span>
-        </button>
-
-        <h3 class="label">IP Addresses</h3>
-
-        <p>These are the Internet Protocol (IP) addresses of your local server. Use these to connect to your device. Use the API address to connect your device since you HTTPS isn't supported as of yet.</p>
-
-        <p>💡 Prefer wired over wireless since the former is likely not to change on you as much.</p>
-      </dialog>
     </fieldset>
+
+    <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-ip-addresses" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">IP Addresses</h3>
+
+      <p>These are the Internet Protocol (IP) addresses of your local server. Use these to connect to your device. Use the API address to connect your device since HTTPS is not supported by our firmware as of yet.</p>
+
+      <p>💡 Prefer wired over wireless since the former is likely not to change on you as much.</p>
+    </dialog>
 
     <fieldset class="box">
       <legend class="label">
@@ -72,20 +72,20 @@
 
       <ul class="list">
         <% firmwares.each do |record| %>
-          <li><%= link_to record.version, record.path %></li>
+          <li><%= link_to record.version, record.path %> (<%= size record.size %>)</li>
         <% end %>
       </ul>
-
-      <dialog id="popover-firmware" class="popover-content" popover="auto">
-        <button class="close" popovertarget="popover-firmware" popovertargetaction="hide">
-          <span aria-hidden=true>❌</span>
-          <span class="screen_reader">Close</span>
-        </button>
-
-        <h3 class="label">Firmware</h3>
-
-        <p>Displays the latest firmware version. Automatically updates when a new version is detected.</p>
-      </dialog>
     </fieldset>
+
+    <dialog id="popover-firmware" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-firmware" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Firmware</h3>
+
+      <p>Displays recently downloaded firmware versions in descending order with the latest version listed first. New versions will appear as they are released and the firmware poller (background process) detects them.</p>
+    </dialog>
   </div>
 </section>
