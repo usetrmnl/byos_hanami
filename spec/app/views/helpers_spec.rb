@@ -32,4 +32,22 @@ RSpec.describe Terminus::Views::Helpers do
       expect(helper.human_at(nil)).to be(nil)
     end
   end
+
+  describe "#size" do
+    it "answers size in bytes" do
+      expect(helper.size(50)).to eq("50 B")
+    end
+
+    it "answers one megabyte" do
+      expect(helper.size(1_048_576)).to eq("1 MB")
+    end
+
+    it "answers multiple megabytes" do
+      expect(helper.size(2_097_152)).to eq("2 MB")
+    end
+
+    it "answers megabytes with two decimal precision" do
+      expect(helper.size(2_500_111)).to eq("2.38 MB")
+    end
+  end
 end

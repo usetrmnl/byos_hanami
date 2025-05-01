@@ -20,6 +20,13 @@ module Terminus
       end
 
       def human_at(at) = (at.strftime "%B %d %Y at %H:%M %Z" if at)
+
+      def size bytes, megabyte: 1_048_576.0
+        case bytes
+          when ...megabyte then "#{bytes} B"
+          else (bytes / megabyte).then { |megabytes| format("%.2f MB", megabytes).sub(".00", "") }
+        end
+      end
     end
   end
 end
