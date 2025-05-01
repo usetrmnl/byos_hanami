@@ -58,7 +58,7 @@ module Terminus
 
           def fetch_firmware_uri device
             firmware_fetcher.call.first.then do
-              it.uri if device.firmware_version != it.version
+              it.uri if it && device.firmware_version != it.version
             end
           end
         end
