@@ -48,18 +48,18 @@ module Terminus
             image_fetcher.call mac_address.tr(":", Dry::Core::EMPTY_STRING), encryption:
           end
 
-          def fetch_firmware
-            firmware_fetcher.call
-                            .relative_path_from(config.public_directory)
-                            .then { |relative_path| "#{settings.api_uri}/#{relative_path}" }
-          end
-
           def build_record image, device
             model[
-              firmware_url: fetch_firmware,
+              firmware_url: fetch_firmware_uri(device),
               **image.slice(:image_url, :filename),
               **device.as_api_display
             ]
+          end
+
+          def fetch_firmware_uri device
+            firmware_fetcher.call.first.then do
+              it.uri if device.firmware_version != it.version
+            end
           end
         end
       end

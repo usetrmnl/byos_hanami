@@ -82,6 +82,22 @@ RSpec.describe "/api/display", :db do
     )
   end
 
+  it "answers removes firmware URI when device and latest firmware versions match" do
+    temp_dir.join("1.2.3.bin").touch
+    get routes.path(:api_display), {}, **firmware_headers
+
+    expect(json_payload).to include(
+      filename: /.+\.bmp/,
+      firmware_url: nil,
+      image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
+      image_url_timeout: 0,
+      refresh_rate: 900,
+      reset_firmware: false,
+      special_function: "sleep",
+      update_firmware: false
+    )
+  end
+
   it "answers not found for index with invalid access token" do
     get routes.path(:api_display)
     expect(last_response.status).to eq(404)
