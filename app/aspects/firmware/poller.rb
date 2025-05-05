@@ -8,7 +8,7 @@ module Terminus
     module Firmware
       # Polls the Core Firmware API on a scheduled interval for new firmware versions.
       class Poller
-        include Deps["aspects.firmware.downloader", :logger]
+        include Deps["aspects.firmware.downloader"]
         include Initable[kernel: Kernel]
         include Dry::Monads[:result]
 
@@ -29,16 +29,8 @@ module Terminus
 
         def keep_alive seconds
           kernel.loop do
-            download
+            downloader.call
             kernel.sleep seconds
-          end
-        end
-
-        def download
-          case downloader.call
-            in Success(path) then logger.info "Downloaded: #{path}."
-            in Failure(message) then logger.error message
-            else logger.error "Unable to download firmware."
           end
         end
       end
