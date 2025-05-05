@@ -2,6 +2,7 @@ name: "terminus"
 
 services:
   web:
+    init: true
     build:
       context: .
     environment:
