@@ -9,7 +9,7 @@ module Terminus
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
         include Deps["aspects.screens.downloader", repository: "repositories.device"]
-        include Initable[endpoint: proc { TRMNL::API::Endpoints::Display.new }, kernel: Kernel]
+        include Initable[client: proc { TRMNL::API::Client.new }, kernel: Kernel]
         include Dry::Monads[:result]
 
         # Seconds equates to five minutes (60 * 5).
@@ -39,7 +39,7 @@ module Terminus
         end
 
         def process device
-          endpoint.call(token: device.api_key).bind do |response|
+          client.display(token: device.api_key).bind do |response|
             downloader.call response.image_url, "#{device.slug}/#{response.filename}"
           end
         end

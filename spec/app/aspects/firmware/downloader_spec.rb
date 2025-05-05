@@ -5,16 +5,16 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Firmware::Downloader do
   using Refinements::Pathname
 
-  subject(:downloader) { described_class.new endpoint: }
+  subject(:downloader) { described_class.new api_client: }
 
   include_context "with main application"
   include_context "with library dependencies"
 
   let(:http) { HTTP }
 
-  let :endpoint do
-    instance_double TRMNL::API::Endpoints::Firmware,
-                    call: Success(
+  let :api_client do
+    instance_double TRMNL::API::Client,
+                    firmware: Success(
                       TRMNL::API::Models::Firmware[
                         url: "https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.5.2.bin",
                         version: "1.5.2"
@@ -34,10 +34,8 @@ RSpec.describe Terminus::Aspects::Firmware::Downloader do
       expect(downloader.call).to be_success(path)
     end
 
-    context "with endpoint failure" do
-      let :endpoint do
-        instance_double TRMNL::API::Endpoints::Firmware, call: Failure(message: "Danger!")
-      end
+    context "with API client failure" do
+      let(:api_client) { instance_double TRMNL::API::Client, firmware: Failure(message: "Danger!") }
 
       it "answers failure when image can't be downloaded" do
         expect(downloader.call).to be_failure(message: "Danger!")

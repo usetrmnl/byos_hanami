@@ -11,12 +11,12 @@ module Terminus
         include Deps[:settings, fetcher: "aspects.firmware.fetcher"]
         include Dependencies[client: :downloader]
         include Dry::Monads[:result]
-        include Initable[endpoint: proc { TRMNL::API::Endpoints::Firmware.new }]
+        include Initable[api_client: proc { TRMNL::API::Client.new }]
 
         using Refinements::Pathname
 
         def call
-          result = endpoint.call
+          result = api_client.firmware
 
           case result
             in Success(payload)

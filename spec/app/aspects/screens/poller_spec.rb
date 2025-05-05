@@ -3,13 +3,13 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Poller, :db do
-  subject(:poller) { described_class.new endpoint:, downloader:, kernel: }
+  subject(:poller) { described_class.new client:, downloader:, kernel: }
 
   let(:kernel) { class_spy Kernel, sleep: nil }
 
-  let :endpoint do
-    instance_spy TRMNL::API::Endpoints::Display,
-                 call: Success(
+  let :client do
+    instance_spy TRMNL::API::Client,
+                 display: Success(
                    TRMNL::API::Models::Display[
                      image_url: "https://test.io/test.bmp",
                      filename: "test.bmp"
@@ -44,7 +44,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     it "requests image for device API key" do
       poller.call
-      expect(endpoint).to have_received(:call)
+      expect(client).to have_received(:display)
     end
 
     it "downloads image" do
@@ -75,9 +75,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
     end
 
     context "with remote image failure" do
-      let :endpoint do
-        instance_spy TRMNL::API::Endpoints::Display, call: Failure("Danger!")
-      end
+      let(:client) { instance_spy TRMNL::API::Client, display: Failure("Danger!") }
 
       it "doesn't download image" do
         poller.call
