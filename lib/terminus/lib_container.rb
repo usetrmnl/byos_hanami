@@ -15,6 +15,7 @@ module Terminus
       HTTP
     end
 
+    register(:downloader) { Downloader.new }
     register(:sanitizer) { Sanitizer.new }
     register(:logger) { Cogger.new id: :terminus, formatter: :detail }
   end
