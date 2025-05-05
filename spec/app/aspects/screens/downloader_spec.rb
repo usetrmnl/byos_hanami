@@ -9,55 +9,46 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
 
   include_context "with main application"
 
-  let(:client) { HTTP }
+  let :client do
+    fixture_path.copy image_path
+    instance_double Terminus::Downloader, call: Success(image_path)
+  end
+
+  let(:fixture_path) { SPEC_ROOT.join "support/fixtures/test.png" }
+  let(:image_path) { temp_dir.join "test.png" }
 
   describe "#call" do
-    it "creates root directory when it doesn't exist" do
-      temp_dir.rmdir
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
-
-      expect(temp_dir.join("abc").exist?).to be(true)
-    end
-
     it "downloads file" do
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
-      expect(temp_dir.join("abc/test.png").exist?).to be(true)
+      expect(downloader.call("https://test.io/test.png", "test.png")).to be_success(image_path)
     end
 
     it "applies correct file extension" do
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test"
-      expect(temp_dir.join("abc/test.png").exist?).to be(true)
+      expect(downloader.call("https://test.io/test.png", "test")).to be_success(image_path)
     end
 
     it "marks downloaded file older than oldest file" do
-      temp_dir.join("abc/test.txt").make_ancestors.write("test").touch Time.new(2000, 1, 1, 0, 0, 0)
-      downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
+      temp_dir.join("test.txt").write("test").touch Time.new(2000, 1, 1, 0, 0, 0)
+      downloader.call "https://test.io/test.png", "test.png"
 
-      expect(temp_dir.join("abc/test.png").mtime.year).to eq(1999)
+      expect(temp_dir.join("test.png").mtime.year).to eq(1999)
     end
 
-    it "answers nested output path" do
-      result = downloader.call "https://usetrmnl.com/assets/mashups.png", "abc/test.png"
-      expect(result).to be_success(temp_dir.join("abc/test.png"))
-    end
+    context "when unable to download" do
+      let(:client) { instance_double Terminus::Downloader, call: Failure("Danger!") }
 
-    it "answers non-nested output path" do
-      result = downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
-      expect(result).to be_success(temp_dir.join("test.png"))
-    end
-
-    it "answers failure when image can't be downloaded" do
-      code = downloader.call("https://test.io/bogus.png", "bogus.png").alt_map { it.status.code }
-      expect(code).to be_failure(403).or(be_failure(404))
+      it "answers failure" do
+        expect(downloader.call("https://test.io/test.png", "test")).to be_failure("Danger!")
+      end
     end
 
     context "with invalid download" do
-      let(:client) { class_spy HTTP, get: response }
-      let(:response) { instance_double HTTP::Response, body: "", status: }
-      let(:status) { instance_double HTTP::Response::Status, success?: true }
+      let :client do
+        image_path.touch
+        instance_double Terminus::Downloader, call: Success(image_path)
+      end
 
       it "answers failure" do
-        result = downloader.call "https://usetrmnl.com/assets/mashups.png", "test.png"
+        result = downloader.call "https://test.io/test.png", "test.png"
         expect(result).to be_failure(%(Unable to analyze image: #{temp_dir.join "test.png"}.))
       end
     end

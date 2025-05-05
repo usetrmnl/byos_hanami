@@ -11,18 +11,18 @@ module Terminus
       # A basic file downloader for screen images.
       class Downloader
         include Deps[:settings]
-        include Dependencies[client: :http]
+        include Dependencies[client: :downloader]
         include Initable[seconds: 10, imager: MiniMagick::Image]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
 
         def call uri, path
-          asset_path = settings.screens_root.join(path).make_ancestors
+          asset_path = settings.screens_root.join path
 
-          get(uri).fmap { |content| asset_path.write(content) }
-                  .bind { |full_path| rename full_path }
-                  .fmap { |full_path| full_path.touch oldest_at(asset_path) }
+          client.call(uri, asset_path)
+                .bind { |full_path| rename full_path }
+                .fmap { |full_path| full_path.touch oldest_at(asset_path) }
         end
 
         private
@@ -36,17 +36,11 @@ module Terminus
           updated_path = path.sub_ext ".#{type}"
           path.rename updated_path
           Success updated_path
-        rescue Errno::ENOENT, OpenSSL::SSL::SSLError, MiniMagick::Error
+        rescue Errno::ENOENT, MiniMagick::Error
           Failure "Unable to analyze image: #{path}."
         end
 
         def oldest_at(path) = path.parent.files.min_by(&:mtime).mtime - seconds
-
-        def get uri
-          client.get(uri).then do |response|
-            response.status.success? ? Success(response) : Failure(response)
-          end
-        end
       end
     end
   end
