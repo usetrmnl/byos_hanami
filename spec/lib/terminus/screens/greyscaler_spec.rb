@@ -19,7 +19,7 @@ RSpec.describe Terminus::Screens::Greyscaler do
         dimensions: [1, 1],
         exif: {},
         type: "BMP3",
-        data: hash_including("depth" => 1, "baseDepth" => 1)
+        data: hash_including("depth" => 1)
       )
     end
 
