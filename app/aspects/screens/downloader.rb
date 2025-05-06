@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "cgi"
 require "dry/core"
 require "dry/monads"
 require "mini_magick"
@@ -10,37 +11,49 @@ module Terminus
     module Screens
       # A basic file downloader for screen images.
       class Downloader
-        include Deps[:settings]
+        include Deps[:settings, "aspects.screens.deduplicator"]
         include Dependencies[client: :downloader]
-        include Initable[seconds: 10, imager: MiniMagick::Image]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
 
-        def call uri, path
-          asset_path = settings.screens_root.join path
+        FILE_PATTERN = /
+          (                   # Conditional start.
+          plugin-             # Plugin prefix.
+          \d{4}-\d{2}-\d{2}   # Date.
+          T                   # Date and time delimiter.
+          \d{2}-\d{2}-\d{2}Z  # Time with zone.
+          -                   # Dash suffix.
+          |                   # Or.
+          -                   # Dash prefix.
+          \d{10}              # Cache buster timestamp.
+          )                   # Conditional end.
+        /x
 
-          client.call(uri, asset_path)
-                .bind { |full_path| rename full_path }
-                .fmap { |full_path| full_path.touch oldest_at(asset_path) }
+        def initialize(file_pattern: FILE_PATTERN, **)
+          @file_pattern = file_pattern
+          super(**)
+        end
+
+        def call uri, path
+          type = CGI.parse(uri)
+                    .fetch("response-content-type", Dry::Core::EMPTY_ARRAY)
+                    .first
+                    .to_s
+                    .sub("image/", Dry::Core::EMPTY_STRING)
+
+          client.call(uri, settings.screens_root.join(path))
+                .bind { |download_path| deduplicator.call download_path, sanitize(path, type) }
         end
 
         private
 
-        def rename path
-          type = imager.open(path)
-                       .data
-                       .fetch("mimeType", Dry::Core::EMPTY_STRING)
-                       .sub "image/", Dry::Core::EMPTY_STRING
+        attr_reader :file_pattern
 
-          updated_path = path.sub_ext ".#{type}"
-          path.rename updated_path
-          Success updated_path
-        rescue Errno::ENOENT, MiniMagick::Error
-          Failure "Unable to analyze image: #{path}."
+        def sanitize path, type
+          stripped = path.gsub(file_pattern, Dry::Core::EMPTY_STRING).sub("/", "/proxy-")
+          settings.screens_root.join "#{stripped}.#{type}"
         end
-
-        def oldest_at(path) = path.parent.files.min_by(&:mtime).mtime - seconds
       end
     end
   end
