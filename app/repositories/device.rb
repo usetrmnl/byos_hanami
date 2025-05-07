@@ -19,22 +19,13 @@ module Terminus
 
       def find(id) = (devices.by_pk(id).one if id)
 
-      def find_by_api_key value
-        return unless value
+      def find_by_api_key(value) = devices.where(api_key: value.to_s).one
 
-        devices.where { api_key.ilike "%#{value}%" }
-               .one
-      end
+      def find_by_mac_address(value) = devices.where(mac_address: value.to_s).one
 
-      def find_by_mac_address value
-        return unless value
-
-        devices.where { mac_address.ilike "%#{value}%" }
-               .one
-      end
-
-      def update_by_api_key(value, **attributes)
-        relation = devices.where { api_key.ilike "%#{value}%" }
+      # :reek:FeatureEnvy
+      def update_by_mac_address(value, **attributes)
+        relation = devices.where mac_address: value.to_s
 
         return relation.one if attributes.empty?
 
