@@ -27,7 +27,7 @@ RSpec.describe Terminus::Aspects::Synchronizers::Device, :db do
     end
 
     it "fails to update device upon failure" do
-      expect(updater.call(firmware_headers)).to be_failure("Unable to find device by API key.")
+      expect(updater.call(firmware_headers)).to be_failure("Unable to find device by MAC address.")
     end
   end
 end

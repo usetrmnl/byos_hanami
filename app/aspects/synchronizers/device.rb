@@ -20,8 +20,9 @@ module Terminus
 
         def update result
           result.bind do |payload|
-            device = repository.update_by_api_key(payload.api_key, **payload.device_attributes)
-            device ? Success(device) : Failure("Unable to find device by API key.")
+            device = repository.update_by_mac_address payload.mac_address,
+                                                      **payload.device_attributes
+            device ? Success(device) : Failure("Unable to find device by MAC address.")
           end
         end
       end
