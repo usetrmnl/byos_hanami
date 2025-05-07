@@ -13,6 +13,11 @@ module Terminus
 
       module_function
 
+      def boolean value
+        css_class = value == true ? "text-green" : "text-red"
+        tag.span value.to_s, class: css_class
+      end
+
       def field_for key, attributes, record = nil
         return attributes[key] unless record
 

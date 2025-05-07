@@ -5,6 +5,16 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Helpers do
   subject(:helper) { described_class }
 
+  describe ".boolean" do
+    it "answers green span when true" do
+      expect(helper.boolean(true)).to eq(%(<span class="text-green">true</span>))
+    end
+
+    it "answers red span when true" do
+      expect(helper.boolean(false)).to eq(%(<span class="text-red">false</span>))
+    end
+  end
+
   describe ".field_for" do
     let(:record) { Data.define(:label).new label: "Test" }
     let(:attributes) { {label: "Other"} }
