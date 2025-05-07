@@ -4,21 +4,25 @@
   flex-direction: column;
   gap: 1rem;
   justify-content: between;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 
-   @media only screen and (min-width: 825px) {
+  @media only screen and (min-width: 825px) {
     flex-direction: row;
   }
 
-  .terminal {
+  .device {
+    border-color: var(--site-black);
+    border-style: solid;
     border-radius: 0.3rem;
+    border-width: 0.65rem 0.65rem 1.1rem 0.65rem;
     box-shadow:
       0.7px 0.7px 0.7px rgba(0, 0, 0, 0.022),
       1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
       3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
       7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
       20px 20px 20px rgba(0, 0, 0, 0.07);
-    border-width: 1rem 1rem 1.8rem 1rem;
+    margin: 0;
+    display: flex;
   }
 
   .form {

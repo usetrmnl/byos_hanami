@@ -72,6 +72,14 @@
   }
 }
 
+.text-green {
+  color: var(--site-green);
+}
+
+.text-red {
+  color: var(--site-red);
+}
+
 .site-breadcrumbs {
   align-items: center;
   border-radius: 0.5rem;
@@ -116,47 +124,29 @@
 .site-definition-list {
   display: grid;
   grid-template: auto / auto 1fr;
+  padding: 0 1rem;
+
+  .key, .value {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    padding: 0.5rem;
+    word-break: break-word;
+  }
 
   .key {
     align-content: center;
     background-color: oklch(from var(--site-darkgrey) l c h / 0.2);
+    border-radius: 0.5rem 0 0 0.5rem;
     color: oklch(from var(--site-darkgrey) l c h / 0.7);
     font-weight: 400;
-    font-size: 0.95rem;
-    padding: 0.8rem;
     text-align: right;
-    border-radius: 0.5rem 0 0 0.5rem;
-    margin-bottom: 0.25rem;
   }
 
   .value {
     background-color: oklch(from var(--site-lightgrey) l c h / 0.3);
-    font-weight: 300;
-    font-size: 0.95rem;
     border-radius: 0rem 0.5rem 0.5rem 0;
-    padding: 0.8rem;
-    margin-bottom: 0.25rem;
-    word-break: break-word;
+    font-weight: 350;
   }
-}
-
-.site-figure {
-  border-radius: 0.3rem;
-  border: 1rem solid var(--site-black);
-  display: flex;
-  justify-content: center;
-  margin: 0;
-}
-
-.site-figure-device {
-  box-shadow:
-    0.7px 0.7px 0.7px rgba(0, 0, 0, 0.03),
-    1.7px 1.7px 1.7px rgba(0, 0, 0, 0.04),
-    3.5px 3.5px 3.5px rgba(0, 0, 0, 0.04),
-    7.3px 7.3px 7.3px rgba(0, 0, 0, 0.05),
-    2px 14px 20px rgba(0, 0, 0, 0.25)
-  ;
-  border-width: 0.65rem 0.65rem 1.1rem 0.65rem;
 }
 
 .site-secret {
@@ -278,10 +268,6 @@
   align-items: center;
   width: 100%;
 
-  @media only screen and (min-width: 480px) {
-    width: 50%;
-  }
-
   .group {
     border: none;
     display: flex;
@@ -308,9 +294,10 @@
 
   .value {
     width: 100%;
+    background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
     border-radius: 0.7rem;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
-    padding: 0.9rem 0.6rem 0.9rem 0.6rem;
+    padding: 0.7rem 0.6rem;
     outline: none;
   }
 
@@ -360,10 +347,10 @@
 .page-search {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 
   .value {
-    width: 100%;
     border-radius: 0.5rem;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
     padding: 0.7rem 0.4rem;

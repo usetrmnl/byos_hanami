@@ -1,4 +1,42 @@
 .page-dashboard {
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .devices {
+    list-style: none;
+    padding: 0 1rem;
+  }
+
+  .device {
+    display: flex;
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .measurements {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .measurement {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+  }
+
+  .battery, .signal {
+    width: 6rem;
+    height: 1.5rem;
+  }
+
   .widgets {
     display: grid;
     gap: 2rem;
@@ -25,6 +63,7 @@
 
     .label {
       display: flex;
+      font-weight: 500;
     }
   }
 }

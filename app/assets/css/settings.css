@@ -1,6 +1,5 @@
 :root {
   --site-font-family: Inter var, system-ui, sans-serif;
-  --site-heading-font-family: EB Garamond;
   --site-z-index-hidden: -10;
   --site-z-index-tooltip: 10;
   --site-z-index-navigation: 20;
