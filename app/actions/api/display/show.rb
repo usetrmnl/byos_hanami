@@ -12,8 +12,6 @@ module Terminus
         # The show action.
         class Show < Terminus::Action
           include Deps[
-            :settings,
-            repository: "repositories.device",
             image_fetcher: "aspects.screens.rotator",
             firmware_fetcher: "aspects.firmware.fetcher",
             synchronizer: "aspects.synchronizers.device"
