@@ -1,13 +1,15 @@
 <li id="<%= device.id %>" class="device">
-  <%= render :image, uri: device.image_uri %>
+  <figure class="screen">
+    <%= render :image, uri: device.image_uri %>
+  </figure>
 
   <h2 class="label"><%= device.label %></h2>
 
   <%= render "measurements", device: %>
 
   <div class="actions">
-    <%= link_to "View", "/devices/#{device.id}" %>
-    <%= link_to "Logs", "/devices/#{device.id}/logs" %>
+    <%= link_to "View", routes.path(:device_show, id: device.id) %>
+    <%= link_to "Logs", routes.path(:device_logs, device_id: device.id) %>
     <%= render "edit_link", device: %>
 
     <a href="/devices"

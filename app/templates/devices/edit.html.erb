@@ -9,26 +9,30 @@
   </header>
 
   <div class="page-body">
-    <figure class="site-figure site-figure-device">
-      <%= render :image, uri: device.image_uri %>
-    </figure>
+    <div class="device">
+      <figure class="screen">
+        <%= render :image, uri: device.image_uri %>
+      </figure>
 
-    <form action="/devices" method="put" class="page-form">
-      <%= render :fields, device:, fields: fields.value, errors: %>
+      <%= render "measurements", device: %>
 
-      <div class="form-actions">
-        <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
+      <form action="/devices" method="put" class="page-form">
+        <%= render :fields, device:, fields: fields.value, errors: %>
 
-        <a href="<%= routes.path :device_show, id: device.id %>"
-           class="button-decline"
-           hx-get="<%= routes.path :device_show, id: device.id %>"
-           hx-trigger="click"
-           hx-target="closest .page-devices"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-           Cancel
-        </a>
-      </div>
-    </form>
+        <div class="form-actions">
+          <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
+
+          <a href="<%= routes.path :device_show, id: device.id %>"
+             class="button-decline"
+             hx-get="<%= routes.path :device_show, id: device.id %>"
+             hx-trigger="click"
+             hx-target="closest .page-devices"
+             hx-swap="outerHTML"
+             hx-push-url="true">
+             Cancel
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
 </section>

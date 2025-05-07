@@ -9,17 +9,19 @@
   </header>
 
   <div class="page-body">
-    <figure class="site-figure">
-      <%= render :image, uri: assets["setup.svg"]%>
-    </figure>
+    <div class="device">
+      <figure class="screen">
+        <%= render :image, uri: assets["setup.svg"]%>
+      </figure>
 
-    <form action="/devices" method="post" class="page-form">
-      <%= render :fields, device:, fields: fields.value, errors: %>
+      <form action="/devices" method="post" class="page-form">
+        <%= render :fields, device:, fields: fields.value, errors: %>
 
-      <div class="form-actions">
-        <%= render "save_button", verb: :post, path: "/devices" %>
-        <%= link_to "Cancel", routes.path(:devices), class: "button-decline" %>
-      </div>
-    </form>
+        <div class="form-actions">
+          <%= render "save_button", verb: :post, path: "/devices" %>
+          <%= link_to "Cancel", routes.path(:devices), class: "button-decline" %>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
