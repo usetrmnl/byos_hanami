@@ -1,13 +1,13 @@
 <% content_for :title, "Designer | Terminus" %>
 
-<section class="page-devices">
+<section class="page-body">
   <header class="page-header">
     <h1 class="label">Designer</h1>
     <p class="page-subheader">Use the text area below to design custom screens for your device using pure HTML/CSS. Changes are applied automatically as you make edits. Enjoy!</p>
   </header>
 
   <div class="page-designer">
-    <figure class="site-figure device"
+    <figure class="device"
             hx-ext="sse"
             sse-connect="/preview/<%= id %>"
             sse-swap="preview">
