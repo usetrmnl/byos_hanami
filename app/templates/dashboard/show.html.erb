@@ -14,9 +14,12 @@
         </button>
       </legend>
 
-      <ul class="list">
+      <ul class="devices">
         <% devices.each do |device| %>
-          <%= tag.li link_to(device.label, routes.path(:device_show, id: device.id)) %>
+          <li class="device">
+            <%= link_to(device.label, routes.path(:device_show, id: device.id)) %>
+            <%= render "devices/measurements", device: %>
+          </li>
         <% end %>
       </ul>
     </fieldset>
