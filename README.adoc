@@ -2,6 +2,7 @@
 :toclevels: 5
 :figure-caption!:
 
+:cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
 :docker_link: link:https://www.docker.com[Docker]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
@@ -140,6 +141,16 @@ poller.call seconds: 30
 
 Each automatically run in the background as separate processes in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
 
+When using {overmind_link}, you can restart these pollers (as with any process managed by Overmind) as follows:
+
+[source,bash]
+----
+overmind restart firmware_poller
+overmind restart screen_poller
+----
+
+This can be handy if you want to force either of these poller's to check for new content.
+
 === APIs
 
 This section documents all supported API endpoints. Each endpoint uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
@@ -153,7 +164,7 @@ See each endpoint for further details.
 
 ==== Display
 
-Used for displaying new content to your device. Your device's refresh determines how often this occurs.
+Used for displaying new content to your device. Your device's refresh rate determines how often this occurs.
 
 .Request
 [%collapsible]
@@ -493,14 +504,16 @@ The above will create a new image in the `public/screens` folder of this applica
 
 Pure CSS is used in order to avoid pulling in complicated frameworks. The following stylesheets allow you to customize the look and feel of this application as follows:
 
-* *Colors*: Use to customize site colors.
-* *Defaults*: Use to customize HTML element defaults.
 * *Settings*: Use to customize site settings.
+* *Colors*: Use to customize site colors.
+* *Keyframes*: Use to customize keyframe behavior.
+* *View Transitions*: Use to customize view transitions.
+* *Defaults*: Use to customize HTML element defaults.
 * *Layout*: Use to customize the site layout.
 * *Components*: Use to customize general site components.
-* *View Transitions*: Use to customize view transitions.
 * *Dashboard*: Use to customize the dashboard page.
 * *Devices*: Use to customize the devices page.
+* *Designer*: Use to customize the designer page.
 
 For responsive resolutions, the following measurements are used:
 
@@ -513,6 +526,32 @@ For responsive resolutions, the following measurements are used:
 === HTML/CSS Sanitization
 
 The link:https://github.com/rgrove/sanitize[Santize] gem is used to sanitize HTML/CSS when using the console, API, or UI. All of this configured via the `Terminus::Sanitizer` class which defaults to the `Sanitize::Config::RELAXED` style with additional support for `style` and `source` elements. If you find elements being stripped from your HTML/CSS content, this is why. Feel free to open an link:https://github.com/usetrmnl/byos_hanami/issues[issue] if you need additional support.
+
+=== Logging
+
+By default, all logging is set to `INFO` level but you can get more verbose information by using the `DEBUG` level. There are multiple ways to do this. First, you can export the desired debug level:
+
+[source,bash]
+----
+export LOG_LEVEL=debug
+----
+
+You can also specify the log level before launching the server:
+
+[source,bash]
+----
+LOG_LEVEL=debug overmind start --port-step 10 --procfile Procfile.dev --can-die assets,migrate
+----
+
+Finally, you can configure the app to use a different log level via `lib/terminus/lib_container.rb` by adjusting log level of logger during registration:
+
+[source,ruby]
+----
+register(:logger) { Cogger.new id: :terminus, level: :debug, formatter: :detail }
+
+----
+
+💡 See the {cogger_link} gem documentation for further details.
 
 == Tests
 
@@ -550,6 +589,12 @@ To build an image for production purpose, use the `Dockerfile` and `bin/docker` 
 * `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
 
 There is also a `compose.yml` in the root of this project that configures both the web (Hanami) and database (PostgreSQL) services for quickly launching the entire stack. Run `docker-compose up` from the root of this project to launch the entire stack.
+
+== Tools
+
+The following is additional tooling, developed by the Open Source community, that might be of interest for use with this application:
+
+* link:https://github.com/clarson15/terminus-publisher[Terminus Publisher]: Provides a way to generate and publish content to Terminus for display on your device.
 
 == Credits
 
