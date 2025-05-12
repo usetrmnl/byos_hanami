@@ -1,4 +1,4 @@
-.button-accept, .button-decline {
+.button-accept, .button-decline, .button-danger {
   border-radius: 1.5rem;
   border: none;
   cursor: pointer;
@@ -24,6 +24,16 @@
 
   &:hover {
     background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
+    text-decoration: none;
+  }
+}
+
+.button-danger {
+  background-color: oklch(from var(--site-red) l c h / 0.8);
+  color: var(--site-white);
+
+  &:hover {
+    background-color: var(--site-red);
     text-decoration: none;
   }
 }
