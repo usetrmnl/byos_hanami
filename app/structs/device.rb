@@ -10,7 +10,11 @@ module Terminus
         {image_url_timeout: image_timeout, refresh_rate:, update_firmware: firmware_update}
       end
 
-      def slug = mac_address.tr ":", Dry::Core::EMPTY_STRING
+      def slug
+        return Dry::Core::EMPTY_STRING unless mac_address
+
+        mac_address.tr ":", Dry::Core::EMPTY_STRING
+      end
     end
   end
 end

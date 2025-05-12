@@ -21,5 +21,10 @@ RSpec.describe Terminus::Structs::Device, :db do
     it "answers string with no colons" do
       expect(device.slug).to eq("AABBCC112233")
     end
+
+    it "answers empty string when slug is nil" do
+      device = Factory[:device, mac_address: nil]
+      expect(device.slug).to eq("")
+    end
   end
 end
