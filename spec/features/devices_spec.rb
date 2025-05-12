@@ -7,7 +7,7 @@ RSpec.describe "Devices", :db do
 
   let(:device) { Factory[:device] }
 
-  it "creates and views device", :aggregate_failures do
+  it "creates and views device", :aggregate_failures, :js do
     visit routes.path(:devices)
     click_link "New"
     click_button "Save"
