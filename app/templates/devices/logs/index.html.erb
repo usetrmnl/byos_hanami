@@ -8,7 +8,18 @@
       <li class="breadcrumb">Logs</li>
     </ul>
 
-    <%= render :search, device:, query: %>
+    <div class="actions">
+      <%= render :search, device:, query: %>
+
+      <a href="/bulk/devices/<%= device.id %>/logs"
+         class="button-danger"
+         hx-delete="/bulk/devices/<%= device.id %>/logs"
+         hx-confirm="Are you sure you want to delete all logs for this device?"
+         hx-target=".site-container"
+         hx-swap="swap:0.5s">
+        Delete All
+      </a>
+    </div>
   </header>
 
   <div class="site-container">

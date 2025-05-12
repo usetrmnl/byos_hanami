@@ -12,6 +12,10 @@ module Terminus
     post "/api/log", to: "api.log.create", as: :api_log_create
     get "/api/setup/", to: "api.setup.show", as: :api_setup
 
+    delete "/bulk/devices/:device_id/logs",
+           to: "bulk.devices.logs.delete",
+           as: :bulk_device_logs_delete
+
     get "/devices", to: "devices.index", as: :devices
     get "/devices/:id", to: "devices.show", as: :device_show
     get "/devices/new", to: "devices.new", as: :device_new
