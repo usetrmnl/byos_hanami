@@ -31,7 +31,7 @@ end
 Pathname.require_tree SPEC_ROOT.join("support/factories")
 
 RSpec.configure do |config|
-  config.include Capybara::DSL, Capybara::RSpecMatchers, :web
+  config.include Capybara::DSL, Capybara::RSpecMatchers, type: :feature
   config.include Dry::Monads[:result]
   config.include Rack::Test::Methods, type: :request
 

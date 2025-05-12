@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe "Dashboard", :db, :web do
+RSpec.describe "Dashboard", :db do
   using Refinements::Pathname
 
   let(:device) { Factory[:device] }
