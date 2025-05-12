@@ -57,6 +57,7 @@ end
 
 group :test do
   gem "capybara", "~> 3.40"
+  gem "capybara-validate_html5", "~> 2.1"
   gem "cuprite", "~> 0.15"
   gem "database_cleaner-sequel", "~> 2.0"
   gem "http-fake", "~> 4.1"
