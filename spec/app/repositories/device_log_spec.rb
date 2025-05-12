@@ -76,4 +76,13 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
       expect(repository.find(log.id)).to eq(log)
     end
   end
+
+  describe "#delete_logs" do
+    it "deletes associated logs" do
+      id = log.device_id
+      repository.delete_all_by_device id
+
+      expect(repository.all).to eq([])
+    end
+  end
 end

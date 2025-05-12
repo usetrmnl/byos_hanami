@@ -28,6 +28,8 @@ module Terminus
       def find(id) = (device_logs.combine(:device).by_pk(id).one if id)
 
       def delete_by_device(device_id, id) = device_logs.where(device_id:, id:).delete
+
+      def delete_all_by_device(device_id) = device_logs.where(device_id:).command(:delete).call
     end
   end
 end
