@@ -14,7 +14,7 @@ RSpec.describe Terminus::Aspects::API::Responses::Setup, :db do
           api_key: "abc123",
           friendly_id: "ABC123",
           image_url: %(#{Hanami.app[:settings].api_uri}/assets/setup.bmp),
-          message: "Welcome to TRMNL BYOS."
+          message: "Welcome to Terminus!"
         ]
       )
     end

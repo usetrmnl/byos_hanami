@@ -19,7 +19,7 @@ RSpec.describe "/api/setup", :db do
         api_key: device.api_key,
         friendly_id: device.friendly_id,
         image_url: %(#{settings.api_uri}/assets/setup.bmp),
-        message: "Welcome to TRMNL BYOS."
+        message: "Welcome to Terminus!"
       )
     end
 
@@ -43,7 +43,7 @@ RSpec.describe "/api/setup", :db do
       api_key: device.api_key,
       friendly_id: device.friendly_id,
       image_url: %(#{settings.api_uri}/assets/setup.bmp),
-      message: "Welcome to TRMNL BYOS."
+      message: "Welcome to Terminus!"
     )
   end
 end
