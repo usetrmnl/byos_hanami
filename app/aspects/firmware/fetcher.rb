@@ -19,7 +19,8 @@ module Terminus
               path: build_relative(path),
               size: path.size,
               uri: build_uri(path),
-              version: path.name.to_s
+              version: path.name.to_s,
+              modified_at: path.mtime
             ]
           end
         end

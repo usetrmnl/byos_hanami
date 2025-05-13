@@ -11,8 +11,8 @@ RSpec.describe Terminus::Aspects::Firmware::Fetcher do
 
   describe "#call" do
     it "answers records in descending order" do
-      temp_dir.join("1.0.0.bin").write("For size test.")
-      temp_dir.join("1.0.1.bin").touch
+      first = temp_dir.join("1.0.0.bin").write("For size test.")
+      second = temp_dir.join("1.0.1.bin").touch
 
       expect(fetcher.call).to eq(
         [
@@ -20,13 +20,15 @@ RSpec.describe Terminus::Aspects::Firmware::Fetcher do
             path: Pathname("1.0.1.bin"),
             size: 0,
             uri: "https://localhost/1.0.1.bin",
-            version: "1.0.1"
+            version: "1.0.1",
+            modified_at: second.mtime
           ],
           Terminus::Aspects::Firmware::Model[
             path: Pathname("1.0.0.bin"),
             size: 14,
             uri: "https://localhost/1.0.0.bin",
-            version: "1.0.0"
+            version: "1.0.0",
+            modified_at: first.mtime
           ]
         ]
       )
