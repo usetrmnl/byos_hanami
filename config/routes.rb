@@ -15,6 +15,7 @@ module Terminus
     delete "/bulk/devices/:device_id/logs",
            to: "bulk.devices.logs.delete",
            as: :bulk_device_logs_delete
+    delete "/bulk/firmware", to: "bulk.firmware.delete", as: :bulk_firmware_delete
 
     get "/devices", to: "devices.index", as: :devices
     get "/devices/:id", to: "devices.show", as: :device_show
