@@ -1,0 +1,64 @@
+<% content_for :title, "Firmware | Terminus" %>
+
+<section class="page-devices">
+  <header class="page-header">
+    <h1 class="label">
+      Firmware
+
+      <button class="popover-trigger" popovertarget="popover-help">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-help" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-help" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by version using partial or full version information.</p>
+
+      <h3 class="label">Devices</h3>
+
+      <p>When your devices are enabled to perform firmware updates, newer versions that appear here will cause your devices to update to the latest version. Should you want to revert to an older version, simply delete the latest version(s) in order to force your devices to update to an older version.</p>
+    </dialog>
+
+    <div class="actions">
+      <%= render :search, firmware:, query: %>
+
+      <a href="<%= routes.path :bulk_firmware_delete %>"
+         class="button-danger"
+         hx-delete="<%= routes.path :bulk_firmware_delete %>"
+         hx-confirm="Are you sure you want to delete all firmware?"
+         hx-target=".site-container"
+         hx-swap="swap:0.5s">
+        Delete All
+      </a>
+    </div>
+  </header>
+
+  <div class="site-container">
+    <% if firmware.any? %>
+      <table class="site-table">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Size</th>
+            <th>Downloaded At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% firmware.each do |record| %>
+            <%= record.render :firmware, firmware: record %>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <%= render "shared/empty", message: "No firmware found." %>
+    <% end %>
+  </div>
+</section>

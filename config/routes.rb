@@ -31,6 +31,8 @@ module Terminus
     get "/designer", to: "designer.show", as: :designer
     post "/designer", to: "designer.create", as: :designer_create
 
+    get "/firmware", to: "firmware.index", as: :firmware
+
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt"]
