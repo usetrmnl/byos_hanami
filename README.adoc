@@ -3,6 +3,7 @@
 :figure-caption!:
 
 :cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
+:docker_compose_link: link:https://docs.docker.com/compose[Docker Compose]
 :docker_link: link:https://www.docker.com[Docker]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
@@ -17,6 +18,8 @@
 = Terminus
 
 This is a {ruby_link}/{hanami_link} project that allows you to point a {trmnl_link} device to your own server which can be running on your local network or in the cloud. This is also the flagship implementation officially supported by {trmnl_link}.
+
+⚠️ *At the moment, there is a known bug which causes connection issues and lots of device logs starting with Firmware, Version 1.5.3. We recommend you revert to Version 1.5.2 until this issue is fixed. Follow the instructions in the xref:_firwmare[Firmware] section to revert to an older version. We'll remove this message once a new, and stable, Firmware version is released!*
 
 toc::[]
 
@@ -150,6 +153,22 @@ overmind restart screen_poller
 ----
 
 This can be handy if you want to force either of these poller's to check for new content.
+
+=== Firmware
+
+By default, the xref:_background_pollers[Firmware Poller] will automatically download the latest firmware but you'll need to enable firmware updates for your device to have each new firmware release automatically applied. You can do this by editing your device and clicking the _Firmware Update_ checkbox to enable. Otherwise, newer firmware versions will be cached on the server but your device won't update.
+
+In situations where your device updated to a newer Firmware version and it was a bad/broken version, you can revert to and older version by following these steps:
+
+. Delete this line, `firmware_poller: bin/pollers/firmware`, from either the `Procfile` or `Procfile.dev` in order to prevent newer firmware versions being downloaded.
+. Browse to the `terminus/public/assets/firmware` folder and delete all files (if any).
+. Download the specific firmware version you want to update by visiting this URL: `https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.5.2.bin`. You'll want to replace `1.5.2` with your desired version. The full list can be found link:https://github.com/usetrmnl/firmware/tags[here].
+. Copy the downloaded firmware binary (i.e. `FW1.5.2.bin`) to `terminus/public/assets/firmware` and _ensure_ you rename it as `1.5.2.bin`. Removing the `FW` prefix is important.
+. Ensure firmware updates are enabled for your device.
+. When your device next connects to Terminus, you'll see it updating to the older version.
+. That's it!
+
+To restore default behavior, you'd only need to add the `firmware_poller: bin/pollers/firmware` line back to your `Procfile.dev` and/or `Procfile` file(s) and restart the server.
 
 === APIs
 
@@ -564,31 +583,40 @@ bin/rake
 
 == Docker
 
-{docker_link} is supported both for production and development purposes. Each is explained below.
+{docker_link} is supported both for production and development purposes. In most cases, you'll want to use {docker_compose_link} to manage the stack. Read on to learn more.
 
 === Compose
 
-link:https://docs.docker.com/compose[Docker Compose] support is provided so you can quickly spin up the images and containers for running this application either in development or production. Full details are captured in the `compose.yml` at the root of this project. The `compose.yml` can also be configured via the following environment variables:
+We use {docker_compose_link} to quickly spin up the images and containers for running this application in either a development or production environment.
+
+You'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container if you don't change this. You can do this by adding `API_URI` to the environment section. Example: `API_URI: http://192.168.1.1:2300`. You can also confirm this is set when launching all services and viewing the Dashboard (look for the API IP address).
+
+The following commands might be of interest for getting started:
+
+* `docker-compose up`: Builds and launches the entire stack.
+* `docker-compose build web`: Rebuilds the web service. You'll want to run this before running `up` in order to pick up the latest changes whenever there is a new version release or pulling changes from the `main` branch.
+* `docker-compose exec web bash`: This'll give you a Bash shell within root of the project. Use `bin/console` to launch a Hanami console.
+* `docker logs terminus-web-1`: Use this to view the web service logs.
+
+Further details can be found in the `compose.yml` file at the root of this project. The `compose.yml` can also be configured via the following environment variables:
 
 * `PG_USER`: Your PostgreSQL user name.
 * `PG_DATABASE`: Your PostgreSQL database name.
 * `PG_PASSWORD`: Your PostgreSQL password.
 
-💡 The above is automatically generated for you when running `bin/setup` with safe default values but customization is definitely encouraged.
+💡 The above is automatically generated for you when running `bin/setup` but customization is encouraged.
 
 === Development
 
-To develop with Docker, you can use the same tooling as explained below in the _Production_ section below by using Docker Compose to manage all services while running and using each locally.
+To develop with Docker, you can use the same tooling as explained above in the _Compose_ section and/or _Production_ sections.
 
 === Production
 
-To build an image for production purpose, use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
+To build and deploy for production purposes, see the xref:_compose[Compose] section mentioned above. If you only care about the web image, then you can use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
 
 * `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
 * `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
 * `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
-
-There is also a `compose.yml` in the root of this project that configures both the web (Hanami) and database (PostgreSQL) services for quickly launching the entire stack. Run `docker-compose up` from the root of this project to launch the entire stack.
 
 == Tools
 
