@@ -131,7 +131,9 @@ There are two background pollers that cache data from the remote link:https://us
 * *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. By default, this checks for updates every six hours.
 * *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. By default, this checks for updates every five minutes.
 
-Both of these processes can be configured to use different polling intervals by passing in a different value in seconds. You can do this by modifying each script. Example:
+==== Configuration
+
+All pollers can be configured to use different polling intervals by supplying the desired seconds in which to poll. You can do this by modifying each script. Example:
 
 [source,ruby]
 ----
@@ -144,6 +146,8 @@ poller.call seconds: 30
 
 Each automatically run in the background as separate processes in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
 
+==== Restarts
+
 When using {overmind_link}, you can restart these pollers (as with any process managed by Overmind) as follows:
 
 [source,bash]
@@ -154,21 +158,28 @@ overmind restart screen_poller
 
 This can be handy if you want to force either of these poller's to check for new content.
 
+==== Disablement
+
+To disable any of the pollers, remove them from the `Procfile.dev` and/or `Procfile` files. For example, delete these lines:
+
+----
+firmware_poller: bin/pollers/firmware
+screen_poller: bin/pollers/screen
+----
+
+You could also configure them to have a massive number of seconds as mentioned above when supplying custom seconds in which to poll.
+
 === Firmware
 
 By default, the xref:_background_pollers[Firmware Poller] will automatically download the latest firmware but you'll need to enable firmware updates for your device to have each new firmware release automatically applied. You can do this by editing your device and clicking the _Firmware Update_ checkbox to enable. Otherwise, newer firmware versions will be cached on the server but your device won't update.
 
 In situations where your device updated to a newer Firmware version and it was a bad/broken version, you can revert to and older version by following these steps:
 
-. Delete this line, `firmware_poller: bin/pollers/firmware`, from either the `Procfile` or `Procfile.dev` in order to prevent newer firmware versions being downloaded.
-. Browse to the `terminus/public/assets/firmware` folder and delete all files (if any).
-. Download the specific firmware version you want to update by visiting this URL: `https://trmnl-fw.s3.us-east-2.amazonaws.com/FW1.5.2.bin`. You'll want to replace `1.5.2` with your desired version. The full list can be found link:https://github.com/usetrmnl/firmware/tags[here].
-. Copy the downloaded firmware binary (i.e. `FW1.5.2.bin`) to `terminus/public/assets/firmware` and _ensure_ you rename it as `1.5.2.bin`. Removing the `FW` prefix is important.
-. Ensure firmware updates are enabled for your device.
-. When your device next connects to Terminus, you'll see it updating to the older version.
+. Ensure the device you want to downgrade has firmware updates turned on (you'll also want to ensure devices you don't want to downgrade have this setting _turned off_).
+. Visit the Firmwares page within the UI.
+. Delete all latest versions until you only have the version you want to downgrade to listed at the top of the list.
+. Short click the button on the back of your device to force a refresh and wait for the firmware downgrade to complete.
 . That's it!
-
-To restore default behavior, you'd only need to add the `firmware_poller: bin/pollers/firmware` line back to your `Procfile.dev` and/or `Procfile` file(s) and restart the server.
 
 === APIs
 
