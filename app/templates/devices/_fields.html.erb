@@ -34,14 +34,13 @@
     <%= tag.input name: "device[mac_address]",
                   type: :password,
                   value: field_for(:mac_address, fields, device),
-                  class: :value,
-                  autocomplete: :mac_address %>
+                  class: :value %>
   <% end %>
 
   <%= render "field_popover_content",
              name: "mac_address",
              label: "MAC Address",
-             body: "Uniquely identifies your device when communicating over the network." %>
+             body: "Uniquely identifies your device when communicating over the network. Must consist of six segments, be capitalized, and only use hexadecimal characters. Example: A1:B2:C3:D4:E5:F6." %>
 
 
   <%= scope(:form_field, key: :api_key, errors:).render do %>
@@ -108,7 +107,7 @@
                   type: :number,
                   value: field_for(:refresh_rate, fields, device),
                   class: :value,
-                  autocomplete: :refresh_rate %>
+                  min: 20 %>
   <% end %>
 
   <%= render "field_popover_content",
@@ -126,7 +125,7 @@
                   type: :number,
                   value: field_for(:image_timeout, fields, device),
                   class: :value,
-                  autocomplete: :image_timeout %>
+                  min: 0 %>
   <% end %>
 
   <%= render "field_popover_content",
