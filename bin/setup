@@ -41,6 +41,7 @@ class Runner
     kernel.puts "Creating .env..."
 
     path.write <<~CONTENT
+      API_URI=http://localhost:2300
       PG_DATABASE=terminus
       PG_PASSWORD=#{SecureRandom.hex 15}
       PG_USER=terminus
