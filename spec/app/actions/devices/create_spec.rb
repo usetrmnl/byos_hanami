@@ -13,7 +13,7 @@ RSpec.describe Terminus::Actions::Devices::Create, :db do
         device: {
           label: "Test",
           friendly_id: "ABC123",
-          mac_address: "aa:bb:cc:11:22:33",
+          mac_address: "AA:BB:CC:11:22:33",
           api_key: "abc",
           refresh_rate: 100,
           image_timeout: 100

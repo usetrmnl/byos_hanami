@@ -10,7 +10,7 @@ RSpec.describe Terminus::Contracts::API::Device do
       {
         label: "Test",
         friendly_id: "ABC123",
-        mac_address: "aa:bb:cc:11:22:33",
+        mac_address: "AA:BB:CC:11:22:33",
         api_key: "secret",
         refresh_rate: 100,
         image_timeout: 0,
@@ -21,6 +21,22 @@ RSpec.describe Terminus::Contracts::API::Device do
 
     it "answers success when all attributes are valid" do
       expect(described_class.call(attributes).to_monad).to be_success
+    end
+
+    it "answers failure when refresh rate is less than zero" do
+      attributes[:refresh_rate] = -1
+
+      expect(described_class.call(attributes).errors.to_h).to include(
+        refresh_rate: ["must be greater than or equal to 10"]
+      )
+    end
+
+    it "answers failure when image timeout is less than zero" do
+      attributes[:image_timeout] = -1
+
+      expect(described_class.call(attributes).errors.to_h).to include(
+        image_timeout: ["must be greater than or equal to 0"]
+      )
     end
 
     it "answers true when proxy is truthy" do
