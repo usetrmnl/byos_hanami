@@ -19,8 +19,6 @@
 
 This is a {ruby_link}/{hanami_link} project that allows you to point a {trmnl_link} device to your own server which can be running on your local network or in the cloud. This is also the flagship implementation officially supported by {trmnl_link}.
 
-⚠️ *At the moment, there is a known bug which causes connection issues and lots of device logs starting with Firmware, Version 1.5.3. We recommend you revert to Version 1.5.2 until this issue is fixed. Follow the instructions in the xref:_firwmare[Firmware] section to revert to an older version. We'll remove this message once a new, and stable, Firmware version is released!*
-
 toc::[]
 
 == Features
@@ -611,6 +609,7 @@ The following commands might be of interest for getting started:
 
 Further details can be found in the `compose.yml` file at the root of this project. The `compose.yml` can also be configured via the following environment variables:
 
+* `API_URI`: The host you are running your container on. Defaults to localhost but you'll definitely want to replace localhost with your actual IP address because your device won't be able to talk to your server otherwise.
 * `PG_USER`: Your PostgreSQL user name.
 * `PG_DATABASE`: Your PostgreSQL database name.
 * `PG_PASSWORD`: Your PostgreSQL password.
