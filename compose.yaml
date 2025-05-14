@@ -6,6 +6,7 @@ services:
     build:
       context: .
     environment:
+      API_URI: ${API_URI}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
     ports:
       - "2300:2300"
