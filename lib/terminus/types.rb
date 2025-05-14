@@ -10,6 +10,11 @@ module Terminus
     include Dry.Types(default: :strict)
 
     Pathname = Constructor ::Pathname
+
+    MACAddress = String.constrained(
+      format: /\A[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}\Z/
+    )
+
     Version = Constructor Versionaire::Version, Versionaire.method(:Version)
   end
 end
