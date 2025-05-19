@@ -201,7 +201,7 @@ Used for displaying new content to your device. Your device's refresh rate deter
 
 [source,bash]
 ----
-curl "https://localhost:2443/api/display/" \
+curl "https://localhost:2443/api/display" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json'
@@ -211,7 +211,7 @@ curl "https://localhost:2443/api/display/" \
 
 [source,bash]
 ----
-curl "https://localhost:2443/api/display/" \
+curl "https://localhost:2443/api/display" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json' \
@@ -222,7 +222,7 @@ curl "https://localhost:2443/api/display/" \
 
 [source,bash]
 ----
-curl "https://localhost:2443/api/display/?base_64=true" \
+curl "https://localhost:2443/api/display?base_64=true" \
      -H 'ID: <redacted>' \
      -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json'
@@ -330,14 +330,14 @@ curl -X "POST" "https://localhost:2443/api/screens" \
     -d $'{
  "image": {
    "content": "<p>Test</p>",
-   "file_name": "test"
+   "file_name": "test.png"
  }
 }'
 ----
 
 The `Access-Token` is your device's MAC address. You can obtain this information from the UI.
 
-If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
+Both `.png` or `.bmp` extensions are suppored for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 ====
 
 .Response
@@ -346,7 +346,7 @@ If you don't supply a `file_name`, the server will generate one for you using a 
 [source,json]
 ----
 {
-  "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/test.bmp"
+  "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/test.png"
 }
 ----
 ====
@@ -440,12 +440,13 @@ fetcher.call device.slug
 # 💡 "A1B2C3D4E5F6" would be your device slug (i.e. collapsed MAC Address).
 creator = Terminus::Screens::Creator.new
 creator.call "<p>Test</p>",
-             Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/%<name>s.bmp")
-#<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/5af3f06-775f-4ae9-8bb1-246d9a5200c9.bmp>
+             Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/%<name>s.png")
+#<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/5af3f06-775f-4ae9-8bb1-246d9a5200c9.png>
 
 # To generate image with specific name.
-creator.call "<p>Test.</p>", Pathname(Hanami.app[:settings].screens_root).join("demo.bmp")
-#<Pathname:terminus/public/assets/screens/demo.bmp>
+creator.call "<p>Test.</p>",
+             Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/demo.png")
+#<Pathname:terminus/public/assets/screens/demo.png>
 ----
 
 When creating images, you might find this HTML template valuable as a starting point as this let's you use the full capabilities of HTML to create new images for your device.
