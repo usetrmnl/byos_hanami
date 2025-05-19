@@ -18,7 +18,7 @@ module Terminus
       end
     end
 
-    config.inflections { it.acronym "IP" }
+    config.inflections { it.acronym "IP", "TYPES" }
 
     config.actions.content_security_policy.then do |csp|
       csp[:manifest_src] = "'self'"
