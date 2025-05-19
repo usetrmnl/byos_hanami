@@ -41,7 +41,7 @@ RSpec.describe Terminus::Screens::Creator do
     end
 
     it "answers image path" do
-      expect(creator.call(content, path)).to eq(path)
+      expect(creator.call(content, path)).to be_success(path)
     end
   end
 end
