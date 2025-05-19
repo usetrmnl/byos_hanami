@@ -39,13 +39,13 @@ module Terminus
 
           private
 
-          # :nocov:
-          # :reek:FeatureEnvy
           def save device, image, response
-            case creator.call image[:content], output_path(device.slug, image)
-              in Success(path) then response.with body: {path:}.to_json, status: 200
-              in Failure(error) then response.with body: {error:}.to_json, status: 400
-              else response.with body: {error: "Unknown error."}.to_json, status: 500
+            result = creator.call image[:content], output_path(device.slug, image)
+
+            if result.success?
+              response.with body: {path: result.success}.to_json, status: 200
+            else
+              response.with body: {error: result.failure}.to_json, status: 400
             end
           end
 
