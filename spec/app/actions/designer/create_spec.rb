@@ -20,7 +20,7 @@ RSpec.describe Terminus::Actions::Designer::Create do
 
     it "creates preview image" do
       Rack::MockRequest.new(action).post "", "HTTP_HX_REQUEST" => true, params: parameters
-      expect(temp_dir.join("123.bmp").exist?).to be(true)
+      expect(temp_dir.join("123.png").exist?).to be(true)
     end
 
     it "answers created status" do
