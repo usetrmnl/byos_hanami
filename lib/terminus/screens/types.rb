@@ -2,6 +2,7 @@
 
 module Terminus
   module Screens
-    TYPES = %w[bmp png].freeze
+    # Defines supported image types along with corresponding MiniMagick version types.
+    TYPES = {"bmp" => "bmp3", "png" => "png"}.freeze
   end
 end

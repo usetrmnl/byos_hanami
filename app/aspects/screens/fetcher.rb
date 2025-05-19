@@ -9,7 +9,7 @@ module Terminus
     module Screens
       # Fetches latest image for rendering on device screen.
       class Fetcher
-        include Initable[types: proc { Terminus::Screens::TYPES }, encryptions: [:base_64]]
+        include Initable[types: proc { Terminus::Screens::TYPES.keys }, encryptions: [:base_64]]
 
         include Deps[:settings, :assets]
 

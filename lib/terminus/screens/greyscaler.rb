@@ -51,13 +51,11 @@ module Terminus
       def uniquify(path) = Pathname format(path.to_s, name: randomizer.call)
 
       def typed_path_for path, extension
-        return type_error extension unless types.include? extension
+        type = types[extension]
 
-        Success "#{extension == "bmp" ? "bmp3" : extension}:#{path}"
-      end
+        return Success "#{type}:#{path}" if type
 
-      def type_error value
-        Failure %(Invalid image type: #{value.inspect}. Use: #{types.to_usage "or"}.)
+        Failure %(Invalid image type: #{extension.inspect}. Use: #{types.keys.to_usage "or"}.)
       end
 
       attr_reader :types, :randomizer, :client
