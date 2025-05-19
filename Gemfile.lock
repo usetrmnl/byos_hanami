@@ -252,6 +252,7 @@ GEM
       marameters (~> 4.1)
     initable (0.4.0)
       marameters (~> 4.1)
+    inspectable (0.3.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -486,13 +487,14 @@ GEM
       refinements (~> 13.0)
       zeitwerk (~> 2.7)
     transproc (1.1.1)
-    trmnl-api (0.1.0)
+    trmnl-api (0.2.0)
       cogger (~> 1.2)
       containable (~> 1.2)
       dry-monads (~> 1.8)
       dry-schema (~> 1.14)
       http (~> 5.2)
       infusible (~> 4.3)
+      inspectable (~> 0.3)
       pipeable (~> 1.3)
       zeitwerk (~> 2.7)
     unicode-display_width (3.1.4)
@@ -574,7 +576,7 @@ DEPENDENCIES
   sanitize (~> 7.0)
   sequel (~> 5.89)
   simplecov (~> 0.22)
-  trmnl-api (~> 0.0)
+  trmnl-api (~> 0.2)
   versionaire (~> 14.1)
 
 CHECKSUMS
@@ -658,6 +660,7 @@ CHECKSUMS
   ice_nine (0.11.2) sha256=5d506a7d2723d5592dc121b9928e4931742730131f22a1a37649df1c1e2e63db
   infusible (4.3.0) sha256=b7bd1e55affbe3b7278d3221a7bff068ce47ce784c29aa747fae0ac94e340416
   initable (0.4.0) sha256=491a103e93a82e1d4edd4f9390b4102c40c96c2e198e23a8445fa083e34ff0e0
+  inspectable (0.3.0) sha256=e3b0da1db9fc72a669ae5dc868cb59a50f9a5b79059b1400d6aa639863129bee
   io-console (0.8.0) sha256=cd6a9facbc69871d69b2cb8b926fc6ea7ef06f06e505e81a64f14a470fddefa2
   irb (1.15.2) sha256=222f32952e278da34b58ffe45e8634bf4afc2dc7aa9da23fed67e581aa50fdba
   irb-kit (1.2.0) sha256=138573850448b5dd6b541e08418bd21232fa9dd92217b84fa2c943979849c68b
@@ -754,7 +757,7 @@ CHECKSUMS
   tilt (2.6.0) sha256=263d748466e0d83e510aa1a2e2281eff547937f0ef06be33d3632721e255f76b
   tone (2.3.0) sha256=89af00de299f3d952dfa7412678aea909a64effe9f8301b14e147e230ff4652a
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
-  trmnl-api (0.1.0) sha256=30a54b74f390bad6997ad4691cc4c5c9581f32be33311c835b3be6ee0d45e06a
+  trmnl-api (0.2.0) sha256=aaf89dcbc496b4fdb4f5bf855a511ce4fb8c105911ef0b88c6cee1008498d717
   unicode-display_width (3.1.4) sha256=8caf2af1c0f2f07ec89ef9e18c7d88c2790e217c482bfc78aaa65eadd5415ac1
   unicode-emoji (4.0.4) sha256=2c2c4ef7f353e5809497126285a50b23056cc6e61b64433764a35eff6c36532a
   versionaire (14.2.0) sha256=f52fbcbc54d6b37f63a8151de7d3f1ec8cb0d2cc5a1886723497a8686a634476
