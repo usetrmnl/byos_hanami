@@ -9,13 +9,14 @@ module Terminus
     module Screens
       # Fetches latest image for rendering on device screen.
       class Fetcher
-        include Initable[encryptions: [:base_64]]
+        include Initable[types: proc { Terminus::Screens::TYPES }, encryptions: [:base_64]]
+
         include Deps[:settings, :assets]
 
         using Refinements::Pathname
 
         def call slug, encryption: nil
-          image_path = settings.screens_root.join(slug).files("*.bmp").max_by(&:mtime)
+          image_path = settings.screens_root.join(slug).files(supported_types).max_by(&:mtime)
 
           return default unless image_path
 
@@ -33,6 +34,8 @@ module Terminus
         end
 
         def default = {filename: "empty_state", image_url: "#{settings.api_uri}/assets/setup.bmp"}
+
+        def supported_types = %(*.{#{types.join ","}})
       end
     end
   end
