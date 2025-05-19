@@ -10,7 +10,7 @@ module Terminus
         # Renders device preview image event streams.
         class EventStream
           include Deps[:settings]
-          include Initable[%i[req id], type: :bmp, imager: MiniMagick::Image, kernel: Kernel]
+          include Initable[%i[req id], type: :png, imager: MiniMagick::Image, kernel: Kernel]
 
           def each
             kernel.loop do
