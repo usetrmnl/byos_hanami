@@ -4,7 +4,7 @@ require "hanami_helper"
 
 RSpec.describe "/api/screens", :db do
   let(:device) { Factory[:device] }
-  let(:path) { temp_dir.join device.slug, "rspec_test.bmp" }
+  let(:path) { temp_dir.join device.slug, "rspec_test.png" }
 
   it "creates image with random name" do
     post routes.path(:api_screens_create),
@@ -17,7 +17,7 @@ RSpec.describe "/api/screens", :db do
 
   it "creates image with specific name" do
     post routes.path(:api_screens_create),
-         {image: {content: "<p>Test</p>"}, filename: "test.bmp"}.to_json,
+         {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
@@ -58,5 +58,22 @@ RSpec.describe "/api/screens", :db do
          "HTTP_ACCESS_TOKEN" => device.api_key
 
     expect(last_response.status).to eq(400)
+  end
+
+  context "with invalid file name" do
+    before do
+      post routes.path(:api_screens_create),
+           {image: {content: "Test.", file_name: "test"}}.to_json,
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+    end
+
+    it "answers bad request status" do
+      expect(last_response.status).to eq(400)
+    end
+
+    it "answers error" do
+      expect(json_payload).to match(error: /invalid image type/i)
+    end
   end
 end

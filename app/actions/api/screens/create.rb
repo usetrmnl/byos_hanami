@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/monads"
 require "initable"
 require "refinements/pathname"
 
@@ -11,6 +12,7 @@ module Terminus
         class Create < Terminus::Action
           include Deps[:settings, repository: "repositories.device"]
           include Initable[creator: proc { Terminus::Screens::Creator.new }]
+          include Dry::Monads[:result]
 
           using Refinements::Pathname
           using Refines::Actions::Response
@@ -37,16 +39,18 @@ module Terminus
 
           private
 
+          # :nocov:
+          # :reek:FeatureEnvy
           def save device, image, response
-            path = creator.call image[:content], output_path(device.slug, image)
-            response.with body: {path:}.to_json, status: 200
+            case creator.call image[:content], output_path(device.slug, image)
+              in Success(path) then response.with body: {path:}.to_json, status: 200
+              in Failure(error) then response.with body: {error:}.to_json, status: 400
+              else response.with body: {error: "Unknown error."}.to_json, status: 500
+            end
           end
 
           def output_path slug, image
-            settings.screens_root
-                    .join(slug)
-                    .mkpath
-                    .join %(#{image.fetch :file_name, "%<name>s"}.bmp)
+            settings.screens_root.join(slug).mkpath.join image.fetch(:file_name, "%<name>s.png")
           end
         end
       end
