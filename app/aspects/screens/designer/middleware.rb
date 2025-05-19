@@ -8,7 +8,7 @@ require_relative "event_stream"
 module Terminus
   module Aspects
     module Screens
-      module Editor
+      module Designer
         # Streams Server Side Events (SSE) for device screen previews.
         class Middleware
           include Initable[

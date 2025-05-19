@@ -6,7 +6,7 @@ require "mini_magick"
 module Terminus
   module Aspects
     module Screens
-      module Editor
+      module Designer
         # Renders device preview image event streams.
         class EventStream
           include Deps[:settings]

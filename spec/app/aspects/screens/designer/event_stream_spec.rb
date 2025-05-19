@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Editor::EventStream do
+RSpec.describe Terminus::Aspects::Screens::Designer::EventStream do
   using Refinements::Pathname
 
   subject(:event_stream) { described_class.new "test", type: :png, kernel: }

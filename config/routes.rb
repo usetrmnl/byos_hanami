@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../app/aspects/screens/editor/middleware"
+require_relative "../app/aspects/screens/designer/middleware"
 
 module Terminus
   # The application base routes.
@@ -38,6 +38,6 @@ module Terminus
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt"]
-    use Aspects::Screens::Editor::Middleware, pattern: %r(/preview/(?<id>\d+))
+    use Aspects::Screens::Designer::Middleware, pattern: %r(/preview/(?<id>\d+))
   end
 end

@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Editor::Middleware do
+RSpec.describe Terminus::Aspects::Screens::Designer::Middleware do
   subject(:middleware) { described_class.new application, pattern: %r(/preview/(?<id>\d+)) }
 
   let(:application) { proc { [200, {}, []] } }
@@ -19,13 +19,13 @@ RSpec.describe Terminus::Aspects::Screens::Editor::Middleware do
             "Cache-Control" => "no-cache",
             "Connection" => "keep-alive"
           },
-          instance_of(Terminus::Aspects::Screens::Editor::EventStream)
+          instance_of(Terminus::Aspects::Screens::Designer::EventStream)
         )
       )
     end
 
     it "passes ID to event stream" do
-      event_stream = class_spy Terminus::Aspects::Screens::Editor::EventStream
+      event_stream = class_spy Terminus::Aspects::Screens::Designer::EventStream
       middleware = described_class.new(application, pattern: %r(/preview/(?<id>\d+)), event_stream:)
       environment = Rack::MockRequest.env_for "/preview/123", method: :get
       middleware.call environment
