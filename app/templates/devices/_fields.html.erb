@@ -11,7 +11,7 @@
   <%= scope(:form_field, key: :friendly_id, errors:).render do %>
     <label class="key" for="device[friendly_id]">
       Friendly ID
-      <%= render "field_popover_trigger", name: "friendly_id" %>
+      <%= render "shared/popovers/trigger", name: "friendly_id" %>
     </label>
 
     <%= tag.input name: "device[friendly_id]",
@@ -20,15 +20,10 @@
                   autocomplete: :friendly_id %>
   <% end %>
 
-  <%= render "field_popover_content",
-             name: "friendly_id",
-             label: "Friendly ID",
-             body: "Provides a way to uniquely identify your device." %>
-
   <%= scope(:form_field, key: :mac_address, errors:).render do %>
     <label class="key" for="device[mac_address]">
       MAC Address
-      <%= render "field_popover_trigger", name: "mac_address" %>
+      <%= render "shared/popovers/trigger", name: "mac_address" %>
     </label>
 
     <%= tag.input name: "device[mac_address]",
@@ -37,16 +32,10 @@
                   class: :value %>
   <% end %>
 
-  <%= render "field_popover_content",
-             name: "mac_address",
-             label: "MAC Address",
-             body: "Uniquely identifies your device when communicating over the network. Must consist of six segments, be capitalized, and only use hexadecimal characters. Example: A1:B2:C3:D4:E5:F6." %>
-
-
   <%= scope(:form_field, key: :api_key, errors:).render do %>
     <label class="key" for="device[api_key]">
       API Key
-      <%= render "field_popover_trigger", name: "api_key" %>
+      <%= render "shared/popovers/trigger", name: "api_key" %>
     </label>
 
     <%= tag.input name: "device[api_key]",
@@ -56,51 +45,10 @@
 
   <% end %>
 
-  <%= render "field_popover_content",
-             name: "api_key",
-             label: "API Key",
-             body: "Used for API requests to authenticate between server and device." %>
-
-  <%= scope(:form_field, key: :firmware_update, errors:).render do %>
-    <label class="key" for="device[firmware_update]">
-      Firmware Update
-      <%= render "field_popover_trigger", name: "firmware_update" %>
-    </label>
-
-    <%= tag.input name: "device[firmware_update]",
-                  type: :checkbox,
-                  checked: field_for(:firmware_update, fields, device),
-                  switch: true,
-                  class: :checkbox %>
-  <% end %>
-
-  <%= render "field_popover_content",
-             name: "firmware_update",
-             label: "Firmware Update",
-             body: "When enabled, allows your device to be automatically updated when a new firmware version is available." %>
-
-  <%= scope(:form_field, key: :proxy, errors:).render do %>
-    <label class="key" for="device[proxy]">
-      Proxy
-      <%= render "field_popover_trigger", name: "proxy" %>
-    </label>
-
-    <%= tag.input name: "device[proxy]",
-                  type: :checkbox,
-                  checked: field_for(:proxy, fields, device),
-                  switch: true,
-                  class: :checkbox %>
-  <% end %>
-
-  <%= render "field_popover_content",
-             name: "proxy",
-             label: "Proxy",
-             body: "Allows you to display remote images generated via your TRMNL account when enabled. This includes locally generated images but the remote images will take precedence. Your MAC address and API key must be identical both locally and remotely for this to work." %>
-
   <%= scope(:form_field, key: :refresh_rate, errors:).render do %>
     <label class="key" for="device[refresh_rate]">
       Refresh Rate
-      <%= render "field_popover_trigger", name: "refresh_rate" %>
+      <%= render "shared/popovers/trigger", name: "refresh_rate" %>
     </label>
 
     <%= tag.input name: "device[refresh_rate]",
@@ -110,15 +58,10 @@
                   min: 20 %>
   <% end %>
 
-  <%= render "field_popover_content",
-             name: "refresh_rate",
-             label: "Refresh Rate",
-             body: "The time, in seconds, until the next image is displayed on your device." %>
-
   <%= scope(:form_field, key: :image_timeout, errors:).render do %>
     <label class="key" for="device[image_timeout]">
       Image Timeout
-      <%= render "field_popover_trigger", name: "image_timeout" %>
+      <%= render "shared/popovers/trigger", name: "image_timeout" %>
     </label>
 
     <%= tag.input name: "device[image_timeout]",
@@ -128,8 +71,37 @@
                   min: 0 %>
   <% end %>
 
-  <%= render "field_popover_content",
-             name: "image_timeout",
-             label: "Image Timeout",
-             body: "The time, in seconds, to fetch the image before timing out (useful if you are making an external request for an image)." %>
+  <%= scope(:form_field, key: :firmware_update, errors:).render do %>
+    <label class="key" for="device[firmware_update]">
+      Firmware Update
+      <%= render "shared/popovers/trigger", name: "firmware_update" %>
+    </label>
+
+    <%= tag.input name: "device[firmware_update]",
+                  type: :checkbox,
+                  checked: field_for(:firmware_update, fields, device),
+                  switch: true,
+                  class: :checkbox %>
+  <% end %>
+
+  <%= scope(:form_field, key: :proxy, errors:).render do %>
+    <label class="key" for="device[proxy]">
+      Proxy
+      <%= render "shared/popovers/trigger", name: "proxy" %>
+    </label>
+
+    <%= tag.input name: "device[proxy]",
+                  type: :checkbox,
+                  checked: field_for(:proxy, fields, device),
+                  switch: true,
+                  class: :checkbox %>
+  <% end %>
 </fieldset>
+
+<%= render "popovers/friendly_id_content" %>
+<%= render "popovers/mac_address_content" %>
+<%= render "popovers/api_key_content" %>
+<%= render "popovers/firmware_update_content" %>
+<%= render "popovers/proxy_content" %>
+<%= render "popovers/refresh_rate_content" %>
+<%= render "popovers/image_timeout_content" %>
