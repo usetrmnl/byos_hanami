@@ -3,7 +3,7 @@
 module Terminus
   module Screens
     # Creates device image.
-    class Creator
+    class HTMLSaver
       include Dependencies[:sanitizer]
 
       def initialize(screensaver: Screensaver.new, greyscaler: Greyscaler.new, **)
