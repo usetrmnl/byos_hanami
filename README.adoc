@@ -14,6 +14,7 @@
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
+:image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 
 = Terminus
 
@@ -306,20 +307,11 @@ curl "https://localhost:2443/api/setup/" \
 
 ==== Screens
 
-Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device.
+Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are suppored for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 
-This endpoint supports full HTML so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
+When making requests, the `Access-Token` is your device's MAC address. You can obtain this information from the UI.
 
-[source,css]
-----
-* {
-  margin: 0;
-}
-----
-
-🎗️ You can use the UI Editor to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
-
-.Request
+.Request (HTML Content)
 [%collapsible]
 ====
 [source,bash]
@@ -330,14 +322,62 @@ curl -X "POST" "https://localhost:2443/api/screens" \
     -d $'{
  "image": {
    "content": "<p>Test</p>",
-   "file_name": "test.png"
+   "file_name": "demo.png"
  }
 }'
 ----
 
-The `Access-Token` is your device's MAC address. You can obtain this information from the UI.
+Full HTML is supported so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
 
-Both `.png` or `.bmp` extensions are suppored for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
+[source,css]
+----
+* {
+  margin: 0;
+}
+----
+
+Don't forget that you can use the Designer within the UI to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
+====
+
+.Request (URI)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Access-Token: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "image": {
+    "uri": "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png",
+    "file_name": "demo.png",
+    "dimensions": "800x480!"
+  }
+}'
+----
+
+The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
+====
+
+.Request (Base64 Encoded Data)
+[%collapsible]
+====
+
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Access-Token: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "image": {
+    "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAXNSR0IArs4c6QAAAAtJREFUCFtjYGAAAAADAAHc7H1IAAAAAElFTkSuQmCC"
+    "file_name": "demo.png",
+    "dimensions": "800x480!"
+  }
+}'
+----
+
+The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
 ====
 
 .Response
@@ -346,9 +386,11 @@ Both `.png` or `.bmp` extensions are suppored for the `file_name` key. If you do
 [source,json]
 ----
 {
-  "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/test.png"
+  "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/demo.png"
 }
 ----
+
+No matter what parameters you use for this request, you'll always get a path (unless an error is encountered).
 ====
 
 ==== Logs
