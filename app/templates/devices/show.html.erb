@@ -28,22 +28,34 @@
         <dt class="key">ID</dt>
         <dd class="value"><%= device.id %></dd>
 
-        <dt class="key">Friendly ID</dt>
+        <dt class="key">
+          Friendly ID
+          <%= render "shared/popovers/trigger", name: "friendly_id" %>
+        </dt>
         <dd class="value"><%= device.friendly_id %></dd>
 
-        <dt class="key">MAC Address</dt>
+        <dt class="key">
+          MAC Address
+          <%= render "shared/popovers/trigger", name: "mac_address" %>
+        </dt>
         <dd class="value site-secret"><%= device.mac_address %></dd>
 
-        <dt class="key">Proxy</dt>
-        <dd class="value"><%= boolean device.proxy %></dd>
-
-        <dt class="key">API Key</dt>
+        <dt class="key">
+          API Key
+          <%= render "shared/popovers/trigger", name: "api_key" %>
+        </dt>
         <dd class="value site-secret"><%= device.api_key %></dd>
 
-        <dt class="key">Refresh Rate</dt>
+        <dt class="key">
+          Refresh Rate
+          <%= render "shared/popovers/trigger", name: "refresh_rate" %>
+        </dt>
         <dd class="value"><%= device.refresh_rate %></dd>
 
-        <dt class="key">Image Timeout</dt>
+        <dt class="key">
+          Image Timeout
+          <%= render "shared/popovers/trigger", name: "image_timeout" %>
+        </dt>
         <dd class="value"><%= device.image_timeout %></dd>
 
         <dt class="key">Dimensions</dt>
@@ -52,7 +64,16 @@
         <dt class="key">Firmware</dt>
         <dd class="value"><%= device.firmware_version %></dd>
 
-        <dt class="key">Firmware Update</dt>
+        <dt class="key">
+          Proxy
+          <%= render "shared/popovers/trigger", name: "proxy" %>
+        </dt>
+        <dd class="value"><%= boolean device.proxy %></dd>
+
+        <dt class="key">
+          Firmware Update
+          <%= render "shared/popovers/trigger", name: "firmware_update" %>
+        </dt>
         <dd class="value"><%= boolean device.firmware_update %></dd>
 
         <dt class="key">Firmware Beta</dt>
@@ -67,3 +88,11 @@
     </div>
   </div>
 </section>
+
+<%= render "popovers/friendly_id_content" %>
+<%= render "popovers/mac_address_content" %>
+<%= render "popovers/api_key_content" %>
+<%= render "popovers/firmware_update_content" %>
+<%= render "popovers/proxy_content" %>
+<%= render "popovers/refresh_rate_content" %>
+<%= render "popovers/image_timeout_content" %>
