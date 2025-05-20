@@ -1,0 +1,13 @@
+<dialog id="popover-<%= name %>" class="popover-content" popover="auto">
+  <button type="button"
+          class="close"
+          popovertarget="popover-<%= name %>"
+          popovertargetaction="hide">
+    <span aria-hidden=true>❌</span>
+    <span class="screen_reader">Close</span>
+  </button>
+
+  <h3 class="label"><%= label %></h3>
+
+  <%= yield %>
+</dialog>
