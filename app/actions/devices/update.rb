@@ -37,7 +37,6 @@ module Terminus
           response.render show_view, device: repository.find(id), layout: false
         end
 
-        # :reek:FeatureEnvy
         def edit device, parameters, response
           response.render edit_view,
                           device:,

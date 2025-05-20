@@ -21,7 +21,6 @@ module Terminus
 
         private
 
-        # :reek:FeatureEnvy
         def render version, response
           settings.firmware_root.join("#{version}.bin").delete
           response.with body: "", status: 200

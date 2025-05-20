@@ -33,7 +33,6 @@ module Terminus
           settings
         end
 
-        # :reek:FeatureEnvy
         def render_new response, parameters
           response.render new_view,
                           device: nil,

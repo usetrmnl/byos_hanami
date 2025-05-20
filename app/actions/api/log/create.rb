@@ -42,21 +42,16 @@ module Terminus
             end
           end
 
-          # :reek:FeatureEnvy
           def handle request, response
-            environment = request.env
-            parameters = request.params
-
-            save environment, parameters
-
+            save request, request.params
             response.status = 204
           end
 
           private
 
-          def save environment, parameters
+          def save request, parameters
             if parameters.valid?
-              device = device_repository.find_by_mac_address environment["HTTP_ID"]
+              device = device_repository.find_by_mac_address request.get_header("HTTP_ID")
 
               transformer.call(parameters.to_h).each do |attributes|
                 log_repository.create attributes.merge!(device_id: device.id)
