@@ -21,8 +21,11 @@ module Terminus
 
           params do
             required(:image).hash do
-              required(:content).filled :string
+              optional(:content).filled :string
+              optional(:uri).filled :string
+              optional(:data).filled :string
               optional(:file_name).filled :string
+              optional(:dimensions).filled :string
             end
           end
 
@@ -40,7 +43,10 @@ module Terminus
           private
 
           def save device, image, response
-            result = creator.call image[:content], output_path(device.slug, image)
+            result = creator.call(
+              {dimensions: "800x480"}.merge(image),
+              output_path(device.slug, image)
+            )
 
             if result.success?
               response.with body: {path: result.success}.to_json, status: 200
