@@ -137,6 +137,8 @@
   padding: 0 1rem;
 
   .key, .value {
+    align-items: center;
+    display: flex;
     font-size: 0.9rem;
     margin-bottom: 0.25rem;
     padding: 0.5rem;
@@ -149,7 +151,7 @@
     border-radius: 0.5rem 0 0 0.5rem;
     color: oklch(from var(--site-darkgrey) l c h / 0.7);
     font-weight: 400;
-    text-align: right;
+    justify-content: flex-end;
   }
 
   .value {
