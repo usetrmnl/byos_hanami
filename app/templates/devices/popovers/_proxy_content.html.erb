@@ -1,0 +1,12 @@
+<%= scope(:popover_content, name: :proxy, label: "Proxy").render do %>
+  <p>Allows you to display remote images generated via your <a href="https://usetrmnl.com">TRMNL</a> account when enabled. This includes:</p>
+
+  <ul>
+    <li>Plugins (native and custom)</li>
+    <li>Recipes</li>
+  </ul>
+
+  <p>Remote images will take precedence, when enabled, over locally generated images.</p>
+
+  <p>💡 Your MAC address and API key must be identical to your <a href="https://usetrmnl.com/devices">device</a>'s MAC address and API Key associated with your hosted account. Otherwise, you won't be able to authenticate and proxy images onto your device.</p>
+<% end %>
