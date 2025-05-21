@@ -36,6 +36,13 @@ RSpec.describe Terminus::Aspects::Screens::Downloader do
       expect(downloader.call(uri, path)).to be_success(image_path)
     end
 
+    it "answers failure with non-S3 URI" do
+      cgi = class_double CGI, parse: CGI.parse("https://trmnl.test/sleep.bmp")
+      downloader = described_class.new(settings:, cgi:)
+
+      expect(downloader.call(uri, "test")).to be_failure(%(Invalid image type: "".))
+    end
+
     context "when unable to download" do
       let(:client) { instance_double Terminus::Downloader, call: Failure("Danger!") }
 
