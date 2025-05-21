@@ -32,7 +32,7 @@ module Terminus
         def render_text template, response
           id, content = template.values_at :id, :content
 
-          creator.call({content:}, settings.previews_root.mkpath.join("#{id}.png"))
+          creator.call(settings.previews_root.mkpath.join("#{id}.png"), content:)
 
           response.body = content.strip
           response.status = 201

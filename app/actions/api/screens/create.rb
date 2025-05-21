@@ -43,10 +43,7 @@ module Terminus
           private
 
           def save device, image, response
-            result = creator.call(
-              {dimensions: "800x480"}.merge(image),
-              output_path(device.slug, image)
-            )
+            result = creator.call output_path(device.slug, image), dimensions: "800x480", **image
 
             if result.success?
               response.with body: {path: result.success}.to_json, status: 200

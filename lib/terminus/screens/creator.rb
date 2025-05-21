@@ -14,7 +14,7 @@ module Terminus
         @uri_saver = uri_saver
       end
 
-      def call parameters, output_path
+      def call output_path, **parameters
         case parameters
           in content: then html_saver.call content, output_path
           in uri:, dimensions: then uri_saver.call uri, output_path, dimensions
