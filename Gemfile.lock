@@ -553,6 +553,7 @@ DEPENDENCIES
   http-fake (~> 4.1)
   infusible (~> 4.2)
   initable (~> 0.3)
+  inspectable (~> 0.3.0)
   irb-kit (~> 1.1)
   launchy (~> 3.1)
   localhost (~> 1.3)
