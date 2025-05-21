@@ -307,7 +307,7 @@ curl "https://localhost:2443/api/setup/" \
 
 ==== Screens
 
-Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are suppored for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
+Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 
 When making requests, the `Access-Token` is your device's MAC address. You can obtain this information from the UI.
 
@@ -464,7 +464,9 @@ To access the console with direct access to all objects, run:
 bin/console
 ----
 
-Once in the console, you can do the following:
+==== Basic
+
+Once in the console, you can interact with all objects. A few examples:
 
 [source,ruby]
 ----
@@ -477,18 +479,79 @@ device = repository.find 1  # Find by Device ID.
 # Fetch next device screen. Sorts in descending order by modified timestamp.
 fetcher = Hanami.app["aspects.screens.fetcher"]
 fetcher.call device.slug
+----
 
-# Generate device screen with random name.
-# 💡 "A1B2C3D4E5F6" would be your device slug (i.e. collapsed MAC Address).
+==== Screens
+
+Should you want to create screens from the command line/console instead of using the Designer (UI) or xref:_screens[Screens API], you can use the `Creator`. Please be aware of the following:
+
+* The output path must include your device's MAC Address in collapsed form (i.e. colons removed). Example: `"A1B2C3D4E5F6"`.
+* Use `.bmp` or `.png` as the file extension. This ensures your image is generated in the correct MIME Type and desired format.
+* Use `%<name>s` in your output path to generate a random name. This must included a supported file extension. Example: `%<name>s.png`.
+* The `image` parameters used in the xref:_screens[Screens API] -- except `file_name` -- are identical to the keyword arguments when calling this object.
+* When using `uri` and `data` keys, you'll need to supply dimensions which leverage the full {image_magick_geometry_link} syntax.
+
+Here are a few examples:
+
+*HTML content with random name*
+
+[source,ruby]
+----
 creator = Terminus::Screens::Creator.new
-creator.call "<p>Test</p>",
-             Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/%<name>s.png")
-#<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/5af3f06-775f-4ae9-8bb1-246d9a5200c9.png>
+output_path = Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/%<name>s.png")
 
-# To generate image with specific name.
-creator.call "<p>Test.</p>",
-             Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/demo.png")
-#<Pathname:terminus/public/assets/screens/demo.png>
+
+creator.call output_path, content: "<p>Test</p>"
+
+# Success(
+#  #<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/31a55181-ef94-4397-89d9-bd576d89b404.png>
+# )
+----
+
+*HTML content with specific name*
+
+[source,ruby]
+----
+creator = Terminus::Screens::Creator.new
+output_path = Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/demo.png")
+
+creator.call output_path, content: "<p>Test</p>"
+
+# Success(
+#  #<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/demo.png>
+# )
+----
+
+*URI*
+
+[source,ruby]
+----
+creator = Terminus::Screens::Creator.new
+output_path = Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/demo.png")
+
+creator.call output_path,
+             uri: "https://leonardo.ai/wp-content/uploads/2023/07/image-129.jpeg",
+             dimensions: "800x480"
+
+# Success(
+#  #<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/demo.png>
+# )
+----
+
+*Data (Base64)*
+
+[source,ruby]
+----
+creator = Terminus::Screens::Creator.new
+output_path = Pathname(Hanami.app[:settings].screens_root).join("A1B2C3D4E5F6/demo.png")
+
+creator.call output_path,
+             data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAXNSR0IArs4c6QAAAAtJREFUCFtjYGAAAAADAAHc7H1IAAAAAElFTkSuQmCC",
+             dimensions: "800x480!"
+
+# Success(
+#  #<Pathname:terminus/public/assets/screens/A1B2C3D4E5F6/demo.png>
+# )
 ----
 
 When creating images, you might find this HTML template valuable as a starting point as this let's you use the full capabilities of HTML to create new images for your device.
@@ -527,7 +590,7 @@ When creating images, you might find this HTML template valuable as a starting p
 
 Use of `margin` zero is important to prevent default browser styles from creating borders around your image which will show up when rendered on your device. Otherwise, you have full capabilities to render any kind of page you want using whatever HTML you like. Anything is possible because `Terminus::Screens::Creator` is designed to screenshot your rendered HTML as a 800x480 image to render on your device. If you put all this together, that means you can do this in the console:
 
-.Image Generation
+.Screen Creation
 [%collapsible]
 ====
 [source,ruby]
