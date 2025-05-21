@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require "inspectable"
+
 module Terminus
   module Screens
     # Creates device image.
     class HTMLSaver
       include Dependencies[:sanitizer]
+      include Inspectable[sanitizer: :class]
 
       def initialize(screensaver: Screensaver.new, greyscaler: Greyscaler.new, **)
         super(**)

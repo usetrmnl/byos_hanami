@@ -44,4 +44,10 @@ RSpec.describe Terminus::Screens::HTMLSaver do
       expect(creator.call(content, path)).to be_success(path)
     end
   end
+
+  describe "#inspect" do
+    it "only displays the sanitizer class" do
+      expect(creator.inspect).to include("@sanitizer=Terminus::Sanitizer")
+    end
+  end
 end
