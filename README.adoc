@@ -7,14 +7,15 @@
 :docker_link: link:https://www.docker.com[Docker]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
+:image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
 :overmind_link: link:https://github.com/DarthSim/overmind[Overmind]
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
+:rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
-:image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 
 = Terminus
 
@@ -106,7 +107,7 @@ To view the app, use either of the following:
 
 There are a few environment variables you can use to customize behavior:
 
-* `API_URI`: Needed for connecting your device to this server. Defaults to your wired IP address.
+* `API_URI`: Used for connecting your device to this server. Defaults to the wired IP address and port of the server you are running Terminus on. This also assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to be using `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `FIRMWARE_ROOT`: The root location for firmware updates. Defaults to `public/assets/firmware`.
 * `PREVIEWS_ROOT`: The root location for all device screen preview images when designing new screens. Defaults to `public/assets/previews`
@@ -120,8 +121,6 @@ The first is automatic which happens immediately after you have successfully use
 
 
 The second way is to manually add your device via the UI. At a minimum, you only need to know your device's MAC Address when entering your device information within the UI.
-
-That's it!
 
 === Background Pollers
 
@@ -309,7 +308,7 @@ curl "https://localhost:2443/api/setup/" \
 
 Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
 
-When making requests, the `Access-Token` is your device's MAC address. You can obtain this information from the UI.
+When making requests, the `Access-Token` is your device's API key. You can obtain this information from within the UI for your specific device.
 
 .Request (HTML Content)
 [%collapsible]
@@ -739,6 +738,10 @@ To build and deploy for production purposes, see the xref:_compose[Compose] sect
 The following is additional tooling, developed by the Open Source community, that might be of interest for use with this application:
 
 * link:https://github.com/clarson15/terminus-publisher[Terminus Publisher]: Provides a way to generate and publish content to Terminus for display on your device.
+
+== Troubleshooting
+
+{rack_attack_link} is enabled by default but might interfere when using a custom service layer like DNS, reverse proxy, etc. between your device and this application. If that's the case, you can disable Rack Attack by removing the `config.middleware.use Rack::Attack` line from `config/app.rb`. Alternatively, you can customize Rack Attack via the `config/initializers/rack_attack.rb` file. Either (or both) of these approaches will allow you to get your service layer properly configured so your device can talk to this server.
 
 == Credits
 
