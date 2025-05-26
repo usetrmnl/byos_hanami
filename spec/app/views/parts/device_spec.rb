@@ -113,7 +113,7 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
   describe "#wifi_percentage" do
     it "answers zero when zero" do
       allow(device).to receive(:wifi).and_return(0)
-      expect(part.battery_percentage).to eq(0)
+      expect(part.wifi_percentage).to eq(0)
     end
 
     it "answers ten percent when extremely low" do
