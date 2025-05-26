@@ -8,6 +8,8 @@ RSpec.describe "/api/setup", :db do
   let(:device) { Factory[:device] }
   let(:repository) { Terminus::Repositories::Device.new }
 
+  include_context "with main application"
+
   context "with no devices" do
     let(:mac_address) { "aa:bb:cc:00:11:22" }
     let(:device) { repository.find_by_mac_address mac_address }
@@ -33,6 +35,11 @@ RSpec.describe "/api/setup", :db do
         firmware_version: "1.2.3",
         api_key: /[a-z0-9]{20}/i
       )
+    end
+
+    it "creates welcome screen" do
+      get routes.path(:api_setup), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
+      expect(temp_dir.join("aabbcc001122/setup.png").exist?).to be(true)
     end
   end
 
