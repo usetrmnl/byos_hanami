@@ -2,6 +2,7 @@
 
 require "dry/monads"
 require "initable"
+require "petail"
 require "refinements/pathname"
 
 module Terminus
@@ -11,7 +12,7 @@ module Terminus
         # The create action.
         class Create < Terminus::Action
           include Deps[:settings, repository: "repositories.device"]
-          include Initable[creator: proc { Terminus::Screens::Creator.new }]
+          include Initable[problem: Petail, creator: proc { Terminus::Screens::Creator.new }]
           include Dry::Monads[:result]
 
           using Refinements::Pathname
@@ -33,10 +34,12 @@ module Terminus
             parameters = request.params
             device = repository.find_by_api_key request.env["HTTP_ACCESS_TOKEN"]
 
-            if parameters.valid? && device
+            return unauthorized response unless device
+
+            if parameters.valid?
               save device, parameters[:image], response
             else
-              response.with body: parameters.errors.to_json, status: 400
+              unprocessable_entity_for_parameters parameters.errors.to_h, response
             end
           end
 
@@ -46,14 +49,39 @@ module Terminus
             result = creator.call output_path(device.slug, image), dimensions: "800x480", **image
 
             if result.success?
-              response.with body: {path: result.success}.to_json, status: 200
+              response.with body: {path: result.success}.to_json, format: :json, status: 200
             else
-              response.with body: {error: result.failure}.to_json, status: 400
+              unprocessable_entity_for_creation result, response
             end
           end
 
           def output_path slug, image
             settings.screens_root.join(slug).mkpath.join image.fetch(:file_name, "%<name>s.png")
+          end
+
+          def unauthorized response
+            response.with body: problem.new(status: :unauthorized).to_json,
+                          format: :problem_details,
+                          status: 401
+          end
+
+          def unprocessable_entity_for_parameters errors, response
+            body = problem.new type: "/problems/screen_creation",
+                               status: :unprocessable_entity,
+                               detail: "Validation failed.",
+                               instance: "/api/screens",
+                               extensions: errors
+
+            response.with body: body.to_json, format: :problem_details, status: 422
+          end
+
+          def unprocessable_entity_for_creation result, response
+            body = problem.new type: "/problems/screen_creation",
+                               status: :unprocessable_entity,
+                               detail: result.failure,
+                               instance: "/api/screens"
+
+            response.with body: body.to_json, format: :problem_details, status: 422
           end
         end
       end

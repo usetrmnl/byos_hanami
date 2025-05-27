@@ -19,7 +19,7 @@ module Terminus
           in content: then html_saver.call content, output_path
           in uri:, dimensions: then uri_saver.call uri, output_path, dimensions
           in data:, dimensions: then decoder.call data, output_path, dimensions
-          else Failure "Invalid screen parameters: #{parameters.inspect}."
+          else Failure "Invalid parameters: #{parameters.inspect}."
         end
       end
 

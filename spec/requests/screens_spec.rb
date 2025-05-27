@@ -55,45 +55,54 @@ RSpec.describe "/api/screens", :db do
     expect(image).to have_attributes(width: 50, height: 100)
   end
 
-  it "answers bad request for unknown device" do
-    post routes.path(:api_screens_create),
-         {image: {content: "<p>Test</p>"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => "bogus"
+  context "with unknown device" do
+    before do
+      post routes.path(:api_screens_create),
+           {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => "bogus"
+    end
 
-    expect(last_response.status).to eq(400)
+    it "answers problem details" do
+      expect(json_payload).to eq(Petail.new(status: :unauthorized).to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 401
+      )
+    end
   end
 
-  it "answers bad request for no body" do
-    post routes.path(:api_screens_create),
-         {},
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => "bogus"
+  context "without dimensions" do
+    before do
+      post routes.path(:api_screens_create),
+           {image: {file_name: "test.png"}}.to_json,
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+    end
 
-    expect(last_response.status).to eq(400)
+    it "answers problem details" do
+      problem = Petail.new(
+        type: "/problems/screen_creation",
+        status: :unprocessable_entity,
+        detail: %(Invalid parameters: {dimensions: "800x480", file_name: "test.png"}.),
+        instance: "/api/screens"
+      )
+
+      expect(json_payload).to eq(problem.to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 422
+      )
+    end
   end
 
-  it "answers errors for partial body" do
-    post routes.path(:api_screens_create),
-         {image: {file_name: "test"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(json_payload).to eq(
-      error: %(Invalid screen parameters: {dimensions: "800x480", file_name: "test"}.)
-    )
-  end
-
-  it "answers bad request for partial body" do
-    post routes.path(:api_screens_create),
-         {image: {file_name: "test"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(last_response.status).to eq(400)
-  end
-
-  context "with invalid file name" do
+  context "without file extension" do
     before do
       post routes.path(:api_screens_create),
            {image: {content: "Test.", file_name: "test"}}.to_json,
@@ -101,12 +110,50 @@ RSpec.describe "/api/screens", :db do
            "HTTP_ACCESS_TOKEN" => device.api_key
     end
 
-    it "answers bad request status" do
-      expect(last_response.status).to eq(400)
+    it "answers problem details" do
+      problem = Petail.new(
+        type: "/problems/screen_creation",
+        status: :unprocessable_entity,
+        detail: %(Invalid image type: "". Use: "bmp" or "png".),
+        instance: "/api/screens"
+      )
+
+      expect(json_payload).to eq(problem.to_h)
     end
 
-    it "answers error" do
-      expect(json_payload).to match(error: /invalid image type/i)
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 422
+      )
+    end
+  end
+
+  context "without body" do
+    before do
+      post routes.path(:api_screens_create),
+           {},
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+    end
+
+    it "answers problem details" do
+      problem = Petail.new(
+        type: "/problems/screen_creation",
+        status: :unprocessable_entity,
+        detail: "Validation failed.",
+        instance: "/api/screens",
+        extensions: {image: ["is missing"]}
+      )
+
+      expect(json_payload).to eq(problem.to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 422
+      )
     end
   end
 end

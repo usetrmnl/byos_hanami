@@ -37,7 +37,7 @@ RSpec.describe Terminus::Screens::Creator do
 
     it "answers failure with invalid parameters" do
       expect(saver.call(output_path, bogus: :danger)).to be_failure(
-        "Invalid screen parameters: {bogus: :danger}."
+        "Invalid parameters: {bogus: :danger}."
       )
     end
   end
