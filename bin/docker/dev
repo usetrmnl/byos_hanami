@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./bin/setup
+[ -e ./.overmind.sock ] && rm ./.overmind.sock
+bundle exec overmind start --port-step 10 --procfile Procfile.dev --can-die assets,migrate
