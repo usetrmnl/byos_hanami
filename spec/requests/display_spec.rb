@@ -114,8 +114,24 @@ RSpec.describe "/api/display", :db do
     )
   end
 
-  it "answers not found for index with invalid access token" do
-    get routes.path(:api_display)
-    expect(last_response.status).to eq(404)
+  context "with invalid/missing headers" do
+    before { get routes.path(:api_display) }
+
+    it "answers problem details" do
+      problem = Petail.new(
+        status: :not_found,
+        detail: "Unable to find device.",
+        instance: "/api/display"
+      )
+
+      expect(json_payload).to eq(problem.to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 404
+      )
+    end
   end
 end

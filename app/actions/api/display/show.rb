@@ -3,6 +3,7 @@
 require "dry/core"
 require "dry/monads"
 require "initable"
+require "petail"
 require "trmnl/api"
 
 module Terminus
@@ -17,14 +18,12 @@ module Terminus
             synchronizer: "aspects.synchronizers.device"
           ]
 
-          include Initable[model: TRMNL::API::Models::Display]
+          include Initable[problem: Petail, model: TRMNL::API::Models::Display]
           include Dry::Monads[:result]
 
           using Refines::Actions::Response
 
           format :json
-
-          params { optional(:base_64).filled :integer }
 
           def handle request, response
             environment = request.env
@@ -33,7 +32,7 @@ module Terminus
               in Success(device)
                 record = build_record fetch_image(request.params, environment), device
                 response.with body: record.to_json, status: 200
-              else response.with body: model.new.to_json, status: 404
+              else not_found response
             end
           end
 
@@ -58,6 +57,14 @@ module Terminus
             firmware_fetcher.call.first.then do
               it.uri if it && device.firmware_version != it.version
             end
+          end
+
+          def not_found response
+            body = problem.new status: __method__,
+                               detail: "Unable to find device.",
+                               instance: "/api/display"
+
+            response.with body: body.to_json, format: :problem_details, status: 404
           end
         end
       end
