@@ -36,6 +36,14 @@
   }
 }
 
+:where(code) {
+  background-color: var(--site-darkgrey);
+  border-radius: 0.3rem;
+  color: var(--site-white);
+  font-size: 0.95rem;
+  padding: 0.1rem 0.3rem;
+}
+
 :where(li) {
   margin-bottom: 0.4rem;
 }
