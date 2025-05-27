@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "initable"
+require "petail"
+
 module Terminus
   module Actions
     module API
@@ -12,6 +15,10 @@ module Terminus
             device_repository: "repositories.device",
             log_repository: "repositories.device_log"
           ]
+
+          include Initable[problem: Petail]
+
+          using Refines::Actions::Response
 
           format :json
 
@@ -43,22 +50,33 @@ module Terminus
           end
 
           def handle request, response
-            save request, request.params
-            response.status = 204
+            save request.params, request, response
           end
 
           private
 
-          def save request, parameters
+          def save parameters, request, response
             if parameters.valid?
               device = device_repository.find_by_mac_address request.get_header("HTTP_ID")
 
               transformer.call(parameters.to_h).each do |attributes|
                 log_repository.create attributes.merge!(device_id: device.id)
               end
+
+              response.status = 204
             else
-              logger.error parameters.errors
+              unprocessable_entity parameters.errors.to_h, response
             end
+          end
+
+          def unprocessable_entity errors, response
+            body = problem.new status: __method__,
+                               detail: "Validation failed.",
+                               instance: "/api/log",
+                               extensions: errors
+
+            logger.error errors
+            response.with body: body.to_json, format: :problem_details, status: 422
           end
         end
       end

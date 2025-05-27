@@ -52,21 +52,48 @@ RSpec.describe "/api/log", :db do
     }
   end
 
-  it "create record" do
-    post routes.path(:api_log_create), payload.to_json, **headers
+  context "with valid payload" do
+    before { post routes.path(:api_log_create), payload.to_json, **headers }
 
-    expect(repository.all.first).to have_attributes(
-      device_id: device.id,
-      external_id: 2,
-      message: "Danger!",
-      special_function: "none",
-      retry: 1,
-      created_at: Time.utc(2025, 3, 15, 1, 2, 3)
-    )
+    it "create record" do
+      expect(repository.all.first).to have_attributes(
+        device_id: device.id,
+        external_id: 2,
+        message: "Danger!",
+        special_function: "none",
+        retry: 1,
+        created_at: Time.utc(2025, 3, 15, 1, 2, 3)
+      )
+    end
+
+    it "answers success (no content)" do
+      expect(last_response.status).to eq(204)
+    end
   end
 
-  it "answers success (no content)" do
-    post routes.path(:api_log_create), {}, **headers
-    expect(last_response.status).to eq(204)
+  context "with invalid payload" do
+    before { post routes.path(:api_log_create), {log: {log_array: []}}.to_json, **headers }
+
+    it "doesn't create record" do
+      expect(repository.all).to eq([])
+    end
+
+    it "answers problem details" do
+      problem = Petail.new(
+        status: :unprocessable_entity,
+        detail: "Validation failed.",
+        instance: "/api/log",
+        extensions: {log: {logs_array: ["is missing"]}}
+      )
+
+      expect(json_payload).to eq(problem.to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 422
+      )
+    end
   end
 end
