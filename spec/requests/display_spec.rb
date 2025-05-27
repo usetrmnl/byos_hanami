@@ -118,11 +118,11 @@ RSpec.describe "/api/display", :db do
     before { get routes.path(:api_display) }
 
     it "answers problem details" do
-      problem = Petail.new(
+      problem = Petail[
         status: :not_found,
         detail: "Unable to find device.",
         instance: "/api/display"
-      )
+      ]
 
       expect(json_payload).to eq(problem.to_h)
     end

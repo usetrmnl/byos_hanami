@@ -79,12 +79,12 @@ RSpec.describe "/api/log", :db do
     end
 
     it "answers problem details" do
-      problem = Petail.new(
+      problem = Petail[
         status: :unprocessable_entity,
         detail: "Validation failed.",
         instance: "/api/log",
         extensions: {log: {logs_array: ["is missing"]}}
-      )
+      ]
 
       expect(json_payload).to eq(problem.to_h)
     end

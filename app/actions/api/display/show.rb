@@ -60,9 +60,11 @@ module Terminus
           end
 
           def not_found response
-            body = problem.new status: __method__,
-                               detail: "Unable to find device.",
-                               instance: "/api/display"
+            body = problem[
+              status: __method__,
+              detail: "Unable to find device.",
+              instance: "/api/display"
+            ]
 
             response.with body: body.to_json, format: :problem_details, status: 404
           end

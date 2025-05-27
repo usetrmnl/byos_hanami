@@ -64,7 +64,7 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      expect(json_payload).to eq(Petail.new(status: :unauthorized).to_h)
+      expect(json_payload).to eq(Petail[status: :unauthorized].to_h)
     end
 
     it "answers content type and status" do
@@ -84,12 +84,12 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail.new(
+      problem = Petail[
         type: "/problems/screen_creation",
         status: :unprocessable_entity,
         detail: %(Invalid parameters: {dimensions: "800x480", file_name: "test.png"}.),
         instance: "/api/screens"
-      )
+      ]
 
       expect(json_payload).to eq(problem.to_h)
     end
@@ -111,12 +111,12 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail.new(
+      problem = Petail[
         type: "/problems/screen_creation",
         status: :unprocessable_entity,
         detail: %(Invalid image type: "". Use: "bmp" or "png".),
         instance: "/api/screens"
-      )
+      ]
 
       expect(json_payload).to eq(problem.to_h)
     end
@@ -138,13 +138,13 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail.new(
+      problem = Petail[
         type: "/problems/screen_creation",
         status: :unprocessable_entity,
         detail: "Validation failed.",
         instance: "/api/screens",
         extensions: {image: ["is missing"]}
-      )
+      ]
 
       expect(json_payload).to eq(problem.to_h)
     end

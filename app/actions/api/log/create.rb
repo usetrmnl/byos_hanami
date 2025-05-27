@@ -70,10 +70,12 @@ module Terminus
           end
 
           def unprocessable_entity errors, response
-            body = problem.new status: __method__,
-                               detail: "Validation failed.",
-                               instance: "/api/log",
-                               extensions: errors
+            body = problem[
+              status: __method__,
+              detail: "Validation failed.",
+              instance: "/api/log",
+              extensions: errors
+            ]
 
             logger.error errors
             response.with body: body.to_json, format: :problem_details, status: 422

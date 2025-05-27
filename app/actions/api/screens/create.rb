@@ -60,26 +60,30 @@ module Terminus
           end
 
           def unauthorized response
-            response.with body: problem.new(status: :unauthorized).to_json,
+            response.with body: problem[status: :unauthorized].to_json,
                           format: :problem_details,
                           status: 401
           end
 
           def unprocessable_entity_for_parameters errors, response
-            body = problem.new type: "/problems/screen_creation",
-                               status: :unprocessable_entity,
-                               detail: "Validation failed.",
-                               instance: "/api/screens",
-                               extensions: errors
+            body = problem[
+              type: "/problems/screen_creation",
+              status: :unprocessable_entity,
+              detail: "Validation failed.",
+              instance: "/api/screens",
+              extensions: errors
+            ]
 
             response.with body: body.to_json, format: :problem_details, status: 422
           end
 
           def unprocessable_entity_for_creation result, response
-            body = problem.new type: "/problems/screen_creation",
-                               status: :unprocessable_entity,
-                               detail: result.failure,
-                               instance: "/api/screens"
+            body = problem[
+              type: "/problems/screen_creation",
+              status: :unprocessable_entity,
+              detail: result.failure,
+              instance: "/api/screens"
+            ]
 
             response.with body: body.to_json, format: :problem_details, status: 422
           end
