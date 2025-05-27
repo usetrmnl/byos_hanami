@@ -1,0 +1,34 @@
+<% content_for :title, "Screen Creation Problem Details | Terminus" %>
+
+<section class="page-problem">
+  <header class="page-header">
+    <h1 class="label">Screen Creation Problem Details</h1>
+  </header>
+
+  <p>When making an API HTTP POST request, the following required and optional keys should be used within the hash provided for the <code>image</code> key.</p>
+
+  <p><strong>Required (use only one):</strong></p>
+
+  <dl class="site-definition-list">
+    <dt class="key">content</dt>
+    <dd class="value">Must be HTML content. CSS can be provided via the style tags within HTML head element if desired too.</dd>
+
+    <dt class="key">uri</dt>
+    <dd class="value">Must be an image URI. This can be either relative path or an URL to an image.</dd>
+
+    <dt class="key">data</dt>
+    <dd class="value">Must be Base64 encoded image data. In Ruby, that'd be: <code>Base64.strict_encode64 file.read</code>.</dd>
+  </dl>
+
+  <p><strong>Optional:</strong></p>
+
+  <dl class="site-definition-list">
+    <dt class="key">dimensions</dt>
+    <dd class="value">
+      Use to render your screen with specific dimensions. The <a href="https://www.imagemagick.org/script/command-line-processing.php#geometry">ImageMagick Geometry</a> syntax is available to you to render your screen as desired. If no dimensions are supplied, then the default dimensions of <code>800x480</code> are used.
+    </dd>
+
+    <dt class="key">file_name</dt>
+    <dd class="value">Use to create a screen with an automatically generated or specific file name. Example: <code>demo.png</code>. Otherwise, if no file name is provided, a UUID will be used instead. Example: <code>e2a8a4bc-11ba-40a4-9184-5275f4172da4.png</code>. You can also use <code>%&lt;name&gt;s</code> with a file extension to render an automatically generated file. Example: <code>%&lt;name&gt;s.bmp</code>. Only <code>.bmp</code> and <code>.png</code> file extensions are supported.</dd>
+  </dl>
+</section>

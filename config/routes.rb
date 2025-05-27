@@ -35,6 +35,10 @@ module Terminus
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:version", to: "firmware.delete", as: :firmware_delete
 
+    get "/problems/screen_creation",
+        to: "problems.screen_creation.show",
+        as: :problem_screen_creation
+
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt"]
