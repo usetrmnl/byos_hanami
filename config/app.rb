@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "hanami"
+require "petail"
 
 require_relative "initializers/rack_attack"
 
@@ -19,6 +20,12 @@ module Terminus
     end
 
     config.inflections { it.acronym "HTML", "IP", "TYPES", "URI" }
+
+    config.actions
+          .formats
+          .add(:all, "application/octet-stream")
+          .add(:all, "*/*")
+          .add :problem_details, Petail::MEDIA_TYPE_JSON
 
     config.actions.content_security_policy.then do |csp|
       csp[:manifest_src] = "'self'"
