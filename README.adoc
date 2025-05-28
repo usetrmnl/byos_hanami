@@ -10,6 +10,7 @@
 :image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
 :overmind_link: link:https://github.com/DarthSim/overmind[Overmind]
+:petail_link: link:https://alchemists.io/projects/petail[Petail]
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
@@ -181,7 +182,7 @@ In situations where your device updated to a newer Firmware version and it was a
 
 === APIs
 
-This section documents all supported API endpoints. Each endpoint uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above).
+This section documents all supported API endpoints. Each endpoint uses HTTPS which requires accepting your locally generated SSL certificate. If you don't want this behavior, you can switch to using HTTP (see above). Any/all error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which also means you can use Petail to easily parse the error responses in your own application if desired.
 
 Some endpoints use either the HTTP `ID`, `Access-Token` or both headers. These break down as follows:
 
