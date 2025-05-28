@@ -702,11 +702,24 @@ bin/rake
 
 === Compose
 
-We use {docker_compose_link} to quickly spin up the images and containers for running this application in either a development or production environment.
+You can use {docker_compose_link} to quickly launch the entire production stack.
 
-You'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container if you don't change this. You can do this by adding `API_URI` to the environment section. Example: `API_URI: http://192.168.1.1:2300`. You can also confirm this is set when launching all services and viewing the Dashboard (look for the API IP address).
+To start, you'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container which devices can't connect to. You can fix by adding updating the `API_URI` in the environment section. Here's a few examples:
 
-The following commands might be of interest for getting started:
+[source,yaml]
+----
+# With specific IP address.
+environment:
+  API_URI: http://192.168.1.1:2300
+
+# With hostname.
+environment:
+  API_URI: http://terminus.demo.io
+----
+
+You can also confirm the above changes are applied by running `docker-compose up` to launch all services and viewing the Dashboard (look for the API IP address).
+
+The following commands can be helpful when managing the stack:
 
 * `docker-compose up`: Builds and launches the entire stack.
 * `docker-compose build web`: Rebuilds the web service. You'll want to run this before running `up` in order to pick up the latest changes whenever there is a new version release or pulling changes from the `main` branch.
@@ -715,12 +728,12 @@ The following commands might be of interest for getting started:
 
 Further details can be found in the `compose.yml` file at the root of this project. The `compose.yml` can also be configured via the following environment variables:
 
-* `API_URI`: The host you are running your container on. Defaults to localhost but you'll definitely want to replace localhost with your actual IP address because your device won't be able to talk to your server otherwise.
+* `API_URI`: The IP address of your container. You'll definitely want customize as mentioned above.
 * `PG_USER`: Your PostgreSQL user name.
 * `PG_DATABASE`: Your PostgreSQL database name.
 * `PG_PASSWORD`: Your PostgreSQL password.
 
-💡 The above is automatically generated for you when running `bin/setup` but customization is encouraged.
+💡 The above is automatically generated for you within the `.env` file when running `bin/setup` but customization is encouraged.
 
 === Development
 
@@ -728,7 +741,33 @@ To develop with Docker, you can use the same tooling as explained above in the _
 
 === Production
 
-To build and deploy for production purposes, see the xref:_compose[Compose] section mentioned above. If you only care about the web image, then you can use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
+An image is built each time changes are applied to the `main` branch or a new tag is created. All images can be found in the link:https://github.com/usetrmnl/byos_hanami/pkgs/container/terminus[Container Registry]. Use as follows:
+
+[source,bash]
+----
+# Latest
+docker pull ghcr.io/usetrmnl/terminus:latest
+
+# Specific version.
+docker pull ghcr.io/usetrmnl/terminus:<version>
+----
+
+You can also update `compose.yml` to use the above image by replacing the following (should you not want to manually build the image):
+
+[source,yaml]
+----
+build:
+  context: .
+----
+
+...with:
+
+[source,yaml]
+----
+image: ghcr.io/usetrmnl/terminus:latest
+----
+
+If the above registry is not desired, you can manually build and run the entire stack using xref:_compose[Docker Compose] as mentioned above. If you only care about the web image, then you can use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
 
 * `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
 * `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
