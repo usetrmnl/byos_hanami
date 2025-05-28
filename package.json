@@ -1,7 +1,6 @@
 {
   "name": "terminus",
   "description": "A TRMNL server.",
-  "version": "0.0.0",
   "author": "TRMNL",
   "license": "MIT",
   "private": true,
