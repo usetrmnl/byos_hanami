@@ -6,8 +6,8 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 LABEL org.opencontainers.image.base.name=terminus
 LABEL org.opencontainers.image.title=Terminus
-LABEL org.opencontainers.image.description="A self-hosted server implementation."
-LABEL org.opencontainers.image.authors="TRMNL <support@usetrmnl.com>"
+LABEL org.opencontainers.image.description="A TRMNL server."
+LABEL org.opencontainers.image.authors="TRMNL <engineering@usetrmnl.com>"
 LABEL org.opencontainers.image.vendor=TRMNL
 
 ENV RACK_ENV=production
