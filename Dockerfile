@@ -4,6 +4,12 @@ ARG RUBY_VERSION=3.4.4
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
+LABEL org.opencontainers.image.base.name=terminus
+LABEL org.opencontainers.image.title=Terminus
+LABEL org.opencontainers.image.description="A self-hosted server implementation."
+LABEL org.opencontainers.image.authors="TRMNL <support@usetrmnl.com>"
+LABEL org.opencontainers.image.vendor=TRMNL
+
 ENV RACK_ENV=production
 ENV HANAMI_ENV=production
 ENV HANAMI_SERVE_ASSETS=true
@@ -23,8 +29,8 @@ RUN <<STEPS
   nodejs \
   npm \
   postgresql-client \
-  tmux \
-  && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+  tmux
+  rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
 FROM base AS build
@@ -34,8 +40,8 @@ RUN <<STEPS
   && apt-get install --no-install-recommends -y build-essential \
   libpq-dev \
   libyaml-dev \
-  pkg-config \
-  && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+  pkg-config
+  rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
 COPY .ruby-version Gemfile Gemfile.lock .node-version package.json package-lock.json ./
