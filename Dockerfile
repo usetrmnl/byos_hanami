@@ -10,6 +10,7 @@ LABEL org.opencontainers.image.description="A TRMNL server."
 LABEL org.opencontainers.image.authors="TRMNL <engineering@usetrmnl.com>"
 LABEL org.opencontainers.image.vendor=TRMNL
 
+ENV LANG=C.UTF-8
 ENV RACK_ENV=production
 ENV HANAMI_ENV=production
 ENV HANAMI_SERVE_ASSETS=true
@@ -24,8 +25,10 @@ RUN <<STEPS
   && apt-get install --no-install-recommends -y \
   chromium \
   curl \
+  fonts-noto-cjk \
   imagemagick \
   libjemalloc2 \
+  locales \
   nodejs \
   npm \
   postgresql-client \
