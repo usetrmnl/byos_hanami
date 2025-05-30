@@ -23,6 +23,9 @@ ENV BUNDLE_WITHOUT="development:quality:test:tools"
 WORKDIR /app
 
 RUN <<STEPS
+  set -o errexit
+  set -o nounset
+  set -o xtrace
   apt-get update -qq
   apt-get install --no-install-recommends -y \
   chromium \
