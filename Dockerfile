@@ -4,6 +4,8 @@ ARG RUBY_VERSION=3.4.4
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
+ARG NODE_VERSION=24
+
 LABEL org.opencontainers.image.base.name=terminus
 LABEL org.opencontainers.image.title=Terminus
 LABEL org.opencontainers.image.description="A TRMNL server."
@@ -21,18 +23,23 @@ ENV BUNDLE_WITHOUT="development:quality:test:tools"
 WORKDIR /app
 
 RUN <<STEPS
-  apt-get update -qq \
-  && apt-get install --no-install-recommends -y \
+  apt-get update -qq
+  apt-get install --no-install-recommends -y \
   chromium \
   curl \
   fonts-noto-cjk \
+  gnupg2 \
   imagemagick \
   libjemalloc2 \
   locales \
-  nodejs \
+  lsb-release \
   npm \
-  postgresql-client \
   tmux
+  curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/postgresql-keyring.gpg] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+  curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
+  apt-get update -qq
+  apt-get install --no-install-recommends -y postgresql-client-17 nodejs
   rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
