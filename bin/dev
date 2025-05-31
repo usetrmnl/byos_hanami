@@ -1,0 +1,2 @@
+#!/bin/bash
+bundle exec overmind start -f Procfile.dev --port-step 10 --can-die migrate,assets
