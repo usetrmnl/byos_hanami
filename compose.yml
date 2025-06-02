@@ -14,6 +14,9 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    volumes:
+      - web-assets-firmware:/app/public/assets/firmware
+      - web-assets-screens:/app/public/assets/screens
     deploy:
       resources:
         limits:
@@ -42,3 +45,5 @@ services:
 
 volumes:
   database-data:
+  web-assets-firmware:
+  web-assets-screens:
