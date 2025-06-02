@@ -4,7 +4,8 @@
   <header class="page-header">
     <ul class="site-breadcrumbs">
       <li class="breadcrumb"><a href="/devices" class="link">Devices</a></li>
-      <li class="breadcrumb"><%= device.label %> Edit</li>
+      <li class="breadcrumb"><%= link_to device.label, "/devices/#{device.id}", class: :link %></li>
+      <li class="breadcrumb">Edit</li>
     </ul>
   </header>
 
