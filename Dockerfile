@@ -72,12 +72,14 @@ COPY --from=build /app /app
 
 RUN <<STEPS
   mkdir -p /app/log
+  mkdir -p /app/public/assets/firmware
+  mkdir -p /app/public/assets/screens
   mkdir -p /app/tmp
 STEPS
 
 RUN groupadd --system --gid 1000 app && \
     useradd app --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R app:app . public log tmp
+    chown -R app:app . log public tmp
 
 USER 1000:1000
 
