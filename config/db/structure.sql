@@ -134,8 +134,10 @@ CREATE TABLE public.devices (
     height integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    proxy boolean,
-    firmware_update boolean DEFAULT false NOT NULL
+    proxy boolean DEFAULT false NOT NULL,
+    firmware_update boolean DEFAULT false NOT NULL,
+    sleep_start_at time without time zone,
+    sleep_end_at time without time zone
 );
 
 
@@ -235,4 +237,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250408143435_add_device_firmware_update_column.rb'),
 ('20250423143027_add_device_log_max_alloc_size.rb'),
 ('20250429114320_remove_device_setup_at_column.rb'),
-('20250429115049_change_device_column_text_types.rb');
+('20250429115049_change_device_column_text_types.rb'),
+('20250602132300_add_device_sleep_period.rb');
