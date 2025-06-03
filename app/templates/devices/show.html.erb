@@ -30,31 +30,31 @@
 
         <dt class="key">
           Friendly ID
-          <%= render "shared/popovers/trigger", name: "friendly_id" %>
+          <%= render "shared/popovers/trigger", name: :friendly_id %>
         </dt>
         <dd class="value"><%= device.friendly_id %></dd>
 
         <dt class="key">
           MAC Address
-          <%= render "shared/popovers/trigger", name: "mac_address" %>
+          <%= render "shared/popovers/trigger", name: :mac_address %>
         </dt>
         <dd class="value site-secret"><%= device.mac_address %></dd>
 
         <dt class="key">
           API Key
-          <%= render "shared/popovers/trigger", name: "api_key" %>
+          <%= render "shared/popovers/trigger", name: :api_key %>
         </dt>
         <dd class="value site-secret"><%= device.api_key %></dd>
 
         <dt class="key">
           Refresh Rate
-          <%= render "shared/popovers/trigger", name: "refresh_rate" %>
+          <%= render "shared/popovers/trigger", name: :refresh_rate %>
         </dt>
         <dd class="value"><%= device.refresh_rate %></dd>
 
         <dt class="key">
           Image Timeout
-          <%= render "shared/popovers/trigger", name: "image_timeout" %>
+          <%= render "shared/popovers/trigger", name: :image_timeout %>
         </dt>
         <dd class="value"><%= device.image_timeout %></dd>
 
@@ -66,18 +66,30 @@
 
         <dt class="key">
           Proxy
-          <%= render "shared/popovers/trigger", name: "proxy" %>
+          <%= render "shared/popovers/trigger", name: :proxy %>
         </dt>
         <dd class="value"><%= boolean device.proxy %></dd>
 
         <dt class="key">
           Firmware Update
-          <%= render "shared/popovers/trigger", name: "firmware_update" %>
+          <%= render "shared/popovers/trigger", name: :firmware_update %>
         </dt>
         <dd class="value"><%= boolean device.firmware_update %></dd>
 
         <dt class="key">Firmware Beta</dt>
         <dd class="value"><%= boolean device.firmware_beta %></dd>
+
+        <dt class="key">
+          Sleep Start
+          <%= render "shared/popovers/trigger", name: :sleep_start %>
+        </dt>
+        <dd class="value"><%= human_time device.sleep_start_at %></dd>
+
+        <dt class="key">
+          Sleep End
+          <%= render "shared/popovers/trigger", name: :sleep_end %>
+        </dt>
+        <dd class="value"><%= human_time device.sleep_end_at %></dd>
 
         <dt class="key">Created</dt>
         <dd class="value"><%= human_at device.created_at %></dd>
@@ -96,3 +108,5 @@
 <%= render "popovers/proxy_content" %>
 <%= render "popovers/refresh_rate_content" %>
 <%= render "popovers/image_timeout_content" %>
+<%= render "popovers/sleep_start_content" %>
+<%= render "popovers/sleep_end_content" %>
