@@ -27,4 +27,26 @@ RSpec.describe Terminus::Structs::Device, :db do
       expect(device.slug).to eq("")
     end
   end
+
+  describe "#asleep?" do
+    subject :device do
+      Factory[
+        :device,
+        sleep_start_at: Time.new(2025, 1, 1, 1, 1, 0),
+        sleep_end_at: Time.new(2025, 1, 1, 1, 10, 0)
+      ]
+    end
+
+    it "answers true when current time is within period" do
+      expect(device.asleep?(Time.new(2025, 1, 1, 1, 5, 0))).to be(true)
+    end
+
+    it "answers false when current time is outside period" do
+      expect(device.asleep?(Time.new(2025, 1, 1, 1, 20, 0))).to be(false)
+    end
+
+    it "answers false when start and end are nil" do
+      expect(device.asleep?).to be(false)
+    end
+  end
 end

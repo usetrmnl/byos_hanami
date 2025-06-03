@@ -15,6 +15,12 @@ module Terminus
 
         mac_address.tr ":", Dry::Core::EMPTY_STRING
       end
+
+      def asleep? now = Time.now
+        return false unless sleep_start_at && sleep_end_at
+
+        (sleep_start_at.to_s..sleep_end_at.to_s).cover? now.strftime("%H:%M:%S")
+      end
     end
   end
 end
