@@ -45,7 +45,7 @@ module Terminus
 
         def dimensions = "#{width}x#{height}"
 
-        def image_uri = fetcher.call(slug)[:image_url].sub(settings.api_uri, "")
+        def image_uri = fetcher.call(value)[:image_url].sub(settings.api_uri, "")
       end
     end
   end

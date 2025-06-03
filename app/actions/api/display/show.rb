@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
 require "dry/monads"
 require "initable"
 require "petail"
@@ -30,7 +29,7 @@ module Terminus
 
             case synchronizer.call environment
               in Success(device)
-                record = build_record fetch_image(request.params, environment), device
+                record = build_record fetch_image(request.params, environment, device), device
                 response.with body: record.to_json, status: 200
               else not_found response
             end
@@ -38,11 +37,10 @@ module Terminus
 
           private
 
-          def fetch_image parameters, environment
-            encrypted, mac_address = environment.values_at "HTTP_BASE64", "HTTP_ID"
-            encryption = :base_64 if (encrypted || parameters[:base_64]) == "true"
+          def fetch_image parameters, environment, device
+            encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
 
-            image_fetcher.call mac_address.tr(":", Dry::Core::EMPTY_STRING), encryption:
+            image_fetcher.call device, encryption:
           end
 
           def build_record image, device

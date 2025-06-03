@@ -10,8 +10,10 @@ module Terminus
         include Deps[:settings, "aspects.screens.fetcher"]
         include Initable[toucher: proc { Terminus::Screens::Toucher }]
 
-        def call slug, encryption: nil
-          fetcher.call(slug, encryption:).tap { toucher.call settings.screens_root.join(slug) }
+        def call device, encryption: nil
+          fetcher.call(device, encryption:).tap do
+            toucher.call settings.screens_root.join(device.slug)
+          end
         end
       end
     end
