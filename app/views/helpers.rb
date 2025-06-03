@@ -24,7 +24,11 @@ module Terminus
         attributes.fetch_value key, record.public_send(key)
       end
 
-      def human_at(at) = (at.strftime "%B %d %Y at %H:%M %Z" if at)
+      def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
+
+      def human_time(value) = (value.strftime "%I:%M %p" if value)
+
+      def time_at(value) = (value.strftime "%H:%M:%S" if value)
 
       def size bytes, megabyte: 1_048_576.0
         case bytes

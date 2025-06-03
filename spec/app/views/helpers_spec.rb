@@ -27,7 +27,7 @@ RSpec.describe Terminus::Views::Helpers do
       expect(helper.field_for(:label, attributes, record)).to eq("Other")
     end
 
-    it "answers record value when attribute key is missing" do
+    it "answers record value when attribute is missing" do
       attributes.clear
       expect(helper.field_for(:label, attributes, record)).to eq("Test")
     end
@@ -40,6 +40,26 @@ RSpec.describe Terminus::Views::Helpers do
 
     it "answers nil if not set" do
       expect(helper.human_at(nil)).to be(nil)
+    end
+  end
+
+  describe ".human_time" do
+    it "answers human date/time" do
+      expect(helper.human_time(Time.utc(2025, 1, 2, 3, 4, 5))).to eq("03:04 AM")
+    end
+
+    it "answers nil if not set" do
+      expect(helper.human_time(nil)).to be(nil)
+    end
+  end
+
+  describe ".time_at" do
+    it "answers formatted time" do
+      expect(helper.time_at(Time.utc(2025, 1, 2, 3, 4, 5))).to eq("03:04:05")
+    end
+
+    it "answers nil if not set" do
+      expect(helper.time_at(nil)).to be(nil)
     end
   end
 
