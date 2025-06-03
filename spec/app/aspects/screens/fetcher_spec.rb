@@ -15,9 +15,25 @@ RSpec.describe Terminus::Aspects::Screens::Fetcher, :db do
     let(:asset_path) { temp_dir.join(device.slug).mkpath.join "test.bmp" }
 
     it "answers default image" do
+      expect(fetcher.call(device)).to match(filename: "setup", image_url: %r(/assets/setup.+svg))
+    end
+
+    it "answers sleep image when asleep" do
+      allow(device).to receive(:asleep?).and_return(true)
+
       expect(fetcher.call(device)).to match(
-        filename: "empty_state",
-        image_url: %r(/assets/setup.+svg)
+        filename: "sleep.png",
+        image_url: %r(/assets/screens/A1B2C3D4E5F6/sleep.+png)
+      )
+    end
+
+    it "answers generated image while ignoring sleep images" do
+      fixture_path.copy asset_path
+      temp_dir.join(device.slug).mkpath.join("sleep.png").touch
+
+      expect(fetcher.call(device)).to eq(
+        filename: "test.bmp",
+        image_url: "https://localhost/assets/screens/A1B2C3D4E5F6/test.bmp"
       )
     end
 
