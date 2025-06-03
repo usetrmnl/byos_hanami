@@ -13,7 +13,7 @@ module Terminus
 
         params do
           required(:id).filled :integer
-          required(:device).hash Contracts::API::Device
+          required(:device).hash Schemas::Device
         end
 
         def handle request, response

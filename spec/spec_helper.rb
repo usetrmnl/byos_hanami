@@ -10,15 +10,16 @@ unless ENV["NO_COVERAGE"]
 
     add_group "Actions", "app/actions"
     add_group "Aspects", "app/aspects"
+    add_group "Config", "config"
     add_group "Contracts", "app/contracts"
     add_group "DB", "app/db"
+    add_group "Lib", "lib"
     add_group "Relations", "app/relations"
     add_group "Repositories", "app/repositories"
+    add_group "Schemas", "app/schemas"
+    add_group "Slices", "slices"
     add_group "Structs", "app/structs"
     add_group "Views", "app/views"
-    add_group "Config", "config"
-    add_group "Lib", "lib"
-    add_group "Slices", "slices"
   end
 end
 

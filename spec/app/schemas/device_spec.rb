@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Contracts::API::Device do
+RSpec.describe Terminus::Schemas::Device do
   subject(:contract) { described_class }
 
   describe "#call" do
@@ -20,13 +20,13 @@ RSpec.describe Terminus::Contracts::API::Device do
     end
 
     it "answers success when all attributes are valid" do
-      expect(described_class.call(attributes).to_monad).to be_success
+      expect(contract.call(attributes).to_monad).to be_success
     end
 
     it "answers failure when refresh rate is less than zero" do
       attributes[:refresh_rate] = -1
 
-      expect(described_class.call(attributes).errors.to_h).to include(
+      expect(contract.call(attributes).errors.to_h).to include(
         refresh_rate: ["must be greater than or equal to 10"]
       )
     end
@@ -34,27 +34,27 @@ RSpec.describe Terminus::Contracts::API::Device do
     it "answers failure when image timeout is less than zero" do
       attributes[:image_timeout] = -1
 
-      expect(described_class.call(attributes).errors.to_h).to include(
+      expect(contract.call(attributes).errors.to_h).to include(
         image_timeout: ["must be greater than or equal to 0"]
       )
     end
 
     it "answers true when proxy is truthy" do
-      expect(described_class.call(attributes).to_h).to include(proxy: true)
+      expect(contract.call(attributes).to_h).to include(proxy: true)
     end
 
     it "answers false when proxy key is missing" do
       attributes.delete :proxy
-      expect(described_class.call(attributes).to_h).to include(proxy: false)
+      expect(contract.call(attributes).to_h).to include(proxy: false)
     end
 
     it "answers true when firmware update is truthy" do
-      expect(described_class.call(attributes).to_h).to include(firmware_update: true)
+      expect(contract.call(attributes).to_h).to include(firmware_update: true)
     end
 
     it "answers false when firmware update key is missing" do
       attributes.delete :firmware_update
-      expect(described_class.call(attributes).to_h).to include(firmware_update: false)
+      expect(contract.call(attributes).to_h).to include(firmware_update: false)
     end
   end
 end
