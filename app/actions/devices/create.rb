@@ -11,7 +11,7 @@ module Terminus
           index_view: "views.devices.index"
         ]
 
-        params { required(:device).hash Schemas::Device }
+        contract Contracts::Devices::Create
 
         def handle request, response
           parameters = request.params

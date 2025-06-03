@@ -11,10 +11,7 @@ module Terminus
           edit_view: "views.devices.edit"
         ]
 
-        params do
-          required(:id).filled :integer
-          required(:device).hash Schemas::Device
-        end
+        contract Contracts::Devices::Update
 
         def handle request, response
           parameters = request.params
