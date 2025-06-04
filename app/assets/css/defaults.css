@@ -73,3 +73,18 @@
 :where(dl) {
   margin-block-start: 0px;
 }
+
+:where(pre:not([class^=language])) {
+  background-color: var(--site-black);
+  color: var(--site-white);
+  line-height: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+:where(pre) {
+  border-radius: 0.5rem;
+  font-weight: 400;
+  padding: 0.5rem;
+}
