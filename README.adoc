@@ -204,7 +204,6 @@ Used for displaying new content to your device. Your device's refresh rate deter
 ----
 curl "https://localhost:2443/api/display" \
      -H 'ID: <redacted>' \
-     -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 
@@ -214,7 +213,6 @@ curl "https://localhost:2443/api/display" \
 ----
 curl "https://localhost:2443/api/display" \
      -H 'ID: <redacted>' \
-     -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json' \
      -H 'BASE64: true'
 ----
@@ -225,12 +223,12 @@ curl "https://localhost:2443/api/display" \
 ----
 curl "https://localhost:2443/api/display?base_64=true" \
      -H 'ID: <redacted>' \
-     -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 
-Both the `ID` and `Access-Token` HTTP headers are required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
+Only the `ID` HTTP header is required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
 
+* `ACCESS_TOKEN`: Can be the API key or an empty string.
 * `BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
 * `FW_VERSION`: The firmware version (i.e. `1.2.3`).
 * `HOST`: The host (usually the IP address).
@@ -395,7 +393,7 @@ No matter what parameters you use for this request, you'll always get a path (un
 
 ==== Logs
 
-Used for logging information about your server and/or device. Mostly used for debugging purposes.
+Used by device firmware to log information about your device. Mostly used for debugging purposes. You can find device specific logs within the UI by clicking on your device logs.
 
 .Request
 [%collapsible]
@@ -405,7 +403,6 @@ Used for logging information about your server and/or device. Mostly used for de
 ## Logs
 curl -X "POST" "https://localhost:2443/api/log" \
      -H 'ID: <redacted>' \
-     -H 'Access-Token: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "log": {
