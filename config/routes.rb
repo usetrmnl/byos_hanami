@@ -35,9 +35,7 @@ module Terminus
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:version", to: "firmware.delete", as: :firmware_delete
 
-    get "/problems/screen_creation",
-        to: "problems.screen_creation.show",
-        as: :problem_screen_creation
+    get "/problem_details", to: "problem_details.index", as: :problem_details
 
     slice(:health, at: "/up") { root to: "show" }
 
