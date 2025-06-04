@@ -8,3 +8,4 @@ import "../css/components.css";
 import "../css/dashboard.css";
 import "../css/devices.css";
 import "../css/designer.css";
+import "../css/problem_details.css";
