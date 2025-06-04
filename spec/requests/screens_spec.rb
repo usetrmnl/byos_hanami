@@ -85,7 +85,7 @@ RSpec.describe "/api/screens", :db do
 
     it "answers problem details" do
       problem = Petail[
-        type: "/problem_details#screen_creation",
+        type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
         detail: %(Invalid parameters: {dimensions: "800x480", file_name: "test.png"}.),
         instance: "/api/screens"
@@ -112,7 +112,7 @@ RSpec.describe "/api/screens", :db do
 
     it "answers problem details" do
       problem = Petail[
-        type: "/problem_details#screen_creation",
+        type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
         detail: %(Invalid image type: "". Use: "bmp" or "png".),
         instance: "/api/screens"
@@ -139,7 +139,7 @@ RSpec.describe "/api/screens", :db do
 
     it "answers problem details" do
       problem = Petail[
-        type: "/problem_details#screen_creation",
+        type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
         detail: "Validation failed.",
         instance: "/api/screens",

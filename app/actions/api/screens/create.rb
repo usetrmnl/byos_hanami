@@ -67,7 +67,7 @@ module Terminus
 
           def unprocessable_entity_for_parameters errors, response
             body = problem[
-              type: "/problem_details#screen_creation",
+              type: "/problem_details#screen_payload",
               status: :unprocessable_entity,
               detail: "Validation failed.",
               instance: "/api/screens",
@@ -79,7 +79,7 @@ module Terminus
 
           def unprocessable_entity_for_creation result, response
             body = problem[
-              type: "/problem_details#screen_creation",
+              type: "/problem_details#screen_payload",
               status: :unprocessable_entity,
               detail: result.failure,
               instance: "/api/screens"

@@ -79,6 +79,7 @@ RSpec.describe "/api/log", :db do
 
     it "answers problem details" do
       problem = Petail[
+        type: "/problem_details#device_id",
         status: 404,
         title: "Not Found",
         detail: "Invalid device ID.",
@@ -105,6 +106,7 @@ RSpec.describe "/api/log", :db do
 
     it "answers problem details" do
       problem = Petail[
+        type: "/problem_details#log_payload",
         status: :unprocessable_entity,
         detail: "Validation failed due to incorrect or invalid payload.",
         instance: "/api/log",

@@ -1,9 +1,52 @@
 <% content_for :title, "Problem Details | Terminus" %>
 
-<section class="page-problem">
+<section class="page-problem_details">
   <header class="page-header">
-    <h1 class="label">Screen Creation Problem Details</h1>
+    <h1>Problem Details</h1>
   </header>
+
+  <p>Welcome to the problem details page where you can information for resolving API errors.</p>
+
+  <h2 id="device_id" class="problem">Device ID</h2>
+
+  <p>Could not find device by ID. The device ID should be supplied via the HTTP ID header.</p>
+
+  <h2 id="log_payload" class="problem">Log Payload</h2>
+
+  <p>Could create log for device due to invalid payload. The payload should be structured as follows:</p>
+
+  <pre>
+    "log": {
+      "logs_array": [
+        {
+          "log_id": 1,
+          "creation_timestamp": 1742022123,
+          "log_message": "returned code is not OK: 404",
+          "log_codeline": 597,
+          "device_status_stamp": {
+            "wifi_status": "connected",
+            "wakeup_reason": "timer",
+            "current_fw_version": "1.5.2",
+            "free_heap_size": 160656,
+            "max_alloc_size": 200000,
+            "special_function": "none",
+            "refresh_rate": 30,
+            "battery_voltage": 4.772,
+            "time_since_last_sleep_start": 31,
+            "wifi_rssi_level": -54
+          },
+          "additional_info": {
+            "retry_attempt": 1
+          },
+          "log_sourcefile": "src/bl.cpp"
+        }
+      ]
+    }
+  </pre>
+
+  <p>💡 The <code>additional_info</code> key is optional and can be be excluded but all other keys are required.</p>
+
+  <h2 id="screen_payload" class="problem">Screen Payload</h2>
 
   <p>When making an API HTTP POST request, the following required and optional keys should be used within the hash provided for the <code>image</code> key.</p>
 

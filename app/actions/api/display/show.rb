@@ -51,16 +51,18 @@ module Terminus
             ]
           end
 
+          # :reek:FeatureEnvy
           def fetch_firmware_uri device
-            firmware_fetcher.call.first.then do
-              it.uri if it && device.firmware_version != it.version
+            firmware_fetcher.call.first.then do |firmware|
+              firmware.uri if firmware && device.firmware_version != firmware.version
             end
           end
 
           def not_found response
             body = problem[
+              type: "/problem_details#device_id",
               status: __method__,
-              detail: "Unable to find device.",
+              detail: "Invalid device ID.",
               instance: "/api/display"
             ]
 

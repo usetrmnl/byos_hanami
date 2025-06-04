@@ -119,8 +119,9 @@ RSpec.describe "/api/display", :db do
 
     it "answers problem details" do
       problem = Petail[
+        type: "/problem_details#device_id",
         status: :not_found,
-        detail: "Unable to find device.",
+        detail: "Invalid device ID.",
         instance: "/api/display"
       ]
 
