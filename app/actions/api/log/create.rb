@@ -50,29 +50,38 @@ module Terminus
           end
 
           def handle request, response
-            save request.params, request, response
+            parameters = request.params
+            device = device_repository.find_by_mac_address request.get_header("HTTP_ID")
+
+            return not_found response unless device
+            return unprocessable_entity parameters, response unless parameters.valid?
+
+            save device, parameters, response
           end
 
           private
 
-          def save parameters, request, response
-            if parameters.valid?
-              device = device_repository.find_by_mac_address request.get_header("HTTP_ID")
-
-              transformer.call(parameters.to_h).each do |attributes|
-                log_repository.create attributes.merge!(device_id: device.id)
-              end
-
-              response.status = 204
-            else
-              unprocessable_entity parameters.errors.to_h, response
+          def save device, parameters, response
+            transformer.call(parameters.to_h).each do |attributes|
+              log_repository.create attributes.merge!(device_id: device.id)
             end
+
+            response.status = 204
           end
 
-          def unprocessable_entity errors, response
+          def not_found response
+            body = problem[status: __method__, detail: "Invalid device ID.", instance: "/api/log"]
+
+            logger.error "Unable to find device."
+            response.with body: body.to_json, format: :problem_details, status: 404
+          end
+
+          def unprocessable_entity parameters, response
+            errors = parameters.errors.to_h
+
             body = problem[
               status: __method__,
-              detail: "Validation failed.",
+              detail: "Validation failed due to incorrect or invalid payload.",
               instance: "/api/log",
               extensions: errors
             ]

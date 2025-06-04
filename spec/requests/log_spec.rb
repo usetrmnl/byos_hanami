@@ -71,6 +71,31 @@ RSpec.describe "/api/log", :db do
     end
   end
 
+  context "with invalid ID header" do
+    before do
+      headers.delete "HTTP_ID"
+      post routes.path(:api_log_create), payload.to_json, **headers
+    end
+
+    it "answers problem details" do
+      problem = Petail[
+        status: 404,
+        title: "Not Found",
+        detail: "Invalid device ID.",
+        instance: "/api/log"
+      ]
+
+      expect(json_payload).to eq(problem.to_h)
+    end
+
+    it "answers content type and status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/problem+json; charset=utf-8",
+        status: 404
+      )
+    end
+  end
+
   context "with invalid payload" do
     before { post routes.path(:api_log_create), {log: {log_array: []}}.to_json, **headers }
 
@@ -81,7 +106,7 @@ RSpec.describe "/api/log", :db do
     it "answers problem details" do
       problem = Petail[
         status: :unprocessable_entity,
-        detail: "Validation failed.",
+        detail: "Validation failed due to incorrect or invalid payload.",
         instance: "/api/log",
         extensions: {log: {logs_array: ["is missing"]}}
       ]
