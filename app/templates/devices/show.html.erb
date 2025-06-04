@@ -65,19 +65,22 @@
         <dd class="value"><%= device.firmware_version %></dd>
 
         <dt class="key">
-          Proxy
-          <%= render "shared/popovers/trigger", name: :proxy %>
-        </dt>
-        <dd class="value"><%= boolean device.proxy %></dd>
-
-        <dt class="key">
           Firmware Update
           <%= render "shared/popovers/trigger", name: :firmware_update %>
         </dt>
         <dd class="value"><%= boolean device.firmware_update %></dd>
 
-        <dt class="key">Firmware Beta</dt>
+        <dt class="key">
+          Firmware Beta
+          <%= render "shared/popovers/trigger", name: :firmware_beta %>
+        </dt>
         <dd class="value"><%= boolean device.firmware_beta %></dd>
+
+        <dt class="key">
+          Proxy
+          <%= render "shared/popovers/trigger", name: :proxy %>
+        </dt>
+        <dd class="value"><%= boolean device.proxy %></dd>
 
         <dt class="key">
           Sleep Start
@@ -101,12 +104,4 @@
   </div>
 </section>
 
-<%= render "popovers/friendly_id_content" %>
-<%= render "popovers/mac_address_content" %>
-<%= render "popovers/api_key_content" %>
-<%= render "popovers/firmware_update_content" %>
-<%= render "popovers/proxy_content" %>
-<%= render "popovers/refresh_rate_content" %>
-<%= render "popovers/image_timeout_content" %>
-<%= render "popovers/sleep_start_content" %>
-<%= render "popovers/sleep_end_content" %>
+<%= render "popovers/all" %>
