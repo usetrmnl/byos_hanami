@@ -10,6 +10,7 @@ detectors:
       - Terminus::Actions::Devices::Create#render_new
       - Terminus::Actions::Devices::Update#edit
       - Terminus::Actions::Firmware::Delete#render
+      - Terminus::IPFinder#all
       - Terminus::Screens::Greyscaler#convert
       - Terminus::Screens::Screensaver#save
   LongParameterList:

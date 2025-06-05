@@ -9,9 +9,9 @@ module Terminus
     include Initable[socket: Socket]
 
     def all pattern: /\A(en|wl|eth)/
-      socket.getifaddrs.select do
-        address = it.addr
-        it.name.match?(pattern) && address.ipv4? && !address.ipv4_loopback?
+      socket.getifaddrs.select do |interface|
+        address = interface.addr
+        interface.name.match?(pattern) && address.ipv4? && !address.ipv4_loopback?
       end
     end
 
