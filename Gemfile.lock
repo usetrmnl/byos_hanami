@@ -11,11 +11,11 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
       rouge (>= 1.0.0)
-    bigdecimal (3.2.1)
+    bigdecimal (3.2.2)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    caliber (0.80.2)
-      rubocop (~> 1.75)
+    caliber (0.81.0)
+      rubocop (~> 1.76)
       rubocop-capybara (~> 2.22)
       rubocop-disable_syntax (~> 0.2)
       rubocop-packaging (~> 0.6)
@@ -338,7 +338,7 @@ GEM
     puma (6.6.0)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.16)
+    rack (2.2.17)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-test (2.2.0)
@@ -415,7 +415,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.4)
-    rubocop (1.75.8)
+    rubocop (1.76.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -423,10 +423,10 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.44.0, < 2.0)
+      rubocop-ast (>= 1.45.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.44.1)
+    rubocop-ast (1.45.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
     rubocop-capybara (2.22.1)
@@ -530,7 +530,7 @@ PLATFORMS
 
 DEPENDENCIES
   amazing_print (~> 1.7)
-  caliber (~> 0.74)
+  caliber (~> 0.81)
   capybara (~> 3.40)
   capybara-validate_html5 (~> 2.1)
   cogger (~> 1.1)
@@ -593,9 +593,9 @@ CHECKSUMS
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   benchmark (0.4.1) sha256=d4ef40037bba27f03b28013e219b950b82bace296549ec15a78016552f8d2cce
   better_errors (2.10.1) sha256=f798f1bac93f3e775925b7fcb24cffbcf0bb62ee2210f5350f161a6b75fc0a73
-  bigdecimal (3.2.1) sha256=1f68631e876c6aba8fe9b84b36983c55ad3293ff2d1ad4c6f115bde1e9d802e3
+  bigdecimal (3.2.2) sha256=39085f76b495eb39a79ce07af716f3a6829bc35eb44f2195e2753749f2fa5adc
   binding_of_caller (1.0.1) sha256=2b2902abff4246ddcfbc4da9b69bc4a019e22aeb300c2ff6289a173d4b90b29a
-  caliber (0.80.2) sha256=58e59d903e8467344db638d988cec08a1cfac29262475c63d9af2521bc8d762f
+  caliber (0.81.0) sha256=e8b28f4825ce3b80503e4d06efa88960a24ee4cc345491e5e1ba704d50b87df5
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   capybara-validate_html5 (2.1.0) sha256=9c5bcac8058f05c8468c0856ccfbf91478e24c7ff07c79b8ac7c64ba9291cf5a
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
@@ -713,7 +713,7 @@ CHECKSUMS
   public_suffix (6.0.2) sha256=bfa7cd5108066f8c9602e0d6d4114999a5df5839a63149d3e8b0f9c1d3558394
   puma (6.6.0) sha256=f25c06873eb3d5de5f0a4ebc783acc81a4ccfe580c760cfe323497798018ad87
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rack (2.2.16) sha256=8082752aa493a793baa89500afb3544ff92bd4dd5a55a969d1fd2df9506979c4
+  rack (2.2.17) sha256=5fe02a1ca80d6fb2271dba00985ee2962d6f5620b6f46dfed89f5301ac4699dd
   rack-attack (6.7.0) sha256=3ca47e8f66cd33b2c96af53ea4754525cd928ed3fa8da10ee6dad0277791d77c
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
@@ -741,8 +741,8 @@ CHECKSUMS
   rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
   rspec-mocks (3.13.5) sha256=e4338a6f285ada9fe56f5893f5457783af8194f5d08884d17a87321d5195ea81
   rspec-support (3.13.4) sha256=184b1814f6a968102b57df631892c7f1990a91c9a3b9e80ef892a0fc2a71a3f7
-  rubocop (1.75.8) sha256=c80ab4286c5dcfc49d7ad1787cdba5569b63b58c96ee7afde4ec47a9c8a85be9
-  rubocop-ast (1.44.1) sha256=e3cc04203b2ef04f6d6cf5f85fe6d643f442b18cc3b23e3ada0ce5b6521b8e92
+  rubocop (1.76.0) sha256=b7515398e1280b3cb7e3e0c429933ca3597ea43b7d0f03cb3c2d97719851c411
+  rubocop-ast (1.45.0) sha256=0b4ade77d15f25b9e07214fb42fa98164f5316accea525e14e44bbb8f06f78d7
   rubocop-capybara (2.22.1) sha256=ced88caef23efea53f46e098ff352f8fc1068c649606ca75cb74650970f51c0c
   rubocop-disable_syntax (0.2.0) sha256=1e61645773b3fc2f74e995ec65f605f7db59437c274fdfd4f385f60bf86af73e
   rubocop-packaging (0.6.0) sha256=fb92bd0fb48e6f8cdb1648d2249b0cd51c2497dcc87340132d22f01edbf558a7
