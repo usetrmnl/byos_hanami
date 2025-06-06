@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
-RSpec.describe Terminus::Screens::URISaver do
+RSpec.describe Terminus::Screens::Savers::UnprocessedURI do
   subject(:saver) { described_class.new }
 
   include_context "with temporary directory"
@@ -37,7 +36,7 @@ RSpec.describe Terminus::Screens::URISaver do
       expect(saver.call(fixture_path, output_path)).to be_success(output_path)
     end
 
-    it "answers failure with image can't be processed" do
+    it "answers failure when image can't be processed" do
       client = class_double MiniMagick::Image
       allow(client).to receive(:open).and_raise(MiniMagick::Error, "Danger!")
       saver = described_class.new(client:)

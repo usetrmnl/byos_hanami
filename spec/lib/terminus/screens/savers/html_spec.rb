@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Screens::HTMLSaver do
+RSpec.describe Terminus::Screens::Savers::HTML do
   subject(:creator) { described_class.new }
 
   include_context "with temporary directory"

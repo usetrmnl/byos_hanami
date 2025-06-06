@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
-RSpec.describe Terminus::Screens::Decoder do
+RSpec.describe Terminus::Screens::Savers::Encoded do
   subject(:saver) { described_class.new }
 
   include_context "with temporary directory"
