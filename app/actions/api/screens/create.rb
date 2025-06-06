@@ -25,6 +25,7 @@ module Terminus
               optional(:content).filled :string
               optional(:uri).filled :string
               optional(:data).filled :string
+              optional(:preprocessed).filled :bool
               optional(:file_name).filled :string
               optional(:dimensions).filled :string
             end

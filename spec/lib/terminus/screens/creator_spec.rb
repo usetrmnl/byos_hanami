@@ -19,9 +19,15 @@ RSpec.describe Terminus::Screens::Creator do
       expect(image).to have_attributes(width: 800, height: 480, type: "PNG", exif: {})
     end
 
-    it "saves URI as image" do
-      saver.call output_path, uri: SPEC_ROOT.join("support/fixtures/test.png"), dimensions: "50x50"
+    it "saves preprocessed URI as image" do
+      saver.call output_path, uri: SPEC_ROOT.join("support/fixtures/test.png"), preprocessed: true
+      image = MiniMagick::Image.open output_path
 
+      expect(image).to have_attributes(width: 1, height: 1, type: "PNG", exif: {})
+    end
+
+    it "saves unprocessed URI as image" do
+      saver.call output_path, uri: SPEC_ROOT.join("support/fixtures/test.png"), dimensions: "50x50"
       image = MiniMagick::Image.open output_path
 
       expect(image).to have_attributes(width: 50, height: 50, type: "PNG", exif: {})

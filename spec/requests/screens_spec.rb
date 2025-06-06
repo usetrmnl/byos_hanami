@@ -24,7 +24,16 @@ RSpec.describe "/api/screens", :db do
     expect(Pathname(json_payload[:path]).exist?).to be(true)
   end
 
-  it "creates image from URI" do
+  it "creates preprocessed image from URI" do
+    post routes.path(:api_screens_create),
+         {image: {uri: SPEC_ROOT.join("support/fixtures/test.png"), preprocessed: true}}.to_json,
+         "CONTENT_TYPE" => "application/json",
+         "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(Pathname(json_payload[:path]).exist?).to be(true)
+  end
+
+  it "creates unprocessed image from URI" do
     post routes.path(:api_screens_create),
          {image: {uri: SPEC_ROOT.join("support/fixtures/test.png")}}.to_json,
          "CONTENT_TYPE" => "application/json",
