@@ -13,7 +13,7 @@
 
   <h2 id="log_payload" class="problem">Log Payload</h2>
 
-  <p>Could create log for device due to invalid payload. The payload should be structured as follows:</p>
+  <p>Could not create log for device due to invalid payload. The payload should be structured as follows:</p>
 
   <pre>
     "log": {
@@ -48,7 +48,7 @@
 
   <h2 id="screen_payload" class="problem">Screen Payload</h2>
 
-  <p>When making an API HTTP POST request, the following required and optional keys should be used within the hash provided for the <code>image</code> key.</p>
+  <p>Could not create screen for device. When making an API HTTP POST request, the following required and optional keys should be used within the hash provided for the <code>image</code> key.</p>
 
   <p><strong>Required (use only one):</strong></p>
 
@@ -73,5 +73,11 @@
 
     <dt class="key">file_name</dt>
     <dd class="value">Use to create a screen with an automatically generated or specific file name. Example: <code>demo.png</code>. Otherwise, if no file name is provided, a UUID will be used instead. Example: <code>e2a8a4bc-11ba-40a4-9184-5275f4172da4.png</code>. You can also use <code>%&lt;name&gt;s</code> with a file extension to render an automatically generated file. Example: <code>%&lt;name&gt;s.bmp</code>. Only <code>.bmp</code> and <code>.png</code> file extensions are supported.</dd>
+
+    <dt class="key">preprocessed</dt>
+    <dd class="value">
+      Use to render a preprocessed image directly onto your device. The value must be either <code>true</code> or <code>false</code>. When <code>true</code>, this must be used in conjuction with the <code>uri</code> key (mentioned above). This assumes the URI you want have rendered on your device is fully compatible with the device in terms of greyscale, bit depth, color depth, and so forth.
+    </dd>
+
   </dl>
 </section>
