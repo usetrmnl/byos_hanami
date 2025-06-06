@@ -24,7 +24,7 @@ RSpec.describe Terminus::Aspects::Screens::Welcomer, :db do
     context "when welcome screen exists" do
       subject(:welcomer) { described_class.new creator: }
 
-      let(:creator) { instance_spy Terminus::Screens::HTMLSaver }
+      let(:creator) { instance_spy Terminus::Screens::Savers::HTML }
 
       before { temp_dir.join(device.slug, "setup.png").deep_touch }
 

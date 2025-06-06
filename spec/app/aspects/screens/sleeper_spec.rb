@@ -24,7 +24,7 @@ RSpec.describe Terminus::Aspects::Screens::Sleeper, :db do
     context "when screen exists" do
       subject(:sleeper) { described_class.new creator: }
 
-      let(:creator) { instance_spy Terminus::Screens::HTMLSaver }
+      let(:creator) { instance_spy Terminus::Screens::Savers::HTML }
 
       before { temp_dir.join(device.slug, "sleep.png").deep_touch }
 

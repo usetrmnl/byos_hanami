@@ -7,7 +7,7 @@ module Terminus
     module Savers
       # Saves HTML content as a processed image.
       class HTML
-        include Dependencies[:sanitizer]
+        include Terminus::Dependencies[:sanitizer]
         include Inspectable[sanitizer: :class]
 
         def initialize(screensaver: Screensaver.new, greyscaler: Greyscaler.new, **)

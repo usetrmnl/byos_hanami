@@ -8,12 +8,8 @@ module Terminus
       # Creates sleep screen for new device.
       class Sleeper
         include Deps[:settings, view: "views.sleep.new"]
+        include Terminus::Screens::Savers::Dependencies[creator: :html]
         include Dry::Monads[:result]
-
-        def initialize(creator: Terminus::Screens::HTMLSaver.new, **)
-          @creator = creator
-          super(**)
-        end
 
         def call device
           output_path = path_for device
@@ -24,8 +20,6 @@ module Terminus
         end
 
         private
-
-        attr_reader :creator
 
         def path_for(device) = settings.screens_root.join(device.slug).mkpath.join "sleep.png"
       end
