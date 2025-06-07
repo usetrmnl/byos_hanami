@@ -1,4 +1,5 @@
 *.env*
+!*.env*.tt
 *.log
 .bundle
 .DS_Store
