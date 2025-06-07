@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+
+./bin/setup
+
+[ -S .overmind.sock ] && rm .overmind.sock
+
+bundle exec overmind start -f Procfile.dev --port-step 10 --can-die migrate,assets

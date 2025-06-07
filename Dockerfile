@@ -66,6 +66,20 @@ RUN <<STEPS
 STEPS
 
 COPY . .
+
+FROM build AS dev
+
+ENV RACK_ENV=development
+ENV HANAMI_ENV=development
+ENV BUNDLE_DEPLOYMENT=0
+ENV BUNDLE_WITHOUT=""
+
+RUN <<STEPS
+  bundle install
+  mkdir -p /app/log
+  mkdir -p /app/tmp
+STEPS
+
 FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /app /app
