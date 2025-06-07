@@ -9,3 +9,5 @@ Procfile.dev
 public/assets
 public/assets.json
 tmp
+compose.dev.yml
+pgdata

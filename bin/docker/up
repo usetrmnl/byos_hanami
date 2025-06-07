@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT_DIR="$( cd "$SCRIPT_DIR/../../" && pwd )"
+
+COMPOSE_FILE="$ROOT_DIR/compose.dev.yml"
+EXAMPLE_FILE="$ROOT_DIR/compose.dev.yml.example"
+
+if [ ! -f "$COMPOSE_FILE" ] && [ -f "$EXAMPLE_FILE" ]; then
+  echo "$COMPOSE_FILE not found. Copying from example..."
+  cp "$EXAMPLE_FILE" "$COMPOSE_FILE"
+  echo "Created $COMPOSE_FILE from example file."
+fi
+
+cd "$ROOT_DIR"
+docker compose -f "$COMPOSE_FILE" up "$@"

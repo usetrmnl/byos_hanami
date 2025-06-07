@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql://${PG_USER:-postgres}:${PG_PASSWORD:-password}@postgres:5432/${PG_DATABASE:-terminus_development}"
+    command: bin/docker/entrypoint-dev
+    ports:
+      - "${APP_PORT:-2300}:${APP_PORT:-2300}"
+    volumes:
+      - ".:/app"
+    depends_on:
+      postgres:
+      condition: service_healthy
+    networks:
+      - terminus-network
+
+  postgres:
+    image: postgres:17
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-password}
+      POSTGRES_DB: ${PG_DATABASE:-terminus_development}
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-postgres} -d ${PG_DATABASE:-terminus_development}"]
+      interval: 1s
+      timeout: 2s
+      retries: 5
+      start_period: 2s
+    networks:
+      - terminus-network
+
+networks:
+  terminus-network:
+    driver: bridge
+
+volumes:
+  pgdata:

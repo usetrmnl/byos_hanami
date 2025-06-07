@@ -20,7 +20,7 @@ class Runner
       setup_development_procfile
       step "Installing dependencies...", "bundle install"
       step "Installing packages...", "npm install"
-      step "Configuring databases...", "hanami db prepare"
+      step "Configuring databases...", "bundle exec hanami db prepare"
     end
   end
 
