@@ -1,84 +1,118 @@
-#! /usr/bin/env ruby
-# frozen_string_literal: true
+#! /usr/bin/env bash
 
-require "fileutils"
-require "pathname"
-require "securerandom"
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
 
-class Runner
-  def initialize root = Pathname(__dir__).join("..").expand_path, kernel: Kernel, kit: FileUtils
-    @root = root
-    @kernel = kernel
-    @kit = kit
-  end
+SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_ROOT/.." && pwd)"
+TEMPLATES_ROOT="$PROJECT_ROOT/.config/setup"
 
-  def call
-    kit.chdir root do
-      setup_environment
-      setup_development_environment
-      setup_test_environment
-      setup_development_procfile
-      step "Installing dependencies...", "bundle install"
-      step "Installing packages...", "npm install"
-      step "Configuring databases...", "bundle exec hanami db prepare"
-    end
-  end
+# Label: Create Global Environment
+# Description: Create global environment.
+create_global_environment() {
+  local template_path="$TEMPLATES_ROOT/.env.tt"
+  local output_path="$PROJECT_ROOT/.env"
+  local password="$((RANDOM * RANDOM * RANDOM))"
 
-  private
+  if [[ -f "$output_path" ]]; then
+    printf "%s\n" ".env exists. Skipped."
+    return
+  fi
 
-  attr_reader :root, :kernel, :kit
+  printf "%s\n" "Creating .env..."
+  cp "$template_path" "$output_path"
+  sed -i '' "s|<password>|$password|g" "$output_path"
+}
 
-  def step(message, *arguments)
-    kernel.puts message
-    kernel.system(*arguments) || kernel.abort("\nERROR: Command #{arguments.inspect} failed.")
-  end
+# Label: Create Development Environment
+# Description: Create development environment.
+create_development_environment() {
+  local template_path="$TEMPLATES_ROOT/.env.development.tt"
+  local output_path="$PROJECT_ROOT/.env.development"
 
-  def setup_environment
-    path = root.join ".env"
+  if [[ -f "$output_path" ]]; then
+    printf "%s\n" ".env.development exists. Skipped."
+    return
+  fi
 
-    return kernel.puts ".env exists. Skipped." if path.exist?
+  printf "%s\n" "Creating .env.development..."
+  cp "$template_path" "$output_path"
+}
 
-    kernel.puts "Creating .env..."
+# Label: Create Test Environment
+# Description: Create test environment.
+create_test_environment() {
+  local template_path="$TEMPLATES_ROOT/.env.test.tt"
+  local output_path="$PROJECT_ROOT/.env.test"
 
-    path.write <<~CONTENT
-      API_URI=http://localhost:2300
-      PG_DATABASE=terminus
-      PG_PASSWORD=#{SecureRandom.hex 15}
-      PG_USER=terminus
-    CONTENT
-  end
+  if [[ -f "$output_path" ]]; then
+    printf "%s\n" ".env.test exists. Skipped."
+    return
+  fi
 
-  def setup_development_environment
-    path = root.join ".env.development"
+  printf "%s\n" "Creating .env.test..."
+  cp "$template_path" "$output_path"
+}
 
-    return kernel.puts ".env.development exists. Skipped." if path.exist?
+# Label: Create Procfile (development)
+# Description: Create Procfile for development environment.
+create_development_procfile() {
+  local template_path="$TEMPLATES_ROOT/Procfile.dev.tt"
+  local output_path="$PROJECT_ROOT/Procfile.dev"
 
-    kernel.puts "Creating .env.development..."
-    path.write %(DATABASE_URL="postgres://localhost/terminus_development")
-  end
+  if [[ -f "$output_path" ]]; then
+    printf "%s\n" "Procfile.dev exists. Skipped."
+    return
+  fi
 
-  def setup_test_environment
-    path = root.join ".env.test"
+  cp "$template_path" "$output_path"
+  printf "%s\n" "Creating Procfile.dev..."
+}
 
-    return kernel.puts ".env.test exists. Skipped." if path.exist?
+# Label: Create Docker Compose Development Configuration
+# Description: Create Docker Compose configuration for development environment.
+create_docker_compose_development_configuration() {
+  local template_path="$TEMPLATES_ROOT/compose.dev.yml.tt"
+  local output_path="$PROJECT_ROOT/compose.dev.yml"
 
-    kernel.puts "Creating .env.test..."
-    path.write "DATABASE_URL=postgres://localhost/terminus_test"
-  end
+  if [[ -f "$output_path" ]]; then
+    printf "%s\n" "compose.dev.yml exists. Skipped."
+    return
+  fi
 
-  def setup_development_procfile
-    path = root.join "Procfile.dev"
+  cp "$template_path" "$output_path"
+  printf "%s\n" "Creating compose.dev.yml..."
+}
 
-    return kernel.puts "Procfile.dev exists. Skipped." if path.exist?
+# Label: Install Gems
+# Description: Install gem dependencies.
+install_gems() {
+  printf "%s\n" "Installing gem dependencies..."
+  bundle install
+}
 
-    kernel.puts "Creating Procfile.dev..."
+# Label: Install Packages
+# Description: Install JavaScript package dependencies.
+install_packages() {
+  printf "%s\n" "Installing package dependencies..."
+  bundle install
+}
 
-    path.write %(web: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- ) +
-               "bundle exec puma --config ./config/puma.rb\n" \
-               "assets: bundle exec hanami assets watch\n" \
-               "screen_poller: bin/pollers/screen\n" \
-               "firmware_poller: bin/pollers/firmware"
-  end
-end
+# Label: Prepare Database
+# Description: Prepare database for development and test environments.
+prepare_database() {
+  printf "%s\n" "Preparing databases..."
+  bundle exec hanami db prepare
+}
 
-Runner.new.call
+printf "%s\n\n" "Setting up Terminus..."
+create_global_environment
+create_development_environment
+create_test_environment
+create_development_procfile
+create_docker_compose_development_configuration
+install_gems
+install_packages
+prepare_database
