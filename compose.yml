@@ -24,7 +24,7 @@ services:
           cpus: "1.0"
 
   database:
-    image: postgres:17.4
+    image: postgres:17.5
     restart: unless-stopped
     volumes:
       - database-data:/var/lib/postgresql/data
