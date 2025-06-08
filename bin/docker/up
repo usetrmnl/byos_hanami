@@ -5,16 +5,4 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
-SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT_DIR="$( cd "$SCRIPT_ROOT/../../" && pwd )"
-COMPOSE_FILE="$ROOT_DIR/compose.dev.yml"
-EXAMPLE_FILE="$ROOT_DIR/compose.dev.yml.example"
-
-if [ ! -f "$COMPOSE_FILE" ] && [ -f "$EXAMPLE_FILE" ]; then
-  printf "%s\n""$COMPOSE_FILE not found. Copying from example..."
-  cp "$EXAMPLE_FILE" "$COMPOSE_FILE"
-  printf "%s\n" "Created $COMPOSE_FILE from example file."
-fi
-
-cd "$ROOT_DIR"
-docker compose -f "$COMPOSE_FILE" up "$@"
+docker-compose --file compose.dev.yml up "$@"

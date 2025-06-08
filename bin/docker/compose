@@ -5,4 +5,4 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
-docker-compose -f compose.dev.yml "$@"
+docker-compose --file compose.dev.yml "$@"
