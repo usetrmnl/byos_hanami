@@ -6,16 +6,14 @@ services:
     build:
       context: .
       target: development
-    env_file:
-      - .env
     environment:
       API_URI: ${API_URI}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
-    command: bin/docker/entrypoint-dev
     ports:
-      - "${APP_PORT:-2300}:${APP_PORT:-2300}"
+      - "${APP_PORT}:${APP_PORT}"
     volumes:
       - ".:/app"
+    command: bin/docker/entrypoint-dev
     depends_on:
       database:
         condition: service_healthy
@@ -24,14 +22,12 @@ services:
 
   database:
     image: postgres:17.5
-    env_file:
-      - .env
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_DB: ${PG_DATABASE}
     ports:
-      - "${PG_PORT:-5432}:5432"
+      - "${PG_PORT}:${PG_PORT}"
     volumes:
       - database-data:/var/lib/postgresql/data
     healthcheck:

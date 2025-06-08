@@ -9,14 +9,14 @@ services:
       API_URI: ${API_URI}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
     ports:
-      - "2300:2300"
+      - "${APP_PORT}:${APP_PORT}"
     restart: unless-stopped
-    depends_on:
-      database:
-        condition: service_healthy
     volumes:
       - web-assets-firmware:/app/public/assets/firmware
       - web-assets-screens:/app/public/assets/screens
+    depends_on:
+      database:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -25,13 +25,15 @@ services:
 
   database:
     image: postgres:17.5
-    restart: unless-stopped
-    volumes:
-      - database-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_DB: ${PG_DATABASE}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
+    ports:
+      - "${PG_PORT}:${PG_PORT}"
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
       interval: 10s
