@@ -86,6 +86,8 @@ cd terminus
 bin/setup
 ----
 
+💡 The setup script is idempotent so you can run it multiple times without harm. To rebuild a file managed by the setup script, delete the desired file and rerun setup to recreate.
+
 == Usage
 
 To launch the server, run:
@@ -719,7 +721,7 @@ bin/rake
 
 === Compose
 
-You can use {docker_compose_link} to quickly launch the entire production stack.
+You can use {docker_compose_link} to quickly launch the entire stack for development or production environments.
 
 To start, you'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container which devices can't connect to. You can fix by adding updating the `API_URI` in the environment section. Here's a few examples:
 
@@ -736,29 +738,42 @@ environment:
 
 You can also confirm the above changes are applied by running `docker-compose up` to launch all services and viewing the Dashboard (look for the API IP address).
 
-The following commands can be helpful when managing the stack:
+Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project. They can be configured via environment variables (i.e. `.env`) as follows:
+
+* `API_URI`: The IP address of your container. You'll definitely want customize as mentioned above.
+* `APP_PORT`: The port for your web service.
+* `PG_USER`: Your PostgreSQL user name.
+* `PG_DATABASE`: Your PostgreSQL database name.
+* `PG_PASSWORD`: Your PostgreSQL password.
+* `PG_PORT`: Your PostgreSQL port.
+
+💡 The above is automatically generated for you within the `.env` file when running `bin/setup` but customization is encouraged.
+
+=== Development
+
+To develop with Docker, you can use the following scripts:
+
+* `bin/docker/up`: Use to start up all services via Docker Compose.
+* `bin/docker/down`: Use to shut down all services via Docker Compose.
+* `bin/docker/compose`: Use to run any Docker Compose command.
+* `bin/docker/entrypoint-dev`: Used by `compose.dev.yml` to ensure the web service is setup properly.
+
+=== Production
+
+The following commands can be helpful when managing the stack locally:
 
 * `docker-compose up`: Builds and launches the entire stack.
 * `docker-compose build web`: Rebuilds the web service. You'll want to run this before running `up` in order to pick up the latest changes whenever there is a new version release or pulling changes from the `main` branch.
 * `docker-compose exec web bash`: This'll give you a Bash shell within root of the project. Use `bin/console` to launch a Hanami console.
 * `docker logs terminus-web-1`: Use this to view the web service logs.
 
-Further details can be found in the `compose.yml` file at the root of this project. The `compose.yml` can also be configured via the following environment variables:
+If you only care about the web image, then you can use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
 
-* `API_URI`: The IP address of your container. You'll definitely want customize as mentioned above.
-* `PG_USER`: Your PostgreSQL user name.
-* `PG_DATABASE`: Your PostgreSQL database name.
-* `PG_PASSWORD`: Your PostgreSQL password.
+* `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
+* `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
+* `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
 
-💡 The above is automatically generated for you within the `.env` file when running `bin/setup` but customization is encouraged.
-
-=== Development
-
-To develop with Docker, you can use the same tooling as explained above in the _Compose_ section and/or _Production_ sections.
-
-=== Production
-
-An image is built each time changes are applied to the `main` branch or a new tag is created. All images can be found in the link:https://github.com/usetrmnl/byos_hanami/pkgs/container/terminus[Container Registry]. Use as follows:
+If you don't care about using Docker or Docker Compose locally, then you can use the prebuilt image since an image is built each time changes are applied to the `main` branch or a new tag is created. All images can be found in the link:https://github.com/usetrmnl/byos_hanami/pkgs/container/terminus[Container Registry]. Use as follows:
 
 [source,bash]
 ----
@@ -783,12 +798,6 @@ build:
 ----
 image: ghcr.io/usetrmnl/terminus:latest
 ----
-
-If the above registry is not desired, you can manually build and run the entire stack using xref:_compose[Docker Compose] as mentioned above. If you only care about the web image, then you can use the `Dockerfile` and `bin/docker` scripts. Here's how each works:
-
-* `bin/docker/build`: This will build a production Docker image based on latest changes to this project.
-* `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
-* `bin/docker/entrypoint`: This is used by the `Dockerfile` when building your Docker image.
 
 == Tools
 
