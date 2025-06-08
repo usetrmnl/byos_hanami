@@ -23,7 +23,7 @@ services:
       - terminus-network
 
   database:
-    image: postgres:17
+    image: postgres:17.5
     env_file:
       - .env
     environment:
