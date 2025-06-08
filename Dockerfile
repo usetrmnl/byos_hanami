@@ -76,8 +76,6 @@ ENV BUNDLE_WITHOUT=""
 
 RUN <<STEPS
   bundle install
-  mkdir -p /app/log
-  mkdir -p /app/tmp
 STEPS
 
 FROM base
