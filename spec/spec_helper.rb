@@ -19,6 +19,7 @@ unless ENV["NO_COVERAGE"]
     add_group "Schemas", "app/schemas"
     add_group "Slices", "slices"
     add_group "Structs", "app/structs"
+    add_group "Uploaders", "app/uploaders"
     add_group "Views", "app/views"
   end
 end
