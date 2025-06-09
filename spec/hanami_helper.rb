@@ -12,6 +12,7 @@ require "spec_helper"
 ENV["HANAMI_ENV"] = "test"
 
 require "hanami/prepare"
+require "shrine/storage/memory"
 
 using Refinements::Pathname
 
@@ -27,6 +28,8 @@ Capybara.register_driver :cuprite do |app|
   browser_options = {"disable-gpu" => nil, "disable-dev-shm-usage" => nil, "no-sandbox" => nil}
   Capybara::Cuprite::Driver.new app, browser_options:, window_size: [1920, 1080]
 end
+
+Shrine.storages = {cache: Shrine::Storage::Memory.new, store: Shrine::Storage::Memory.new}
 
 Pathname.require_tree SPEC_ROOT.join("support/factories")
 

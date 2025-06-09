@@ -4,6 +4,7 @@ require "hanami"
 require "petail"
 
 require_relative "initializers/rack_attack"
+require_relative "initializers/shrine"
 
 module Terminus
   # The application base configuration.
