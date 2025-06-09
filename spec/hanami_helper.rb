@@ -7,6 +7,7 @@ require "database_cleaner/sequel"
 require "dry/monads"
 require "rack/test"
 require "rom-factory"
+require "shrine/storage/memory"
 require "spec_helper"
 
 ENV["HANAMI_ENV"] = "test"
@@ -53,6 +54,12 @@ RSpec.configure do |config|
     databases.call.each do |db|
       DatabaseCleaner[:sequel, db:].clean_with :truncation, except: ["schema_migrations"]
     end
+  end
+
+  config.before do
+    Hanami.app[:shrine]
+          .storages
+          .merge! cache: Shrine::Storage::Memory.new, store: Shrine::Storage::Memory.new
   end
 
   config.prepend_before :each, :db do |example|
