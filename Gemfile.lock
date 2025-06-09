@@ -46,6 +46,7 @@ GEM
     concurrent-ruby (1.3.5)
     containable (1.2.0)
       concurrent-ruby (~> 1.3)
+    content_disposition (1.0.0)
     core (2.2.0)
     crass (1.0.6)
     cuprite (0.17)
@@ -64,6 +65,8 @@ GEM
     docile (1.4.1)
     domain_name (0.6.20240107)
     dotenv (3.1.8)
+    down (5.4.2)
+      addressable (~> 2.8)
     dry-auto_inject (1.1.0)
       dry-core (~> 1.1)
       zeitwerk (~> 2.6)
@@ -459,6 +462,9 @@ GEM
       nokogiri (>= 1.16.8)
     sequel (5.93.0)
       bigdecimal
+    shrine (3.6.0)
+      content_disposition (~> 1.0)
+      down (~> 5.1)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -575,6 +581,7 @@ DEPENDENCIES
   rubocop-sequel (~> 0.3)
   sanitize (~> 7.0)
   sequel (~> 5.89)
+  shrine (~> 3.6)
   simplecov (~> 0.22)
   trmnl-api (~> 0.2)
   versionaire (~> 14.1)
@@ -595,6 +602,7 @@ CHECKSUMS
   cogger (1.2.2) sha256=53a7c755cedd4cdc15f676fa82b1c5daabef386659b3c23a386e0ebe48a9b20b
   concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
   containable (1.2.0) sha256=c7c5209dd375d914ae68129388a6e019d1f1b6ab5a4278e6eaaaae29c3a01b01
+  content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516
   core (2.2.0) sha256=f396aa51af0ba84b9ccb77e07cd54a3c3154bbed95b0defe743e9f03dab5e2e3
   crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
   cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
@@ -607,6 +615,7 @@ CHECKSUMS
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   domain_name (0.6.20240107) sha256=5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933
   dotenv (3.1.8) sha256=9e1176060ced581f8e6ce4384e91361817763a76e3c625c8bddc18b35bd392c3
+  down (5.4.2) sha256=516e5e01e7a96214a7e2cd155aac6f700593038ae6c857c0f4a05413b1c58acf
   dry-auto_inject (1.1.0) sha256=f9276cb5d15a3ef138e1f1149e289e287f636de57ef4a6decd233542eb708f78
   dry-cli (1.2.0) sha256=8c97df3b290ee6354ee2025a5f0a67226b381627de32741d06f35ea0887cd95b
   dry-configurable (1.3.0) sha256=882d862858567fc1210d2549d4c090f34370fc1bb7c5c1933de3fe792e18afa8
@@ -748,6 +757,7 @@ CHECKSUMS
   runcom (12.2.1) sha256=2c99aee565ffb6fc476b8e33d8ec80bc88fd7373a617a9755be1744ad71cf1eb
   sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
   sequel (5.93.0) sha256=5828193600de98e160082b1cd984683c9412533861300b64521f58cb2a5129b2
+  shrine (3.6.0) sha256=d361b7e5a452d65d900f3326ed99fe343d0d3b2ce17e012fc04ae85b0373358c
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.1) sha256=5dab0b7ee612e60e9887ad57693832fdf4695b4c0c859eaea5f95c18791ef10b
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
