@@ -9,5 +9,6 @@ db/*.sqlite
 node_modules
 Procfile.dev
 public/assets
+public/uploads
 public/assets.json
 tmp
