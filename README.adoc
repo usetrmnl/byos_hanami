@@ -20,6 +20,10 @@
 
 = Terminus
 
+image:https://dl.circleci.com/status-badge/img/gh/usetrmnl/byos_hanami/tree/main.svg?style=svg[CircleCI, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main]
+image:https://alchemists.io/images/projects/caliber/coverage.svg[Code Coverage, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main, width=139.1, height=20]
+image:https://alchemists.io/images/badges/style.svg[Style, link=https://alchemists.io/projects/caliber, width=81, height=20]
+
 This is a {ruby_link}/{hanami_link} project that allows you to point a {trmnl_link} device to your own server which can be running on your local network or in the cloud. This is also the flagship implementation officially supported by {trmnl_link}.
 
 toc::[]
@@ -714,6 +718,20 @@ To test, run:
 ----
 bin/rake
 ----
+
+== Code Coverage
+
+link:https://github.com/simplecov-ruby/simplecov[SimpleCov] code coverage reports are generated with every Circle CI build. The badge at the top of this document isn't updated in real-time, unfortunately, but fairly accurate since this project is configured to strive for 100% code coverage.
+
+To view up-to-date details, follow these steps:
+
+. Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/byos_hanami?branch=main[Circle CI] build page.
+. Click on the latest "Success" build at the top of the page.
+. Click on `build`.
+. Click on ARTIFACTS.
+. Click on the `coverage/index.html` file.
+
+At this point you can click through the tabs at the top of the page to inspect the various namespaces that make up this application.
 
 == Docker
 
