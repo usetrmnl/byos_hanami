@@ -248,6 +248,9 @@ GEM
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     infusible (4.3.0)
       marameters (~> 4.1)
     initable (0.4.0)
@@ -454,6 +457,9 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.2.4)
+      ffi (~> 1.12)
+      logger
     ruby2_keywords (0.0.5)
     runcom (12.2.1)
       refinements (~> 13.0)
@@ -555,6 +561,7 @@ DEPENDENCIES
   htmx (~> 2.1)
   http (~> 5.2)
   http-fake (~> 4.1)
+  image_processing (~> 1.14)
   infusible (~> 4.2)
   initable (~> 0.3)
   inspectable (~> 0.3)
@@ -665,6 +672,7 @@ CHECKSUMS
   http-form_data (2.3.0) sha256=cc4eeb1361d9876821e31d7b1cf0b68f1cf874b201d27903480479d86448a5f3
   i18n (1.14.7) sha256=ceba573f8138ff2c0915427f1fc5bdf4aa3ab8ae88c8ce255eb3ecf0a11a5d0f
   ice_nine (0.11.2) sha256=5d506a7d2723d5592dc121b9928e4931742730131f22a1a37649df1c1e2e63db
+  image_processing (1.14.0) sha256=754cc169c9c262980889bec6bfd325ed1dafad34f85242b5a07b60af004742fb
   infusible (4.3.0) sha256=b7bd1e55affbe3b7278d3221a7bff068ce47ce784c29aa747fae0ac94e340416
   initable (0.4.0) sha256=491a103e93a82e1d4edd4f9390b4102c40c96c2e198e23a8445fa083e34ff0e0
   inspectable (0.3.0) sha256=e3b0da1db9fc72a669ae5dc868cb59a50f9a5b79059b1400d6aa639863129bee
@@ -751,6 +759,7 @@ CHECKSUMS
   rubocop-sequel (0.4.1) sha256=f325dc470c1e3191a616b41a4bf8cfbb2c3c2f4fbc2eee6286de019ca1f7c113
   rubocop-thread_safety (0.7.2) sha256=bd51449c420b1ddda5672b71a39706367402beb55aaf19fc020c1868717f31f6
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
+  ruby-vips (2.2.4) sha256=a305d34c8b38bf93fcb45e9c652dfba4464f3ff86d9a2ccfe3361841e7ea1c49
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   runcom (12.2.1) sha256=2c99aee565ffb6fc476b8e33d8ec80bc88fd7373a617a9755be1744ad71cf1eb
   sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
