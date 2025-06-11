@@ -1,22 +1,14 @@
 # frozen_string_literal: true
 
 require "dry/monads"
-require "refinements/pathname"
 
 module Terminus
-  # A simple remote file downloader.
+  # A simple content downloader.
   class Downloader
     include Dependencies[:http, :logger]
     include Dry::Monads[:result]
 
-    using Refinements::Pathname
-
-    def call uri, output_path
-      return Success output_path if output_path.exist?
-
-      get(uri).fmap { |content| output_path.make_ancestors.write content }
-              .tap { log it }
-    end
+    def call(uri) = get(uri).tap { log it, uri }
 
     private
 
@@ -28,9 +20,9 @@ module Terminus
       Failure error.message
     end
 
-    def log result
+    def log result, uri
       case result
-        in Success(Pathname => path) then logger.info { "Downloaded: #{path}." }
+        in Success then logger.info { "Downloaded: #{uri}." }
         in Failure(HTTP::Response => response) then log_error response.body
         in Failure(String => message) then log_error message
         else log_error "Unable to perform download."
