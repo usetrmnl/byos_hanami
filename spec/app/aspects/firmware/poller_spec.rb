@@ -5,11 +5,11 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Firmware::Poller do
   using Refinements::Pathname
 
-  subject(:poller) { described_class.new downloader:, kernel: }
+  subject(:poller) { described_class.new synchronizer:, kernel: }
 
   include_context "with temporary directory"
 
-  let(:downloader) { instance_spy Terminus::Aspects::Firmware::Downloader }
+  let(:synchronizer) { instance_spy Terminus::Aspects::Firmware::Synchronizer }
   let(:kernel) { class_spy Kernel, sleep: 0 }
 
   describe "#call" do
@@ -31,7 +31,7 @@ RSpec.describe Terminus::Aspects::Firmware::Poller do
 
     it "downloads file" do
       poller.call
-      expect(downloader).to have_received(:call)
+      expect(synchronizer).to have_received(:call)
     end
   end
 end
