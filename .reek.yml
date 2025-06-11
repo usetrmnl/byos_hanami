@@ -6,6 +6,7 @@ detectors:
   Attribute:
     exclude:
       - Terminus::Structs::Firmware#attachment_data
+      - Terminus::Structs::Screen#attachment_data
   FeatureEnvy:
     exclude:
       - Terminus::Actions::API::Screens::Create#handle
