@@ -8,7 +8,7 @@ module Terminus
     module Screens
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
-        include Deps["aspects.screens.downloader", repository: "repositories.device"]
+        include Deps["aspects.screens.synchronizer", repository: "repositories.device"]
         include Initable[client: proc { TRMNL::API::Client.new }, kernel: Kernel]
         include Dry::Monads[:result]
 
@@ -34,14 +34,10 @@ module Terminus
           end
         end
 
-        def process_devices
-          repository.all.select(&:proxy).each { |device| process device }
-        end
+        def process_devices = repository.all.select(&:proxy).each { |device| process device }
 
         def process device
-          client.display(token: device.api_key).bind do |response|
-            downloader.call response.image_url, "#{device.slug}/#{response.filename}"
-          end
+          client.display(token: device.api_key).bind { |record| synchronizer.call record }
         end
       end
     end

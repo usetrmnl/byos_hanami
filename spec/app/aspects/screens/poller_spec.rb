@@ -3,22 +3,16 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Poller, :db do
-  subject(:poller) { described_class.new client:, downloader:, kernel: }
+  subject(:poller) { described_class.new client:, synchronizer:, kernel: }
 
   let(:kernel) { class_spy Kernel, sleep: nil }
+  let(:client) { instance_spy TRMNL::API::Client, display: Success(display) }
 
-  let :client do
-    instance_spy TRMNL::API::Client,
-                 display: Success(
-                   TRMNL::API::Models::Display[
-                     image_url: "https://test.io/test.bmp",
-                     filename: "test.bmp"
-                   ]
-                 )
+  let :display do
+    TRMNL::API::Models::Display[image_url: "https://test.io/test.bmp", filename: "test.bmp"]
   end
 
-  let(:downloader) { instance_spy Terminus::Aspects::Screens::Downloader }
-  let(:logger) { instance_spy Dry::Logger::Dispatcher }
+  let(:synchronizer) { instance_spy Terminus::Aspects::Screens::Synchronizer }
 
   describe "#call" do
     let(:devices) { [Factory[:device, proxy: true]] }
@@ -49,11 +43,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
     it "downloads image" do
       poller.call
-
-      expect(downloader).to have_received(:call).with(
-        "https://test.io/test.bmp",
-        "#{devices.first.slug}/test.bmp"
-      )
+      expect(synchronizer).to have_received(:call).with(display)
     end
 
     context "with no devices" do
@@ -61,7 +51,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
       it "doesn't download image" do
         poller.call
-        expect(downloader).not_to have_received(:call)
+        expect(synchronizer).not_to have_received(:call)
       end
     end
 
@@ -70,7 +60,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
       it "doesn't download image" do
         poller.call
-        expect(downloader).not_to have_received(:call)
+        expect(synchronizer).not_to have_received(:call)
       end
     end
 
@@ -79,7 +69,7 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
       it "doesn't download image" do
         poller.call
-        expect(downloader).not_to have_received(:call)
+        expect(synchronizer).not_to have_received(:call)
       end
     end
   end
