@@ -8,7 +8,7 @@ module Terminus
     module Firmware
       # Polls the Core Firmware API on a scheduled interval for new firmware versions.
       class Poller
-        include Deps["aspects.firmware.downloader"]
+        include Deps["aspects.firmware.synchronizer"]
         include Initable[kernel: Kernel]
         include Dry::Monads[:result]
 
@@ -29,7 +29,7 @@ module Terminus
 
         def keep_alive seconds
           kernel.loop do
-            downloader.call
+            synchronizer.call
             kernel.sleep seconds
           end
         end
