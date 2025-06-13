@@ -2,17 +2,16 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Actions::Firmware::Index do
-  using Refinements::Pathname
-
+RSpec.describe Terminus::Actions::Firmware::Index, :db do
   subject(:action) { described_class.new }
 
   include_context "with main application"
 
   describe "#call" do
-    before { settings.firmware_root.join("0.0.0.bin").touch }
+    let(:firmware) { Factory[:firmware, :with_attachment] }
+    let(:proof) { %(<a download="test.bin" href="memory://abc123.bin">0.0.0</a>) }
 
-    let(:proof) { %r(<td>.+0\.0\.0.+</td>) }
+    before { firmware }
 
     it "renders standard response with search results" do
       response = Rack::MockRequest.new(action).get "", params: {query: "0.0"}

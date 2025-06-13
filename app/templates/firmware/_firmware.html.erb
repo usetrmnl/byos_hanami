@@ -1,12 +1,14 @@
 <tr class="firmware">
-  <td><%= link_to firmware.version, firmware.uri %></td>
-  <%= tag.td size(firmware.size) %>
-  <%= tag.td human_at(firmware.modified_at) %>
+  <td>
+    <%= link_to firmware.version, firmware.attachment_uri, download: firmware.attachment_name %>
+  </td>
+  <%= tag.td size(firmware.attachment_size) %>
+  <%= tag.td human_at(firmware.created_at) %>
 
   <td class="actions">
-    <a href="/firmware/<%= firmware.version %>"
+    <a href="/firmware/<%= firmware.id %>"
        class="link-cancel"
-       hx-delete="/firmware/<%= firmware.version %>"
+       hx-delete="/firmware/<%= firmware.id %>"
        hx-confirm="Are you sure you want to delete this firmware version?"
        hx-target="closest .firmware"
        hx-swap="outerHTML swap:0.5s">

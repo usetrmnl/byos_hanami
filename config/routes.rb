@@ -33,7 +33,7 @@ module Terminus
     post "/designer", to: "designer.create", as: :designer_create
 
     get "/firmware", to: "firmware.index", as: :firmware
-    delete "/firmware/:version", to: "firmware.delete", as: :firmware_delete
+    delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/problem_details", to: "problem_details.index", as: :problem_details
 

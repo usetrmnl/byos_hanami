@@ -5,7 +5,7 @@ module Terminus
     module Firmware
       # The index action.
       class Index < Terminus::Action
-        include Deps["aspects.firmware.fetcher"]
+        include Deps[repository: "repositories.firmware"]
 
         def handle request, response
           query = request.params[:query]
@@ -22,11 +22,11 @@ module Terminus
         private
 
         def load query
-          paths = fetcher.call
+          records = repository.all
 
-          return paths unless query
+          return records unless query
 
-          paths.select { |firmware| firmware.version.match? query }
+          records.select { |firmware| firmware.version.match? query }
         end
 
         def add_htmx_headers response, query
