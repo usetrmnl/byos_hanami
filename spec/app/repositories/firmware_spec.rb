@@ -20,6 +20,37 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
     end
   end
 
+  describe "#delete" do
+    it "deletes existing record" do
+      firmware
+      repository.delete firmware.id
+
+      expect(repository.all).to eq([])
+    end
+
+    it "ignores unknown record" do
+      repository.delete 13
+      expect(repository.all).to eq([])
+    end
+  end
+
+  describe "#delete_all" do
+    before { firmware }
+
+    it "deletes all records" do
+      repository.delete_all
+      expect(repository.all).to eq([])
+    end
+
+    it "deletes all attachments" do
+      upload = firmware.upload StringIO.new([123].pack("N"))
+      repository.update firmware.id, attachment_data: upload.data
+      repository.delete_all
+
+      expect(Hanami.app[:shrine].storages[:store].store).to eq({})
+    end
+  end
+
   describe "#find" do
     it "answers record by ID" do
       expect(repository.find(firmware.id)).to eq(firmware)
@@ -31,6 +62,19 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
 
     it "answers nil for nil ID" do
       expect(repository.find(nil)).to be(nil)
+    end
+  end
+
+  describe "#latest" do
+    it "answers latest record" do
+      firmware
+      two = Factory[:firmware, version: "0.1.0"]
+
+      expect(repository.latest).to eq(two)
+    end
+
+    it "answers nil when records don't exist" do
+      expect(repository.latest).to be(nil)
     end
   end
 
