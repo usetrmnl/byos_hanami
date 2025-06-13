@@ -6,18 +6,13 @@ module Terminus
       module Firmware
         # The delete action.
         class Delete < Terminus::Action
-          include Deps["aspects.firmware.fetcher"]
+          include Deps[repository: "repositories.firmware"]
 
           using Refines::Actions::Response
 
           def handle _request, response
-            fetcher.call.each do |record|
-              Pathname(config.public_directory).join(record.path).delete
-            end
-
+            repository.delete_all
             response.render view, layout: false
-          rescue Errno::ENOENT
-            response.with body: "Unable to delete firmware.", status: 500
           end
         end
       end
