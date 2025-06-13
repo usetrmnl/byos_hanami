@@ -14,6 +14,8 @@ module Terminus
       def find(id) = (firmwares.by_pk(id).one if id)
 
       def find_by_version(value) = firmwares.where(version: value).one
+
+      def delete_all = firmwares.delete
     end
   end
 end

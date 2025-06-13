@@ -47,4 +47,13 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
       expect(repository.find_by_version(nil)).to be(nil)
     end
   end
+
+  describe "#delete_all" do
+    it "deletes all records" do
+      firmware
+      repository.delete_all
+
+      expect(repository.all).to eq([])
+    end
+  end
 end
