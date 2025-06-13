@@ -2,17 +2,22 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Actions::Firmware::Index do
-  using Refinements::Pathname
-
+RSpec.describe Terminus::Actions::Firmware::Index, :db do
   subject(:action) { described_class.new }
 
   include_context "with main application"
 
   describe "#call" do
-    before { settings.firmware_root.join("0.0.0.bin").touch }
+    let :firmware do
+      path = temp_dir.join "test.bin"
+      path.binwrite [123].pack("N")
+      repository.update Factory[:firmware].id, attachment: Shrine.upload(path.open, :store).data
+    end
 
+    let(:repository) { Terminus::Repositories::Firmware.new }
     let(:proof) { %r(<td>.+0\.0\.0.+</td>) }
+
+    before { firmware }
 
     it "renders standard response with search results" do
       response = Rack::MockRequest.new(action).get "", params: {query: "0.0"}

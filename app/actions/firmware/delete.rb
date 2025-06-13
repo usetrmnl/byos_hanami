@@ -5,27 +5,19 @@ module Terminus
     module Firmware
       # The delete action.
       class Delete < Terminus::Action
-        include Deps[:settings]
+        include Deps[repository: "repositories.firmware"]
 
         using Refines::Actions::Response
 
-        params { required(:version).filled :string }
+        params { required(:id).filled :integer }
 
         def handle request, response
           parameters = request.params
 
           halt :unprocessable_entity unless parameters.valid?
 
-          render parameters[:version], response
-        end
-
-        private
-
-        def render version, response
-          settings.firmware_root.join("#{version}.bin").delete
+          repository.delete parameters[:id]
           response.with body: "", status: 200
-        rescue Errno::ENOENT
-          response.with body: "Unable to delete Version #{version}.", status: 404
         end
       end
     end
