@@ -5,9 +5,10 @@ require "hanami_helper"
 RSpec.describe "/api/display", :db do
   using Refinements::Pathname
 
-  let(:device) { Factory[:device] }
-
   include_context "with firmware headers"
+
+  let(:device) { Factory[:device] }
+  let(:firmware) { Factory[:firmware, :with_attachment] }
 
   before do
     temp_dir.join("0.0.0.bin").touch
@@ -17,11 +18,12 @@ RSpec.describe "/api/display", :db do
   end
 
   it "answers payload with valid parameters and full dependencies" do
+    firmware
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /.+\.bmp/,
-      firmware_url: /.*0\.0\.0\.bin/,
+      filename: "test.bmp",
+      firmware_url: "memory://abc123.bin",
       image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -35,11 +37,12 @@ RSpec.describe "/api/display", :db do
     let(:device) { Factory[:device, image_timeout: 10, refresh_rate: 20] }
 
     it "answers payload with custom device attributes" do
+      firmware
       get routes.path(:api_display), {}, **firmware_headers
 
       expect(json_payload).to include(
-        filename: /.+\.bmp/,
-        firmware_url: /.*0\.0\.0\.bin/,
+        filename: "test.bmp",
+        firmware_url: "memory://abc123.bin",
         image_url: %r(https://.+/assets/screens/A1B2C3D4E5F6.+\.bmp),
         image_url_timeout: 10,
         refresh_rate: 20,
@@ -51,13 +54,14 @@ RSpec.describe "/api/display", :db do
   end
 
   it "answers image data for valid access token and Base 64 header" do
+    firmware
     firmware_headers["HTTP_BASE64"] = "true"
 
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /.+\.bmp/,
-      firmware_url: /.*0\.0\.0\.bin/,
+      filename: "test.bmp",
+      firmware_url: "memory://abc123.bin",
       image_url: %r(data:image/bmp;base64.+),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -68,11 +72,12 @@ RSpec.describe "/api/display", :db do
   end
 
   it "answers image data for valid access token and Base 64 parameter" do
+    firmware
     get routes.path(:api_display), {base_64: true}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /.+\.bmp/,
-      firmware_url: /\d+\.\d+\.\d+\.bin/,
+      filename: "test.bmp",
+      firmware_url: "memory://abc123.bin",
       image_url: %r(data:image/bmp;base64.+),
       image_url_timeout: 0,
       refresh_rate: 900,

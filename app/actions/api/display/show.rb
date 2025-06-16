@@ -12,8 +12,8 @@ module Terminus
         # The show action.
         class Show < Terminus::Action
           include Deps[
+            firmware_repository: "repositories.firmware",
             image_fetcher: "aspects.screens.rotator",
-            firmware_fetcher: "aspects.firmware.fetcher",
             synchronizer: "aspects.devices.synchronizer"
           ]
 
@@ -53,8 +53,8 @@ module Terminus
 
           # :reek:FeatureEnvy
           def fetch_firmware_uri device
-            firmware_fetcher.call.first.then do |firmware|
-              firmware.uri if firmware && device.firmware_version != firmware.version
+            firmware_repository.latest.then do |firmware|
+              firmware.attachment_uri if firmware && device.firmware_version != firmware.version
             end
           end
 
