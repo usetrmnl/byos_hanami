@@ -10,7 +10,7 @@ module Terminus
         include Deps[
           :settings,
           device_repository: "repositories.device",
-          firmware_fetcher: "aspects.firmware.fetcher"
+          firmware_repository: "repositories.firmware"
         ]
 
         include Initable[ip_finder: proc { Terminus::IPFinder.new }]
@@ -19,7 +19,7 @@ module Terminus
           response.render view,
                           api_uri: settings.api_uri,
                           devices: device_repository.all,
-                          firmwares: firmware_fetcher.call,
+                          firmwares: firmware_repository.all,
                           ip_addresses: ip_finder.all
         end
       end

@@ -75,7 +75,9 @@
 
       <ul class="list">
         <% firmwares.each do |record| %>
-          <li><%= link_to record.version, record.path %> (<%= size record.size %>)</li>
+          <li>
+            <%= link_to record.version, record.attachment_uri, download: record.attachment_name %> (<%= size record.attachment_size %>)
+          </li>
         <% end %>
       </ul>
     </fieldset>

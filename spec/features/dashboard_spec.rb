@@ -3,8 +3,6 @@
 require "hanami_helper"
 
 RSpec.describe "Dashboard", :db do
-  using Refinements::Pathname
-
   let(:device) { Factory[:device] }
 
   it "lists devices" do
@@ -20,8 +18,9 @@ RSpec.describe "Dashboard", :db do
   end
 
   it "lists firmware" do
-    temp_dir.join("0.0.0.bin").touch
+    Factory[:firmware, :with_attachment]
     visit routes.path(:root)
-    expect(page).to have_link("0.0.0", href: %r(rspec/\d+\.\d+\.\d+))
+
+    expect(page).to have_link("0.0.0", href: "memory://abc123.bin", download: "test.bin")
   end
 end
