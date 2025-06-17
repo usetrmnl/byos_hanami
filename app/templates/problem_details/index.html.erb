@@ -11,6 +11,27 @@
 
   <p>Could not find device by ID. The device ID should be supplied via the HTTP ID header.</p>
 
+  <h2 id="device_setup" class="problem">Device Setup</h2>
+
+  The following required and optional headers are necessary when making API requests:
+
+  <p><strong>Required</strong></p>
+
+  <dl class="site-definition-list">
+    <dt class="key">ID</dt>
+    <dd class="value">Must be your device's MAC address and properly formatted. Example: <code>A1:B2:C3:D4:E5:F6</code>.</dd>
+  </dl>
+
+  <p><strong>Optional:</strong></p>
+
+  <dl class="site-definition-list">
+    <dt class="key">FW_VERSION</dt>
+    <dd class="value">If provided, must adhere to <a href="https://alchemists.io/articles/strict_semantic_versioning">Strict Semantic Versioning</a>. Example: <code>1.2.3</code>.
+    </dd>
+  </dl>
+
+  <p></p>
+
   <h2 id="log_payload" class="problem">Log Payload</h2>
 
   <p>Could not create log for device due to invalid payload. The payload should be structured as follows:</p>
