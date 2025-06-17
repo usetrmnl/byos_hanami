@@ -10,8 +10,8 @@ RSpec.describe "/api/setup", :db do
 
   include_context "with main application"
 
-  context "with no devices" do
-    let(:mac_address) { "aa:bb:cc:00:11:22" }
+  context "without devices" do
+    let(:mac_address) { "AA:BB:CC:00:11:22" }
     let(:device) { repository.find_by_mac_address mac_address }
 
     it "answers device/image details for new device" do
@@ -39,7 +39,7 @@ RSpec.describe "/api/setup", :db do
 
     it "creates welcome screen" do
       get routes.path(:api_setup), {}, "HTTP_ID" => mac_address, "HTTP_FW_VERSION" => "1.2.3"
-      expect(temp_dir.join("aabbcc001122/setup.png").exist?).to be(true)
+      expect(temp_dir.join("AABBCC001122/setup.png").exist?).to be(true)
     end
   end
 
@@ -52,5 +52,53 @@ RSpec.describe "/api/setup", :db do
       image_url: %(#{settings.api_uri}/assets/setup.bmp),
       message: "Welcome to Terminus!"
     )
+  end
+
+  it "answers error when firmware version header is invalid" do
+    get routes.path(:api_setup), {}, "HTTP_ID" => device.mac_address, "HTTP_FW_VERSION" => "abc"
+
+    problem = Petail[
+      type: "/problem_details#device_setup",
+      status: :unprocessable_entity,
+      detail: "Invalid request headers.",
+      instance: "/api/setup",
+      extensions: {
+        HTTP_FW_VERSION: ["is in invalid format"]
+      }
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
+  end
+
+  it "answers error when device ID header is invalid" do
+    get routes.path(:api_setup), {}, "HTTP_ID" => "bogus"
+
+    problem = Petail[
+      type: "/problem_details#device_setup",
+      status: :unprocessable_entity,
+      detail: "Invalid request headers.",
+      instance: "/api/setup",
+      extensions: {
+        HTTP_ID: ["is in invalid format"]
+      }
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
+  end
+
+  it "answers error when device headers are missing" do
+    get routes.path(:api_setup), {}
+
+    problem = Petail[
+      type: "/problem_details#device_setup",
+      status: :unprocessable_entity,
+      detail: "Invalid request headers.",
+      instance: "/api/setup",
+      extensions: {
+        HTTP_ID: ["is missing"]
+      }
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
   end
 end
