@@ -7,7 +7,7 @@ module Terminus
       class Update < Abstract
         params do
           required(:id).filled :integer
-          required(:device).hash Schemas::Device
+          required(:device).hash Schemas::Devices::Upsert
         end
       end
     end

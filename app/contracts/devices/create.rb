@@ -5,7 +5,7 @@ module Terminus
     module Devices
       # The contract for device creates.
       class Create < Abstract
-        params { required(:device).hash Schemas::Device }
+        params { required(:device).hash Schemas::Devices::Upsert }
       end
     end
   end
