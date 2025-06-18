@@ -19,7 +19,7 @@ Hanami.app.register_provider :shrine do
 
     Shrine.plugin :determine_mime_type, analyzer: :marcel
     Shrine.plugin :entity
-    Shrine.plugin :store_dimensions, analyzer: :mini_magick
+    Shrine.plugin :store_dimensions, analyzer: :mini_magick, on_error: proc { "Omit" }
     Shrine.plugin :validation_helpers
 
     Shrine.logger = Terminus::LibContainer[:logger]
