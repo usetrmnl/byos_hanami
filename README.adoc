@@ -827,6 +827,10 @@ The following is additional tooling, developed by the Open Source community, tha
 
 {rack_attack_link} is enabled by default but might interfere when using a custom service layer like DNS, reverse proxy, etc. between your device and this application. If that's the case, you can disable Rack Attack by removing the `config.middleware.use Rack::Attack` line from `config/app.rb`. Alternatively, you can customize Rack Attack via the `config/initializers/rack_attack.rb` file. Either (or both) of these approaches will allow you to get your service layer properly configured so your device can talk to this server.
 
+== License
+
+While this project is distributed under the permissive link:/LICENSE.adoc[MIT License], we strongly believe that technology should serve humanity's best interests. We created this software with the intent that it be used to benefit people and communities, not to cause harm. We encourage individuals and organizations to consider the ethical implications and to use this project in ways that respect human rights, promote equity, and contribute positively to society. Though we cannot legally restrict usage under the MIT License, we ask that you join us in fostering a responsible technology ecosystem by avoiding applications that could cause harm, perpetuate discrimination, or undermine human dignity. Technology is best used to enrich lives, let's ensure we build a better world together!
+
 == Credits
 
 * Built with link:https://alchemists.io/projects/hanamismith[Hanamismith].
