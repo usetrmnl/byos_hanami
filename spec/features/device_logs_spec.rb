@@ -14,7 +14,7 @@ RSpec.describe "Device Logs", :db do
 
     expect(page).to have_content("Danger!")
 
-    click_link device_log.id
+    click_link device_log.id.to_s
 
     expect(page).to have_content("connected")
   end
