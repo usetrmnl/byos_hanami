@@ -56,11 +56,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.before do
-    Hanami.app[:shrine]
-          .storages
-          .merge! cache: Shrine::Storage::Memory.new, store: Shrine::Storage::Memory.new
-  end
+  config.before { Hanami.app[:shrine].storages.each_value(&:clear!) }
 
   config.prepend_before :each, :db do |example|
     databases.call.each do |db|
