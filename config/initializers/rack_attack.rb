@@ -15,4 +15,12 @@ Rack::Attack.safelist "allow private network" do |request|
   private_subnets.any? { |subnet| subnet.include? request.ip }
 end
 
+allowed_subnets = ENV['ALLOWED_SUBNETS']&.split(',')&.map do |subnet|
+  IPAddr.new(subnet.strip)
+end
+
+Rack::Attack.safelist "allowed subnets" do |request|
+  allowed_subnets.any? { |subnet| subnet.include? request.ip }
+end
+
 Rack::Attack.throttle("requests by IP", limit: 100, period: 60, &:ip)

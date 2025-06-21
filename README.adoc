@@ -825,7 +825,7 @@ The following is additional tooling, developed by the Open Source community, tha
 
 == Troubleshooting
 
-{rack_attack_link} is enabled by default but might interfere when using a custom service layer like DNS, reverse proxy, etc. between your device and this application. If that's the case, you can disable Rack Attack by removing the `config.middleware.use Rack::Attack` line from `config/app.rb`. Alternatively, you can customize Rack Attack via the `config/initializers/rack_attack.rb` file. Either (or both) of these approaches will allow you to get your service layer properly configured so your device can talk to this server.
+{rack_attack_link} is enabled, and by default blocks incoming clients that don't have an IP in a private range (`192.168.0.0/16`, `172.16.0.0/12`, and `10.0.0.0/8`). That might interfere when using a custom service layer like DNS, reverse proxy, or a VPN, etc. between your device and this application. You can explicitly safelist known IP addresses or ranges by setting the `ALLOWED_SUBNETS` environment variable in your `.env` file, or you can disable Rack Attack by removing the `config.middleware.use Rack::Attack` line from `config/app.rb`. Alternatively, you can customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server.
 
 == License
 
