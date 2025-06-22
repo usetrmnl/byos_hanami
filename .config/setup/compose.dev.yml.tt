@@ -10,7 +10,7 @@ services:
       API_URI: ${API_URI}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
     ports:
-      - "${APP_PORT}:${APP_PORT}"
+      - "${HANAMI_PORT}:${HANAMI_PORT}"
     volumes:
       - ".:/app"
     command: bin/docker/entrypoint-dev

@@ -6,10 +6,11 @@ services:
     build:
       context: .
     environment:
+      HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
     ports:
-      - "${APP_PORT}:${APP_PORT}"
+      - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
     volumes:
       - web-assets-firmware:/app/public/assets/firmware
