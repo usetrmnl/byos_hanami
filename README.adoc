@@ -114,12 +114,17 @@ To view the app, use either of the following:
 
 There are a few environment variables you can use to customize behavior:
 
-* `API_URI`: Used for connecting your device to this server. Defaults to the wired IP address and port of the server you are running Terminus on. This also assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to be using `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
+* `API_URI`: Used for connecting your device to this server or via xref:_docker[Docker]. Defaults to the wired IP address and port of the server you are running Terminus on. This also assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to be using `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `FIRMWARE_ROOT`: The root location for firmware updates. Defaults to `public/assets/firmware`.
+* `HANAMI_PORT`: The default port you connect to when running the app locally or via xref:_docker[Docker]. When using Docker, this port is used for the internal and external port mapping.
 * `PREVIEWS_ROOT`: The root location for all device screen preview images when designing new screens. Defaults to `public/assets/previews`
-* `RACK_ATTACK_ALLOWED_SUBNETS`: Defines the {rack_attack_link} subnets that are allowed to connect to this server. This might interfere with your service layers like DNS, reverse proxy, or a VPN, etc. between your device and this application so you can use this environment variable to add more subnets as desired. Alternatively, you can disable Rack Attack altogether by removing the `config.middleware.use Rack::Attack` line from `config/app.rb` or customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server. By default, the following subnets are allowed: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.1`, and `::1`.
+* `RACK_ATTACK_ALLOWED_SUBNETS`: Defines the {rack_attack_link} subnets that are allowed to connect to this server which helps when adding DNS, a reverse proxy, or a VPN, etc. between your device and this application so you can use this environment variable to add more subnets as desired. This takes a single subnet/IP or an array -- with no spaces -- of subnets/IPs as values. Example: "111.111.111.111,150.120.0.0/16". Alternatively, you can disable Rack Attack altogether by removing the `config.middleware.use Rack::Attack` line from `config/app.rb` or customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server. By default, the following subnets are allowed: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.1`, and `::1`.
 * `SCREENS_ROOT`: The root location for all device screens (images). Defaults to `public/assets/screens`.
+* `PG_DATABASE`: Defines your database name. Used by xref:_docker[Docker] only. Default: `terminus`.
+* `PG_PASSWORD`: Defines your database password. Used by xref:_docker[Docker] only. Default: (auto-generated for you during setup).
+* `PG_PORT`: Defines your database port. Used by xref:_docker[Docker] only. Default: `5432`.
+* `PG_USER`: Defines your database user. Used by xref:_docker[Docker] only. Default: `terminus`.
 
 === Device Provisioning
 
@@ -742,31 +747,23 @@ At this point you can click through the tabs at the top of the page to inspect t
 
 You can use {docker_compose_link} to quickly launch the entire stack for development or production environments.
 
-To start, you'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container which devices can't connect to. You can fix by adding updating the `API_URI` in the environment section. Here's a few examples:
+To start, you'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container which devices can't connect to. You can fix by adding updating your `HANAMI_PORT` and `API_URI` in the environment section. Here's a few examples:
 
 [source,yaml]
 ----
 # With specific IP address.
 environment:
-  API_URI: http://192.168.1.1:2300
+  HANAMI_PORT=2300
+  API_URI: http://192.168.1.1:$HANAMI_PORT
 
 # With hostname.
 environment:
-  API_URI: http://terminus.demo.io
+  API_URI: https://terminus.demo.io
 ----
 
-You can also confirm the above changes are applied by running `docker-compose up` to launch all services and viewing the Dashboard (look for the API IP address).
+You can also confirm the above changes are applied by running `docker-compose up` and viewing the Dashboard (look for the API IP address).
 
-Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project. They can be configured via environment variables (i.e. `.env`) as follows:
-
-* `API_URI`: The IP address of your container. You'll definitely want customize as mentioned above.
-* `APP_PORT`: The port for your web service.
-* `PG_USER`: Your PostgreSQL user name.
-* `PG_DATABASE`: Your PostgreSQL database name.
-* `PG_PASSWORD`: Your PostgreSQL password.
-* `PG_PORT`: Your PostgreSQL port.
-
-💡 The above is automatically generated for you within the `.env` file when running `bin/setup` but customization is encouraged.
+Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project.
 
 === Development
 
