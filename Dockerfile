@@ -84,8 +84,9 @@ COPY --from=build /app /app
 
 RUN <<STEPS
   mkdir -p /app/log
-  mkdir -p /app/public/assets/firmware
   mkdir -p /app/public/assets/screens
+  mkdir -p /app/public/uploads
+  mkdir -p /app/public/uploads/cache
   mkdir -p /app/tmp
 STEPS
 
