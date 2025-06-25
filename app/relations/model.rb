@@ -6,6 +6,7 @@ module Terminus
     class Model < DB::Relation
       schema :model, infer: true do
         associations { has_many :devices }
+        associations { has_many :screens, relation: :screen }
       end
     end
   end
