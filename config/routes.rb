@@ -61,6 +61,7 @@ module Terminus
     post "/playlists", to: "playlists.create", as: :playlist_create
     get "/playlists/:id/edit", to: "playlists.edit", as: :playlist_edit
     put "/playlists/:id", to: "playlists.update", as: :playlist_update
+    delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
 
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
