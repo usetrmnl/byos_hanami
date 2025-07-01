@@ -1,0 +1,38 @@
+<li id="<%= playlist.id %>" class="playlist">
+  <h2 class="label"><%= playlist.label %></h2>
+
+  <div class="actions">
+    <a href="<%= routes.path :playlist, id: playlist.id %>"
+       hx-get="<%= routes.path :playlist, id: playlist.id %>"
+       hx-target="closest .page-playlists"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      View
+    </a>
+
+    <a href="<%= routes.path :playlist_edit, id: playlist.id %>"
+       hx-get="<%= routes.path :playlist_edit, id: playlist.id %>"
+       hx-target="closest .page-playlists"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      Edit
+    </a>
+
+    <a href="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
+       hx-get="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
+       hx-target="closest .page-playlists"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      Mirror
+    </a>
+
+    <a href="<%= routes.path :playlist_delete, id: playlist.id %>"
+       class="link-cancel"
+       hx-delete="<%= routes.path :playlist_delete, id: playlist.id %>"
+       hx-confirm="Are you sure you want to delete this playlist?"
+       hx-target="closest .playlist"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
+</li>
