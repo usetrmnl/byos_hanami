@@ -1,0 +1,20 @@
+<search>
+  <%= tag.form(action: routes.path(:playlists), method: :get, class: "page-search") do %>
+    <input id="search"
+           name="query"
+           value="<%= query %>"
+           class="value"
+           hx-get="<%= routes.path :playlists %>"
+           hx-trigger="search, keyup delay:200ms changed"
+           hx-select=".playlist"
+           hx-target="next .playlist"
+           hx-swap="outerHTML"
+           hx-push-url="true"
+           hx-indicator=".page-loader"/>
+
+      <div class="page-loader htmx-indicator"></div>
+      <input type="submit" value="Search" class="button-accept"/>
+      <%= link_to "Clear", routes.path(:playlists), class: "button-decline" %>
+  <% end %>
+</search>
+
