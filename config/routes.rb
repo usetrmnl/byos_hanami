@@ -53,6 +53,7 @@ module Terminus
     get "/playlists/new", to: "playlists.new", as: :playlist_new
     post "/playlists", to: "playlists.create", as: :playlist_create
     get "/playlists/:id/edit", to: "playlists.edit", as: :playlist_edit
+    put "/playlists/:id", to: "playlists.update", as: :playlist_update
 
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
     put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
