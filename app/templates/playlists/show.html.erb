@@ -1,0 +1,53 @@
+<% content_for :title, "#{playlist.label} Playlist | Terminus" %>
+
+<section class="page-playlists">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
+      <li class="breadcrumb"><%= playlist.label %></li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="playlist">
+      <h2 class="label"><%= playlist.label %></h2>
+
+      <div class="page-actions">
+        <%= link_to "Playlists", routes.path(:playlists) %>
+
+        <a href="<%= routes.path :playlist_edit, id: playlist.id %>"
+           hx-get="<%= routes.path :playlist_edit, id: playlist.id %>"
+           hx-target="closest .page-playlists"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Edit
+        </a>
+
+        <a href="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
+           hx-get="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
+           hx-target="closest .page-playlists"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Mirror
+        </a>
+      </div>
+
+      <dl class="site-definition-list">
+        <dt class="key">Name</dt>
+        <dd class="value"><%= playlist.name %></dd>
+
+        <dt class="key">Created</dt>
+        <dd class="value"><%= human_at playlist.created_at %></dd>
+
+        <dt class="key">Updated</dt>
+        <dd class="value"><%= human_at playlist.updated_at %></dd>
+      </dl>
+
+      <div class="show_items">
+        <% items.each do |item| %>
+          <%= item.render :item %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
