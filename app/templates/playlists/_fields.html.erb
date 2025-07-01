@@ -1,0 +1,19 @@
+<fieldset role="group" class="group">
+  <%= scope(:form_field, key: :label, errors:).render do %>
+    <label class="key" for="playlist[label]">Label</label>
+
+    <%= tag.input name: "playlist[label]",
+                  value: field_for(:label, fields, playlist),
+                  class: :value,
+                  autocomplete: :label %>
+  <% end %>
+
+  <%= scope(:form_field, key: :name, errors:).render do %>
+    <label class="key" for="playlist[name]">Name</label>
+
+    <%= tag.input name: "playlist[name]",
+                  value: field_for(:name, fields, playlist),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+</fieldset>
