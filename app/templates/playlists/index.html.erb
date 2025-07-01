@@ -1,0 +1,57 @@
+<% content_for :title, "Playlists | Terminus" %>
+
+<section class="page-playlists">
+  <header class="page-header">
+    <h1 class="label">
+      Playlists
+
+      <button class="popover-trigger" popovertarget="popover-shortcuts">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-shortcuts" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by playlist label using partial or full label.</p>
+
+      <h3 class="label">Keyboard Shortcuts</h3>
+
+      <ul>
+        <li><kbd>CONTROL + n</kbd>: New playlist.</li>
+        <li><kbd>CONTROL + s</kbd>: Save playlist (when within form).</li>
+      </ul>
+    </dialog>
+
+    <div class="actions">
+      <%= render :search, query: %>
+
+      <a href="/playlists/new"
+         class="button-accept"
+         hx-get="/playlists/new"
+         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+         hx-target="closest .page-playlists"
+         hx-swap="outerHTML"
+         hx-push-url="true">
+        New
+      </a>
+    </div>
+  </header>
+
+  <% if playlists.any? %>
+    <ul class="playlists">
+      <% playlists.each do |playlist| %>
+        <%= playlist.render :playlist %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="playlists">
+      <%= render "shared/empty", message: "No playlists found." %>
+    </div>
+  <% end %>
+</section>
