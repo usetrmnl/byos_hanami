@@ -1,0 +1,37 @@
+<% content_for :title, "Device #{playlist.label} Edit | Terminus" %>
+
+<section class="page-playlists">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/playlists" class="link">Devices</a></li>
+      <li class="breadcrumb">
+        <%= link_to playlist.label, "/playlists/#{playlist.id}", class: :link %>
+      </li>
+      <li class="breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="playlists">
+      <form action="/playlists" method="put" class="playlist page-form">
+        <h1 class="label">Edit Playlist</h1>
+
+        <%= render :fields, playlist:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :put, path: "/playlists/#{playlist.id}" %>
+
+          <a href="<%= routes.path :playlist, id: playlist.id %>"
+             class="button-decline"
+             hx-get="<%= routes.path :playlist, id: playlist.id %>"
+             hx-trigger="click"
+             hx-target="closest .page-playlists"
+             hx-swap="outerHTML"
+             hx-push-url="true">
+             Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
