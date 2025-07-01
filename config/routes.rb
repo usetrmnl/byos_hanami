@@ -58,6 +58,7 @@ module Terminus
     get "/playlists", to: "playlists.index", as: :playlists
     get "/playlists/:id", to: "playlists.show", as: :playlist
     get "/playlists/new", to: "playlists.new", as: :playlist_new
+    post "/playlists", to: "playlists.create", as: :playlist_create
 
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
