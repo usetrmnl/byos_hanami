@@ -1,0 +1,8 @@
+<input type="submit"
+       value="Save"
+       class="button-accept"
+       <%= "hx-#{verb}=#{path}" %>
+       hx-trigger="click, keyup[ctrlKey&&key=='s'] from:closest .playlist"
+       hx-target="closest .page-playlists"
+       hx-swap="outerHTML"
+       hx-push-url="true">

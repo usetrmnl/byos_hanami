@@ -1,0 +1,25 @@
+<% content_for :title, "New Playlist | Terminus" %>
+
+<section class="page-playlists">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
+      <li class="breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="playlists">
+      <form action="<%= routes.path :playlist_create %>" method="post" class="playlist page-form">
+        <h1 class="label">New Playlist</h1>
+
+        <%= render :fields, playlist:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :post, path: "/playlists" %>
+          <%= link_to "Cancel", routes.path(:playlists), class: "button-decline" %>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
