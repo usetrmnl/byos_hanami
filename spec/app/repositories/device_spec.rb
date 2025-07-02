@@ -64,6 +64,27 @@ RSpec.describe Terminus::Repositories::Device, :db do
     end
   end
 
+  describe "#mirror_playlist" do
+    let(:playlist) { Factory[:playlist] }
+
+    it "updates records with new playlist ID" do
+      repository.mirror_playlist [device.id], playlist.id
+      record = repository.find device.id
+
+      expect(record.playlist_id).to eq(playlist.id)
+    end
+
+    it "answers one when success" do
+      result = repository.mirror_playlist [device.id], playlist.id
+      expect(result).to eq(1)
+    end
+
+    it "answers zero when there is nothing to update" do
+      result = repository.mirror_playlist [], playlist.id
+      expect(result).to eq(0)
+    end
+  end
+
   describe "#update_by_mac_address" do
     it "updates record with attributes" do
       device
