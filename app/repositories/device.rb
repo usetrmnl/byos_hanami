@@ -21,6 +21,10 @@ module Terminus
 
       def find_by(**) = with_associations.where(**).one
 
+      def mirror_playlist ids, playlist_id
+        devices.update playlist_id: Sequel.case({{id: ids} => playlist_id}, nil)
+      end
+
       def update_by_mac_address(value, **attributes)
         device = find_by mac_address: value
 
