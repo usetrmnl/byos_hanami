@@ -63,6 +63,8 @@ module Terminus
     put "/playlists/:id", to: "playlists.update", as: :playlist_update
     delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
 
+    get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
+
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
     slice(:health, at: "/up") { root to: "show" }
