@@ -1,0 +1,8 @@
+<p class="form-field">
+  <%= tag.label device.label, name: "mirror[device_ids]", class: :key %>
+  <%= tag.input type: :checkbox,
+                name: "mirror[device_ids][]",
+                value: device.id,
+                checked: (device.playlist_id == playlist_id),
+                class: :value %>
+</p>
