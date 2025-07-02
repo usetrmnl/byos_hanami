@@ -49,6 +49,7 @@ module Terminus
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
+    put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
 
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
