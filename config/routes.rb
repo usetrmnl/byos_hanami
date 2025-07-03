@@ -69,6 +69,7 @@ module Terminus
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
     get "/screens", to: "screens.index", as: :screens
+    get "/screens/:id", to: "screens.show", as: :screen
 
     slice(:health, at: "/up") { root to: "show" }
 

@@ -1,0 +1,14 @@
+<% content_for :title, "#{screen.label} Screen | Terminus" %>
+
+<section class="page-screens">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/screens" class="link">Screens</a></li>
+      <li class="breadcrumb"><%= screen.label %></li>
+    </ul>
+  </header>
+
+  <ul class="screens">
+    <%= screen.render :screen %>
+  </ul>
+</section>
