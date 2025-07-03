@@ -1,0 +1,58 @@
+<% content_for :title, "Screens | Terminus" %>
+
+<section class="page-screens">
+  <header class="page-header">
+    <h1 class="label">
+      Screens
+
+      <button class="popover-trigger" popovertarget="popover-shortcuts">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-shortcuts" class="popover-content" popover="auto">
+      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="screen_reader">Close</span>
+      </button>
+
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by screen label using partial or full label.</p>
+
+      <h3 class="label">Keyboard Shortcuts</h3>
+
+      <ul>
+        <li><kbd>CONTROL + n</kbd>: New screen.</li>
+        <li><kbd>CONTROL + s</kbd>: Save screen (when within form).</li>
+      </ul>
+    </dialog>
+
+    <div class="actions">
+      <%= render :search, query: %>
+
+      <a href="/screens/new"
+         class="button-accept"
+         hx-get="/screens/new"
+         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+         hx-target="closest .page-screens"
+         hx-swap="outerHTML"
+         hx-push-url="true">
+        New
+      </a>
+    </div>
+  </header>
+
+  <% if screens.any? %>
+    <ul class="screens">
+      <% screens.each do |screen| %>
+        <%= screen.render :screen %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="screens">
+      <%= render "shared/empty", message: "No screens found." %>
+    </div>
+  <% end %>
+</section>
+
