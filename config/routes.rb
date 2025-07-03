@@ -12,14 +12,19 @@ module Terminus
     post "/api/devices", to: "api.devices.create", as: :api_device_create
     patch "/api/devices/:id", to: "api.devices.patch", as: :api_device_patch
     delete "/api/devices/:id", to: "api.devices.delete", as: :api_device_delete
+
     get "/api/display", to: "api.display.show", as: :api_display
+
     post "/api/log", to: "api.log.create", as: :api_log_create
+
     get "/api/models", to: "api.models.index", as: :api_models
     get "/api/models/:id", to: "api.models.show", as: :api_model
     post "/api/models", to: "api.models.create", as: :api_model_create
     patch "/api/models/:id", to: "api.models.patch", as: :api_model_patch
     delete "/api/models/:id", to: "api.models.delete", as: :api_model_delete
+
     post "/api/screens", to: "api.screens.create", as: :api_screens_create
+
     get "/api/setup", to: "api.setup.show", as: :api_setup
 
     # TODO: Remove once Firmware drops trailing slash requirement.
@@ -55,6 +60,8 @@ module Terminus
     get "/playlists/:id/edit", to: "playlists.edit", as: :playlist_edit
     put "/playlists/:id", to: "playlists.update", as: :playlist_update
     delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
+
+    get "/screens", to: "screens.index", as: :screens
 
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
     put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update

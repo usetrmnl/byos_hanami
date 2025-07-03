@@ -1,0 +1,20 @@
+<search>
+  <%= tag.form(action: routes.path(:screens), method: :get, class: "page-search") do %>
+    <input id="search"
+           name="query"
+           value="<%= query %>"
+           class="value"
+           hx-get="<%= routes.path :screens %>"
+           hx-trigger="search, keyup delay:200ms changed"
+           hx-select=".screen"
+           hx-target="next .screen"
+           hx-swap="outerHTML"
+           hx-push-url="true"
+           hx-indicator=".page-loader"/>
+
+      <div class="page-loader htmx-indicator"></div>
+      <input type="submit" value="Search" class="button-accept"/>
+      <%= link_to "Clear", routes.path(:screens), class: "button-decline" %>
+  <% end %>
+</search>
+
