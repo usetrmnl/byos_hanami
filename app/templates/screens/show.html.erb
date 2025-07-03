@@ -1,0 +1,44 @@
+<% content_for :title, "#{screen.label} Screen | Terminus" %>
+
+<section class="page-screens">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/screens" class="link">Screens</a></li>
+      <li class="breadcrumb"><%= screen.label %></li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="screen">
+      <%= tag.img src: screen.image_uri, class: :image, width: 250, height: 150, loading: :lazy %>
+
+      <h2 class="label"><%= screen.label %></h2>
+
+      <div class="page-actions">
+        <%= link_to "Screens", routes.path(:screens) %>
+
+        <a href="<%= routes.path :screen_edit, id: screen.id %>"
+           hx-get="<%= routes.path :screen_edit, id: screen.id %>"
+           hx-target="closest .page-screens"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Edit
+        </a>
+      </div>
+
+      <dl class="site-definition-list">
+        <dt class="key">Name</dt>
+        <dd class="value"><%= screen.name %></dd>
+
+        <dt class="key">Model</dt>
+        <dd class="value"><%= screen.model.label %></dd>
+
+        <dt class="key">Created</dt>
+        <dd class="value"><%= human_at screen.created_at %></dd>
+
+        <dt class="key">Updated</dt>
+        <dd class="value"><%= human_at screen.updated_at %></dd>
+      </dl>
+    </div>
+  </div>
+</section>
