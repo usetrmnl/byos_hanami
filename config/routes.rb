@@ -72,6 +72,7 @@ module Terminus
     get "/screens/:id", to: "screens.show", as: :screen
     get "/screens/new", to: "screens.new", as: :screen_new
     post "/screens", to: "screens.create", as: :screen_create
+    get "/screens/:id/edit", to: "screens.edit", as: :screen_edit
 
     slice(:health, at: "/up") { root to: "show" }
 
