@@ -70,6 +70,7 @@ module Terminus
 
     get "/screens", to: "screens.index", as: :screens
     get "/screens/:id", to: "screens.show", as: :screen
+    get "/screens/new", to: "screens.new", as: :screen_new
 
     slice(:health, at: "/up") { root to: "show" }
 
