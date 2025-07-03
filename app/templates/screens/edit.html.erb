@@ -1,0 +1,42 @@
+<% content_for :title, "#{screen.label} Edit | Terminus" %>
+
+<section class="page-screens">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><%= link_to "Screens", routes.path(:screens), class: :link %></li>
+      <li class="breadcrumb">
+        <%= link_to screen.label, routes.path(:screen, id: screen.id), class: :link %>
+      </li>
+      <li class="breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="screens">
+      <form action="<%= routes.path :screen_update, id: screen.id %>"
+            method="put"
+            class="screen page-form">
+
+        <h1 class="label">Edit Screen</h1>
+
+        <img src="<%= screen.image_uri %>" class="image" loading="lazy" width="200" height="120">
+
+        <%= render :fields, models:, screen:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :put, path: routes.path(:screen, id: screen.id) %>
+
+          <a href="<%= routes.path :screen, id: screen.id %>"
+             class="button-decline"
+             hx-get="<%= routes.path :screen, id: screen.id %>"
+             hx-trigger="click"
+             hx-target="closest .page-screens"
+             hx-swap="outerHTML"
+             hx-push-url="true">
+             Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

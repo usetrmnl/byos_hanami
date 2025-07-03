@@ -1,0 +1,32 @@
+<fieldset role="group" class="group">
+  <%= scope(:form_field, key: :model_id, errors:).render do %>
+    <label class="key" for="screen[model_id]">
+      Model
+      <%= render "shared/popovers/trigger", name: :model %>
+    </label>
+
+    <%= tag.select name: "screen[model_id]", class: :value do %>
+      <% select_options_for(models).each do |label, id| %>
+        <%= tag.option label, value: id, selected: id == field_for(:model_id, fields, screen) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :label, errors:).render do %>
+    <label class="key" for="screen[label]">Label</label>
+
+    <%= tag.input name: "screen[label]",
+                  value: field_for(:label, fields, screen),
+                  class: :value,
+                  autocomplete: :label %>
+  <% end %>
+
+  <%= scope(:form_field, key: :name, errors:).render do %>
+    <label class="key" for="screen[name]">Name</label>
+
+    <%= tag.input name: "screen[name]",
+                  value: field_for(:name, fields, screen),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+</fieldset>
