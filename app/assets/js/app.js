@@ -9,4 +9,5 @@ import "../css/dashboard.css";
 import "../css/devices.css";
 import "../css/designer.css";
 import "../css/playlists.css";
+import "../css/screens.css";
 import "../css/problem_details.css";
