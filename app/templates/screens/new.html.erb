@@ -1,0 +1,25 @@
+<% content_for :title, "New Screen | Terminus" %>
+
+<section class="page-screens">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/screens" class="link">Screens</a></li>
+      <li class="breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="screens">
+      <form action="/screens" method="post" class="screen page-form">
+        <h1 class="label">New Screen</h1>
+
+        <%= render :fields, models:, screen:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :post, path: routes.path(:screens) %>
+          <%= link_to "Cancel", routes.path(:screens), class: "button-decline" %>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
