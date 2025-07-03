@@ -1,0 +1,25 @@
+<li id="<%= screen.id %>" class="screen">
+   <%= tag.img src: screen.image_uri, loading: :lazy %>
+
+  <h2 class="label"><%= screen.label %></h2>
+  <h3 class="name"><%= screen.name %></h2>
+
+  <div class="actions">
+    <a href="/screens/<%= "#{screen.id}/edit" %>"
+       hx-get="/screens/<%= "#{screen.id}/edit" %>"
+       hx-target="closest .page-screens"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      Edit
+    </a>
+
+    <a href="/screen/<%= screen.id %>"
+       class="link-cancel"
+       hx-delete="/screens/<%= screen.id %>"
+       hx-confirm="Are you sure you want to delete this screen?"
+       hx-target="closest .screen"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
+</li>
