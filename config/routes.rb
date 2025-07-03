@@ -68,6 +68,8 @@ module Terminus
 
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
+    get "/screens", to: "screens.index", as: :screens
+
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/uploads"]
