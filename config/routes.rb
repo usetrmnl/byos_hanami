@@ -74,6 +74,7 @@ module Terminus
     post "/screens", to: "screens.create", as: :screen_create
     get "/screens/:id/edit", to: "screens.edit", as: :screen_edit
     put "/screens/:id", to: "screens.update", as: :screen_update
+    delete "/screens/:id", to: "screens.delete", as: :screen_delete
 
     slice(:health, at: "/up") { root to: "show" }
 
