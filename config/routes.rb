@@ -65,6 +65,7 @@ module Terminus
     get "/screens/:id", to: "screens.show", as: :screen
     get "/screens/new", to: "screens.new", as: :screen_new
     post "/screens", to: "screens.create", as: :screen_create
+    get "/screens/:id/edit", to: "screens.edit", as: :screen_edit
 
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
     put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
