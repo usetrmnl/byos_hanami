@@ -919,7 +919,7 @@ To contribute, run:
 
 [source,bash]
 ----
-git clone https://github.com/usetrmnl/terminus
+git clone https://github.com/usetrmnl/byos_hanami terminus
 cd terminus
 bin/setup
 ----
