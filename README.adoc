@@ -796,7 +796,38 @@ Used for generating new device screens by supplying HTML content for rendering, 
 
 When making requests, the `Access-Token` is your device's API key. You can obtain this information from within the UI for your specific device.
 
-.Request (HTML Content)
+.GET Request
+[%collapsible]
+====
+[source,bash]
+----
+curl "https://localhost:2443/api/screens" \
+     -H 'Access-Token: <redacted>' \
+     -H 'Content-Type: application/json'
+----
+====
+
+.GET Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": [
+    {
+      "name": "demo.png",
+      "path": "http://192.168.0.227:2300/public/assets/screens/B0818422BDE8/demo.png"
+    },
+    {
+      "name": "proxy-9fb9de.bmp",
+      "path": "http://192.168.0.227:2300/public/assets/screens/B0818422BDE8/proxy-9fb9de.bmp"
+    }
+  ]
+}
+----
+====
+
+.POST Request (HTML Content)
 [%collapsible]
 ====
 [source,bash]
@@ -832,7 +863,7 @@ Due to this being so flexible, this also means you can pull in and use our link:
 💡 You can use the Designer within the UI to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
 ====
 
-.Request (Preprocessed URI)
+.POST Request (Preprocessed URI)
 [%collapsible]
 ====
 [source,bash]
@@ -852,7 +883,7 @@ curl -X "POST" "https://localhost:2443/api/screens" \
 Allows you to render a preprocessed image -- by you -- on your device. The `preprocessed` value must be `true` when supplied. This assumes the URI you want have rendered on your device is fully compatible with the device in terms of greyscale, bit depth, color depth, and so forth. We _do not process this image_ and only cache the image locally for display on your device. I you want want your image processed then see the Unprocessed URI API Request example.
 ====
 
-.Request (Unprocessed URI)
+.POST Request (Unprocessed URI)
 [%collapsible]
 ====
 [source,bash]
@@ -872,7 +903,7 @@ curl -X "POST" "https://localhost:2443/api/screens" \
 Allows you to render a unprocessed image on your device. We'll automatically process the image for rendering on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
 ====
 
-.Request (Base64 Encoded Data)
+.POST Request (Base64 Encoded Data)
 [%collapsible]
 ====
 
@@ -893,19 +924,47 @@ curl -X "POST" "https://localhost:2443/api/screens" \
 Allows you to render a strictly Base64 encoded image on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
 ====
 
-.Response
+.POST Response
 [%collapsible]
 ====
 [source,json]
 ----
 {
   "data": {
-    "path": "$HOME/Engineering/terminus/public/assets/screens/A1B2C3D4E5F6/demo.png"
+    "name": "demo.png"
+    "path": "http://192.168.1.2:2300/public/assets/screens/A1B2C3D4E5F6/demo.png"
   }
 }
 ----
 
 No matter what parameters you use for this request, you'll always get a path (unless an error is encountered).
+====
+
+.DELETE Request
+[%collapsible]
+====
+Use the file name (extension included) of the screen you wish to delete when making API requests. In the future, a proper ID will be used instead of the file name.
+
+[source,bash]
+----
+curl -X "DELETE" "https://localhost:2443/api/screens/demo.png" \
+     -H 'Access-Token: <redacted>' \
+     -H 'Content-Type: application/json'
+----
+====
+
+.DELETE Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "name": "demo.png",
+    "path": "http://192.168.1.2:2300/public/assets/screens/A1B2C3D4E5F6/demo.png"
+  }
+}
+----
 ====
 
 == Development
