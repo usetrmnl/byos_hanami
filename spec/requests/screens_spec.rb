@@ -217,4 +217,59 @@ RSpec.describe "/api/screens", :db do
       )
     end
   end
+
+  it "deletes existing screen" do
+    path.deep_touch
+
+    delete routes.path(:api_screen_delete, id: path.basename.to_s),
+           {},
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(path.exist?).to be(false)
+  end
+
+  it "answers deleted screen" do
+    path.deep_touch
+
+    delete routes.path(:api_screen_delete, id: path.basename.to_s),
+           {},
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(json_payload).to eq(
+      data: {
+        name: "rspec_test.png",
+        path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
+      }
+    )
+  end
+
+  it "answers unknown screen for unknown device" do
+    delete routes.path(:api_screen_delete, id: "bogus"),
+           {},
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => "bogus"
+
+    expect(json_payload).to eq(
+      data: {
+        name: "unknown.png",
+        path: "https://localhost/screens/bogus/unknown.png"
+      }
+    )
+  end
+
+  it "answers non-existing screen" do
+    delete routes.path(:api_screen_delete, id: path.basename.to_s),
+           {},
+           "CONTENT_TYPE" => "application/json",
+           "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(json_payload).to eq(
+      data: {
+        name: "rspec_test.png",
+        path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
+      }
+    )
+  end
 end

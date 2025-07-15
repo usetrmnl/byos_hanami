@@ -22,6 +22,7 @@ module Terminus
 
     get "/api/screens", to: "api.screens.index", as: :api_screens
     post "/api/screens", to: "api.screens.create", as: :api_screens_create
+    delete "/api/screens/:id", to: "api.screens.delete", as: :api_screen_delete
 
     get "/api/setup", to: "api.setup.show", as: :api_setup
 
