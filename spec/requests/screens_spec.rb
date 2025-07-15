@@ -45,7 +45,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates image from HTML with random name" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {content: "<p>Test</p>"}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -54,7 +54,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates image from HTML with specific name" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -63,7 +63,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates preprocessed image from URI" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {uri: SPEC_ROOT.join("support/fixtures/test.png"), preprocessed: true}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -72,7 +72,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates unprocessed image from URI" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {uri: SPEC_ROOT.join("support/fixtures/test.png")}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -83,7 +83,7 @@ RSpec.describe "/api/screens", :db do
   it "creates image from Base64 encoded data" do
     data = Base64.strict_encode64 SPEC_ROOT.join("support/fixtures/test.png").read
 
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {data:}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -92,7 +92,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates image with specific dimensions" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {uri: SPEC_ROOT.join("support/fixtures/test.png"), dimensions: "50x100!"}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -103,7 +103,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "creates screen and answers name and path" do
-    post routes.path(:api_screens_create),
+    post routes.path(:api_screen_create),
          {image: {content: "<p>Test</p>", file_name: "test.png"}}.to_json,
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
@@ -118,7 +118,7 @@ RSpec.describe "/api/screens", :db do
 
   context "with unknown device" do
     before do
-      post routes.path(:api_screens_create),
+      post routes.path(:api_screen_create),
            {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
            "CONTENT_TYPE" => "application/json",
            "HTTP_ACCESS_TOKEN" => "bogus"
@@ -138,7 +138,7 @@ RSpec.describe "/api/screens", :db do
 
   context "without dimensions" do
     before do
-      post routes.path(:api_screens_create),
+      post routes.path(:api_screen_create),
            {image: {file_name: "test.png"}}.to_json,
            "CONTENT_TYPE" => "application/json",
            "HTTP_ACCESS_TOKEN" => device.api_key
@@ -165,7 +165,7 @@ RSpec.describe "/api/screens", :db do
 
   context "without file extension" do
     before do
-      post routes.path(:api_screens_create),
+      post routes.path(:api_screen_create),
            {image: {content: "Test.", file_name: "test"}}.to_json,
            "CONTENT_TYPE" => "application/json",
            "HTTP_ACCESS_TOKEN" => device.api_key
@@ -192,7 +192,7 @@ RSpec.describe "/api/screens", :db do
 
   context "without body" do
     before do
-      post routes.path(:api_screens_create),
+      post routes.path(:api_screen_create),
            {},
            "CONTENT_TYPE" => "application/json",
            "HTTP_ACCESS_TOKEN" => device.api_key

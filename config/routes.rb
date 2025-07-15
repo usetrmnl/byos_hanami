@@ -12,8 +12,11 @@ module Terminus
     post "/api/devices", to: "api.devices.create", as: :api_device_create
     patch "/api/devices/:id", to: "api.devices.patch", as: :api_device_patch
     delete "/api/devices/:id", to: "api.devices.delete", as: :api_device_delete
+
     get "/api/display", to: "api.display.show", as: :api_display
+
     post "/api/log", to: "api.log.create", as: :api_log_create
+
     get "/api/models", to: "api.models.index", as: :api_models
     get "/api/models/:id", to: "api.models.show", as: :api_model
     post "/api/models", to: "api.models.create", as: :api_model_create
@@ -21,7 +24,7 @@ module Terminus
     delete "/api/models/:id", to: "api.models.delete", as: :api_model_delete
 
     get "/api/screens", to: "api.screens.index", as: :api_screens
-    post "/api/screens", to: "api.screens.create", as: :api_screens_create
+    post "/api/screens", to: "api.screens.create", as: :api_screen_create
     delete "/api/screens/:id", to: "api.screens.delete", as: :api_screen_delete
 
     get "/api/setup", to: "api.setup.show", as: :api_setup
