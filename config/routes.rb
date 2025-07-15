@@ -19,7 +19,10 @@ module Terminus
     post "/api/models", to: "api.models.create", as: :api_model_create
     patch "/api/models/:id", to: "api.models.patch", as: :api_model_patch
     delete "/api/models/:id", to: "api.models.delete", as: :api_model_delete
+
+    get "/api/screens", to: "api.screens.index", as: :api_screens
     post "/api/screens", to: "api.screens.create", as: :api_screens_create
+
     get "/api/setup", to: "api.setup.show", as: :api_setup
 
     # TODO: Remove once Firmware drops trailing slash requirement.

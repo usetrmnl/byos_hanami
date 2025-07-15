@@ -3,8 +3,46 @@
 require "hanami_helper"
 
 RSpec.describe "/api/screens", :db do
+  using Refinements::Pathname
+
   let(:device) { Factory[:device] }
-  let(:path) { temp_dir.join device.slug, "rspec_test.png" }
+  let(:path) { settings.screens_root.join device.slug, "rspec_test.png" }
+
+  it "answers records when screens exist" do
+    path.deep_touch
+
+    get routes.path(:api_screens),
+        {},
+        "CONTENT_TYPE" => "application/json",
+        "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(json_payload).to eq(
+      data: [
+        {
+          name: "rspec_test.png",
+          path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
+        }
+      ]
+    )
+  end
+
+  it "answers empty array when screens don't exist" do
+    get routes.path(:api_screens),
+        {},
+        "CONTENT_TYPE" => "application/json",
+        "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(json_payload).to eq(data: [])
+  end
+
+  it "answers empty array when device doesn't exist" do
+    get routes.path(:api_screens),
+        {},
+        "CONTENT_TYPE" => "application/json",
+        "HTTP_ACCESS_TOKEN" => "bogus"
+
+    expect(json_payload).to eq(data: [])
+  end
 
   it "creates image from HTML with random name" do
     post routes.path(:api_screens_create),
