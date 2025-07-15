@@ -12,7 +12,7 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    expect(Pathname(json_payload.dig(:data, :path)).exist?).to be(true)
+    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
   end
 
   it "creates image from HTML with specific name" do
@@ -21,7 +21,7 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    expect(Pathname(json_payload.dig(:data, :path)).exist?).to be(true)
+    expect(temp_dir.join("A1B2C3D4E5F6/test.bmp").exist?).to be(true)
   end
 
   it "creates preprocessed image from URI" do
@@ -30,7 +30,7 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    expect(Pathname(json_payload.dig(:data, :path)).exist?).to be(true)
+    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
   end
 
   it "creates unprocessed image from URI" do
@@ -39,7 +39,7 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    expect(Pathname(json_payload.dig(:data, :path)).exist?).to be(true)
+    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
   end
 
   it "creates image from Base64 encoded data" do
@@ -50,7 +50,7 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    expect(Pathname(json_payload.dig(:data, :path)).exist?).to be(true)
+    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
   end
 
   it "creates image with specific dimensions" do
@@ -59,9 +59,23 @@ RSpec.describe "/api/screens", :db do
          "CONTENT_TYPE" => "application/json",
          "HTTP_ACCESS_TOKEN" => device.api_key
 
-    image = MiniMagick::Image.open Pathname(json_payload.dig(:data, :path))
+    image = MiniMagick::Image.open temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}")
 
     expect(image).to have_attributes(width: 50, height: 100)
+  end
+
+  it "creates screen and answers name and path" do
+    post routes.path(:api_screens_create),
+         {image: {content: "<p>Test</p>", file_name: "test.png"}}.to_json,
+         "CONTENT_TYPE" => "application/json",
+         "HTTP_ACCESS_TOKEN" => device.api_key
+
+    expect(json_payload).to eq(
+      data: {
+        name: "test.png",
+        path: "https://localhost/../tmp/rspec/A1B2C3D4E5F6/test.png"
+      }
+    )
   end
 
   context "with unknown device" do

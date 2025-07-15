@@ -46,15 +46,22 @@ module Terminus
           def save device, image, response
             result = creator.call output_path(device.slug, image), dimensions: "800x480", **image
 
-            if result.success?
-              response.with body: {data: {path: result.success}}.to_json, format: :json, status: 200
-            else
-              unprocessable_entity_for_creation result, response
+            case result
+              in Success(path)
+                uri = uri_for path
+                response.with body: {data: {name: path.basename, path: uri}}.to_json,
+                              format: :json,
+                              status: 200
+              else unprocessable_entity_for_creation result, response
             end
           end
 
           def output_path slug, image
             settings.screens_root.join(slug).mkpath.join image.fetch(:file_name, "%<name>s.png")
+          end
+
+          def uri_for path
+            "#{settings.api_uri}/#{path.relative_path_from config.public_directory}"
           end
 
           def unauthorized response
