@@ -1,0 +1,11 @@
+<% if items.any? %>
+  <ul class="items">
+    <% items.each do |item| %>
+      <%= item.render :item %>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="items">
+    <%= render "shared/empty", message: "No items found." %>
+  </div>
+<% end %>
