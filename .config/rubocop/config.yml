@@ -16,6 +16,9 @@ Metrics/MethodLength:
     - wifi_percentage
   Exclude:
     - app/views/helpers.rb
+RSpec/ExampleLength:
+  Exclude:
+    - "spec/features/**/*"
 RSpec/SpecFilePathFormat:
   CustomTransform:
     Terminus: ""
