@@ -1,0 +1,24 @@
+<% edit_uri = routes.path :playlist_item_edit, playlist_id: item.playlist_id, id: item.id %>
+<% delete_uri = routes.path :playlist_item_delete, playlist_id: item.playlist_id, id: item.id %>
+
+<div class="item">
+  <img src="<%= item.screen.image_uri %>" class="image" loading="lazy" width="200" height="120">
+
+  <div class="actions">
+    <a href="<%= edit_uri %>"
+       hx-get="<%= edit_uri %>"
+       hx-target="closest .item"
+       hx-swap="outerHTML">
+      Edit
+    </a>
+
+    <a href="<%= delete_uri %>"
+       class="link-cancel"
+       hx-delete="<%= delete_uri %>"
+       hx-confirm="Are you sure you want to delete this item?"
+       hx-target="closest .item"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
+</div>

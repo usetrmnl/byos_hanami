@@ -63,6 +63,8 @@ module Terminus
     put "/playlists/:id", to: "playlists.update", as: :playlist_update
     delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
 
+    get "/playlists/:playlist_id/items", to: "playlists.items.index", as: :playlist_items
+
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
     put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
 

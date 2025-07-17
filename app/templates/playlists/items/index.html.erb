@@ -1,0 +1,20 @@
+<div class="items">
+  <h2 class="label">Items</h2>
+
+  <% if items.any? %>
+    <% items.each do |item| %>
+      <%= item.render :item %>
+    <% end %>
+  <% else %>
+    <%= render "shared/empty", message: "No items found." %>
+  <% end %>
+
+  <a href="<%= routes.path :playlist_item_new, playlist_id: playlist_id %>"
+     class="button-accept"
+     hx-get="<%= routes.path :playlist_item_new, playlist_id: playlist_id %>"
+     hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+     hx-target="this"
+     hx-swap="beforebegin">
+    Add Item
+  </a>
+</div>
