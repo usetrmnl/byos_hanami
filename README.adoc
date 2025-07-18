@@ -22,6 +22,7 @@
 = Terminus
 
 image:https://dl.circleci.com/status-badge/img/gh/usetrmnl/byos_hanami/tree/main.svg?style=svg[CircleCI, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main]
+image:https://github.com/usetrmnl/byos_hanami/actions/workflows/docker.yml/badge.svg[Docker, link="https://github.com/usetrmnl/byos_hanami/actions"]
 image:https://alchemists.io/images/projects/caliber/coverage.svg[Code Coverage, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main, width=139.1, height=20]
 image:https://alchemists.io/images/badges/style.svg[Style, link=https://alchemists.io/projects/caliber, width=81, height=20]
 
@@ -31,9 +32,8 @@ toc::[]
 
 == Features
 
-* Allows you to run your own server.
+* Allows you to run your own server on your own private network.
 * Built atop {ruby_link} and {hanami_link}.
-* Provides automatic detection of your server's IP address.
 * Uses {htmx_link}.
 * Uses {imagemagick_link}.
 * Uses {overmind_link}.
@@ -63,12 +63,13 @@ The following is a high level overview you can use to compare/contrast when deci
 | JSON Data API                     | 🟢       | 🟢
 | Image Previews                    | 🟢       | 🟢
 | Playlists                         | 🟡       | 🟢
-| Plugins                           | 🟢       | 🟢
-| Recipes                           | 🟢       | 🟢
-| Account                           | 🔴       | 🟢
-| Open Source Components            | 🟢       | 🟡
+| Plugins^*^                        | 🟢       | 🟢
+| Recipes^*^                        | 🟢       | 🟢
+| Account Management                | ⚪️       | 🟢
 | Docker                            | 🟢       | 🔴
 |===
+
+ℹ️ Plugins and Recipes are supported by pulling screen data from our link:https://usetrmnl.com[Core] server. This means Terminus accesses data outside your private network to acquire this data. This is done by _proxying_, per device, to our Core server (disabled by default), downloading screens from your playlist and then rendering on your device. For more information, see xref:_background_pollers[Background Pollers].
 
 The goal isn't for BYOS to match parity with our hosted solution but to provide enough of a pleasant solution for your own customized experience. There are trade offs either way but we've got you covered for whatever path you wish to travel. 🎉
 
