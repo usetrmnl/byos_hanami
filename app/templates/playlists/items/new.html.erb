@@ -1,0 +1,13 @@
+<form action="<%= routes.path :playlist_item_new, playlist_id: playlist.id %>"
+      method="post"
+      class="page-form"
+      hx-ext="remove">
+
+  <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
+
+  <div class="form-actions">
+    <%= render "save_button",
+               verb: :post,
+               path: routes.path(:playlist_item_create, playlist_id: playlist.id) %>
+    <%= tag.button "Cancel", class: "button-decline", data: {remove: true} %>
+  </div>
