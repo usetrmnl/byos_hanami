@@ -1,0 +1,16 @@
+<% new_uri = routes.path :playlist_item_new, playlist_id: playlist.id %>
+
+<form action="<%= new_uri %>" method="post" class="page-form" hx-ext="remove">
+  <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
+
+  <div class="form-actions">
+    <input type="submit"
+           value="Save"
+           class="button-accept"
+           hx-post="<%= routes.path :playlist_item_create, playlist_id: playlist.id %>"
+           hx-target="closest .page-form"
+           hx-swap="outerHTML">
+
+    <%= tag.button "Cancel", class: "button-decline", data: {remove: true} %>
+  </div>
+</form>
