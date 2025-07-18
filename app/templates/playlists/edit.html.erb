@@ -3,17 +3,20 @@
 <section class="page-playlists">
   <header class="page-header">
     <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><a href="/playlists" class="link">Devices</a></li>
+      <li class="breadcrumb"><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
       <li class="breadcrumb">
-        <%= link_to playlist.label, "/playlists/#{playlist.id}", class: :link %>
+        <%= link_to playlist.label, routes.path(:playlist, id: playlist.id), class: :link %>
       </li>
       <li class="breadcrumb">Edit</li>
     </ul>
   </header>
 
   <div class="page-body">
-    <div class="playlists">
-      <form action="/playlists" method="put" class="playlist page-form">
+    <div class="playlist">
+      <form action="<%= routes.path :playlist_update, id: playlist.id %>"
+            method="put"
+            class="page-form">
+
         <h1 class="label">Edit Playlist</h1>
 
         <%= render :fields, playlist:, fields: fields.value, errors: %>
@@ -32,6 +35,11 @@
           </a>
         </div>
       </form>
+
+      <div hx-get="<%= routes.path :playlist_items, playlist_id: playlist.id %>"
+           hx-trigger="load"
+           hx-swap="outerHTML">
+      </div>
     </div>
   </div>
 </section>

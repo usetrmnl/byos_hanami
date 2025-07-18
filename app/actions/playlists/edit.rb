@@ -5,7 +5,11 @@ module Terminus
     module Playlists
       # The edit action.
       class Edit < Terminus::Action
-        include Deps[repository: "repositories.playlist"]
+        include Deps[
+          :htmx,
+          repository: "repositories.playlist",
+          item_repository: "repositories.playlist_item"
+        ]
 
         params { required(:id).filled :integer }
 
@@ -20,9 +24,10 @@ module Terminus
         private
 
         def view_settings request, parameters
-          settings = {playlist: repository.find(parameters[:id])}
+          playlist = repository.find parameters[:id]
+          settings = {playlist:, items: item_repository.all_by(playlist_id: playlist.id)}
+          settings[:layout] = false if htmx.request(**request.env).request?
 
-          settings[:layout] = false if request.env.key? "HTTP_HX_REQUEST"
           settings
         end
       end
