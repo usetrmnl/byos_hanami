@@ -18,7 +18,21 @@
 
         <%= render :fields, playlist:, fields: fields.value, errors: %>
 
+        <div hx-get="<%= routes.path :playlist_items, playlist_id: playlist.id %>"
+             hx-trigger="load"
+             hx-swap="outerHTML">
+        </div>
+
         <div class="form-actions">
+          <a href="<%= routes.path :playlist_item_new, playlist_id: playlist.id %>"
+             class="button-accept"
+             hx-get="<%= routes.path :playlist_item_new, playlist_id: playlist.id %>"
+             hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+             hx-target="closest .form-actions"
+             hx-swap="beforebegin">
+            Add Item
+          </a>
+
           <%= render "save_button", verb: :put, path: "/playlists/#{playlist.id}" %>
 
           <a href="<%= routes.path :playlist, id: playlist.id %>"
