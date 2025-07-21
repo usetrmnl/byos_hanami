@@ -221,7 +221,14 @@ CREATE TABLE public.model (
     description text,
     width integer NOT NULL,
     height integer NOT NULL,
-    published_at timestamp without time zone
+    published_at timestamp without time zone,
+    mime_type text DEFAULT 'image/png'::text NOT NULL,
+    colors integer DEFAULT 2 NOT NULL,
+    bit_depth integer DEFAULT 1 NOT NULL,
+    scale_factor integer DEFAULT 1 NOT NULL,
+    rotation integer DEFAULT 0 NOT NULL,
+    offset_x integer DEFAULT 0 NOT NULL,
+    offset_y integer DEFAULT 0 NOT NULL
 );
 
 
@@ -630,4 +637,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250625123645_change_device_sleep_end_column.rb'),
 ('20250625123721_add_screen.rb'),
 ('20250625123745_add_playlist_item.rb'),
-('20250723140212_add_playlist_current_item_foreign_key.rb');
+('20250723140212_add_playlist_current_item_foreign_key.rb'),
+('20250723140455_add_model_detail_columns.rb');
