@@ -8,6 +8,7 @@ module Terminus
         include Deps[
           repository: "repositories.device",
           model_repository: "repositories.model",
+          playlist_repository: "repositories.playlist",
           show_view: "views.devices.show",
           edit_view: "views.devices.edit"
         ]
@@ -39,6 +40,7 @@ module Terminus
         def edit device, parameters, response
           response.render edit_view,
                           models: model_repository.all,
+                          playlists: playlist_repository.all,
                           device:,
                           fields: parameters[:device],
                           errors: parameters.errors[:device],

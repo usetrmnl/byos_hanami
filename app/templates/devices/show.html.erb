@@ -32,6 +32,14 @@
         <dd class="value"><%= device.model ? device.model.label : nil %></dd>
 
         <dt class="key">
+          Playlist
+          <%= render "shared/popovers/trigger", name: :playlist %>
+        </dt>
+        <dd class="value">
+          <%= device.playlist ? link_to(device.playlist.label, routes.path(:playlist, id: device.playlist_id)) : nil %>
+        </dd>
+
+        <dt class="key">
           Friendly ID
           <%= render "shared/popovers/trigger", name: :friendly_id %>
         </dt>

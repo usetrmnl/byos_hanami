@@ -9,6 +9,7 @@ module Terminus
           :htmx,
           repository: "repositories.device",
           model_repository: "repositories.model",
+          playlist_repository: "repositories.playlist",
           new_view: "views.devices.new",
           index_view: "views.devices.index"
         ]
@@ -37,6 +38,7 @@ module Terminus
         def render_new response, parameters
           response.render new_view,
                           models: model_repository.all,
+                          playlists: playlist_repository.all,
                           device: nil,
                           fields: parameters[:device],
                           errors: parameters.errors[:device],

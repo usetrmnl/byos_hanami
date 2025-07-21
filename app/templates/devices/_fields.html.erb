@@ -12,6 +12,19 @@
     <% end %>
   <% end %>
 
+  <%= scope(:form_field, key: :playlist_id, errors:).render do %>
+    <label class="key" for="device[playlist_id]">
+      Playlist
+      <%= render "shared/popovers/trigger", name: :playlist %>
+    </label>
+
+    <%= tag.select name: "device[playlist_id]", class: :value do %>
+      <% select_options_for(playlists).each do |label, id| %>
+        <%= tag.option label, value: id, selected: id == field_for(:playlist_id, fields, device) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <%= scope(:form_field, key: :label, errors:).render do %>
     <label class="key" for="device[label]">Label</label>
 

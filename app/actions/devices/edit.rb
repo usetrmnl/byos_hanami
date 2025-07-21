@@ -8,7 +8,8 @@ module Terminus
         include Deps[
           :htmx,
           repository: "repositories.device",
-          model_repository: "repositories.model"
+          model_repository: "repositories.model",
+          playlist_repository: "repositories.playlist"
         ]
 
         params { required(:id).filled :integer }
@@ -24,7 +25,11 @@ module Terminus
         private
 
         def view_settings request, parameters
-          settings = {models: model_repository.all, device: repository.find(parameters[:id])}
+          settings = {
+            models: model_repository.all,
+            playlists: playlist_repository.all,
+            device: repository.find(parameters[:id])
+          }
           settings[:layout] = false if htmx.request(**request.env).request?
           settings
         end

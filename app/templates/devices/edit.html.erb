@@ -18,7 +18,7 @@
       <%= render "measurements", device: %>
 
       <form action="/devices" method="put" class="page-form">
-        <%= render :fields, models:, device:, fields: fields.value, errors: %>
+        <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
