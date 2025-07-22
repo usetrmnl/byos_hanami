@@ -20,6 +20,13 @@ module Terminus
               optional(:name).filled :string
               optional(:label).filled :string
               optional(:description).filled :string
+              optional(:mime_type).filled :string
+              optional(:colors).filled :integer
+              optional(:bit_depth).filled :integer
+              optional(:scale_factor).filled :integer
+              optional(:rotation).filled :integer
+              optional(:offset_x).filled :integer
+              optional(:offset_y).filled :integer
               optional(:width).filled :integer
               optional(:height).filled :integer
               optional(:published_at).filled :date_time
