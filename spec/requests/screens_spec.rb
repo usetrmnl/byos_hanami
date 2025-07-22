@@ -5,150 +5,154 @@ require "hanami_helper"
 RSpec.describe "/api/screens", :db do
   using Refinements::Pathname
 
-  let(:device) { Factory[:device] }
-  let(:path) { settings.screens_root.join device.slug, "rspec_test.png" }
+  let(:model) { Factory[:model] }
+  let(:screen) { Factory[:screen] }
 
   it "answers records when screens exist" do
-    path.deep_touch
+    screen
+    get routes.path(:api_screens), {}, "CONTENT_TYPE" => "application/json"
 
-    get routes.path(:api_screens),
-        {},
-        "CONTENT_TYPE" => "application/json",
-        "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(json_payload).to eq(
+    expect(json_payload).to match(
       data: [
         {
-          name: "rspec_test.png",
-          path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
+          model_id: kind_of(Integer),
+          id: kind_of(Integer),
+          label: screen.label,
+          name: screen.name,
+          created_at: match_rfc_3339,
+          updated_at: match_rfc_3339
         }
       ]
     )
   end
 
   it "answers empty array when screens don't exist" do
-    get routes.path(:api_screens),
-        {},
-        "CONTENT_TYPE" => "application/json",
-        "HTTP_ACCESS_TOKEN" => device.api_key
-
+    get routes.path(:api_screens), {}, "CONTENT_TYPE" => "application/json"
     expect(json_payload).to eq(data: [])
   end
 
-  it "answers empty array when device doesn't exist" do
-    get routes.path(:api_screens),
-        {},
-        "CONTENT_TYPE" => "application/json",
-        "HTTP_ACCESS_TOKEN" => "bogus"
-
-    expect(json_payload).to eq(data: [])
-  end
-
-  it "creates image from HTML with random name" do
+  it "creates image from HTML" do
     post routes.path(:api_screen_create),
-         {image: {content: "<p>Test</p>"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
+         {image: {model_id: model.id, label: "Test", name: "test", content: "<p>Test</p>"}}.to_json,
+         "CONTENT_TYPE" => "application/json"
 
-    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
-  end
-
-  it "creates image from HTML with specific name" do
-    post routes.path(:api_screen_create),
-         {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(temp_dir.join("A1B2C3D4E5F6/test.bmp").exist?).to be(true)
+    expect(json_payload).to match(
+      data: {
+        model_id: model.id,
+        id: kind_of(Integer),
+        label: "Test",
+        name: "test",
+        filename: "test.png",
+        uri: %r(memory://.+.png),
+        mime_type: "image/png",
+        size: 320,
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
   end
 
   it "creates preprocessed image from URI" do
-    post routes.path(:api_screen_create),
-         {image: {uri: SPEC_ROOT.join("support/fixtures/test.png"), preprocessed: true}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
+    payload = {
+      image: {
+        model_id: model.id,
+        label: "Test",
+        name: "test",
+        uri: SPEC_ROOT.join("support/fixtures/test.png"),
+        preprocessed: true
+      }
+    }
 
-    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
+    post routes.path(:api_screen_create), payload.to_json, "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: kind_of(Integer),
+        id: kind_of(Integer),
+        label: "Test",
+        name: "test",
+        filename: "test.png",
+        uri: %r(memory://.+.png),
+        mime_type: "image/png",
+        size: 81,
+        width: 1,
+        height: 1,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
   end
 
   it "creates unprocessed image from URI" do
-    post routes.path(:api_screen_create),
-         {image: {uri: SPEC_ROOT.join("support/fixtures/test.png")}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
+    payload = {
+      image: {
+        model_id: model.id,
+        label: "Test",
+        name: "test",
+        uri: SPEC_ROOT.join("support/fixtures/test.png")
+      }
+    }
 
-    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
+    post routes.path(:api_screen_create), payload.to_json, "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: kind_of(Integer),
+        id: kind_of(Integer),
+        label: "Test",
+        name: "test",
+        filename: "test.png",
+        uri: %r(memory://.+.png),
+        mime_type: "image/png",
+        size: 126,
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
   end
 
   it "creates image from Base64 encoded data" do
     data = Base64.strict_encode64 SPEC_ROOT.join("support/fixtures/test.png").read
 
     post routes.path(:api_screen_create),
-         {image: {data:}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
+         {image: {model_id: model.id, label: "Test", name: "test", data:}}.to_json,
+         "CONTENT_TYPE" => "application/json"
 
-    expect(temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}").exist?).to be(true)
-  end
-
-  it "creates image with specific dimensions" do
-    post routes.path(:api_screen_create),
-         {image: {uri: SPEC_ROOT.join("support/fixtures/test.png"), dimensions: "50x100!"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
-
-    image = MiniMagick::Image.open temp_dir.join("A1B2C3D4E5F6/#{json_payload.dig :data, :name}")
-
-    expect(image).to have_attributes(width: 50, height: 100)
-  end
-
-  it "creates screen and answers name and path" do
-    post routes.path(:api_screen_create),
-         {image: {content: "<p>Test</p>", file_name: "test.png"}}.to_json,
-         "CONTENT_TYPE" => "application/json",
-         "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(json_payload).to eq(
+    expect(json_payload).to match(
       data: {
-        name: "test.png",
-        path: "https://localhost/../tmp/rspec/A1B2C3D4E5F6/test.png"
+        model_id: kind_of(Integer),
+        id: kind_of(Integer),
+        label: "Test",
+        name: "test",
+        filename: "test.png",
+        uri: %r(memory://.+.png),
+        mime_type: "image/png",
+        size: 126,
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end
 
-  context "with unknown device" do
+  context "with unknown model" do
     before do
       post routes.path(:api_screen_create),
-           {image: {content: "<p>Test</p>", file_name: "test.bmp"}}.to_json,
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => "bogus"
-    end
-
-    it "answers problem details" do
-      expect(json_payload).to eq(Petail[status: :unauthorized].to_h)
-    end
-
-    it "answers content type and status" do
-      expect(last_response).to have_attributes(
-        content_type: "application/problem+json; charset=utf-8",
-        status: 401
-      )
-    end
-  end
-
-  context "without dimensions" do
-    before do
-      post routes.path(:api_screen_create),
-           {image: {file_name: "test.png"}}.to_json,
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
+           {image: {model_id: 666, label: "Test", name: "test", content: "<p>Test.</p>"}}.to_json,
+           "CONTENT_TYPE" => "application/json"
     end
 
     it "answers problem details" do
       problem = Petail[
         type: "/problem_details#screen_payload",
-        status: :unprocessable_entity,
-        detail: %(Invalid parameters: {dimensions: "800x480", file_name: "test.png"}.),
+        status: 422,
+        title: "Unprocessable Entity",
+        detail: "Unable to find model for ID: 666.",
         instance: "/api/screens"
       ]
 
@@ -163,19 +167,19 @@ RSpec.describe "/api/screens", :db do
     end
   end
 
-  context "without file extension" do
+  context "with invalid MIME Type" do
     before do
+      model = Factory[:model, mime_type: "text/html"]
       post routes.path(:api_screen_create),
-           {image: {content: "Test.", file_name: "test"}}.to_json,
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
+           {image: {model_id: model.id, label: "Test", name: "test", content: "test"}}.to_json,
+           "CONTENT_TYPE" => "application/json"
     end
 
     it "answers problem details" do
       problem = Petail[
         type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
-        detail: %(Invalid image type: "". Use: "bmp" or "png".),
+        detail: %(Invalid MIME Type: "text/html". Use: "image/bmp" or "image/png".),
         instance: "/api/screens"
       ]
 
@@ -191,12 +195,7 @@ RSpec.describe "/api/screens", :db do
   end
 
   context "without body" do
-    before do
-      post routes.path(:api_screen_create),
-           {},
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
-    end
+    before { post routes.path(:api_screen_create), {}, "CONTENT_TYPE" => "application/json" }
 
     it "answers problem details" do
       problem = Petail[
@@ -218,58 +217,24 @@ RSpec.describe "/api/screens", :db do
     end
   end
 
-  it "deletes existing screen" do
-    path.deep_touch
-
-    delete routes.path(:api_screen_delete, id: path.basename.to_s),
-           {},
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(path.exist?).to be(false)
-  end
-
   it "answers deleted screen" do
-    path.deep_touch
+    delete routes.path(:api_screen_delete, id: screen.id), {}, "CONTENT_TYPE" => "application/json"
 
-    delete routes.path(:api_screen_delete, id: path.basename.to_s),
-           {},
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(json_payload).to eq(
+    expect(json_payload).to match(
       data: {
-        name: "rspec_test.png",
-        path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
+        model_id: kind_of(Integer),
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end
 
-  it "answers unknown screen for unknown device" do
-    delete routes.path(:api_screen_delete, id: "bogus"),
-           {},
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => "bogus"
+  it "answers not found problem details when deleting non-existing screen" do
+    delete routes.path(:api_screen_delete, id: 666), {}, "CONTENT_TYPE" => "application/json"
 
-    expect(json_payload).to eq(
-      data: {
-        name: "unknown.png",
-        path: "https://localhost/screens/bogus/unknown.png"
-      }
-    )
-  end
-
-  it "answers non-existing screen" do
-    delete routes.path(:api_screen_delete, id: path.basename.to_s),
-           {},
-           "CONTENT_TYPE" => "application/json",
-           "HTTP_ACCESS_TOKEN" => device.api_key
-
-    expect(json_payload).to eq(
-      data: {
-        name: "rspec_test.png",
-        path: "https://localhost/tmp/rspec/A1B2C3D4E5F6/rspec_test.png"
-      }
-    )
+    expect(json_payload).to eq(status: 404, title: "Not Found", type: "about:blank")
   end
 end

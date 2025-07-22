@@ -1,45 +1,33 @@
 # frozen_string_literal: true
 
+require "initable"
+
 module Terminus
   module Actions
     module API
       module Screens
         # The delete action.
         class Delete < Base
-          include Deps[:settings, device_repository: "repositories.device"]
+          include Deps[:settings, repository: "repositories.screen"]
+          include Initable[serializer: Serializers::Screen]
+
+          using Refines::Actions::Response
 
           def handle request, response
-            api_key = request.env["HTTP_ACCESS_TOKEN"]
-            device = device_repository.find_by(api_key:)
-
-            response.body = if device
-                              {data: build_record(device, request.params[:id])}.to_json
-                            else
-                              unknown(api_key).to_json
-                            end
+            repository.find(request.params[:id]).then do |screen|
+              screen ? success(screen, response) : failure(response)
+            end
           end
 
           private
 
-          # :reek:FeatureEnvy
-          def build_record device, id
-            path = settings.screens_root.join device.slug, id
-            path.delete if path.exist?
-            relative_path = path.relative_path_from config.root_directory
-
-            {
-              name: path.basename.to_s,
-              path: "#{settings.api_uri}/#{relative_path}"
-            }
+          def success screen, response
+            response.body = {data: serializer.new(screen).to_h}.to_json
           end
 
-          def unknown api_key
-            {
-              data: {
-                name: "unknown.png",
-                path: "#{settings.api_uri}/screens/#{api_key}/unknown.png"
-              }
-            }
+          def failure response
+            body = problem[status: :not_found]
+            response.with body: body.to_json, format: :problem_details, status: 404
           end
         end
       end

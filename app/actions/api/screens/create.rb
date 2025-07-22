@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "initable"
-require "refinements/pathname"
 
 module Terminus
   module Actions
@@ -10,11 +9,14 @@ module Terminus
       module Screens
         # The create action.
         class Create < Base
-          include Deps[:settings, repository: "repositories.device"]
-          include Initable[creator: proc { Terminus::Screens::Creator.new }]
+          include Deps[
+            creator: "aspects.screens.creator",
+            model_repository: "repositories.model",
+            repository: "repositories.screen"
+          ]
+          include Initable[serializer: Serializers::Screen]
           include Dry::Monads[:result]
 
-          using Refinements::Pathname
           using Refines::Actions::Response
 
           params do
@@ -31,12 +33,9 @@ module Terminus
 
           def handle request, response
             parameters = request.params
-            device = repository.find_by api_key: request.env["HTTP_ACCESS_TOKEN"]
-
-            return unauthorized response unless device
 
             if parameters.valid?
-              save device, parameters[:image], response
+              save parameters[:image], response
             else
               unprocessable_entity_for_parameters parameters.errors.to_h, response
             end
@@ -44,31 +43,14 @@ module Terminus
 
           private
 
-          def save device, image, response
-            result = creator.call output_path(device.slug, image), dimensions: "800x480", **image
+          def save parameters, response
+            result = creator.call(**parameters)
 
             case result
-              in Success(path)
-                uri = uri_for path
-                response.with body: {data: {name: path.basename, path: uri}}.to_json,
-                              format: :json,
-                              status: 200
+              in Success(screen)
+                response.body = {data: serializer.new(screen).to_h}.to_json
               else unprocessable_entity_for_creation result, response
             end
-          end
-
-          def output_path slug, image
-            settings.screens_root.join(slug).mkpath.join image.fetch(:file_name, "%<name>s.png")
-          end
-
-          def uri_for path
-            "#{settings.api_uri}/#{path.relative_path_from config.public_directory}"
-          end
-
-          def unauthorized response
-            response.with body: problem[status: :unauthorized].to_json,
-                          format: :problem_details,
-                          status: 401
           end
 
           def unprocessable_entity_for_parameters errors, response
