@@ -1,27 +1,20 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-
 module Terminus
   module Aspects
     module Screens
       # Creates sleep screen for new device.
       class Sleeper
-        include Deps[:settings, view: "views.sleep.new"]
-        include Terminus::Screens::Savers::Dependencies[creator: :html]
-        include Dry::Monads[:result]
+        include Deps[view: "views.sleep.new", saver: "aspects.screens.creator"]
 
         def call device
-          output_path = path_for device
+          id = device.friendly_id
 
-          return Success output_path if output_path.exist?
-
-          creator.call "#{view.call device:} ", output_path
+          saver.call model_id: device.model_id,
+                     name: "sleep_#{id.downcase}",
+                     label: "Sleep #{id}",
+                     content: String.new(view.call(device:))
         end
-
-        private
-
-        def path_for(device) = settings.screens_root.join(device.slug).mkpath.join "sleep.png"
       end
     end
   end
