@@ -3,7 +3,7 @@
 require "hanami_helper"
 require "mini_magick"
 
-RSpec.describe Terminus::Screens::Screensaver do
+RSpec.describe Terminus::Aspects::Screens::Shoter do
   subject(:screensaver) { described_class.new }
 
   include_context "with temporary directory"
@@ -36,7 +36,7 @@ RSpec.describe Terminus::Screens::Screensaver do
     end
 
     it "answers image path" do
-      expect(screensaver.call(content, path)).to be(path)
+      expect(screensaver.call(content, path)).to be_success(path)
     end
   end
 end

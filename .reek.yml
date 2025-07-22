@@ -12,13 +12,11 @@ detectors:
       - Terminus::Actions::Firmware::Delete#render
       - Terminus::IPFinder#all
       - Terminus::Screens::Greyscaler#convert
-      - Terminus::Screens::Screensaver#save
   LongParameterList:
     enabled: false
   TooManyStatements:
     exclude:
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Screens::Greyscaler#convert
-      - Terminus::Screens::Screensaver#save
       - Terminus::Views::Parts::Device#battery_percentage
       - Terminus::Views::Parts::Device#wifi_percentage
