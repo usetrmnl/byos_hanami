@@ -19,12 +19,13 @@ module Terminus
 
           params do
             required(:image).filled(:hash) do
+              required(:model_id).filled :integer
+              required(:label).filled :string
+              required(:name).filled :string
               optional(:content).filled :string
               optional(:uri).filled :string
               optional(:data).filled :string
               optional(:preprocessed).filled :bool
-              optional(:file_name).filled :string
-              optional(:dimensions).filled :string
             end
           end
 
