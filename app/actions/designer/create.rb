@@ -5,8 +5,11 @@ module Terminus
     module Designer
       # The create action.
       class Create < Terminus::Action
-        include Deps[:settings, :htmx, show_view: "views.designer.show"]
-        include Initable[creator: proc { Terminus::Screens::Creator.new }]
+        include Deps[
+          :htmx,
+          screen_creator: "aspects.screens.creator",
+          show_view: "views.designer.show"
+        ]
 
         params do
           required(:template).filled(:hash) do
