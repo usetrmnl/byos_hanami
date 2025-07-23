@@ -248,7 +248,8 @@ CREATE TABLE public.playlist (
     name text NOT NULL,
     label text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    current_item_id integer
 );
 
 
@@ -575,6 +576,14 @@ ALTER TABLE ONLY public.devices
 
 
 --
+-- Name: playlist playlist_current_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.playlist
+    ADD CONSTRAINT playlist_current_item_id_fkey FOREIGN KEY (current_item_id) REFERENCES public.playlist_item(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
 -- Name: playlist_item playlist_item_playlist_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -620,4 +629,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250625123558_add_device_and_model_playlist_columns.rb'),
 ('20250625123645_change_device_sleep_end_column.rb'),
 ('20250625123721_add_screen.rb'),
-('20250625123745_add_playlist_item.rb');
+('20250625123745_add_playlist_item.rb'),
+('20250723140212_add_playlist_current_item_foreign_key.rb');
