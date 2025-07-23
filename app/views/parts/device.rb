@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 require "hanami/view"
-require "initable"
 
 module Terminus
   module Views
     module Parts
       # The device presenter.
       class Device < Hanami::View::Part
-        include Initable[fetcher: proc { Terminus::Aspects::Screens::Fetcher.new }]
-        include Deps[:settings]
-
         def battery_percentage
           case battery
             when 0 then 0
@@ -44,8 +40,6 @@ module Terminus
         end
 
         def dimensions = "#{width}x#{height}"
-
-        def image_uri = fetcher.call(value)[:image_url].sub(settings.api_uri, "")
       end
     end
   end

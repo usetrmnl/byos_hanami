@@ -5,9 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Parts::Device, :db do
   using Refinements::Pathname
 
-  subject(:part) { described_class.new settings:, value: device, rendering: view.new.rendering }
-
-  include_context "with main application"
+  subject(:part) { described_class.new value: device, rendering: view.new.rendering }
 
   let(:device) { Factory[:device] }
 
@@ -15,17 +13,6 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     Class.new Hanami::View do
       config.paths = [Hanami.app.root.join("app/templates")]
       config.template = "n/a"
-    end
-  end
-
-  describe "#image_uri" do
-    before do
-      SPEC_ROOT.join("support/fixtures/test.bmp")
-               .copy temp_dir.join(device.slug, "test.bmp").make_ancestors
-    end
-
-    it "answers URI" do
-      expect(part.image_uri).to eq("/assets/screens/#{device.slug}/test.bmp")
     end
   end
 
