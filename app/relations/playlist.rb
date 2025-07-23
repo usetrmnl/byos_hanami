@@ -5,7 +5,10 @@ module Terminus
     # The playlist relation.
     class Playlist < DB::Relation
       schema :playlist, infer: true do
-        associations { has_many :devices }
+        associations do
+          belongs_to :current_item, relation: :playlist_item
+          has_many :devices
+        end
       end
     end
   end
