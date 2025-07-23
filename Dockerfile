@@ -31,6 +31,7 @@ RUN <<STEPS
   chromium \
   curl \
   fonts-noto-cjk \
+  git \
   gnupg2 \
   imagemagick \
   libjemalloc2 \
