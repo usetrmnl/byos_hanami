@@ -3,14 +3,13 @@
 require "hanami_helper"
 
 RSpec.describe "/api/devices", :db do
-  let(:device) { Factory[:device, model:, playlist:] }
+  let(:device) { Factory[:device, model:] }
   let(:model) { Factory[:model] }
   let(:playlist) { Factory[:playlist] }
 
   let :attributes do
     {
       model_id: model.id,
-      playlist_id: playlist.id,
       friendly_id: "ABC123",
       label: "Request Test",
       mac_address: "A1:B2:C3:D4:E5:F6",
@@ -34,7 +33,7 @@ RSpec.describe "/api/devices", :db do
         hash_including(
           id: device.id,
           model_id: model.id,
-          playlist_id: playlist.id,
+          playlist_id: nil,
           friendly_id: "ABC123",
           label: "Test",
           mac_address: "A1:B2:C3:D4:E5:F6",
@@ -70,7 +69,7 @@ RSpec.describe "/api/devices", :db do
       data: {
         id: device.id,
         model_id: model.id,
-        playlist_id: playlist.id,
+        playlist_id: nil,
         friendly_id: "ABC123",
         label: "Test",
         mac_address: "A1:B2:C3:D4:E5:F6",
@@ -98,7 +97,7 @@ RSpec.describe "/api/devices", :db do
     expect(json_payload).to eq(Petail[status: :not_found].to_h)
   end
 
-  it "creates device when valid using all attributes" do
+  it "creates device with valid attributes" do
     post routes.path(:api_devices),
          {device: attributes}.to_json,
          "CONTENT_TYPE" => "application/json"
@@ -120,7 +119,7 @@ RSpec.describe "/api/devices", :db do
     )
   end
 
-  it "creates device when valid using require attributs only" do
+  it "creates device with valid (required only) attributes" do
     post routes.path(:api_devices),
          {device: {model_id: model.id, label: "Test", mac_address: "A1:B2:C3:D4:E5:F6"}}.to_json,
          "CONTENT_TYPE" => "application/json"
@@ -129,7 +128,7 @@ RSpec.describe "/api/devices", :db do
       data: hash_including(
         id: kind_of(Integer),
         model_id: model.id,
-        playlist_id: nil,
+        playlist_id: kind_of(Integer),
         friendly_id: match_friendly_id,
         label: "Test",
         mac_address: "A1:B2:C3:D4:E5:F6",
@@ -154,6 +153,7 @@ RSpec.describe "/api/devices", :db do
 
   it "answers error when creation fails" do
     attributes.delete :model_id
+
     post routes.path(:api_devices),
          {device: attributes}.to_json,
          "CONTENT_TYPE" => "application/json"
@@ -233,7 +233,7 @@ RSpec.describe "/api/devices", :db do
       data: {
         id: device.id,
         model_id: model.id,
-        playlist_id: playlist.id,
+        playlist_id: nil,
         friendly_id: "ABC123",
         label: "Test",
         mac_address: "A1:B2:C3:D4:E5:F6",
