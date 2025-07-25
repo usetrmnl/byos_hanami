@@ -3,47 +3,45 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Rotator, :db do
-  using Refinements::Pathname
-
-  subject(:rotator) { described_class.new settings: }
-
-  include_context "with main application"
+  subject(:rotator) { described_class.new }
 
   describe "#call" do
-    let(:device) { Factory[:device] }
-
-    before do
-      temp_dir.join("#{device.slug}/one.bmp").make_ancestors.touch
-      temp_dir.join("#{device.slug}/two.bmp").make_ancestors.touch
+    let :device do
+      provisioner.call(model_id: Factory[:model].id, mac_address: "A1:B2:C3:D4:E5:F6").value!
     end
 
-    it "answers oldest image" do
-      skip "Doesn't work on CI." if ENV["CI"]
+    let(:provisioner) { Terminus::Aspects::Devices::Provisioner.new }
+    let(:playlist_repository) { Terminus::Repositories::Playlist.new }
+    let(:item_repository) { Terminus::Repositories::PlaylistItem.new }
 
-      expect(rotator.call(device)).to eq(
-        filename: "two.bmp",
-        image_url: "https://localhost/assets/screens/A1B2C3D4E5F6/two.bmp"
-      )
+    it "answers current screen when playlist has single item" do
+      expect(rotator.call(device).success).to have_attributes(label: /Welcome/)
     end
 
-    it "answers oldest image with encryption" do
-      skip "Doesn't work on CI." if ENV["CI"]
+    it "answers next screen when current screen isn't last" do
+      Factory[
+        :playlist_item,
+        playlist_id: device.playlist_id,
+        screen_id: Factory[:screen, label: "Test"].id,
+        position: 2
+      ]
 
-      expect(rotator.call(device, encryption: :base_64)).to eq(
-        filename: "two.bmp",
-        image_url: "data:image/bmp;base64,"
-      )
+      expect(rotator.call(device).success).to have_attributes(label: "Test")
     end
 
-    it "updates oldest image as newest image" do
-      rotator.call device
+    it "answers first screen when current screen is last screen" do
+      screen = Factory[:screen, label: "Test"]
 
-      expect(temp_dir.join("A1B2C3D4E5F6").files.sort_by(&:mtime)).to eq(
-        [
-          temp_dir.join("A1B2C3D4E5F6/two.bmp"),
-          temp_dir.join("A1B2C3D4E5F6/one.bmp")
-        ]
-      )
+      item = Factory[
+        :playlist_item,
+        playlist_id: device.playlist_id,
+        screen_id: screen.id,
+        position: 2
+      ]
+
+      playlist_repository.update device.playlist_id, current_item_id: item.id
+
+      expect(rotator.call(device).success).to have_attributes(label: /Welcome/)
     end
   end
 end
