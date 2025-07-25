@@ -17,9 +17,13 @@ module Terminus
                 .to_a
       end
 
-      def find(id) = (playlist.by_pk(id).one if id)
+      def find(id) = (with_current_item.by_pk(id).one if id)
 
-      def find_by(**) = playlist.where(**).one
+      def find_by(**) = with_current_item.where(**).one
+
+      private
+
+      def with_current_item = playlist.combine :current_item
     end
   end
 end
