@@ -1,56 +1,41 @@
 # frozen_string_literal: true
 
-require "base64"
 require "dry/monads"
-require "initable"
-require "refinements/pathname"
 
 module Terminus
   module Aspects
     module Screens
-      # Fetches latest image for rendering on device screen.
+      # Fetches a device's current screen.
       class Fetcher
-        include Initable[types: proc { Terminus::Screens::TYPES.keys }, encryptions: [:base_64]]
-        include Deps[:settings, :assets, "aspects.screens.sleeper"]
+        include Deps[
+          playlist_repository: "repositories.playlist",
+          playlist_item_repository: "repositories.playlist_item"
+        ]
         include Dry::Monads[:result]
 
-        using Refinements::Pathname
-
-        def call device, encryption: nil
-          image_path = build_image_path device
-
-          return default unless image_path
-
-          {filename: image_path.basename.to_s, image_url: image_url(device, image_path, encryption)}
+        def call device
+          find_playlist(device.playlist_id).bind { |playlist| find_current_item playlist }
+                                           .fmap(&:screen)
         end
 
         private
 
-        def build_image_path device
-          result = device.asleep? ? sleeper.call(device) : Failure()
+        def find_current_item playlist
+          id = playlist.current_item_id
+          item = playlist_item_repository.find id
 
-          case result
-            in Success(path) then path
-            else
-              settings.screens_root
-                      .join(device.slug)
-                      .files(supported_types)
-                      .reject { it.fnmatch? "*sleep.png" }
-                      .max_by(&:mtime)
-          end
+          return Success item if item
+
+          Failure "Unable to fetch screen. Can't find current playlist item with ID: #{id.inspect}."
         end
 
-        def image_url device, image_path, encryption
-          if encryptions.include?(encryption) && encryption == :base_64
-            "data:image/bmp;base64,#{Base64.strict_encode64 image_path.read}"
-          else
-            "#{settings.api_uri}/assets/screens/#{device.slug}/#{image_path.basename}"
-          end
+        def find_playlist id
+          playlist = playlist_repository.find id
+
+          return Success playlist if playlist
+
+          Failure "Unable to fetch screen. Can't find playlist with ID: #{id.inspect}."
         end
-
-        def default = {filename: "setup", image_url: assets["setup.svg"].url}
-
-        def supported_types = %(*.{#{types.join ","}})
       end
     end
   end
