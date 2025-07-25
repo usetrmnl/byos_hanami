@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/monads"
 require "initable"
 require "versionaire"
 
@@ -9,13 +10,9 @@ module Terminus
       module Setup
         # The show action.
         class Show < Base
-          include Deps[
-            repository: "repositories.device",
-            device_defaulter: "aspects.devices.defaulter",
-            welcomer: "aspects.screens.welcomer"
-          ]
-
-          include Initable[model: Aspects::API::Responses::Setup]
+          include Deps["aspects.devices.provisioner", model_repository: "repositories.model"]
+          include Initable[payload: Aspects::API::Responses::Setup]
+          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 
@@ -37,12 +34,16 @@ module Terminus
 
           private
 
+          # FIX: Use dynamic lookup once Firmware Issue 199 is resolved.
+          def load_model = model_repository.find_by name: "t1"
+
           def create environment, response
             mac_address, firmware_version = environment.values_at "HTTP_ID", "HTTP_FW_VERSION"
-            device = repository.find_by(mac_address:)
-            device ||= create_device mac_address, firmware_version
-            welcomer.call device
-            response.body = model.for(device).to_json
+
+            case provisioner.call(model_id: load_model.id, mac_address:, firmware_version:)
+              in Success(device) then response.with body: payload.for(device).to_json, status: 200
+              in Failure(error) then unprocessable_entity error, response
+            end
           end
 
           def create_device mac_address, firmware_version
