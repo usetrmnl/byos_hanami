@@ -7,7 +7,12 @@ module Terminus
     module Screens
       # Polls the Core Display API on a scheduled interval for new images to display locally.
       class Poller
-        include Deps[:trmnl_api, "aspects.screens.synchronizer", repository: "repositories.device"]
+        include Deps[
+          :settings,
+          :trmnl_api,
+          "aspects.screens.synchronizer",
+          repository: "repositories.device"
+        ]
         include Initable[kernel: Kernel]
         include Dry::Monads[:result]
 
@@ -28,14 +33,18 @@ module Terminus
 
         def keep_alive seconds
           kernel.loop do
-            process_devices
+            sync_or_skip
             kernel.sleep seconds
           end
         end
 
-        def process_devices = repository.all.select(&:proxy).each { |device| process device }
+        def sync_or_skip
+          settings.screen_poller ? process_devices : kernel.puts("Screen polling disabled.")
+        end
 
-        def process device
+        def process_devices = repository.all.select(&:proxy).each { |device| sync device }
+
+        def sync device
           trmnl_api.display(token: device.api_key).bind { |record| synchronizer.call record }
         end
       end

@@ -8,7 +8,7 @@ module Terminus
     module Models
       # Polls the Core Models API on a scheduled interval for new (or updated) models.
       class Poller
-        include Deps["aspects.models.synchronizer"]
+        include Deps[:settings, "aspects.models.synchronizer"]
         include Initable[kernel: Kernel]
         include Dry::Monads[:result]
 
@@ -29,9 +29,13 @@ module Terminus
 
         def keep_alive seconds
           kernel.loop do
-            synchronizer.call
+            sync_or_skip
             kernel.sleep seconds
           end
+        end
+
+        def sync_or_skip
+          settings.model_poller ? synchronizer.call : kernel.puts("Model polling disabled.")
         end
       end
     end

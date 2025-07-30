@@ -15,6 +15,8 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
   let(:synchronizer) { instance_spy Terminus::Aspects::Screens::Synchronizer }
 
+  include_context "with main application"
+
   describe "#call" do
     let(:devices) { [Factory[:device, proxy: true]] }
 
@@ -70,6 +72,21 @@ RSpec.describe Terminus::Aspects::Screens::Poller, :db do
 
       it "doesn't synchronize" do
         poller.call
+        expect(synchronizer).not_to have_received(:call)
+      end
+    end
+
+    context "when disabled" do
+      before do
+        allow(settings).to receive(:screen_poller).and_return false
+        poller.call
+      end
+
+      it "prints message" do
+        expect(kernel).to have_received(:puts).with("Screen polling disabled.")
+      end
+
+      it "doesn't synchronize" do
         expect(synchronizer).not_to have_received(:call)
       end
     end
