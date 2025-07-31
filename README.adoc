@@ -121,12 +121,15 @@ There are a few environment variables you can use to customize behavior:
 
 * `API_URI`: Used for connecting your device to this server or via xref:_docker[Docker]. Defaults to the wired IP address and port of the server you are running Terminus on. This also assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to be using `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
+* `FIRMWARE_POLLER`: Enables/disables firmware polling. See xref:_background_pollers[Background Pollers] for details. Defaults to enabled.
 * `HANAMI_PORT`: The default port when running the app locally or via xref:_docker[Docker]. When using Docker, this is used for the internal and external port mapping.
+* `MODEL_POLLER`: Enables/disables model polling. See xref:_background_pollers[Background Pollers] for details. Defaults to enabled.
 * `RACK_ATTACK_ALLOWED_SUBNETS`: Defines the {rack_attack_link} subnets that are allowed to connect to this server which helps when adding DNS, a reverse proxy, or a VPN, etc. between your device and this application so you can use this environment variable to add more subnets as desired. This takes a single subnet/IP or an array -- with no spaces -- of subnets/IPs as values. Example: "111.111.111.111,150.120.0.0/16". Alternatively, you can disable Rack Attack altogether by removing the `config.middleware.use Rack::Attack` line from `config/app.rb` or customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server. By default, the following subnets are allowed: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.1`, and `::1`.
 * `PG_DATABASE`: Defines your database name. Used by xref:_docker[Docker] only. Default: `terminus`.
 * `PG_PASSWORD`: Defines your database password. Used by xref:_docker[Docker] only. Default: (auto-generated for you during setup).
 * `PG_PORT`: Defines your database port. Used by xref:_docker[Docker] only. Default: `5432`.
 * `PG_USER`: Defines your database user. Used by xref:_docker[Docker] only. Default: `terminus`.
+* `SCREEN_POLLER`: Enables/disables model polling. See xref:_background_pollers[Background Pollers] for details. Defaults to enabled.
 
 === Device Provisioning
 
@@ -178,15 +181,19 @@ This can be handy if you want to force either of these poller's to check for new
 
 ==== Disablement
 
-To disable any of the pollers, remove them from the `Procfile.dev` and/or `Procfile` files. For example, delete these lines:
+To disable any of the pollers, use the following environment variables:
 
 ----
-firmware_poller: bin/pollers/firmware
-model_poller: bin/pollers/model
-screen_poller: bin/pollers/screen
+FIRMWARE_POLLER=0
+MODEL_POLLER=0
+SCREEN_POLLER=0
 ----
 
-You could also configure them to have a massive number of seconds as mentioned above when supplying custom seconds in which to poll.
+You are not limited to using `0`. Any falsey value would work, example: `false`, "no", etc. When any of the pollers are disabled, you'll see the following messages in your logs (where `<poller>` is replaced with the specific poller that is disabled):
+
+----
+<poller> polling disabled.
+----
 
 === Firmware
 
