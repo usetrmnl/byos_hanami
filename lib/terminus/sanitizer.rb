@@ -21,10 +21,12 @@ module Terminus
 
     def configuration = client::Config.merge(defaults, elements:, attributes:)
 
-    def elements = defaults[:elements].including "html", "source", "style"
+    def elements = defaults[:elements].including "html", "link", "script", "source", "style"
 
     def attributes
-      defaults[:attributes].merge "source" => %w[type src srcset sizes media height width]
+      defaults[:attributes].merge "link" => %w[href rel],
+                                  "script" => %w[src],
+                                  "source" => %w[type src srcset sizes media height width]
     end
   end
 end
