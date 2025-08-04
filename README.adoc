@@ -1047,6 +1047,28 @@ Allows you to render a strictly Base64 encoded image on your device. The `dimens
 No matter what parameters you use for this request, you'll always get a path (unless an error is encountered).
 ====
 
+.PATCH Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "image": {
+    "model_id": "1"
+    "label": "Demo",
+    "name": "demo",
+    "content": "<h1>Demo</h1>"
+  }
+}'
+----
+
+Unlike the POST request, only HTML content is supported at the moment.
+
+All of the above attributes are optional which means you can update only the attribute you care about or multiple attributes at once. At least one attribute must be supplied, though.
+====
+
 .DELETE Request
 [%collapsible]
 ====
