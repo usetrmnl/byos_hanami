@@ -6,7 +6,7 @@ RSpec.describe "/api/screens", :db do
   using Refinements::Pathname
 
   let(:model) { Factory[:model] }
-  let(:screen) { Factory[:screen] }
+  let(:screen) { Factory[:screen, :with_image] }
 
   it "answers records when screens exist" do
     screen
@@ -19,6 +19,12 @@ RSpec.describe "/api/screens", :db do
           id: kind_of(Integer),
           label: screen.label,
           name: screen.name,
+          filename: "test.png",
+          uri: "memory://abc123.png",
+          mime_type: "image/png",
+          size: kind_of(Integer),
+          width: 1,
+          height: 1,
           created_at: match_rfc_3339,
           updated_at: match_rfc_3339
         }
@@ -217,6 +223,73 @@ RSpec.describe "/api/screens", :db do
     end
   end
 
+  it "patches screen content" do
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {image: {content: "<p>Test</p>"}}.to_json,
+          "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: screen.model_id,
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        filename: "#{screen.name}.png",
+        uri: %r(memory://\h{32}.png),
+        mime_type: "image/png",
+        size: kind_of(Integer),
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
+  it "patches screen model ID" do
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {image: {model_id: model.id}}.to_json,
+          "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: model.id,
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        filename: "test.png",
+        uri: "memory://abc123.png",
+        mime_type: "image/png",
+        size: kind_of(Integer),
+        width: 1,
+        height: 1,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
+  it "answers problem details when payload has no content" do
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {image: {}}.to_json,
+          "CONTENT_TYPE" => "application/json"
+
+    problem = Petail[
+      type: "/problem_details#screen_payload",
+      status: 422,
+      title: "Unprocessable Entity",
+      detail: "Validation failed.",
+      instance: "/api/screens",
+      extensions: {
+        errors: {
+          image: ["must be filled"]
+        }
+      }
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
+  end
+
   it "answers deleted screen" do
     delete routes.path(:api_screen_delete, id: screen.id), {}, "CONTENT_TYPE" => "application/json"
 
@@ -226,6 +299,12 @@ RSpec.describe "/api/screens", :db do
         id: kind_of(Integer),
         label: screen.label,
         name: screen.name,
+        filename: "test.png",
+        uri: "memory://abc123.png",
+        mime_type: "image/png",
+        size: kind_of(Integer),
+        width: 1,
+        height: 1,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
