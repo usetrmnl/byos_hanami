@@ -9,7 +9,6 @@ module Terminus
           include Deps[
             repository: "repositories.playlist_item",
             playlist_repository: "repositories.playlist",
-            new_view: "views.playlists.items.new",
             show_view: "views.playlists.items.show"
           ]
 
@@ -22,33 +21,19 @@ module Terminus
             parameters = request.params
             playlist = playlist_repository.find parameters[:playlist_id]
 
-            if parameters.valid?
-              item = repository.create_with_position playlist_id: playlist.id,
-                                                     **parameters[:playlist_item]
-              response.render show_view, item:, layout: false
-            else
-              render_new playlist, parameters, response
-            end
+            halt :unprocessable_entity unless parameters.valid?
+
+            response.render show_view, item: create(playlist, parameters), layout: false
           end
 
           private
 
-          # :reek:FeatureEnvy
-          def render_new playlist, parameters, response
-            response.render new_view,
-                            playlist:,
-                            screen_options:,
-                            fields: parameters[:playlist_item],
-                            errors: parameters.errors[:playlist_item],
-                            layout: false
-          end
+          def create playlist, parameters
+            playlist_id = playlist.id
+            item = repository.create_with_position playlist_id:, **parameters[:playlist_item]
 
-          # :reek:FeatureEnvy
-          def screen_options prompt: "Select..."
-            screens = screen_repository.all
-            initial = prompt && screens.any? ? [[prompt, nil]] : []
-
-            screens.reduce(initial) { |all, screen| all.append [screen.label, screen.id] }
+            playlist_repository.update_current_item playlist_id, item.id
+            item
           end
         end
       end
