@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "initable"
-require "inspectable"
 
 module Terminus
   module Aspects
@@ -11,29 +10,12 @@ module Terminus
         # Creates screen record with image attachment from HTML content.
         class HTML
           include Dry::Monads[:result]
-          include Inspectable[sanitizer: :class]
-          include Deps[
-            "aspects.screens.shoter",
-            "aspects.screens.converter",
-            repository: "repositories.screen"
-          ]
-          include Terminus::Dependencies[:sanitizer]
+          include Deps["aspects.screens.creators.temp_path", repository: "repositories.screen"]
           include Initable[struct: proc { Terminus::Structs::Screen.new }]
 
-          def call(payload) = Pathname.mktmpdir { process payload, it }
+          def call(payload) = temp_path.call(payload) { |path| save payload, path }
 
           private
-
-          def process payload, directory
-            sanitizer.call(payload.content)
-                     .then { |content| shoter.call(content, directory.join("input.jpg")) }
-                     .bind { |path| convert payload, path, directory.join(payload.filename) }
-                     .bind { |path| save payload, path }
-          end
-
-          def convert payload, input_path, output_path
-            converter.call payload.model, input_path, output_path
-          end
 
           def save payload, path
             struct = attach payload, path
