@@ -17,17 +17,6 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
   end
 
-  describe "#slug" do
-    it "answers string with no colons" do
-      expect(device.slug).to eq("AABBCC112233")
-    end
-
-    it "answers empty string when slug is nil" do
-      device = Factory[:device, mac_address: nil]
-      expect(device.slug).to eq("")
-    end
-  end
-
   describe "#asleep?" do
     subject :device do
       Factory[
@@ -47,6 +36,39 @@ RSpec.describe Terminus::Structs::Device, :db do
 
     it "answers false when start and end are nil" do
       expect(Factory[:device].asleep?).to be(false)
+    end
+  end
+
+  describe "#slug" do
+    it "answers string with no colons" do
+      expect(device.slug).to eq("AABBCC112233")
+    end
+
+    it "answers empty string when slug is nil" do
+      device = Factory[:device, mac_address: nil]
+      expect(device.slug).to eq("")
+    end
+  end
+
+  describe "#system_label" do
+    it "answers system label with prefix" do
+      expect(device.system_label("Test")).to eq("Test ABC123")
+    end
+  end
+
+  describe "#system_name" do
+    it "answers system name with kind" do
+      expect(device.system_name("test")).to eq("terminus_test_abc123")
+    end
+  end
+
+  describe "#system_screen_attributes" do
+    it "answers system screen attributes" do
+      expect(device.system_screen_attributes("test")).to eq(
+        model_id: device.model_id,
+        label: "Test ABC123",
+        name: "terminus_test_abc123"
+      )
     end
   end
 end
