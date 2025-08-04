@@ -10,13 +10,13 @@ module Terminus
       class Creator
         include Dry::Monads[:result]
         include Deps[
-          "aspects.screens.savers.encoded",
-          "aspects.screens.savers.html",
-          "aspects.screens.savers.preprocessed",
-          "aspects.screens.savers.unprocessed",
+          "aspects.screens.creators.encoded",
+          "aspects.screens.creators.html",
+          "aspects.screens.creators.preprocessed",
+          "aspects.screens.creators.unprocessed",
           model_repository: "repositories.model"
         ]
-        include Initable[payload: Savers::Payload]
+        include Initable[payload: Creators::Payload]
 
         def call **parameters
           id = parameters.delete :model_id

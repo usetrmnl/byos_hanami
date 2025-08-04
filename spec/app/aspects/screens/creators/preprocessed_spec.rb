@@ -2,12 +2,12 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Savers::Unprocessed, :db do
+RSpec.describe Terminus::Aspects::Screens::Creators::Preprocessed, :db do
   subject(:saver) { described_class.new }
 
   describe "#call" do
     let :payload do
-      Terminus::Aspects::Screens::Savers::Payload[
+      Terminus::Aspects::Screens::Creators::Payload[
         model:,
         name: "test",
         label: "Test",
@@ -27,8 +27,8 @@ RSpec.describe Terminus::Aspects::Screens::Savers::Unprocessed, :db do
         image_attributes: hash_including(
           metadata: hash_including(
             size: kind_of(Integer),
-            width: 800,
-            height: 480,
+            width: 1,
+            height: 1,
             filename: "test.png",
             mime_type: "image/png"
           )

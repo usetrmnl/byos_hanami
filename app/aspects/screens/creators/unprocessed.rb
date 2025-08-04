@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require "base64"
 require "dry/monads"
+require "mini_magick"
 
 module Terminus
   module Aspects
     module Screens
-      module Savers
-        # Saves encoded content as a decoded and processed image.
-        class Encoded
-          include Dry::Monads[:result]
+      module Creators
+        # Creates screen record with image attachment from unprocessed image URI.
+        class Unprocessed
           include Deps["aspects.screens.converter", repository: "repositories.screen"]
+          include Dry::Monads[:result]
 
-          def initialize(decoder: Base64, struct: Terminus::Structs::Screen.new, **)
-            @decoder = decoder
+          def initialize(client: MiniMagick::Image, struct: Terminus::Structs::Screen.new, **)
+            @client = client
             @struct = struct
             super(**)
           end
@@ -22,14 +22,15 @@ module Terminus
 
           private
 
-          attr_reader :decoder, :struct
+          attr_reader :client, :struct
 
           def process payload, directory
             input_path = Pathname(directory).join "input.png"
 
-            input_path.binwrite(decoder.strict_decode64(payload.content))
-                      .then { convert payload.model, input_path, directory.join(payload.filename) }
-                      .bind { |path| save payload, path }
+            client.open(payload.content)
+                  .write(input_path)
+                  .then { convert payload.model, input_path, directory.join(payload.filename) }
+                  .bind { |path| save payload, path }
           end
 
           def convert model, input_path, output_path

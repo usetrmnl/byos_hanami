@@ -7,8 +7,8 @@ require "inspectable"
 module Terminus
   module Aspects
     module Screens
-      module Savers
-        # Saves HTML content as a screen attachment.
+      module Creators
+        # Creates screen record with image attachment from HTML content.
         class HTML
           include Dry::Monads[:result]
           include Inspectable[sanitizer: :class]

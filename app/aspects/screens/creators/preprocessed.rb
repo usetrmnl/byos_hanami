@@ -6,8 +6,8 @@ require "mini_magick"
 module Terminus
   module Aspects
     module Screens
-      module Savers
-        # Saves URI as a preprocessed image.
+      module Creators
+        # Creates screen record with image attachment from preprocesed image URI.
         class Preprocessed
           include Deps[repository: "repositories.screen"]
           include Dry::Monads[:result]

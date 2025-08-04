@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Savers::Payload, :db do
+RSpec.describe Terminus::Aspects::Screens::Creators::Payload, :db do
   subject(:payload) { described_class[model:, label: "Test", name: "test", content: "test"] }
 
   let(:model) { Factory[:model, id: 1] }
