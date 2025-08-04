@@ -21,6 +21,13 @@ module Terminus
 
       def find_by(**) = with_current_item.where(**).one
 
+      def update_current_item id, item_id
+        playlist.transaction do
+          record = find id
+          record.current_item_id ? record : update(id, current_item_id: item_id)
+        end
+      end
+
       private
 
       def with_current_item = playlist.combine :current_item
