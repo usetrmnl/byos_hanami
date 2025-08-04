@@ -8,12 +8,8 @@ module Terminus
         include Deps["aspects.screens.creator", view: "views.welcome.new"]
 
         def call device
-          id = device.friendly_id
-
-          creator.call model_id: device.model_id,
-                       name: "terminus_welcome_#{id.downcase}",
-                       label: "Welcome #{id}",
-                       content: String.new(view.call(device:))
+          creator.call content: String.new(view.call(device:)),
+                       **device.system_screen_attributes("welcome")
         end
       end
     end
