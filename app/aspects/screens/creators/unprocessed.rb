@@ -38,15 +38,8 @@ module Terminus
           end
 
           def save payload, path
-            struct = attach payload, path
-            Success repository.create(image_data: struct.image_attributes, **payload.attributes)
-          rescue ROM::SQL::Error => error
-            Failure error.message
-          end
-
-          def attach payload, path
             path.open { |io| struct.upload io, metadata: {"filename" => payload.filename} }
-            struct
+            repository.create_with_image payload, struct
           end
         end
       end

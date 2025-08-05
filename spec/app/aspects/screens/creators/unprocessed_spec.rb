@@ -35,10 +35,5 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Unprocessed, :db do
         )
       )
     end
-
-    it "answers failure with database error" do
-      result = creator.call payload.with(name: nil)
-      expect(result.failure).to match(/null value/)
-    end
   end
 end
