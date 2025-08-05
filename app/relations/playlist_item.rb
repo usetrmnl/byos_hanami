@@ -12,13 +12,13 @@ module Terminus
       end
 
       def next_item after:, playlist_id:
-        calculation = "position = CASE " \
-                      "WHEN ? >= (SELECT MAX(position) FROM playlist_item) " \
-                      "THEN (SELECT MIN(position) FROM playlist_item) " \
-                      "ELSE ? + 1 " \
-                      "END"
+        scope = where(playlist_id:)
 
-        where(playlist_id:).where(Sequel.lit(calculation, after, after)).one
+        next_or_previous = scope.where { position > after }
+                                .order(:position)
+                                .first
+
+        next_or_previous || scope.order(:position).first
       end
     end
   end
