@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require "dry/monads"
+
 module Terminus
   module Repositories
     # The screen repository.
     class Screen < DB::Repository[:screen]
+      include Dry::Monads[:result]
+
       commands :create, update: :by_pk
 
       def all
@@ -15,6 +19,19 @@ module Terminus
         with_associations.where(**)
                          .order { created_at.asc }
                          .to_a
+      end
+
+      def create_with_image payload, struct
+        name = payload.name
+
+        find_by(name:).then do |record|
+          if record
+            struct.image_destroy
+            Failure "Screen exists with name: #{name.inspect}."
+          else
+            Success create(image_data: struct.image_attributes, **payload.attributes)
+          end
+        end
       end
 
       def delete id
