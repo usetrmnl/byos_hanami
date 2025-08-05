@@ -5,6 +5,8 @@ require "hanami_helper"
 RSpec.describe Terminus::Actions::Playlists::Mirror::Update, :db do
   subject(:action) { described_class.new }
 
+  include_context "with main application"
+
   describe "#call" do
     let(:playlist) { Factory[:playlist] }
     let(:device) { Factory[:device] }
@@ -19,11 +21,18 @@ RSpec.describe Terminus::Actions::Playlists::Mirror::Update, :db do
       expect(response.body.first).to include("<!DOCTYPE html>")
     end
 
-    it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: playlist.id}
+    context "with htmx request" do
+      let :response do
+        Rack::MockRequest.new(action).get "", "HTTP_HX_REQUEST" => "true", params: {id: playlist.id}
+      end
 
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      it "includes push URL header" do
+        expect(response.header).to include("HX-Push-Url" => routes.path(:playlist, id: playlist.id))
+      end
+
+      it "renders htmx response" do
+        expect(response.body).not_to include("<!DOCTYPE html>")
+      end
     end
   end
 end
