@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
-  subject(:saver) { described_class.new }
+  subject(:creator) { described_class.new }
 
   describe "#call" do
     let(:model) { Factory[:model] }
@@ -30,23 +30,23 @@ RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
     end
 
     it "answers path with specific name and extension (without block)" do
-      expect(saver.call(payload).to_s).to match(%r(/test\.png))
+      expect(creator.call(payload).to_s).to match(%r(/test\.png))
     end
 
     it "answers pathname (without block)" do
-      expect(saver.call(payload)).to match(kind_of(Pathname))
+      expect(creator.call(payload)).to match(kind_of(Pathname))
     end
 
     it "answers path with specific name and extension (with block)" do
       capture = nil
-      saver.call(payload) { capture = it.to_s }
+      creator.call(payload) { capture = it.to_s }
 
       expect(capture).to match(%r(/test\.png))
     end
 
     it "answers pathname (with block)" do
       capture = nil
-      saver.call(payload) { capture = it }
+      creator.call(payload) { capture = it }
 
       expect(capture).to match(kind_of(Pathname))
     end
@@ -54,7 +54,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
 
   describe "#inspect" do
     it "only displays the sanitizer class" do
-      expect(saver.inspect).to include("@sanitizer=Terminus::Sanitizer")
+      expect(creator.inspect).to include("@sanitizer=Terminus::Sanitizer")
     end
   end
 end

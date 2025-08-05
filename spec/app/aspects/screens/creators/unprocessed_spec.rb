@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Creators::Unprocessed, :db do
-  subject(:saver) { described_class.new }
+  subject(:creator) { described_class.new }
 
   describe "#call" do
     let :payload do
@@ -18,7 +18,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Unprocessed, :db do
     let(:model) { Factory[:model] }
 
     it "answers screen" do
-      result = saver.call payload
+      result = creator.call payload
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -37,7 +37,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Unprocessed, :db do
     end
 
     it "answers failure with database error" do
-      result = saver.call payload.with(name: nil)
+      result = creator.call payload.with(name: nil)
       expect(result.failure).to match(/null value/)
     end
   end
