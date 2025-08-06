@@ -23,7 +23,7 @@ create_global_environment() {
 
   printf "%s\n" "Creating .env..."
   cp "$template_path" "$output_path"
-  sed -i '' "s|<password>|$password|g" "$output_path"
+  sed -i.tmp "s|<password>|$password|g" "$output_path" && rm "$output_path.tmp"
 }
 
 # Label: Create Development Environment
