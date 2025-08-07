@@ -9,11 +9,13 @@ module Terminus
     module API
       module Display
         # The show action.
+        # :reek:DataClump
         class Show < Base
           include Deps[
             :settings,
             "aspects.screens.encoder",
             "aspects.screens.rotator",
+            "aspects.screens.gaffer",
             firmware_repository: "repositories.firmware",
             synchronizer: "aspects.devices.synchronizer"
           ]
@@ -24,22 +26,27 @@ module Terminus
           using Refines::Actions::Response
 
           def handle request, response
-            case process request.env, request.params
-              in Success(payload) then response.with body: payload.to_json, status: 200
-              in Failure(String => detail) then unprocessable_entity detail, response
+            case synchronizer.call request.env
+              in Success(device) then process device, request, response
               else not_found response
             end
           end
 
           private
 
-          def process environment, parameters
-            cached_device = nil
+          def process device, request, response
+            rotator.call(device)
+                   .bind { |screen| encode screen, request.params, request.env }
+                   .either -> image_attributes { success device, image_attributes, response },
+                           -> message { error_for device, message, response }
+          end
 
-            synchronizer.call(environment)
-                        .bind { |device| cached_device = device and rotator.call device }
-                        .bind { |screen| encode screen, environment, parameters }
-                        .fmap { |image_attributes| build_payload cached_device, image_attributes }
+          def success device, image_attributes, response
+            response.with body: build_payload(device, image_attributes).to_json, status: 200
+          end
+
+          def error_for device, message, response
+            gaffer.call(device, message).bind { |screen| any_error device, screen, response }
           end
 
           def build_payload device, image_attributes
@@ -60,31 +67,31 @@ module Terminus
             end
           end
 
-          def encode screen, environment, parameters
+          def encode screen, parameters, environment
             encryption = :base_64 if (environment["HTTP_BASE64"] || parameters[:base_64]) == "true"
             encoder.call screen, encryption:
           end
 
-          def unprocessable_entity detail, response
-            body = problem[
-              type: "/problem_details#device",
-              status: __method__,
-              detail:,
-              instance: "/api/display"
+          def any_error device, screen, response
+            payload = model[
+              firmware_url: fetch_firmware_uri(device),
+              filename: screen.image_name,
+              image_url: screen.image_uri(host: settings.api_uri),
+              **device.as_api_display
             ]
 
-            response.with body: body.to_json, format: :problem_details, status: 422
+            response.with body: payload.to_json, status: 200
           end
 
           def not_found response
-            body = problem[
+            payload = problem[
               type: "/problem_details#device_id",
               status: __method__,
               detail: "Invalid device ID.",
               instance: "/api/display"
             ]
 
-            response.with body: body.to_json, format: :problem_details, status: 404
+            response.with body: payload.to_json, format: :problem_details, status: 404
           end
         end
       end

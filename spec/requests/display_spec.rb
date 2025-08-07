@@ -131,13 +131,6 @@ RSpec.describe "/api/display", :db do
 
       expect(json_payload).to eq(problem.to_h)
     end
-
-    it "answers content type and status" do
-      expect(last_response).to have_attributes(
-        content_type: "application/problem+json; charset=utf-8",
-        status: 404
-      )
-    end
   end
 
   context "with no device" do
@@ -145,9 +138,9 @@ RSpec.describe "/api/display", :db do
 
     it "answers problem details" do
       problem = Petail[
-        type: "/problem_details#device",
-        status: :unprocessable_entity,
-        detail: "Unable to find device by MAC address.",
+        type: "/problem_details#device_id",
+        status: :not_found,
+        detail: "Invalid device ID.",
         instance: "/api/display"
       ]
 
@@ -157,7 +150,36 @@ RSpec.describe "/api/display", :db do
     it "answers content type and status" do
       expect(last_response).to have_attributes(
         content_type: "application/problem+json; charset=utf-8",
-        status: 422
+        status: 404
+      )
+    end
+  end
+
+  context "with any error" do
+    let(:device) { Factory[:device] }
+
+    before do
+      device
+      get routes.path(:api_display), {}, **firmware_headers
+    end
+
+    it "answers error image" do
+      expect(json_payload).to include(
+        filename: "#{device.system_name :error}.png",
+        firmware_url: nil,
+        image_url: %r(memory://\h{32}\.png),
+        image_url_timeout: 0,
+        refresh_rate: 900,
+        reset_firmware: false,
+        special_function: "sleep",
+        update_firmware: false
+      )
+    end
+
+    it "answers content type and OK status" do
+      expect(last_response).to have_attributes(
+        content_type: "application/json; charset=utf-8",
+        status: 200
       )
     end
   end
