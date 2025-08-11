@@ -10,7 +10,12 @@
 
   <div class="page-body">
     <div class="screen">
-      <%= tag.img src: screen.image_uri, class: :image, width: 250, height: 150, loading: :lazy %>
+      <%= tag.img src: screen.image_uri,
+                  alt: "Screen",
+                  class: :image,
+                  width: 250,
+                  height: 150,
+                  loading: :lazy %>
 
       <h2 class="label"><%= screen.label %></h2>
 

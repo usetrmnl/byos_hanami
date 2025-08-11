@@ -2,7 +2,12 @@
 <% delete_uri = routes.path :playlist_item_delete, playlist_id: item.playlist_id, id: item.id %>
 
 <div class="item">
-  <img src="<%= item.screen.image_uri %>" class="image" loading="lazy" width="200" height="120">
+  <img src="<%= item.screen.image_uri %>"
+       alt="Screen"
+       class="image"
+       loading="lazy"
+       width="200"
+       height="120">
 
   <div class="actions">
     <a href="<%= edit_uri %>"

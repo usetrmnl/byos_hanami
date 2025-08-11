@@ -19,7 +19,12 @@
 
         <h1 class="label">Edit Screen</h1>
 
-        <img src="<%= screen.image_uri %>" class="image" loading="lazy" width="200" height="120">
+        <img src="<%= screen.image_uri %>"
+             alt="Screen"
+             class="image"
+             width="200"
+             height="120"
+             loading="lazy">
 
         <%= render :fields, models:, screen:, fields: fields.value, errors: %>
 
