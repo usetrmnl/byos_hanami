@@ -19,6 +19,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(screen.image_attributes).to match(
         id: /\h{32}\.png/,
         metadata: {
+          bit_depth: 1,
           filename: "test.png",
           height: 1,
           mime_type: "image/png",
@@ -94,6 +95,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(screen.attach(path.open).data).to match(
         "id" => /\h{32}\.png/,
         "metadata" => {
+          "bit_depth" => 1,
           "filename" => "test.png",
           "height" => 1,
           "size" => 81,
@@ -108,11 +110,12 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(screen.attach(StringIO.new).data).to match(
         "id" => /\h{32}/,
         "metadata" => {
+          "bit_depth" => nil,
           "filename" => nil,
-          "height" => nil,
           "size" => 0,
           "mime_type" => nil,
-          "width" => nil
+          "width" => nil,
+          "height" => nil
         },
         "storage" => "cache"
       )
@@ -126,6 +129,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(upload.data).to match(
         "id" => /\h{32}\.png/,
         "metadata" => {
+          "bit_depth" => 1,
           "filename" => "test.png",
           "height" => 1,
           "size" => 81,
@@ -143,6 +147,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}\.png/,
         storage: "store",
         metadata: {
+          bit_depth: 1,
           filename: "test.png",
           size: 81,
           mime_type: "image/png",
@@ -158,6 +163,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(upload.data).to match(
         "id" => /\h{32}/,
         "metadata" => {
+          "bit_depth" => nil,
           "filename" => nil,
           "height" => nil,
           "size" => 0,
