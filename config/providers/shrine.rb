@@ -18,6 +18,7 @@ Hanami.app.register_provider :shrine do
                         }
                       end
 
+    Shrine.plugin :add_metadata
     Shrine.plugin :determine_mime_type, analyzer: :marcel
     Shrine.plugin :entity
     Shrine.plugin :store_dimensions, analyzer: :mini_magick, on_error: proc { "Omit" }
