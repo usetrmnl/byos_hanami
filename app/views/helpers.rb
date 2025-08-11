@@ -35,13 +35,16 @@ module Terminus
         end
       end
 
-      def size bytes, megabyte: 1_048_576.0
-        return "0" unless bytes
+      def size value, kilobyte: 1_024, units: %w[B KB MB GB TB]
+        bytes = value.to_f
+        index = 0
 
-        case bytes
-          when ...megabyte then "#{bytes} B"
-          else (bytes / megabyte).then { |megabytes| format("%.2f MB", megabytes).sub(".00", "") }
+        while bytes >= kilobyte && index < units.length - 1
+          bytes /= kilobyte
+          index += 1
         end
+
+        "#{bytes.round 2} #{units[index]}"
       end
     end
   end

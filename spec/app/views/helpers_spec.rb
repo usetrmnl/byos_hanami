@@ -88,23 +88,35 @@ RSpec.describe Terminus::Views::Helpers do
 
   describe "#size" do
     it "answers zero if nil" do
-      expect(helper.size(nil)).to eq("0")
+      expect(helper.size(nil)).to eq("0.0 B")
     end
 
-    it "answers size in bytes" do
-      expect(helper.size(50)).to eq("50 B")
+    it "answers zero if zero" do
+      expect(helper.size(0)).to eq("0.0 B")
     end
 
-    it "answers one megabyte" do
-      expect(helper.size(1_048_576)).to eq("1 MB")
+    it "answers bytes" do
+      expect(helper.size(50)).to eq("50.0 B")
     end
 
-    it "answers multiple megabytes" do
-      expect(helper.size(2_097_152)).to eq("2 MB")
+    it "answers kilobytes with single decimal precision" do
+      expect(helper.size(1_130)).to eq("1.1 KB")
     end
 
-    it "answers megabytes with two decimal precision" do
-      expect(helper.size(2_500_111)).to eq("2.38 MB")
+    it "answers kilobytes with two decimal precision" do
+      expect(helper.size(2_444)).to eq("2.39 KB")
+    end
+
+    it "answers megabytes" do
+      expect(helper.size(1_572_864)).to eq("1.5 MB")
+    end
+
+    it "answers gigabytes" do
+      expect(helper.size(1_073_741_824)).to eq("1.0 GB")
+    end
+
+    it "answers terabytes" do
+      expect(helper.size(1_099_511_627_776)).to eq("1.0 TB")
     end
   end
 end
