@@ -5,8 +5,6 @@
     <% items.each do |item| %>
       <%= item.render :item %>
     <% end %>
-  <% else %>
-    <%= render "shared/empty", message: "No items found." %>
   <% end %>
 
   <a href="<%= routes.path :playlist_item_new, playlist_id: playlist_id %>"
