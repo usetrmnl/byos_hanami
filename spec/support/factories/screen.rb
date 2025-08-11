@@ -11,11 +11,12 @@ Factory.define :screen, relation: :screen do |factory|
         id: "abc123.png",
         storage: "store",
         metadata: {
-          size: 1,
-          width: 1,
-          height: 1,
+          bit_depth: 1,
           filename: "test.png",
-          mime_type: "image/png"
+          height: 1,
+          mime_type: "image/png",
+          size: 1,
+          width: 1
         }
       }
     end
