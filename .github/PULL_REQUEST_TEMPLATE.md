@@ -1,8 +1,8 @@
 ## Overview
-<!-- Required. Why is this important/necessary and what is the overarching architecture. -->
+<!-- Required. Describe, briefly, why this is necessary and what the overarching architecture is. -->
 
 ## Screenshots/Screencasts
-<!-- Optional. Provide supporting image/video. -->
+<!-- Optional. Provide supporting screen shots/casts. -->
 
 ## Details
-<!-- Optional. List the key features/highlights as bullet points. -->
+<!-- Optional. As bullet points, list related issue(s); major highlights; team callouts; and/or other information that is helpful. -->
