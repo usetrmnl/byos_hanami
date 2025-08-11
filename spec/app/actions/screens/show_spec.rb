@@ -17,7 +17,7 @@ RSpec.describe Terminus::Actions::Screens::Show, :db do
       response = Rack::MockRequest.new(action)
                                   .get "", "HTTP_HX_REQUEST" => "true", params: {id: screen.id}
 
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      expect(response.body).to have_htmx_title(/Screen \d+ Screen/)
     end
 
     it "answers unprocessable entity with invalid parameters" do
