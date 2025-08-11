@@ -25,7 +25,7 @@ RSpec.describe Terminus::Actions::Screens::Create, :db do
 
     it "renders htmx response" do
       response = Rack::MockRequest.new(action).post("", "HTTP_HX_REQUEST" => "true", params:)
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      expect(response.body).to have_htmx_title("Screens")
     end
   end
 end

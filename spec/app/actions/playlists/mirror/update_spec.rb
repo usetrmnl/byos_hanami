@@ -31,7 +31,7 @@ RSpec.describe Terminus::Actions::Playlists::Mirror::Update, :db do
       end
 
       it "renders htmx response" do
-        expect(response.body).not_to include("<!DOCTYPE html>")
+        expect(response.body).to have_htmx_title(/Playlist \d+ Playlist/)
       end
     end
   end

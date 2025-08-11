@@ -12,7 +12,7 @@ RSpec.describe Terminus::Actions::Playlists::Show, :db do
       response = Rack::MockRequest.new(action)
                                   .get "", "HTTP_HX_REQUEST" => "true", params: {id: playlist.id}
 
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      expect(response.body).to have_htmx_title(/Playlist \d+ Playlist/)
     end
 
     it "answers unprocessable entity with invalid parameters" do

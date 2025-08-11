@@ -15,7 +15,7 @@ RSpec.describe Terminus::Actions::Devices::New do
 
     it "renders htmx response" do
       response = Rack::MockRequest.new(action).post("", "HTTP_HX_REQUEST" => "true", params:)
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      expect(response.body).to have_htmx_title("New Device")
     end
   end
 end

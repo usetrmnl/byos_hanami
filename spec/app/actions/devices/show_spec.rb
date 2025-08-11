@@ -12,7 +12,7 @@ RSpec.describe Terminus::Actions::Devices::Show, :db do
       response = Rack::MockRequest.new(action)
                                   .get "", "HTTP_HX_REQUEST" => "true", params: {id: device.id}
 
-      expect(response.body).not_to include("<!DOCTYPE html>")
+      expect(response.body).to have_htmx_title("Test Device")
     end
 
     it "answers unprocessable entity with invalid parameters" do
