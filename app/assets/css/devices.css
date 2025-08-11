@@ -50,14 +50,11 @@
     max-width: 320px;
 
     .screen {
+      background-color: var(--site-black);
       border: 0.65rem solid var(--site-black);
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
       margin: 0;
-    }
-
-    .image {
-      border-radius: 0.5rem 0.5rem 0 0;
     }
 
     .details {
