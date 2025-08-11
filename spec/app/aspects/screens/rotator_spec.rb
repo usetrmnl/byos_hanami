@@ -51,7 +51,7 @@ RSpec.describe Terminus::Aspects::Screens::Rotator, :db do
 
     it "answers failure when playlist can't be found" do
       expect(rotator.call(Factory[:device])).to be_failure(
-        "Unable to rotate screen. Can't find playlist with ID: nil."
+        "Unable to obtain next screen. Can't find playlist with ID: nil."
       )
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Terminus::Aspects::Screens::Rotator, :db do
       device = Factory[:device, playlist_id: playlist.id]
 
       expect(rotator.call(device)).to be_failure(
-        "Unable to rotate screen. Playlist has no items."
+        "Unable to obtain next screen. Playlist has no items."
       )
     end
   end

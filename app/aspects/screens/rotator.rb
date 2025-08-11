@@ -30,7 +30,7 @@ module Terminus
 
           return Success playlist if playlist
 
-          Failure "Unable to rotate screen. Can't find playlist with ID: #{id.inspect}."
+          Failure "Unable to obtain next screen. Can't find playlist with ID: #{id.inspect}."
         end
 
         def update_current_item playlist
@@ -44,7 +44,9 @@ module Terminus
 
         def find_screen item_id
           item_repository.find(item_id).then do |item|
-            item ? Success(item.screen) : Failure("Unable to rotate screen. Playlist has no items.")
+            return Success item.screen if item
+
+            Failure "Unable to obtain next screen. Playlist has no items."
           end
         end
       end
