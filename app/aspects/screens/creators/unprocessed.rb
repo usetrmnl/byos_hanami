@@ -9,11 +9,10 @@ module Terminus
       module Creators
         # Creates screen record with image attachment from unprocessed image URI.
         class Unprocessed
-          include Deps["aspects.screens.converter", repository: "repositories.screen"]
+          include Deps[:mini_magick, "aspects.screens.converter", repository: "repositories.screen"]
           include Dry::Monads[:result]
 
-          def initialize(client: MiniMagick::Image, struct: Terminus::Structs::Screen.new, **)
-            @client = client
+          def initialize(struct: Terminus::Structs::Screen.new, **)
             @struct = struct
             super(**)
           end
@@ -22,15 +21,15 @@ module Terminus
 
           private
 
-          attr_reader :client, :struct
+          attr_reader :struct
 
           def process payload, directory
             input_path = Pathname(directory).join "input.png"
 
-            client.open(payload.content)
-                  .write(input_path)
-                  .then { convert payload.model, input_path, directory.join(payload.filename) }
-                  .bind { |path| save payload, path }
+            image.open(payload.content)
+                 .write(input_path)
+                 .then { convert payload.model, input_path, directory.join(payload.filename) }
+                 .bind { |path| save payload, path }
           end
 
           def convert model, input_path, output_path
@@ -41,6 +40,8 @@ module Terminus
             path.open { |io| struct.upload io, metadata: {"filename" => payload.filename} }
             repository.create_with_image payload, struct
           end
+
+          def image = mini_magick::Image
         end
       end
     end

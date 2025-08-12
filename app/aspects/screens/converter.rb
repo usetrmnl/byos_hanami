@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "initable"
-require "mini_magick"
 require "refinements/array"
 
 module Terminus
@@ -11,7 +10,8 @@ module Terminus
       # Converts image to greyscale BMP image.
       # :reek:DataClump
       class Converter
-        include Initable[types: TYPES, client: MiniMagick]
+        include Deps[:mini_magick]
+        include Initable[types: TYPES]
         include Dry::Monads[:result]
 
         using Refinements::Array
@@ -36,7 +36,7 @@ module Terminus
         # rubocop:enable Metrics/ParameterLists
 
         def convert model, input_path, typed_output_path
-          client.convert do |converter|
+          mini_magick.convert do |converter|
             converter << input_path.to_s
             converter.dither << "FloydSteinberg"     # Popular black-n-white dithering algorithm.
             converter.remap << "pattern:gray50"

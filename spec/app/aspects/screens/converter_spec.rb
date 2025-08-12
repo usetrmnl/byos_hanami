@@ -50,9 +50,9 @@ RSpec.describe Terminus::Aspects::Screens::Converter, :db do
     end
 
     it "answers failure when MiniMagick can't convert" do
-      client = class_double MiniMagick
-      allow(client).to receive(:convert).and_raise(MiniMagick::Error, "Danger!")
-      converter = described_class.new(client:)
+      mini_magick = class_double MiniMagick
+      allow(mini_magick).to receive(:convert).and_raise(MiniMagick::Error, "Danger!")
+      converter = described_class.new(mini_magick:)
 
       expect(converter.call(model, input_path, output_path)).to be_failure("Danger!")
     end
