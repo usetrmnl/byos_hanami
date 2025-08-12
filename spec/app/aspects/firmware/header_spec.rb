@@ -9,8 +9,31 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
   subject(:parser) { described_class.new }
 
   include_context "with firmware headers"
+  include_context "with library dependencies"
 
   describe "#call" do
+    let :debug_message_pattern do
+      /
+        DEBUG.+
+        \[HTTP_ACCESS_TOKEN=.+\]\s
+        \[HTTP_BATTERY_VOLTAGE=.+]\s
+        \[HTTP_FW_VERSION=.+]\s
+        \[HTTP_HEIGHT=.+]\s
+        \[HTTP_HOST=.+]\s
+        \[HTTP_ID=.+]\s
+        \[HTTP_REFRESH_RATE=.+]\s
+        \[HTTP_RSSI=.+]\s
+        \[HTTP_USER_AGENT=.+]\s
+        \[HTTP_WIDTH=.+]\s
+        Processing\sdevice\srequest\sheaders\.
+      /x
+    end
+
+    it "logs header information as debug message" do
+      parser.call firmware_headers
+      expect(logger.reread).to match(debug_message_pattern)
+    end
+
     it "answers header record when success" do
       expect(parser.call(firmware_headers)).to be_success(
         Terminus::Models::Firmware::Header[
