@@ -25,7 +25,12 @@ module Terminus
       attr_reader :record, :keys, :transformer
 
       def metadata
-        record.image_attributes[:metadata].slice :filename, :mime_type, :width, :height, :size
+        record.image_attributes[:metadata].slice :filename,
+                                                 :mime_type,
+                                                 :bit_depth,
+                                                 :width,
+                                                 :height,
+                                                 :size
       end
     end
   end

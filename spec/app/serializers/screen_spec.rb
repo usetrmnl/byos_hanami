@@ -25,6 +25,7 @@ RSpec.describe Terminus::Serializers::Screen, :db do
         model_id: model.id,
         uri: "memory://abc123.png",
         filename: "test.png",
+        bit_depth: 1,
         mime_type: "image/png",
         width: 1,
         height: 1,
