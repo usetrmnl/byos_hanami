@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/core"
 require "dry/monads"
 
 module Terminus
@@ -36,6 +37,17 @@ module Terminus
       def find(id) = (with_associations.by_pk(id).one if id)
 
       def find_by(**) = with_associations.where(**).one
+
+      def update_image(name, io, **)
+        find_by(name:).then do |record|
+          if record
+            record.replace(io, **)
+            Success update record.id, image_data: record.image_attributes
+          else
+            Failure "Unabled to find screen: #{name.inspect}."
+          end
+        end
+      end
 
       def where(**)
         with_associations.where(**)
