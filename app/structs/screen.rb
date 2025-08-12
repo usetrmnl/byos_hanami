@@ -5,6 +5,7 @@ require "refinements/hash"
 module Terminus
   module Structs
     # The screen struct.
+    # :reek:TooManyMethods
     class Screen < DB::Struct
       include Terminus::Uploaders::Image::Attachment[:image]
 
@@ -17,6 +18,10 @@ module Terminus
         @store = store
         @attacher = image_attacher
       end
+
+      def bit_depth = image_attributes.dig :metadata, :bit_depth
+
+      def height = image_attributes.dig :metadata, :height
 
       def image_attributes = attributes[:image_data].deep_symbolize_keys
 
@@ -53,6 +58,8 @@ module Terminus
       def errors = attacher.errors
 
       def valid? = errors.empty?
+
+      def width = image_attributes.dig :metadata, :width
 
       private
 

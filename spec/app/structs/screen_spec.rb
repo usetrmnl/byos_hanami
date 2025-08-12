@@ -9,6 +9,20 @@ RSpec.describe Terminus::Structs::Screen, :db do
 
   before { path.open { |io| screen.upload io } }
 
+  describe "#bit_depth" do
+    it "answers bit_depth" do
+      screen.attach path.open
+      expect(screen.bit_depth).to eq(1)
+    end
+  end
+
+  describe "#height" do
+    it "answers height" do
+      screen.attach path.open
+      expect(screen.height).to eq(1)
+    end
+  end
+
   describe "#image_attributes" do
     it "answers empty attributes without attachment" do
       screen = Factory[:screen]
@@ -202,6 +216,13 @@ RSpec.describe Terminus::Structs::Screen, :db do
     it "answers false with errors" do
       screen.attach StringIO.new
       expect(screen.valid?).to be(false)
+    end
+  end
+
+  describe "#width" do
+    it "answers width" do
+      screen.attach path.open
+      expect(screen.width).to eq(1)
     end
   end
 end
