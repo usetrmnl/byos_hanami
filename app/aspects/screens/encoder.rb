@@ -25,7 +25,7 @@ module Terminus
 
         def payload_for screen
           Success filename: screen.image_name,
-                  image_url: "data:#{screen.image_type};base64,#{content_for screen}"
+                  image_url: "data:#{screen.mime_type};base64,#{content_for screen}"
         end
 
         def content_for(screen) = client.strict_encode64 screen.image_open(&:read)

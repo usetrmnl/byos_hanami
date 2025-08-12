@@ -87,12 +87,6 @@ RSpec.describe Terminus::Structs::Screen, :db do
     end
   end
 
-  describe "#image_type" do
-    it "answers MIME type" do
-      expect(screen.image_type).to eq("image/png")
-    end
-  end
-
   describe "#image_uri" do
     it "answers URI" do
       expect(screen.image_uri).to match(%r(memory://\h{32}\.png))
@@ -133,6 +127,12 @@ RSpec.describe Terminus::Structs::Screen, :db do
         },
         "storage" => "cache"
       )
+    end
+  end
+
+  describe "#mime_type" do
+    it "answers MIME type" do
+      expect(screen.mime_type).to eq("image/png")
     end
   end
 

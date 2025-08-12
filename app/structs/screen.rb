@@ -43,13 +43,13 @@ module Terminus
 
       def image_size = image_attributes.dig :metadata, :size
 
-      def image_type = image_attributes.dig :metadata, :mime_type
-
       def image_uri(**) = (store.url(image_id, **) if image_id)
 
       def attach(io, **)
         attacher.assign(io, **).tap { |file| attributes[:image_data] = file.data }
       end
+
+      def mime_type = image_attributes.dig :metadata, :mime_type
 
       def upload(io, **)
         attacher.upload(io, **).tap { |file| attributes[:image_data] = file.data }
