@@ -52,15 +52,18 @@ module Terminus
             id = screen.id
 
             if parameters.key? :content
-              screen.image_destroy
-
               temp_path.call build_payload(screen, parameters) do |path|
-                screen.upload StringIO.new(path.read), metadata: {"filename" => path.basename}
-                repository.update id, image_data: screen.image_attributes, **parameters
+                replace path, screen, **parameters
               end
             else
               repository.update id, **parameters
             end
+          end
+
+          # :reek:FeatureEnvy
+          def replace(path, screen, **)
+            path.open { |io| screen.replace io, metadata: {"filename" => path.basename} }
+            repository.update screen.id, image_data: screen.image_attributes, **
           end
 
           def build_payload screen, parameters

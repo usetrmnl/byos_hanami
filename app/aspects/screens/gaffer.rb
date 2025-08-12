@@ -32,14 +32,13 @@ module Terminus
         end
 
         def update screen, device, message
-          screen.image_destroy
-
           temp_path.call build_payload(device, message) do |path|
-            screen.upload StringIO.new(path.read),
-                          metadata: {"filename" => "#{device.system_name :error}.png"}
-
-            Success repository.update(screen.id, image_data: screen.image_attributes)
+            replace screen.name, path, {"filename" => "#{device.system_name :error}.png"}
           end
+        end
+
+        def replace name, path, metadata
+          path.open { |io| repository.update_image name, io, metadata: }
         end
 
         # :reek:FeatureEnvy
