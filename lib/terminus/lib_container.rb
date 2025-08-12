@@ -17,6 +17,13 @@ module Terminus
 
     register(:downloader) { Downloader.new }
     register(:sanitizer) { Sanitizer.new }
-    register(:logger) { Cogger.new id: :terminus, formatter: :detail }
+
+    register :logger do
+      Cogger.add_filter(:api_key)
+            .add_filter(:mac_address)
+            .add_filter(:HTTP_ACCESS_TOKEN)
+            .add_filter(:HTTP_ID)
+            .new id: :terminus, formatter: :property
+    end
   end
 end
