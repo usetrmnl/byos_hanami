@@ -47,12 +47,20 @@ module Terminus
 
       def attach(io, **)
         attacher.assign(io, **).tap { |file| attributes[:image_data] = file.data }
+        self
       end
 
       def mime_type = image_attributes.dig :metadata, :mime_type
 
+      def replace(io, **)
+        image_destroy
+        upload(io, **)
+        self
+      end
+
       def upload(io, **)
         attacher.upload(io, **).tap { |file| attributes[:image_data] = file.data }
+        self
       end
 
       def errors = attacher.errors

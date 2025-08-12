@@ -11,14 +11,14 @@ RSpec.describe Terminus::Structs::Screen, :db do
 
   describe "#bit_depth" do
     it "answers bit_depth" do
-      screen.attach path.open
+      path.open { |io| screen.attach io }
       expect(screen.bit_depth).to eq(1)
     end
   end
 
   describe "#height" do
     it "answers height" do
-      screen.attach path.open
+      path.open { |io| screen.attach io }
       expect(screen.height).to eq(1)
     end
   end
@@ -100,32 +100,34 @@ RSpec.describe Terminus::Structs::Screen, :db do
 
   describe "#attach" do
     it "attaches file" do
-      expect(screen.attach(path.open).data).to match(
-        "id" => /\h{32}\.png/,
-        "metadata" => {
-          "bit_depth" => 1,
-          "filename" => "test.png",
-          "height" => 1,
-          "size" => 81,
-          "mime_type" => "image/png",
-          "width" => 1
+      instance = path.open { |io| screen.attach io }
+
+      expect(instance.image_attributes).to match(
+        id: /\h{32}\.png/,
+        metadata: {
+          bit_depth: 1,
+          filename: "test.png",
+          height: 1,
+          size: 81,
+          mime_type: "image/png",
+          width: 1
         },
-        "storage" => "cache"
+        storage: "cache"
       )
     end
 
     it "doesn't attach when invalid" do
-      expect(screen.attach(StringIO.new).data).to match(
-        "id" => /\h{32}/,
-        "metadata" => {
-          "bit_depth" => nil,
-          "filename" => nil,
-          "size" => 0,
-          "mime_type" => nil,
-          "width" => nil,
-          "height" => nil
+      expect(screen.attach(StringIO.new).image_attributes).to match(
+        id: /\h{32}/,
+        metadata: {
+          bit_depth: nil,
+          filename: nil,
+          height: nil,
+          size: 0,
+          mime_type: nil,
+          width: nil
         },
-        "storage" => "cache"
+        storage: "cache"
       )
     end
   end
@@ -136,28 +138,87 @@ RSpec.describe Terminus::Structs::Screen, :db do
     end
   end
 
-  describe "#upload" do
-    it "uploads file when valid" do
-      upload = screen.upload path.open
+  describe "#replace" do
+    it "replaces file when valid" do
+      instance = path.open { |io| screen.replace io }
 
-      expect(upload.data).to match(
-        "id" => /\h{32}\.png/,
-        "metadata" => {
-          "bit_depth" => 1,
-          "filename" => "test.png",
-          "height" => 1,
-          "size" => 81,
-          "mime_type" => "image/png",
-          "width" => 1
+      expect(instance.image_attributes).to match(
+        id: /\h{32}\.png/,
+        metadata: {
+          bit_depth: 1,
+          filename: "test.png",
+          height: 1,
+          size: 81,
+          mime_type: "image/png",
+          width: 1
         },
-        "storage" => "store"
+        storage: "store"
       )
     end
 
     it "updates attributes when valid" do
-      screen.upload path.open
+      instance = path.open { |io| screen.replace io }
 
-      expect(screen.image_attributes).to match(
+      expect(instance.image_attributes).to match(
+        id: /\h{32}\.png/,
+        storage: "store",
+        metadata: {
+          bit_depth: 1,
+          filename: "test.png",
+          size: 81,
+          mime_type: "image/png",
+          width: 1,
+          height: 1
+        }
+      )
+    end
+
+    it "updates storage ID" do
+      id = screen.image_id
+      instance = path.open { |io| screen.replace io }
+      expect(id).not_to eq(instance.image_id)
+    end
+
+    it "doesn't replace file when invalid" do
+      instance = screen.replace StringIO.new
+
+      expect(instance.image_attributes).to match(
+        id: /\h{32}/,
+        metadata: {
+          bit_depth: nil,
+          filename: nil,
+          height: nil,
+          size: 0,
+          mime_type: nil,
+          width: nil
+        },
+        storage: "store"
+      )
+    end
+  end
+
+  describe "#upload" do
+    it "uploads file when valid" do
+      instance = path.open { |io| screen.upload io }
+
+      expect(instance.image_attributes).to match(
+        id: /\h{32}\.png/,
+        metadata: {
+          bit_depth: 1,
+          filename: "test.png",
+          height: 1,
+          size: 81,
+          mime_type: "image/png",
+          width: 1
+        },
+        storage: "store"
+      )
+    end
+
+    it "updates attributes when valid" do
+      instance = path.open { |io| screen.upload io }
+
+      expect(instance.image_attributes).to match(
         id: /\h{32}\.png/,
         storage: "store",
         metadata: {
@@ -174,25 +235,25 @@ RSpec.describe Terminus::Structs::Screen, :db do
     it "doesn't upload file when invalid" do
       upload = screen.upload StringIO.new
 
-      expect(upload.data).to match(
-        "id" => /\h{32}/,
-        "metadata" => {
-          "bit_depth" => nil,
-          "filename" => nil,
-          "height" => nil,
-          "size" => 0,
-          "mime_type" => nil,
-          "width" => nil
+      expect(upload.image_attributes).to match(
+        id: /\h{32}/,
+        metadata: {
+          bit_depth: nil,
+          filename: nil,
+          height: nil,
+          size: 0,
+          mime_type: nil,
+          width: nil
         },
-        "storage" => "store"
+        storage: "store"
       )
     end
   end
 
   describe "#errors" do
     it "answers empty array when valid" do
-      screen.attach path.open
-      expect(screen.errors).to eq([])
+      instance = path.open { |io| screen.attach io }
+      expect(instance.errors).to eq([])
     end
 
     it "answers errors when invalid" do
