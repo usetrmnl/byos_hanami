@@ -16,15 +16,15 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
       /
         DEBUG.+
         \[HTTP_ACCESS_TOKEN=.+\]\s
-        \[HTTP_BATTERY_VOLTAGE=.+]\s
-        \[HTTP_FW_VERSION=.+]\s
-        \[HTTP_HEIGHT=.+]\s
-        \[HTTP_HOST=.+]\s
-        \[HTTP_ID=.+]\s
-        \[HTTP_REFRESH_RATE=.+]\s
-        \[HTTP_RSSI=.+]\s
-        \[HTTP_USER_AGENT=.+]\s
-        \[HTTP_WIDTH=.+]\s
+        \[HTTP_BATTERY_VOLTAGE=.+\]\s
+        \[HTTP_FW_VERSION=.+\]\s
+        \[HTTP_HEIGHT=.+\]\s
+        \[HTTP_HOST=.+\]\s
+        \[HTTP_ID=.+\]\s
+        \[HTTP_REFRESH_RATE=.+\]\s
+        \[HTTP_RSSI=.+\]\s
+        \[HTTP_USER_AGENT=.+\]\s
+        \[HTTP_WIDTH=.+\]\s
         Processing\sdevice\srequest\sheaders\.
       /x
     end
