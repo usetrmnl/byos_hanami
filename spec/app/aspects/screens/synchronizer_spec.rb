@@ -50,7 +50,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
         image_attributes: {
           id: /\h{32}\.bmp/,
           metadata: {
-            bit_depth: nil,
+            bit_depth: 1,
             filename: "plugin-e76a5c.bmp",
             height: 1,
             mime_type: "image/bmp",
@@ -74,7 +74,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
         image_attributes: {
           id: /\h{32}\.bmp/,
           metadata: {
-            bit_depth: nil,
+            bit_depth: 1,
             filename: "plugin-e76a5c.bmp",
             height: 1,
             mime_type: "image/bmp",

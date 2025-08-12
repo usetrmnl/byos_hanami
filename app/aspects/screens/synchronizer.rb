@@ -11,6 +11,7 @@ module Terminus
   module Aspects
     module Screens
       # A screen attachment synchronizer with Core server.
+      # :reek:DataClump
       class Synchronizer
         include Deps[
           model_repository: "repositories.model",
@@ -61,7 +62,7 @@ module Terminus
         end
 
         def upsert pathname, response, screen
-          upload_attachment(pathname, response).bind do |struct|
+          process_download(pathname, response).bind do |struct|
             if screen
               update screen, struct
             else
@@ -73,9 +74,15 @@ module Terminus
           end
         end
 
-        def upload_attachment pathname, response
-          struct.upload StringIO.new(response), metadata: {"filename" => pathname}
+        def process_download pathname, response
+          Pathname.mktmpdir { |root| upload root, pathname, response }
           struct.valid? ? Success(struct) : Failure(struct.errors)
+        end
+
+        def upload work_dir, pathname, response
+          work_dir.join(pathname).write(response).open do |io|
+            struct.upload io, metadata: {"filename" => pathname}
+          end
         end
 
         def update screen, struct
