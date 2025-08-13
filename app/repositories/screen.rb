@@ -11,8 +11,7 @@ module Terminus
 
       commands :create
 
-      commands :update,
-               update: :by_pk,
+      commands update: :by_pk,
                use: :timestamps,
                plugins_options: {timestamps: {timestamps: :updated_at}}
 

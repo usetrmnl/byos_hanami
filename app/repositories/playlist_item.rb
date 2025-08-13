@@ -6,8 +6,7 @@ module Terminus
     class PlaylistItem < DB::Repository[:playlist_item]
       commands :create, delete: :by_pk
 
-      commands :update,
-               update: :by_pk,
+      commands update: :by_pk,
                use: :timestamps,
                plugins_options: {timestamps: {timestamps: :updated_at}}
 

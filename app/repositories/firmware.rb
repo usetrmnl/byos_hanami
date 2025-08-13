@@ -6,8 +6,7 @@ module Terminus
     class Firmware < DB::Repository[:firmwares]
       commands :create
 
-      commands :update,
-               update: :by_pk,
+      commands update: :by_pk,
                use: :timestamps,
                plugins_options: {timestamps: {timestamps: :updated_at}}
 
