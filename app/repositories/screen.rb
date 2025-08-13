@@ -9,7 +9,12 @@ module Terminus
     class Screen < DB::Repository[:screen]
       include Dry::Monads[:result]
 
-      commands :create, update: :by_pk
+      commands :create
+
+      commands :update,
+               update: :by_pk,
+               use: :timestamps,
+               plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
         with_associations.order { updated_at.desc }

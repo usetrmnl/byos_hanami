@@ -4,7 +4,12 @@ module Terminus
   module Repositories
     # The device log repository.
     class DeviceLog < DB::Repository[:device_logs]
-      commands :create, update: :by_pk, delete: :by_pk
+      commands :create, delete: :by_pk
+
+      commands :update,
+               update: :by_pk,
+               use: :timestamps,
+               plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
         device_logs.combine(:device)

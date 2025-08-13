@@ -4,7 +4,12 @@ module Terminus
   module Repositories
     # The firmware repository.
     class Firmware < DB::Repository[:firmwares]
-      commands :create, update: :by_pk
+      commands :create
+
+      commands :update,
+               update: :by_pk,
+               use: :timestamps,
+               plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all = firmwares.by_version_desc.to_a
 

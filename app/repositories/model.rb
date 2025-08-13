@@ -4,7 +4,12 @@ module Terminus
   module Repositories
     # The model repository.
     class Model < DB::Repository[:model]
-      commands :create, update: :by_pk, delete: :by_pk
+      commands :create, delete: :by_pk
+
+      commands :update,
+               update: :by_pk,
+               use: :timestamps,
+               plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
         model.order { published_at.asc }
