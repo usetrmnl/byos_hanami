@@ -6,8 +6,8 @@
            class="value"
            hx-get="<%= routes.path :screens %>"
            hx-trigger="search, keyup delay:200ms changed"
-           hx-select=".screen"
-           hx-target="next .screen"
+           hx-select=".screens"
+           hx-target="next .screens"
            hx-swap="outerHTML"
            hx-push-url="true"
            hx-indicator=".page-loader"/>
@@ -17,4 +17,3 @@
       <%= link_to "Clear", routes.path(:screens), class: "button-decline" %>
   <% end %>
 </search>
-

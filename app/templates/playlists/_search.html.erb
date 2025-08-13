@@ -6,8 +6,8 @@
            class="value"
            hx-get="<%= routes.path :playlists %>"
            hx-trigger="search, keyup delay:200ms changed"
-           hx-select=".playlist"
-           hx-target="next .playlist"
+           hx-select=".playlists"
+           hx-target="next .playlists"
            hx-swap="outerHTML"
            hx-push-url="true"
            hx-indicator=".page-loader"/>
@@ -17,4 +17,3 @@
       <%= link_to "Clear", routes.path(:playlists), class: "button-decline" %>
   <% end %>
 </search>
-
