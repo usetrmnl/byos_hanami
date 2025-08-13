@@ -670,19 +670,21 @@ curl "https://localhost:2443/api/models/1" \
   "data": [
     {
       "id": 1,
-      "name": "t1",
-      "label": "T1",
-      "description": "The first production model.",
+      "name": "og_png",
+      "label": "TRMNL (1-bit)",
+      "description": "TRMNL (1-bit)",
       "mime_type": "image/png",
       "colors": 2,
       "bit_depth": 1,
-      "scale_factor": 1,
+      "scale_factor": 1.0,
       "rotation": 0,
       "offset_x": 0,
       "offset_y": 0,
       "width": 800,
       "height": 480,
-      "published_at": "2024-06-25T00:00:00+0000"
+      "published_at": "2024-01-01T00:00:00+0000",
+      "created_at": "2025-08-13T19:34:08+0000",
+      "updated_at": "2025-08-13T19:34:08+0000"
     }
   ]
 }
@@ -691,19 +693,21 @@ curl "https://localhost:2443/api/models/1" \
 {
   "data": {
     "id": 1,
-    "name": "t1",
-    "label": "T1",
-    "description": "The first production model.",
+    "name": "og_png",
+    "label": "TRMNL (1-bit)",
+    "description": "TRMNL (1-bit)",
     "mime_type": "image/png",
     "colors": 2,
     "bit_depth": 1,
-    "scale_factor": 1,
+    "scale_factor": 1.0,
     "rotation": 0,
     "offset_x": 0,
     "offset_y": 0,
     "width": 800,
     "height": 480,
-    "published_at": "2024-06-25T00:00:00+0000"
+    "published_at": "2024-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:34:08+0000",
+    "updated_at": "2025-08-13T19:34:08+0000"
   }
 }
 ----
@@ -722,6 +726,8 @@ curl -X "POST" "https://localhost:2443/api/models" \
   "model": {
     "description": "A demonstration.",
     "published_at": "2025-01-01T00:00:00+00:00",
+    "created_at": "2025-08-13T19:34:08+0000",
+    "updated_at": "2025-08-13T19:34:08+0000",
     "label": "Demo",
     "rotation": 25,
     "width": "1000",
@@ -745,20 +751,22 @@ curl -X "POST" "https://localhost:2443/api/models" \
 ----
 {
   "data": {
-    "id": 2,
+    "id": 12,
     "name": "demo",
     "label": "Demo",
     "description": "A demonstration.",
     "mime_type": "image/png",
     "colors": 4,
     "bit_depth": 2,
-    "scale_factor": 2,
+    "scale_factor": 2.0,
     "rotation": 25,
     "offset_x": 50,
     "offset_y": 100,
     "width": 1000,
     "height": 500,
-    "published_at": "2025-01-01T00:00:00+0000"
+    "published_at": "2025-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:42:06+0000",
+    "updated_at": "2025-08-13T19:42:06+0000"
   }
 }
 ----
@@ -769,7 +777,7 @@ curl -X "POST" "https://localhost:2443/api/models" \
 ====
 [source,bash]
 ----
-curl -X "PUT" "https://localhost:2443/api/models/2" \
+curl -X "PUT" "https://localhost:2443/api/models/12" \
      -H 'Content-Type: application/json' \
      -d $'{
   "model": {
@@ -788,20 +796,22 @@ You you change a single attribute or multiple attributes at once.
 ----
 {
   "data": {
-    "id": 2,
+    "id": 12,
     "name": "demo",
     "label": "Demo",
     "description": "A patch demonstration.",
     "mime_type": "image/png",
     "colors": 4,
     "bit_depth": 2,
-    "scale_factor": 2,
+    "scale_factor": 2.0,
     "rotation": 25,
     "offset_x": 50,
     "offset_y": 100,
     "width": 1000,
     "height": 500,
-    "published_at": "2025-01-01T00:00:00+0000"
+    "published_at": "2025-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:42:06+0000",
+    "updated_at": "2025-08-13T19:42:31+0000"
   }
 }
 ----
@@ -825,7 +835,7 @@ curl -X "DELETE" "https://localhost:2443/api/models/2" \
 ----
 {
   "data": {
-    "id": 2,
+    "id": 12,
     "name": "demo",
     "label": "Demo",
     "description": "A patch demonstration.",
@@ -835,10 +845,12 @@ curl -X "DELETE" "https://localhost:2443/api/models/2" \
     "mime_type": "image/png",
     "colors": 4,
     "bit_depth": 2,
-    "scale_factor": 2,
+    "scale_factor": 2.0,
     "rotation": 25,
     "offset_x": 50,
-    "offset_y": 100
+    "offset_y": 100,
+    "created_at": "2025-08-13 19:42:06 UTC",
+    "updated_at": "2025-08-13 19:42:31 UTC"
   }
 }
 ----
