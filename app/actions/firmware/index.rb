@@ -21,13 +21,7 @@ module Terminus
 
         private
 
-        def load query
-          records = repository.all
-
-          return records unless query
-
-          records.select { |firmware| firmware.version.match? query }
-        end
+        def load(query) = query ? repository.search(:version, query) : repository.all
 
         def add_htmx_headers response, query
           htmx.response! response.headers, push_url: routes.path(:firmware, query:)

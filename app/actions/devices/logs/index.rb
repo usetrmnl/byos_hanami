@@ -38,18 +38,18 @@ module Terminus
             query = parameters[:query].to_s
             add_htmx_headers response, device, query
 
-            response.render view, device:, logs: load_logs(device.id, query), query:, layout: false
+            response.render view, device:, logs: load(device.id, query), query:, layout: false
           end
 
           def render_all parameters, device, response
             query = parameters[:query].to_s
-            response.render view, device:, logs: load_logs(device.id, query), query:
+            response.render view, device:, logs: load(device.id, query), query:
           end
 
-          def load_logs device_id, query
-            return repository.where device_id: device_id if query.empty?
+          def load device_id, query
+            return repository.where(device_id:) if query.empty?
 
-            repository.all_by_message device_id, query
+            repository.search :message, query, device_id:
           end
 
           def add_htmx_headers response, device, query

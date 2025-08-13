@@ -9,7 +9,7 @@ module Terminus
 
         def handle request, response
           query = request.params[:query].to_s
-          devices = load_devices query
+          devices = load query
 
           if htmx.request? request.env, :trigger, "search"
             add_htmx_headers response, query
@@ -21,8 +21,8 @@ module Terminus
 
         private
 
-        def load_devices query
-          query.empty? ? repository.all : repository.where(label: query)
+        def load query
+          query.empty? ? repository.all : repository.search(:label, query)
         end
 
         def add_htmx_headers response, query
