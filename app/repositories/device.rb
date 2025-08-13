@@ -23,6 +23,12 @@ module Terminus
         devices.update playlist_id: Sequel.case({{id: ids} => playlist_id}, nil)
       end
 
+      def search key, value
+        devices.where(Sequel.ilike(key, "%#{value}%"))
+               .order { created_at.asc }
+               .to_a
+      end
+
       def update_by_mac_address(value, **attributes)
         device = find_by mac_address: value
 

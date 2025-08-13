@@ -74,6 +74,28 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
     end
   end
 
+  describe "#search" do
+    it "answers records for case insensitive value and device ID" do
+      expect(repository.search(:message, "danger", device_id: log.device_id)).to contain_exactly(
+        have_attributes(id: log.id, device_id: log.device_id, message: "Danger!")
+      )
+    end
+
+    it "answers records for partial value and device ID" do
+      expect(repository.search(:message, "dang", device_id: log.device_id)).to contain_exactly(
+        have_attributes(id: log.id, device_id: log.device_id, message: "Danger!")
+      )
+    end
+
+    it "answers empty array for valid value and invalid device ID" do
+      expect(repository.search(:message, "Danger!", device_id: 13)).to eq([])
+    end
+
+    it "answers empty array for invalid value and valid device ID" do
+      expect(repository.search(:message, "bogus", device_id: log.device_id)).to eq([])
+    end
+  end
+
   describe "#where" do
     it "answers records" do
       expect(repository.where(device_id: log.device_id)).to contain_exactly(

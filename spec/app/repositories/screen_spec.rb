@@ -123,6 +123,24 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     end
   end
 
+  describe "#search" do
+    let(:screen) { Factory[:screen, label: "Test"] }
+
+    before { screen }
+
+    it "answers records for case insensitive value" do
+      expect(repository.search(:label, "test")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers records for partial value" do
+      expect(repository.search(:label, "te")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers empty array for invalid value" do
+      expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
+
   describe "#update_image" do
     it "answers success for existing screen" do
       screen = Factory[:screen]

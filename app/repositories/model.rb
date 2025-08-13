@@ -27,6 +27,12 @@ module Terminus
       def find_by_dimensions width:, height:
         (find_by(name: "og_png", width:, height:) if width == 800)
       end
+
+      def search key, value
+        model.where(Sequel.ilike(key, "%#{value}%"))
+             .order { created_at.asc }
+             .to_a
+      end
     end
   end
 end

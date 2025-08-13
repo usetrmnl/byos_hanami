@@ -29,6 +29,13 @@ module Terminus
 
       def delete_all_by_device(device_id) = device_logs.where(device_id:).command(:delete).call
 
+      def search(key, value, **)
+        device_logs.where(**)
+                   .where(Sequel.ilike(key, "%#{value}%"))
+                   .order { created_at.asc }
+                   .to_a
+      end
+
       def where(**)
         device_logs.where(**)
                    .order { created_at.desc }

@@ -19,6 +19,12 @@ module Terminus
 
       def find_by(**) = with_current_item.where(**).one
 
+      def search key, value
+        playlist.where(Sequel.ilike(key, "%#{value}%"))
+                .order { created_at.asc }
+                .to_a
+      end
+
       def update_current_item id, item_id
         playlist.transaction do
           record = find id

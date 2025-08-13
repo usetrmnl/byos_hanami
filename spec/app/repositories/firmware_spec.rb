@@ -103,4 +103,24 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
       expect(repository.latest).to be(nil)
     end
   end
+
+  describe "#search" do
+    before { firmware }
+
+    it "answers records for exact value" do
+      expect(repository.search(:version, "0.0.0")).to contain_exactly(
+        have_attributes(version: "0.0.0")
+      )
+    end
+
+    it "answers records for partial value" do
+      expect(repository.search(:version, "0.0")).to contain_exactly(
+        have_attributes(version: "0.0.0")
+      )
+    end
+
+    it "answers empty array for invalid value" do
+      expect(repository.search(:version, "1.1.1")).to eq([])
+    end
+  end
 end

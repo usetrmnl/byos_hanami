@@ -84,4 +84,22 @@ RSpec.describe Terminus::Repositories::Model, :db do
       expect(repository.find_by_dimensions(width: 800, height: 13)).to be(nil)
     end
   end
+
+  describe "#search" do
+    let(:model) { Factory[:model, label: "Test"] }
+
+    before { model }
+
+    it "answers records for case insensitive value" do
+      expect(repository.search(:label, "test")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers records for partial value" do
+      expect(repository.search(:label, "te")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers empty array for invalid value" do
+      expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
 end

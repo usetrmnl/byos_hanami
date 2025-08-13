@@ -31,6 +31,12 @@ module Terminus
       def find_by(**) = firmwares.where(**).one
 
       def latest = all.first
+
+      def search key, value
+        firmwares.where(Sequel.like(key, "%#{value}%"))
+                 .order { created_at.asc }
+                 .to_a
+      end
     end
   end
 end

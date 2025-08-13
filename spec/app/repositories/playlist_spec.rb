@@ -54,6 +54,24 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
     end
   end
 
+  describe "#search" do
+    let(:playlist) { Factory[:playlist, label: "Test"] }
+
+    before { playlist }
+
+    it "answers records for case insensitive value" do
+      expect(repository.search(:label, "test")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers records for partial value" do
+      expect(repository.search(:label, "te")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers empty array for invalid value" do
+      expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
+
   describe "#update_current_item" do
     it "updates current item when not set" do
       playlist = Factory[:playlist]

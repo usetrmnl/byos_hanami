@@ -79,6 +79,22 @@ RSpec.describe Terminus::Repositories::Device, :db do
     end
   end
 
+  describe "#search" do
+    before { device }
+
+    it "answers records for case insensitive value" do
+      expect(repository.search(:label, "test")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers records for partial value" do
+      expect(repository.search(:label, "te")).to contain_exactly(have_attributes(label: "Test"))
+    end
+
+    it "answers empty array for invalid value" do
+      expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
+
   describe "#update_by_mac_address" do
     it "updates record with attributes" do
       device
