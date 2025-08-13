@@ -33,7 +33,11 @@
     </dialog>
 
     <div class="actions">
-      <%= render :search, query: %>
+      <%= render "shared/search",
+                 path: routes.path(:playlists),
+                 query:,
+                 pick: ".playlists",
+                 target: "next .playlists" %>
 
       <a href="/playlists/new"
          class="button-accept"

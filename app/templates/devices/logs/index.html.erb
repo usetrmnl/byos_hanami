@@ -11,7 +11,11 @@
     </ul>
 
     <div class="actions">
-      <%= render :search, device:, query: %>
+      <%= render "shared/search",
+                 path: routes.path(:device_logs, device_id: device.id),
+                 query:,
+                 pick: ".site-container",
+                 target: "next .site-container" %>
 
       <a href="<%= routes.path :bulk_device_logs_delete, device_id: device.id %>"
          class="button-danger"

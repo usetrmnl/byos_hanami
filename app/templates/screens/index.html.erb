@@ -37,7 +37,11 @@
     </dialog>
 
     <div class="actions">
-      <%= render :search, query: %>
+      <%= render "shared/search",
+                 path: routes.path(:screens),
+                 query:,
+                 pick: ".screens",
+                 target: "next .screens" %>
 
       <a href="/screens/new"
          class="button-accept"
