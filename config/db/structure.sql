@@ -228,7 +228,9 @@ CREATE TABLE public.model (
     scale_factor double precision DEFAULT 1 NOT NULL,
     rotation integer DEFAULT 0 NOT NULL,
     offset_x integer DEFAULT 0 NOT NULL,
-    offset_y integer DEFAULT 0 NOT NULL
+    offset_y integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -639,4 +641,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250625123745_add_playlist_item.rb'),
 ('20250723140212_add_playlist_current_item_foreign_key.rb'),
 ('20250723140455_add_model_detail_columns.rb'),
-('20250730094230_change_model_scale_factor_to_float.rb');
+('20250730094230_change_model_scale_factor_to_float.rb'),
+('20250813132657_add_model_timestamps.rb');
