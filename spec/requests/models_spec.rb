@@ -29,7 +29,7 @@ RSpec.describe "/api/models", :db do
 
     expect(json_payload).to match(
       data: [
-        hash_including(
+        {
           id: model.id,
           label: model.label,
           name: model.name,
@@ -43,8 +43,10 @@ RSpec.describe "/api/models", :db do
           offset_y: 0,
           width: 800,
           height: 480,
-          published_at: match_rfc_3339
-        )
+          published_at: match_rfc_3339,
+          created_at: match_rfc_3339,
+          updated_at: match_rfc_3339
+        }
       ]
     )
   end
@@ -72,7 +74,9 @@ RSpec.describe "/api/models", :db do
         offset_y: 0,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339
+        published_at: match_rfc_3339,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end
@@ -100,7 +104,9 @@ RSpec.describe "/api/models", :db do
         offset_y: 15,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339
+        published_at: match_rfc_3339,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end
@@ -146,7 +152,9 @@ RSpec.describe "/api/models", :db do
         offset_y: 15,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339
+        published_at: match_rfc_3339,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end
@@ -189,7 +197,9 @@ RSpec.describe "/api/models", :db do
         offset_y: 0,
         width: 800,
         height: 480,
-        published_at: model.published_at.to_s
+        published_at: match_rfc_3339,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
       }
     )
   end

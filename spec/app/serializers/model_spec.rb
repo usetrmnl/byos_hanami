@@ -21,7 +21,9 @@ RSpec.describe Terminus::Serializers::Model do
       offset_y: 15,
       width: 800,
       height: 480,
-      published_at: "2025-01-01T00:00:00+0000"
+      published_at: "2025-01-01T00:00:00+0000",
+      created_at: "2025-01-01T10:10:10+0000",
+      updated_at: "2025-01-01T10:10:10+0000"
     }
   end
 

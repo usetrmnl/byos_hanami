@@ -20,6 +20,8 @@ module Terminus
         width
         height
         published_at
+        created_at
+        updated_at
       ].freeze
 
       def initialize record, keys: KEYS, transformer: Transformers::Time
