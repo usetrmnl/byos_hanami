@@ -7,10 +7,11 @@ module Terminus
         # The delete action.
         class Delete < Base
           include Deps[repository: "repositories.model"]
+          include Initable[serializer: Serializers::Model]
 
           def handle request, response
             model = repository.delete request.params[:id]
-            response.body = {data: model.to_h}.to_json
+            response.body = {data: serializer.new(model).to_h}.to_json
           end
         end
       end
