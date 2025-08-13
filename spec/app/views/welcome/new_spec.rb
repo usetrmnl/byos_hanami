@@ -2,10 +2,10 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Views::Welcome::New, :db do
+RSpec.describe Terminus::Views::Welcome::New do
   subject(:view) { described_class.new }
 
-  let(:device) { Factory[:device] }
+  let(:device) { Factory.structs[:device] }
 
   describe "#call" do
     it "includes greeting" do
@@ -25,7 +25,7 @@ RSpec.describe Terminus::Views::Welcome::New, :db do
     end
 
     it "includes question mark when firmware version isn't defined" do
-      device = Factory[:device, firmware_version: nil]
+      device = Factory.structs[:device, firmware_version: nil]
       expect(view.call(device:).to_s).to include(%(<dd class="value">?</dd>))
     end
   end

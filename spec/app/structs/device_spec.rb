@@ -4,7 +4,7 @@ require "hanami_helper"
 
 RSpec.describe Terminus::Structs::Device, :db do
   subject :device do
-    Factory[:device, image_timeout: 10, mac_address: "AA:BB:CC:11:22:33", refresh_rate: 20]
+    Factory.structs[:device, image_timeout: 10, mac_address: "AA:BB:CC:11:22:33", refresh_rate: 20]
   end
 
   describe "#as_api_display" do
@@ -35,7 +35,7 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
 
     it "answers false when start and end are nil" do
-      expect(Factory[:device].asleep?).to be(false)
+      expect(Factory.structs[:device].asleep?).to be(false)
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
 
     it "answers empty string when slug is nil" do
-      device = Factory[:device, mac_address: nil]
+      device = Factory.structs[:device, mac_address: nil]
       expect(device.slug).to eq("")
     end
   end

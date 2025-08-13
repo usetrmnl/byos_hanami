@@ -2,10 +2,10 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Serializers::Model, :db do
+RSpec.describe Terminus::Serializers::Model do
   subject(:serializer) { described_class.new model }
 
-  let(:model) { Factory[:model, **attributes] }
+  let(:model) { Factory.structs[:model, **attributes] }
 
   let :attributes do
     {

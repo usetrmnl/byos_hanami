@@ -2,12 +2,15 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Serializers::Device, :db do
+RSpec.describe Terminus::Serializers::Device do
   subject(:serializer) { described_class.new device }
 
-  let(:device) { Factory[:device, model_id: model.id, playlist_id: playlist.id, **attributes] }
-  let(:model) { Factory[:model] }
-  let(:playlist) { Factory[:playlist] }
+  let :device do
+    Factory.structs[:device, model_id: model.id, playlist_id: playlist.id, **attributes]
+  end
+
+  let(:model) { Factory.structs[:model] }
+  let(:playlist) { Factory.structs[:playlist] }
 
   let :attributes do
     {

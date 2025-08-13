@@ -2,8 +2,8 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Structs::Model, :db do
-  subject(:model) { Factory[:model] }
+RSpec.describe Terminus::Structs::Model do
+  subject(:model) { Factory.structs[:model] }
 
   describe "#dimensions" do
     it "answers dimensions" do
