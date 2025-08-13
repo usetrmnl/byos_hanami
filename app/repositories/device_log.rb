@@ -16,13 +16,6 @@ module Terminus
                    .to_a
       end
 
-      def all_by_message device_id, value
-        device_logs.where(device_id:)
-                   .where { message.ilike "%#{value}%" }
-                   .order { created_at.desc }
-                   .to_a
-      end
-
       def find(id) = (device_logs.combine(:device).by_pk(id).one if id)
 
       def delete_by_device(device_id, id) = device_logs.where(device_id:, id:).delete

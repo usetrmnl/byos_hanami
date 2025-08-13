@@ -18,22 +18,6 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
     end
   end
 
-  describe "#all_by_message" do
-    it "answers records for device ID and message" do
-      expect(repository.all_by_message(log.device_id, "danger")).to contain_exactly(
-        have_attributes(id: log.id, device_id: log.device_id, message: "Danger!")
-      )
-    end
-
-    it "answers empty array for invalid device ID and valid message" do
-      expect(repository.all_by_message(13, "Danger!")).to eq([])
-    end
-
-    it "answers empty array for valid device ID and invalid message" do
-      expect(repository.all_by_message(log.device_id, "bogus")).to eq([])
-    end
-  end
-
   describe "#find" do
     it "answers record by ID" do
       expect(repository.find(log.id)).to eq(log)
