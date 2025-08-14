@@ -1,8 +1,6 @@
 # auto_register: false
 # frozen_string_literal: true
 
-require "mini_magick"
-
 module Terminus
   module Uploaders
     # Processes image uploads.

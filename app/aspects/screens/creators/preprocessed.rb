@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "dry/monads"
-require "mini_magick"
 
 module Terminus
   module Aspects

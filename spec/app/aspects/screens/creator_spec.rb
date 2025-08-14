@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
 RSpec.describe Terminus::Aspects::Screens::Creator, :db do
   subject(:creator) { described_class.new }
