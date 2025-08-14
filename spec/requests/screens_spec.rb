@@ -191,7 +191,7 @@ RSpec.describe "/api/screens", :db do
       problem = Petail[
         type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
-        detail: "Unable to convert image. Unsupported Model ID: #{model.id}.",
+        detail: "Unsupported MIME Type for model: #{model.id}.",
         instance: "/api/screens"
       ]
 
@@ -275,6 +275,24 @@ RSpec.describe "/api/screens", :db do
         updated_at: match_rfc_3339
       }
     )
+  end
+
+  it "answers problem details for unsupported model" do
+    model = Factory[:model, mime_type: "image/webp"]
+
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {image: {model_id: model.id, content: "<h1>Test</h2>"}}.to_json,
+          "CONTENT_TYPE" => "application/json"
+
+    problem = Petail[
+      type: "/problem_details#screen_payload",
+      status: 422,
+      title: "Unprocessable Entity",
+      detail: "Unsupported MIME Type for model: #{model.id}.",
+      instance: "/api/screens"
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
   end
 
   it "answers problem details when payload has no content" do
