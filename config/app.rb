@@ -20,7 +20,7 @@ module Terminus
       end
     end
 
-    config.inflections { it.acronym "HTML", "IP", "TYPES" }
+    config.inflections { it.acronym "BMP", "HTML", "IP", "TYPES" }
 
     config.actions
           .formats
