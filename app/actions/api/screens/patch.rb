@@ -38,8 +38,7 @@ module Terminus
             screen = repository.find parameters[:id]
 
             if parameters.valid? && screen
-              updated_screen = update screen, parameters[:image]
-              response.body = {data: serializer.new(updated_screen).to_h}.to_json
+              process update(screen, parameters[:image]), response
             else
               unprocessable_entity parameters.errors.to_h, response
             end
@@ -56,14 +55,14 @@ module Terminus
                 replace path, screen, **parameters
               end
             else
-              repository.update id, **parameters
+              Success repository.update(id, **parameters)
             end
           end
 
           # :reek:FeatureEnvy
           def replace(path, screen, **)
             path.open { |io| screen.replace io, metadata: {"filename" => path.basename} }
-            repository.update screen.id, image_data: screen.image_attributes, **
+            Success repository.update(screen.id, image_data: screen.image_attributes, **)
           end
 
           def build_payload screen, parameters
@@ -77,6 +76,14 @@ module Terminus
             ]
           end
 
+          def process result, response
+            case result
+              in Success(update)
+                response.body = {data: serializer.new(update).to_h}.to_json
+              else unprocessable_entity_on_failure result, response
+            end
+          end
+
           def unprocessable_entity errors, response
             body = problem[
               type: "/problem_details#screen_payload",
@@ -84,6 +91,17 @@ module Terminus
               detail: "Validation failed.",
               instance: "/api/screens",
               extensions: {errors:}
+            ]
+
+            response.with body: body.to_json, format: :problem_details, status: 422
+          end
+
+          def unprocessable_entity_on_failure result, response
+            body = problem[
+              type: "/problem_details#screen_payload",
+              status: :unprocessable_entity,
+              detail: result.failure,
+              instance: "/api/screens"
             ]
 
             response.with body: body.to_json, format: :problem_details, status: 422
