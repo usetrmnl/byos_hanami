@@ -179,8 +179,9 @@ RSpec.describe "/api/screens", :db do
   end
 
   context "with invalid MIME Type" do
+    let(:model) { Factory[:model, mime_type: "text/html"] }
+
     before do
-      model = Factory[:model, mime_type: "text/html"]
       post routes.path(:api_screen_create),
            {image: {model_id: model.id, label: "Test", name: "test", content: "test"}}.to_json,
            "CONTENT_TYPE" => "application/json"
@@ -190,7 +191,7 @@ RSpec.describe "/api/screens", :db do
       problem = Petail[
         type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
-        detail: %(Invalid MIME Type: "text/html". Use: "image/bmp" or "image/png".),
+        detail: "Unable to convert image. Unsupported Model ID: #{model.id}.",
         instance: "/api/screens"
       ]
 

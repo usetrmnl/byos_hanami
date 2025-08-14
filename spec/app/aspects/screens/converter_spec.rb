@@ -1,22 +1,23 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
+require "mini_magick"
 
-RSpec.describe Terminus::Aspects::Screens::Converter, :db do
+RSpec.describe Terminus::Aspects::Screens::Converter do
   subject(:converter) { described_class.new }
 
-  include_context "with temporary directory"
+  include_context "with application dependencies"
 
   describe "#call" do
-    let(:model) { Factory[:model, mime_type: "image/bmp"] }
     let(:input_path) { SPEC_ROOT.join "support/fixtures/test.png" }
-    let(:output_path) { temp_dir.join "test.bmp" }
 
-    it "creates BMP screenshot" do
+    it "converts to 1-bit BMP image" do
+      model = Factory.structs[:model, bit_depth: 1, colors: 2, mime_type: "image/bmp"]
+      output_path = temp_dir.join "test.bmp"
+
       converter.call model, input_path, output_path
-      image = MiniMagick::Image.open output_path
 
-      expect(image).to have_attributes(
+      expect(MiniMagick::Image.open(output_path)).to have_attributes(
         dimensions: [800, 480],
         exif: {},
         type: "BMP3",
@@ -24,12 +25,13 @@ RSpec.describe Terminus::Aspects::Screens::Converter, :db do
       )
     end
 
-    it "creates PNG screenshot" do
-      model = Factory[:model, mime_type: "image/png"]
-      converter.call model, input_path, temp_dir.join("test.png")
-      image = MiniMagick::Image.open temp_dir.join("test.png")
+    it "converts to 1-bit PNG image" do
+      model = Factory.structs[:model, bit_depth: 1, colors: 2, mime_type: "image/png"]
+      output_path = temp_dir.join "test.png"
 
-      expect(image).to have_attributes(
+      converter.call model, input_path, output_path
+
+      expect(MiniMagick::Image.open(output_path)).to have_attributes(
         dimensions: [800, 480],
         exif: {},
         type: "PNG",
@@ -37,24 +39,35 @@ RSpec.describe Terminus::Aspects::Screens::Converter, :db do
       )
     end
 
-    it "answers image path" do
-      expect(converter.call(model, input_path, output_path)).to be_success(output_path)
-    end
+    it "converts to 2-bit PNG image" do
+      model = Factory.structs[:model, bit_depth: 2, colors: 4, mime_type: "image/png"]
+      output_path = temp_dir.join "test.png"
 
-    it "answers failure for invalid image type" do
-      model = Factory[:model, mime_type: "image/bogus"]
+      converter.call model, input_path, output_path
 
-      expect(converter.call(model, input_path, temp_dir)).to be_failure(
-        %(Invalid MIME Type: "image/bogus". Use: "image/bmp" or "image/png".)
+      expect(MiniMagick::Image.open(output_path)).to have_attributes(
+        dimensions: [800, 480],
+        exif: {},
+        type: "PNG",
+        data: hash_including("depth" => 2)
       )
     end
 
-    it "answers failure when MiniMagick can't convert" do
-      mini_magick = class_double MiniMagick
-      allow(mini_magick).to receive(:convert).and_raise(MiniMagick::Error, "Danger!")
-      converter = described_class.new(mini_magick:)
+    it "answers image path" do
+      model = Factory.structs[:model, bit_depth: 1, colors: 2, mime_type: "image/bmp"]
+      output_path = temp_dir.join "test.bmp"
 
-      expect(converter.call(model, input_path, output_path)).to be_failure("Danger!")
+      result = converter.call model, input_path, output_path
+
+      expect(result).to be_success(output_path)
+    end
+
+    it "answers failure for invalid model" do
+      model = Factory[:model, mime_type: "image/bogus"]
+
+      expect(converter.call(model, input_path, temp_dir)).to be_failure(
+        "Unsupported MIME Type for model: #{model.id}."
+      )
     end
   end
 end
