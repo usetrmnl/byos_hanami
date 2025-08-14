@@ -13,6 +13,7 @@ detectors:
       - Terminus::Aspects::Screens::Converter#convert
       - Terminus::Aspects::Screens::Converters::Bitmap#convert
       - Terminus::Aspects::Screens::Converters::OneBit#convert
+      - Terminus::Aspects::Screens::Converters::TwoBit#convert
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::IPFinder#all
   LongParameterList:
@@ -23,6 +24,7 @@ detectors:
       - Terminus::Aspects::Screens::Converter#convert
       - Terminus::Aspects::Screens::Converters::Bitmap#convert
       - Terminus::Aspects::Screens::Converters::OneBit#convert
+      - Terminus::Aspects::Screens::Converters::TwoBit#convert
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::Views::Parts::Device#battery_percentage
       - Terminus::Views::Parts::Device#wifi_percentage

@@ -16,6 +16,9 @@ Metrics/MethodLength:
     - wifi_percentage
   Exclude:
     - app/views/helpers.rb
+Metrics/ParameterLists:
+  Exclude:
+    - app/aspects/screens/converters/two_bit.rb
 RSpec/ExampleLength:
   Exclude:
     - "spec/features/**/*"
