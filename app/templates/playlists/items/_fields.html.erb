@@ -1,11 +1,10 @@
 <fieldset role="group" class="group">
   <%= scope(:form_field, key: :screen_id, errors:).render do %>
-    <label class="key" for="playlist_item[screen_id]">
-      Screen
-      <%#= render "shared/popovers/trigger", name: :model %>
-    </label>
+    <label class="key" for="playlist_item_screen_id">Screen</label>
 
-    <%= tag.select name: "playlist_item[screen_id]", class: :value do %>
+    <%= tag.select id: :playlist_item_screen_id,
+                   name: "playlist_item[screen_id]",
+                   class: :value do %>
       <% screen_options.each do |label, id| %>
         <%= tag.option label, value: id, selected: id == field_for(:screen_id, fields, item) %>
       <% end %>
