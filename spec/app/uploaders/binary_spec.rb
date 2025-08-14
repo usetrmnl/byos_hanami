@@ -13,13 +13,13 @@ RSpec.describe Terminus::Uploaders::Binary do
     it "answers zero errors when valid" do
       path = temp_dir.join "test.bin"
       path.binwrite [123].pack("N")
-      attacher.assign path.open
+      path.open { |io| attacher.assign io }
 
       expect(attacher.errors).to eq([])
     end
 
     it "answers errors when invalid" do
-      attacher.assign SPEC_ROOT.join("support/fixtures/test.png").open
+      SPEC_ROOT.join("support/fixtures/test.png").open { |io| attacher.assign io }
 
       expect(attacher.errors).to eq(
         [
