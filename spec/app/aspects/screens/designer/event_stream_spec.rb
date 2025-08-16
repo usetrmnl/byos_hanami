@@ -31,7 +31,7 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
 
       expect(payload).to eq(<<~CONTENT)
         event: preview
-        data: <img src="/assets/screen_preview.svg" alt="Loader" class="image" width="800" height="480"/>
+        data: <img src="/assets/loader.svg" alt="Loader" class="image" width="800" height="480"/>
 
       CONTENT
     end

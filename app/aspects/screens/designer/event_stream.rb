@@ -33,7 +33,7 @@ module Terminus
               %(<img src="#{screen.image_uri}?#{at}" alt="Preview" class="image" ) +
                 %(width="#{width}" height="#{height}"/>)
             else
-              %(<img src="/assets/screen_preview.svg" alt="Loader" class="image" ) +
+              %(<img src="/assets/loader.svg" alt="Loader" class="image" ) +
                 %(width="800" height="480"/>)
             end
           end
