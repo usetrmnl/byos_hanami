@@ -28,6 +28,7 @@ Bundler.require :tools
 
 require "dry/monads"
 require "refinements"
+require "warning"
 
 SPEC_ROOT = Pathname(__dir__).realpath.freeze
 
@@ -36,6 +37,8 @@ using Refinements::Pathname
 Pathname.require_tree SPEC_ROOT.join("support/matchers")
 Pathname.require_tree SPEC_ROOT.join("support/shared_examples")
 Pathname.require_tree SPEC_ROOT.join("support/shared_contexts")
+
+Gem.path.each { |path| Warning.ignore(/shrine/, path) }
 
 RSpec.configure do |config|
   config.color = true
