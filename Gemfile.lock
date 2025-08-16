@@ -507,6 +507,7 @@ GEM
     unicode-emoji (4.0.4)
     versionaire (14.3.0)
       refinements (~> 13.3)
+    warning (1.5.0)
     webrick (1.9.1)
     websocket-driver (0.8.0)
       base64
@@ -588,6 +589,7 @@ DEPENDENCIES
   simplecov (~> 0.22)
   trmnl-api (~> 0.4)
   versionaire (~> 14.1)
+  warning (~> 1.5)
 
 CHECKSUMS
   addressable (2.8.7) sha256=462986537cf3735ab5f3c0f557f14155d778f4b43ea4f485a9deb9c8f7c58232
@@ -775,6 +777,7 @@ CHECKSUMS
   unicode-display_width (3.1.4) sha256=8caf2af1c0f2f07ec89ef9e18c7d88c2790e217c482bfc78aaa65eadd5415ac1
   unicode-emoji (4.0.4) sha256=2c2c4ef7f353e5809497126285a50b23056cc6e61b64433764a35eff6c36532a
   versionaire (14.3.0) sha256=85850476609b35fb5aad62f0f250b54dfbec792ede3075a74c8bb25066a47984
+  warning (1.5.0) sha256=0f12c49fea0c06757778eefdcc7771e4fd99308901e3d55c504d87afdd718c53
   webrick (1.9.1) sha256=b42d3c94f166f3fb73d87e9b359def9b5836c426fc8beacf38f2184a21b2a989
   websocket-driver (0.8.0) sha256=ed0dba4b943c22f17f9a734817e808bc84cdce6a7e22045f5315aa57676d4962
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
