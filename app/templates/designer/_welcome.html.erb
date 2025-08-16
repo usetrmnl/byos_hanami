@@ -21,10 +21,27 @@
         justify-content: center;
         height: 100vh;
       }
+
+      .page {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      .description {
+        font-size: 1.5rem;
+      }
     </style>
   </head>
 
   <body>
-    <h1>Welcome to the Terminus designer!</h1>
+    <main class="page">
+      <h1>Welcome to the Terminus designer!</h1>
+
+      <p class="description">Use the source code on the right to rapidly tinker with different designs. As you make changes, this preview screen will be dynamically updated. Enjoy!</p>
+    </main>
   </body>
 </html>
