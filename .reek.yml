@@ -12,6 +12,7 @@ detectors:
       - Terminus::Actions::Firmware::Delete#render
       - Terminus::Aspects::Screens::Converter#convert
       - Terminus::Aspects::Screens::Converters::BMP#convert
+      - Terminus::Aspects::Screens::Converters::PNG#convert
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::IPFinder#all
   LongParameterList:
@@ -21,6 +22,8 @@ detectors:
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Aspects::Screens::Converter#convert
       - Terminus::Aspects::Screens::Converters::BMP#convert
+      - Terminus::Aspects::Screens::Converters::PNG#call
+      - Terminus::Aspects::Screens::Converters::PNG#convert
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::Views::Parts::Device#battery_percentage
       - Terminus::Views::Parts::Device#wifi_percentage

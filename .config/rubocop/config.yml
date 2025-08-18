@@ -3,6 +3,9 @@ inherit_gem:
 
 plugins: rubocop-sequel
 
+Metrics/AbcSize:
+  Exclude:
+    - app/aspects/screens/converters/png.rb
 Metrics/BlockLength:
   Exclude:
     - config/db/migrate/*
@@ -15,7 +18,11 @@ Metrics/MethodLength:
     - battery_percentage
     - wifi_percentage
   Exclude:
+    - app/aspects/screens/converters/png.rb
     - app/views/helpers.rb
+Metrics/ParameterLists:
+  Exclude:
+    - app/aspects/screens/converters/png.rb
 RSpec/ExampleLength:
   Exclude:
     - "spec/features/**/*"
