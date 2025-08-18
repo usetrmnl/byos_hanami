@@ -3,6 +3,9 @@
 Factory.define :model, relation: :model do |factory|
   factory.sequence(:label) { "T#{it}" }
   factory.sequence(:name) { "t#{it}" }
+  factory.rotation 0
+  factory.offset_x 0
+  factory.offset_y 0
   factory.width 800
   factory.height 480
   factory.published_at { Time.now }
