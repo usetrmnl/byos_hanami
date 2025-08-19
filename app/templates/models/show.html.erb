@@ -1,0 +1,70 @@
+<%= render "shared/title", text: "#{model.label} Model" %>
+
+<section class="page-models">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/models" class="link">Models</a></li>
+      <li class="breadcrumb"><%= model.label %></li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="model">
+      <h2 class="label"><%= model.label %></h2>
+
+      <div class="page-actions">
+        <a href="<%= routes.path :model_edit, id: model.id %>"
+           hx-get="<%= routes.path :model_edit, id: model.id %>"
+           hx-target="closest .page-models"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Edit
+        </a>
+      </div>
+
+      <dl class="site-definition-list">
+        <dt class="key">Name</dt>
+        <dd class="value"><%= model.name %></dd>
+
+        <dt class="key">Description</dt>
+        <dd class="value"><%= model.description %></dd>
+
+        <dt class="key">MIME Type</dt>
+        <dd class="value"><%= model.mime_type %></dd>
+
+        <dt class="key">Colors</dt>
+        <dd class="value"><%= model.colors %></dd>
+
+        <dt class="key">Bit Depth</dt>
+        <dd class="value"><%= model.bit_depth %></dd>
+
+        <dt class="key">Scale Factor</dt>
+        <dd class="value"><%= model.scale_factor %></dd>
+
+        <dt class="key">Rotation</dt>
+        <dd class="value"><%= model.rotation %></dd>
+
+        <dt class="key">X Offset</dt>
+        <dd class="value"><%= model.offset_x %></dd>
+
+        <dt class="key">Y Offset</dt>
+        <dd class="value"><%= model.offset_y %></dd>
+
+        <dt class="key">Width</dt>
+        <dd class="value"><%= model.width %></dd>
+
+        <dt class="key">Height</dt>
+        <dd class="value"><%= model.height %></dd>
+
+        <dt class="key">Published</dt>
+        <dd class="value"><%= human_at model.published_at %></dd>
+
+        <dt class="key">Created</dt>
+        <dd class="value"><%= human_at model.created_at %></dd>
+
+        <dt class="key">Updated</dt>
+        <dd class="value"><%= human_at model.updated_at %></dd>
+      </dl>
+    </div>
+  </div>
+</section>

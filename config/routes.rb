@@ -57,6 +57,7 @@ module Terminus
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/models", to: "models.index", as: :models
+    get "/models/:id", to: "models.show", as: :model
 
     get "/playlists", to: "playlists.index", as: :playlists
     get "/playlists/:id", to: "playlists.show", as: :playlist
