@@ -63,7 +63,7 @@ RSpec.describe Terminus::Aspects::Screens::Converter do
     end
 
     it "answers failure for invalid model" do
-      model = Factory[:model, mime_type: "image/bogus"]
+      model = Factory.structs[:model, mime_type: "image/bogus"]
 
       expect(converter.call(model, input_path, temp_dir)).to be_failure(
         "Unsupported MIME Type for model: #{model.id}."
