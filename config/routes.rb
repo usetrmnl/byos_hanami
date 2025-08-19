@@ -58,6 +58,7 @@ module Terminus
 
     get "/models", to: "models.index", as: :models
     get "/models/:id", to: "models.show", as: :model
+    get "/models/new", to: "models.new", as: :model_new
 
     get "/playlists", to: "playlists.index", as: :playlists
     get "/playlists/:id", to: "playlists.show", as: :playlist

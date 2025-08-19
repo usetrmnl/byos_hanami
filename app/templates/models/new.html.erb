@@ -1,0 +1,25 @@
+<%= render "shared/title", text: "New Model" %>
+
+<section class="page-models">
+  <header class="page-header">
+    <ul class="site-breadcrumbs">
+      <li class="breadcrumb"><a href="/models" class="link">Models</a></li>
+      <li class="breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="page-body">
+    <div class="models">
+      <form action="/models" method="post" class="model page-form">
+        <h1 class="label">New Model</h1>
+
+        <%= render :fields, model:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :post, path: routes.path(:models) %>
+          <%= link_to "Cancel", routes.path(:models), class: "button-decline" %>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

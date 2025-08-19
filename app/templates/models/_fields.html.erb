@@ -1,0 +1,140 @@
+<fieldset role="group" class="group">
+  <%= scope(:form_field, key: :label, errors:).render do %>
+    <label class="key" for="model_label">Label</label>
+
+    <%= tag.input id: :model_label,
+                  name: "model[label]",
+                  value: field_for(:label, fields, model),
+                  class: :value,
+                  autocomplete: :label %>
+  <% end %>
+
+  <%= scope(:form_field, key: :name, errors:).render do %>
+    <label class="key" for="model_name">Name</label>
+
+    <%= tag.input id: :model_name,
+                  name: "model[name]",
+                  value: field_for(:name, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :description, errors:).render do %>
+    <label class="key" for="model_description">Description</label>
+
+    <%= tag.input id: :model_description,
+                  name: "model[description]",
+                  value: field_for(:description, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :mime_type, errors:).render do %>
+    <label class="key" for="model_mime_type">MIME Type</label>
+
+    <%= tag.input id: :model_mime_type,
+                  name: "model[mime_type]",
+                  value: field_for(:mime_type, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :colors, errors:).render do %>
+    <label class="key" for="model_colors">Colors</label>
+
+    <%= tag.input id: :model_colors,
+                  name: "model[colors]",
+                  type: :number,
+                  value: field_for(:colors, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :bit_depth, errors:).render do %>
+    <label class="key" for="model_bit_depth">Bit Depth</label>
+
+    <%= tag.input id: :model_bit_depth,
+                  name: "model[bit_depth]",
+                  type: :number,
+                  value: field_for(:bit_depth, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :scale_factor, errors:).render do %>
+    <label class="key" for="model_scale_factor">Scale Factor</label>
+
+    <%= tag.input id: :model_scale_factor,
+                  name: "model[scale_factor]",
+                  type: :number,
+                  value: field_for(:scale_factor, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :rotation, errors:).render do %>
+    <label class="key" for="model_rotation">Rotation</label>
+
+    <%= tag.input id: :model_rotation,
+                  name: "model[rotation]",
+                  type: :number,
+                  value: field_for(:rotation, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :offset_x, errors:).render do %>
+    <label class="key" for="model_offset_x">X Offset</label>
+
+    <%= tag.input id: :model_offset_x,
+                  name: "model[offset_x]",
+                  type: :number,
+                  value: field_for(:offset_x, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :offset_y, errors:).render do %>
+    <label class="key" for="model_offset_y">Y Offset</label>
+
+    <%= tag.input id: :model_offset_y,
+                  name: "model[offset_y]",
+                  type: :number,
+                  value: field_for(:offset_y, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :width, errors:).render do %>
+    <label class="key" for="model_width">Width</label>
+
+    <%= tag.input id: :model_width,
+                  name: "model[width]",
+                  type: :number,
+                  value: field_for(:width, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :height, errors:).render do %>
+    <label class="key" for="model_height">Height</label>
+
+    <%= tag.input id: :model_height,
+                  name: "model[height]",
+                  type: :number,
+                  value: field_for(:height, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :published_at, errors:).render do %>
+    <label class="key" for="model_published_at">Published</label>
+
+    <%= tag.input id: :model_published_at,
+                  name: "model[published_at]",
+                  type: "datetime-local",
+                  value: field_for(:published_at, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+</fieldset>
