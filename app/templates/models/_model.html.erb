@@ -1,0 +1,30 @@
+<li id="<%= model.id %>" class="model">
+  <h2 class="label"><%= model.label %></h2>
+
+  <div class="actions">
+   <a href="<%= routes.path :model, id: model.id %>"
+      hx-get="<%= routes.path :model, id: model.id %>"
+      hx-target="closest .page-models"
+      hx-swap="outerHTML"
+      hx-push-url="true">
+     View
+   </a>
+
+    <a href="<%= routes.path :model_edit, id: model.id %>"
+       hx-get="<%= routes.path :model_edit, id: model.id %>"
+       hx-target="closest .page-models"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      Edit
+    </a>
+
+    <a href="<%= routes.path :model_delete, id: model.id %>"
+       class="link-cancel"
+       hx-delete="<%= routes.path :model, id: model.id %>"
+       hx-confirm="Are you sure you want to delete this model?"
+       hx-target="closest .model"
+       hx-swap="outerHTML">
+      Delete
+    </a>
+  </div>
+</li>
