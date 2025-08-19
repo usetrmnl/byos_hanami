@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::Playlists::Update do
   subject(:action) { described_class.new }
 
   describe "#call" do
-    it "answers unprocessable entity for unknown playlist" do
+    it "answers unprocessable entity for unknown ID" do
       response = action.call id: 666
       expect(response.status).to eq(422)
     end

@@ -8,7 +8,7 @@ RSpec.describe Terminus::Actions::Devices::Update, :db do
   describe "#call" do
     let(:device) { Factory[:device] }
 
-    it "answers unprocessable entity for unknown device" do
+    it "answers unprocessable entity for unknown ID" do
       response = action.call id: 99
       expect(response.status).to eq(422)
     end
