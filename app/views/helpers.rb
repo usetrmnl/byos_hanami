@@ -22,7 +22,9 @@ module Terminus
       def field_for key, attributes, record = nil
         return attributes[key] unless record
 
-        attributes.fetch_value key, record.public_send(key)
+        value = attributes.fetch_value key, record.public_send(key)
+
+        value.is_a?(Time) ? value.strftime("%Y-%m-%dT%H:%M") : value
       end
 
       def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
