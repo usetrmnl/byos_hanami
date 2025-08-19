@@ -60,6 +60,7 @@ module Terminus
     get "/models/:id", to: "models.show", as: :model
     get "/models/new", to: "models.new", as: :model_new
     post "/models", to: "models.create", as: :model_create
+    get "/models/:id/edit", to: "models.edit", as: :model_edit
 
     get "/playlists", to: "playlists.index", as: :playlists
     get "/playlists/:id", to: "playlists.show", as: :playlist
