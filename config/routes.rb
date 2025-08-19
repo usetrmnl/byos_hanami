@@ -62,6 +62,7 @@ module Terminus
     post "/models", to: "models.create", as: :model_create
     get "/models/:id/edit", to: "models.edit", as: :model_edit
     put "/models/:id", to: "models.update", as: :model_update
+    delete "/models/:id", to: "models.delete", as: :model_delete
 
     get "/playlists", to: "playlists.index", as: :playlists
     get "/playlists/:id", to: "playlists.show", as: :playlist
