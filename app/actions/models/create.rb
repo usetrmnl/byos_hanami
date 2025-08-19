@@ -1,0 +1,63 @@
+# frozen_string_literal: true
+
+module Terminus
+  module Actions
+    module Models
+      # The create action.
+      class Create < Terminus::Action
+        include Deps[
+          :htmx,
+          repository: "repositories.model",
+          new_view: "views.models.new",
+          index_view: "views.models.index"
+        ]
+
+        params do
+          required(:model).filled(:hash) do
+            required(:name).filled :string
+            required(:label).filled :string
+            required(:description).maybe :string
+            required(:mime_type).filled :string
+            required(:colors).filled :integer
+            required(:bit_depth).filled :integer
+            required(:scale_factor).filled :float
+            required(:rotation).filled :integer
+            required(:offset_x).filled :integer
+            required(:offset_y).filled :integer
+            required(:width).filled :integer
+            required(:height).filled :integer
+            required(:published_at).maybe :date_time
+          end
+        end
+
+        def handle request, response
+          parameters = request.params
+
+          if parameters.valid?
+            repository.create parameters[:model]
+            response.render index_view, **view_settings(request, parameters)
+          else
+            render_new response, parameters
+          end
+        end
+
+        private
+
+        def view_settings request, _parameters
+          settings = {models: repository.all}
+          settings[:layout] = false if htmx.request? request.env, :request, "true"
+          settings
+        end
+
+        # :reek:FeatureEnvy
+        def render_new response, parameters
+          response.render new_view,
+                          models: repository.all,
+                          fields: parameters[:model],
+                          errors: parameters.errors[:model],
+                          layout: false
+        end
+      end
+    end
+  end
+end
