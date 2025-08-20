@@ -27,4 +27,18 @@ RSpec.describe Terminus::Views::Parts::Screen do
       end
     end
   end
+
+  describe "#type" do
+    it "answers type when MIME Type is defined" do
+      expect(part.type).to eq("PNG")
+    end
+
+    context "with no image data" do
+      let(:screen) { Factory.structs[:screen, image_data: {}] }
+
+      it "answers unknown" do
+        expect(part.type).to eq("Unknown")
+      end
+    end
+  end
 end

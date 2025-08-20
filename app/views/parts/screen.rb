@@ -8,6 +8,8 @@ module Terminus
       # The screen presenter.
       class Screen < Hanami::View::Part
         def dimensions = "#{width}x#{height}"
+
+        def type = mime_type ? mime_type.delete_prefix("image/").upcase : "Unknown"
       end
     end
   end
