@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Views::Welcome::New do
+RSpec.describe Terminus::Views::Screens::Welcome::New do
   subject(:view) { described_class.new }
 
   let(:device) { Factory.structs[:device] }

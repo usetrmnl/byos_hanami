@@ -9,7 +9,7 @@ module Terminus
       class Sleeper
         include Deps[
           "aspects.screens.creator",
-          view: "views.sleep.new",
+          view: "views.screens.sleep.new",
           repository: "repositories.screen"
         ]
         include Dry::Monads[:result]

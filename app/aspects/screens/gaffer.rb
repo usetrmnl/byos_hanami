@@ -14,7 +14,7 @@ module Terminus
           "aspects.screens.creators.temp_path",
           repository: "repositories.screen",
           model_repository: "repositories.model",
-          view: "views.gaffe.new"
+          view: "views.screens.gaffe.new"
         ]
         include Initable[payload: Creators::Payload]
         include Dry::Monads[:result]
