@@ -1,6 +1,9 @@
 <fieldset role="group" class="group">
   <%= scope(:form_field, key: :label, errors:).render do %>
-    <label class="key" for="model_label">Label</label>
+    <label class="key" for="model_label">
+      Label
+      <%= render "shared/popovers/trigger", name: :label %>
+    </label>
 
     <%= tag.input id: :model_label,
                   name: "model[label]",
@@ -10,7 +13,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :name, errors:).render do %>
-    <label class="key" for="model_name">Name</label>
+    <label class="key" for="model_name">
+      Name
+      <%= render "shared/popovers/trigger", name: :name %>
+    </label>
 
     <%= tag.input id: :model_name,
                   name: "model[name]",
@@ -20,7 +26,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :description, errors:).render do %>
-    <label class="key" for="model_description">Description</label>
+    <label class="key" for="model_description">
+      Description
+      <%= render "shared/popovers/trigger", name: :description %>
+    </label>
 
     <%= tag.input id: :model_description,
                   name: "model[description]",
@@ -30,7 +39,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :mime_type, errors:).render do %>
-    <label class="key" for="model_mime_type">MIME Type</label>
+    <label class="key" for="model_mime_type">
+      MIME Type
+      <%= render "shared/popovers/trigger", name: :mime_type %>
+    </label>
 
     <%= tag.input id: :model_mime_type,
                   name: "model[mime_type]",
@@ -40,7 +52,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :colors, errors:).render do %>
-    <label class="key" for="model_colors">Colors</label>
+    <label class="key" for="model_colors">
+      Colors
+      <%= render "shared/popovers/trigger", name: :colors %>
+    </label>
 
     <%= tag.input id: :model_colors,
                   name: "model[colors]",
@@ -51,7 +66,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :bit_depth, errors:).render do %>
-    <label class="key" for="model_bit_depth">Bit Depth</label>
+    <label class="key" for="model_bit_depth">
+      Bit Depth
+      <%= render "shared/popovers/trigger", name: :bit_depth %>
+    </label>
 
     <%= tag.input id: :model_bit_depth,
                   name: "model[bit_depth]",
@@ -62,7 +80,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :scale_factor, errors:).render do %>
-    <label class="key" for="model_scale_factor">Scale Factor</label>
+    <label class="key" for="model_scale_factor">
+      Scale Factor
+      <%= render "shared/popovers/trigger", name: :scale_factor %>
+    </label>
 
     <%= tag.input id: :model_scale_factor,
                   name: "model[scale_factor]",
@@ -73,7 +94,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :rotation, errors:).render do %>
-    <label class="key" for="model_rotation">Rotation</label>
+    <label class="key" for="model_rotation">
+      Rotation
+      <%= render "shared/popovers/trigger", name: :rotation %>
+    </label>
 
     <%= tag.input id: :model_rotation,
                   name: "model[rotation]",
@@ -84,7 +108,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :offset_x, errors:).render do %>
-    <label class="key" for="model_offset_x">X Offset</label>
+    <label class="key" for="model_offset_x">
+      X Offset
+      <%= render "shared/popovers/trigger", name: :offset_x %>
+    </label>
 
     <%= tag.input id: :model_offset_x,
                   name: "model[offset_x]",
@@ -95,7 +122,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :offset_y, errors:).render do %>
-    <label class="key" for="model_offset_y">Y Offset</label>
+    <label class="key" for="model_offset_y">
+      Y Offset
+      <%= render "shared/popovers/trigger", name: :offset_y %>
+    </label>
 
     <%= tag.input id: :model_offset_y,
                   name: "model[offset_y]",
@@ -106,7 +136,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :width, errors:).render do %>
-    <label class="key" for="model_width">Width</label>
+    <label class="key" for="model_width">
+      Width
+      <%= render "shared/popovers/trigger", name: :width %>
+    </label>
 
     <%= tag.input id: :model_width,
                   name: "model[width]",
@@ -117,7 +150,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :height, errors:).render do %>
-    <label class="key" for="model_height">Height</label>
+    <label class="key" for="model_height">
+      Height
+      <%= render "shared/popovers/trigger", name: :height %>
+    </label>
 
     <%= tag.input id: :model_height,
                   name: "model[height]",
@@ -128,7 +164,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :published_at, errors:).render do %>
-    <label class="key" for="model_published_at">Published</label>
+    <label class="key" for="model_published_at">
+      Published
+      <%= render "shared/popovers/trigger", name: :published %>
+    </label>
 
     <%= tag.input id: :model_published_at,
                   name: "model[published_at]",
@@ -138,3 +177,5 @@
                   autocomplete: :name %>
   <% end %>
 </fieldset>
+
+<%= render "popovers/all" %>
