@@ -6,7 +6,7 @@ module Terminus
   module Aspects
     module Screens
       module Converters
-        # Converts to 1-bit BMP image.
+        # Converts to BMP image for any bit depth and color.
         class BMP
           include Deps[:mini_magick]
           include Dry::Monads[:result]

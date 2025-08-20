@@ -6,7 +6,7 @@ require "initable"
 module Terminus
   module Aspects
     module Screens
-      # Converts image to greyscale BMP image.
+      # Converts to greyscale image based on MIME Type.
       class Converter
         include Deps["aspects.screens.converters.bmp", "aspects.screens.converters.png"]
         include Dry::Monads[:result]
