@@ -14,6 +14,8 @@ module Terminus
       # :reek:DataClump
       class Synchronizer
         include Deps[
+          :mini_magick,
+          "aspects.screens.compressor",
           model_repository: "repositories.model",
           screen_repository: "repositories.screen"
         ]
@@ -80,8 +82,11 @@ module Terminus
         end
 
         def upload work_dir, pathname, response
-          work_dir.join(pathname).write(response).open do |io|
-            struct.upload io, metadata: {"filename" => pathname}
+          input_path = work_dir.join(pathname).write(response)
+          output_path = compressor.call(input_path).value!
+
+          output_path.open do |io|
+            struct.upload io, metadata: {"filename" => output_path.basename}
           end
         end
 
