@@ -36,6 +36,12 @@
          <dd class="value"><%= model.description %></dd>
 
          <dt class="key">
+           Kind
+           <%= render "shared/popovers/trigger", name: :kind %>
+         </dt>
+         <dd class="value"><%= model.kind_label %></dd>
+
+         <dt class="key">
            MIME Type
            <%= render "shared/popovers/trigger", name: :mime_type %>
          </dt>
