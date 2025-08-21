@@ -32,6 +32,18 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
   let(:repository) { Terminus::Repositories::Model.new }
 
   describe "#call" do
+    context "with no remote models" do
+      let(:trmnl_api) { instance_double TRMNL::API::Client, models: Success([]) }
+
+      it "deletes core records" do
+        Factory[:model, name: "test", kind: "core"]
+        synchronizer.call
+        repository.all
+
+        expect(repository.all).to eq([])
+      end
+    end
+
     it "creates new record when missing" do
       synchronizer.call
       record = repository.all.first
@@ -55,7 +67,7 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
     end
 
     it "updates existing record" do
-      Factory[:model, name: "test"]
+      Factory[:model, name: "test", kind: "core"]
       synchronizer.call
       record = repository.all.first
 

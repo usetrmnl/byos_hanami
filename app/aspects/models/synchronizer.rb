@@ -12,17 +12,26 @@ module Terminus
           result = trmnl_api.models
 
           case result
-            in Success(*payload) then upsert payload
+            in Success(*payload)
+              delete payload.map(&:name)
+              upsert payload
             else result
           end
         end
 
         private
 
+        def delete remote_names
+          locals = repository.where kind: "core"
+          local_names = locals.map(&:name)
+
+          repository.delete_all kind: "core", name: local_names - remote_names
+        end
+
         def upsert payload
           payload.each do |item|
             attributes = item.to_h
-            record = repository.find_by name: item.name
+            record = repository.find_by name: item.name, kind: "core"
 
             if record
               repository.update record.id, kind: "core", **attributes
