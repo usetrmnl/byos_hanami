@@ -1,6 +1,10 @@
 <li id="<%= model.id %>" class="model">
   <h2 class="label"><%= model.label %></h2>
 
+  <%= tag.span model.kind_label %>
+  <%= tag.span model.type %>
+  <%= tag.span model.dimensions %>
+
   <div class="actions">
    <a href="<%= routes.path :model, id: model.id %>"
       hx-get="<%= routes.path :model, id: model.id %>"
