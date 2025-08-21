@@ -12,6 +12,7 @@ RSpec.describe Terminus::Serializers::Model do
       name: "t1",
       label: "T1",
       description: nil,
+      kind: "core",
       mime_type: "image/bmp",
       colors: 4,
       bit_depth: 2,

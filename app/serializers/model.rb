@@ -10,6 +10,7 @@ module Terminus
         name
         label
         description
+        kind
         mime_type
         colors
         bit_depth
