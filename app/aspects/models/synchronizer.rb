@@ -25,9 +25,9 @@ module Terminus
             record = repository.find_by name: item.name
 
             if record
-              repository.update record.id, attributes
+              repository.update record.id, kind: "core", **attributes
             else
-              repository.create attributes
+              repository.create kind: "core", **attributes
             end
           end
         end
