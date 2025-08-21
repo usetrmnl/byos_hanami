@@ -20,6 +20,27 @@ RSpec.describe Terminus::Repositories::Model, :db do
     end
   end
 
+  describe "#delete_all" do
+    it "answers all records for given attributes" do
+      model
+      Factory[:model, kind: "core"]
+      repository.delete_all kind: ["core"]
+
+      expect(repository.all).to contain_exactly(model)
+    end
+
+    it "answers number of records deleted" do
+      model
+      Factory[:model, kind: "core"]
+
+      expect(repository.delete_all).to eq(2)
+    end
+
+    it "answers zero when there is nothing to delete" do
+      expect(repository.delete_all).to eq(0)
+    end
+  end
+
   describe "#find" do
     it "answers record by ID" do
       expect(repository.find(model.id)).to eq(model)
@@ -100,6 +121,24 @@ RSpec.describe Terminus::Repositories::Model, :db do
 
     it "answers empty array for invalid value" do
       expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
+
+  describe "#where" do
+    it "answers record for single attribute" do
+      expect(repository.where(label: model.label)).to contain_exactly(model)
+    end
+
+    it "answers record for multiple attributes" do
+      expect(repository.where(label: model.label, name: model.name)).to contain_exactly(model)
+    end
+
+    it "answers empty array for unknown value" do
+      expect(repository.where(label: "bogus")).to eq([])
+    end
+
+    it "answers empty array for nil" do
+      expect(repository.where(label: nil)).to eq([])
     end
   end
 end

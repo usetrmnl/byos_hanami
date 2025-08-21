@@ -15,6 +15,8 @@ module Terminus
              .to_a
       end
 
+      def delete_all(**) = model.where(**).delete
+
       def find(id) = (model.by_pk(id).one if id)
 
       def find_by(**) = model.where(**).one
@@ -30,6 +32,12 @@ module Terminus
 
       def search key, value
         model.where(Sequel.ilike(key, "%#{value}%"))
+             .order { created_at.asc }
+             .to_a
+      end
+
+      def where(**)
+        model.where(**)
              .order { created_at.asc }
              .to_a
       end
