@@ -1,20 +1,22 @@
-<nav class="navigation">
-  <ul class="list">
-    <li>
-      <a href="https://usetrmnl.com" class="link">
-        <%= tag.img src: assets["logo/salmon.svg"], alt: "Logo", width: 30, height: 30 %>
-      </a>
-    </li>
-    <li><a href="/" class="link link-home">Terminus</a></li>
-  </ul>
+<%= link_to routes.path(:root), class: "site-label" do %>
+  <%= tag.img src: assets["logo/salmon.svg"], alt: "Logo", width: 30, height: 30 %>
+  <h1 class=label>Terminus</h1>
+<% end %>
 
-  <ul class="list">
-    <li><%= link_to "Dashboard", routes.path(:root), class: :link %></li>
-    <li><%= link_to "Designer", routes.path(:designer), class: :link %></li>
-    <li><%= link_to "Screens", routes.path(:screens), class: :link %></li>
-    <li><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
-    <li><%= link_to "Devices", routes.path(:devices), class: :link %></li>
-    <li><%= link_to "Models", routes.path(:models), class: :link %></li>
-    <li><%= link_to "Firmware", routes.path(:firmware), class: :link %></li>
+<nav class="site-navigation">
+  <input type="checkbox" id="navigation-toggle" class="checkbox">
+
+  <label for="navigation-toggle" class="label">
+    <span class="toggle"></span>
+  </label>
+
+  <ul class="site-menu">
+    <li class="item"><%= link_to "Dashboard", routes.path(:root), class: :link %></li>
+    <li class="item"><%= link_to "Designer", routes.path(:designer), class: :link %></li>
+    <li class="item"><%= link_to "Screens", routes.path(:screens), class: :link %></li>
+    <li class="item"><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
+    <li class="item"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+    <li class="item"><%= link_to "Models", routes.path(:models), class: :link %></li>
+    <li class="item"><%= link_to "Firmware", routes.path(:firmware), class: :link %></li>
   </ul>
 </nav>
