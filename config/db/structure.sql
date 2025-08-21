@@ -28,6 +28,16 @@ CREATE TYPE public.firmware_kind_enum AS ENUM (
 
 
 --
+-- Name: model_kind_enum; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.model_kind_enum AS ENUM (
+    'terminus',
+    'core'
+);
+
+
+--
 -- Name: playlist_item_repeat_type_enum; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -230,7 +240,8 @@ CREATE TABLE public.model (
     offset_x integer DEFAULT 0 NOT NULL,
     offset_y integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    kind public.model_kind_enum DEFAULT 'terminus'::public.model_kind_enum NOT NULL
 );
 
 
@@ -505,6 +516,13 @@ CREATE INDEX firmwares_attachment_data_index ON public.firmwares USING gin (atta
 
 
 --
+-- Name: model_kind_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX model_kind_index ON public.model USING btree (kind);
+
+
+--
 -- Name: model_label_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -642,4 +660,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250723140212_add_playlist_current_item_foreign_key.rb'),
 ('20250723140455_add_model_detail_columns.rb'),
 ('20250730094230_change_model_scale_factor_to_float.rb'),
-('20250813132657_add_model_timestamps.rb');
+('20250813132657_add_model_timestamps.rb'),
+('20250821094444_add_model_kind_column.rb');
