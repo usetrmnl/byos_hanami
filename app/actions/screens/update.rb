@@ -8,8 +8,7 @@ module Terminus
         include Deps[
           repository: "repositories.screen",
           model_repository: "repositories.model",
-          show_view: "views.screens.show",
-          edit_view: "views.screens.edit"
+          show_view: "views.screens.show"
         ]
 
         params do
@@ -31,7 +30,7 @@ module Terminus
           if parameters.valid?
             save screen, parameters, response
           else
-            edit screen, parameters, response
+            error screen, parameters, response
           end
         end
 
@@ -44,9 +43,8 @@ module Terminus
           response.render show_view, screen: repository.find(id), layout: false
         end
 
-        # :reek:FeatureEnvy
-        def edit screen, parameters, response
-          response.render edit_view,
+        def error screen, parameters, response
+          response.render view,
                           models: model_repository.all,
                           screen:,
                           fields: parameters[:screen],

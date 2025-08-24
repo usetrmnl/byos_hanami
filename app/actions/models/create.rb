@@ -5,12 +5,7 @@ module Terminus
     module Models
       # The create action.
       class Create < Terminus::Action
-        include Deps[
-          :htmx,
-          repository: "repositories.model",
-          new_view: "views.models.new",
-          index_view: "views.models.index"
-        ]
+        include Deps[:htmx, repository: "repositories.model", index_view: "views.models.index"]
 
         params do
           required(:model).filled(:hash) do
@@ -37,7 +32,7 @@ module Terminus
             repository.create parameters[:model]
             response.render index_view, **view_settings(request, parameters)
           else
-            render_new response, parameters
+            error response, parameters
           end
         end
 
@@ -49,9 +44,8 @@ module Terminus
           settings
         end
 
-        # :reek:FeatureEnvy
-        def render_new response, parameters
-          response.render new_view,
+        def error response, parameters
+          response.render view,
                           models: repository.all,
                           fields: parameters[:model],
                           errors: parameters.errors[:model],

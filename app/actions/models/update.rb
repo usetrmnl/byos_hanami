@@ -5,11 +5,7 @@ module Terminus
     module Models
       # The update action.
       class Update < Terminus::Action
-        include Deps[
-          repository: "repositories.model",
-          show_view: "views.models.show",
-          edit_view: "views.models.edit"
-        ]
+        include Deps[repository: "repositories.model", show_view: "views.models.show"]
 
         params do
           required(:id).filled :integer
@@ -40,7 +36,7 @@ module Terminus
           if parameters.valid?
             save model, parameters, response
           else
-            edit model, parameters, response
+            error model, parameters, response
           end
         end
 
@@ -53,9 +49,8 @@ module Terminus
           response.render show_view, model: repository.find(id), layout: false
         end
 
-        # :reek:FeatureEnvy
-        def edit model, parameters, response
-          response.render edit_view,
+        def error model, parameters, response
+          response.render view,
                           model:,
                           fields: parameters[:model],
                           errors: parameters.errors[:model],

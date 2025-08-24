@@ -9,8 +9,7 @@ module Terminus
           repository: "repositories.device",
           model_repository: "repositories.model",
           playlist_repository: "repositories.playlist",
-          show_view: "views.devices.show",
-          edit_view: "views.devices.edit"
+          show_view: "views.devices.show"
         ]
 
         contract Contracts::Devices::Update
@@ -24,7 +23,7 @@ module Terminus
           if parameters.valid?
             save device, parameters, response
           else
-            edit device, parameters, response
+            error device, parameters, response
           end
         end
 
@@ -37,8 +36,8 @@ module Terminus
           response.render show_view, device: repository.find(id), layout: false
         end
 
-        def edit device, parameters, response
-          response.render edit_view,
+        def error device, parameters, response
+          response.render view,
                           models: model_repository.all,
                           playlists: playlist_repository.all,
                           device:,

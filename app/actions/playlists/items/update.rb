@@ -8,8 +8,7 @@ module Terminus
         class Update < Terminus::Action
           include Deps[
             repository: "repositories.playlist_item",
-            show_view: "views.playlists.items.show",
-            edit_view: "views.playlists.items.edit"
+            show_view: "views.playlists.items.show"
           ]
 
           params do
@@ -24,7 +23,7 @@ module Terminus
             if parameters.valid?
               save parameters, response
             else
-              edit parameters, response
+              error parameters, response
             end
           end
 
@@ -39,9 +38,8 @@ module Terminus
             response.render show_view, item: repository.find(id), layout: false
           end
 
-          # :reek:FeatureEnvy
-          def edit parameters, response
-            response.render edit_view,
+          def error parameters, response
+            response.render view,
                             playlist:,
                             fields: parameters[:playlist],
                             errors: parameters.errors[:playlist],

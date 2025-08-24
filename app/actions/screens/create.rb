@@ -9,7 +9,6 @@ module Terminus
           :htmx,
           repository: "repositories.screen",
           model_repository: "repositories.model",
-          new_view: "views.screens.new",
           index_view: "views.screens.index"
         ]
 
@@ -28,7 +27,7 @@ module Terminus
             repository.create parameters[:screen]
             response.render index_view, **view_settings(request, parameters)
           else
-            render_new response, parameters
+            error response, parameters
           end
         end
 
@@ -40,9 +39,8 @@ module Terminus
           settings
         end
 
-        # :reek:FeatureEnvy
-        def render_new response, parameters
-          response.render new_view,
+        def error response, parameters
+          response.render view,
                           models: model_repository.all,
                           screen: nil,
                           fields: parameters[:screen],

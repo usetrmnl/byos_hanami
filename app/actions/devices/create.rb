@@ -13,7 +13,6 @@ module Terminus
           repository: "repositories.device",
           model_repository: "repositories.model",
           playlist_repository: "repositories.playlist",
-          new_view: "views.devices.new",
           index_view: "views.devices.index"
         ]
 
@@ -26,13 +25,12 @@ module Terminus
 
           case provision parameters
             in Success then response.render index_view, **view_settings(request, parameters)
-            else render_new response, parameters
+            else error response, parameters
           end
         end
 
         private
 
-        # :reek:FeatureEnvy
         def provision parameters
           parameters.valid? ? provisioner.call(**parameters[:device]) : Failure
         end
@@ -43,8 +41,8 @@ module Terminus
           settings
         end
 
-        def render_new response, parameters
-          response.render new_view,
+        def error response, parameters
+          response.render view,
                           models: model_repository.all,
                           playlists: playlist_repository.all,
                           device: nil,

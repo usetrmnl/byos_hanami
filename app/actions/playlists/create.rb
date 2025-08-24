@@ -8,7 +8,6 @@ module Terminus
         include Deps[
           :htmx,
           repository: "repositories.playlist",
-          new_view: "views.playlists.new",
           index_view: "views.playlists.index"
         ]
 
@@ -26,7 +25,7 @@ module Terminus
             repository.create parameters[:playlist]
             response.render index_view, **view_settings(request, parameters)
           else
-            render_new response, parameters
+            error response, parameters
           end
         end
 
@@ -38,9 +37,8 @@ module Terminus
           settings
         end
 
-        # :reek:FeatureEnvy
-        def render_new response, parameters
-          response.render new_view,
+        def error response, parameters
+          response.render view,
                           playlist: nil,
                           fields: parameters[:playlist],
                           errors: parameters.errors[:playlist],
