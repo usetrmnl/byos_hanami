@@ -11,14 +11,13 @@ module Terminus
         end
       end
 
-      def next_item after:, playlist_id:
-        scope = where(playlist_id:)
+      def next_item playlist_id:, after:
+        scope = combine(:screen).where(playlist_id:).order :position
 
         next_or_previous = scope.where { position > after }
-                                .order(:position)
                                 .first
 
-        next_or_previous || scope.order(:position).first
+        next_or_previous || scope.first
       end
     end
   end

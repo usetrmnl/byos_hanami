@@ -80,7 +80,8 @@ RSpec.describe Terminus::Repositories::PlaylistItem, :db do
       two = Factory[:playlist_item, playlist_id:, position: 2]
 
       expect(repository.next_item(after: one.position, playlist_id:)).to have_attributes(
-        position: two.position
+        position: two.position,
+        screen: kind_of(Terminus::Structs::Screen)
       )
     end
   end

@@ -10,21 +10,30 @@ RSpec.describe Terminus::Relations::PlaylistItem, :db do
       playlist_id = Factory[:playlist].id
       item = Factory[:playlist_item, playlist_id:, position: 1]
 
-      expect(relation.next_item(playlist_id:, after: item.position)).to include(position: 1)
+      expect(relation.next_item(playlist_id:, after: item.position)).to include(
+        position: 1,
+        screen: kind_of(Hash)
+      )
     end
 
     it "answers next item with gaps before" do
       playlist_id = Factory[:playlist].id
       Factory[:playlist_item, playlist_id:, position: 1]
 
-      expect(relation.next_item(playlist_id:, after: 3)).to include(position: 1)
+      expect(relation.next_item(playlist_id:, after: 3)).to include(
+        position: 1,
+        screen: kind_of(Hash)
+      )
     end
 
     it "answers next item with gaps after" do
       playlist_id = Factory[:playlist].id
       Factory[:playlist_item, playlist_id:, position: 3]
 
-      expect(relation.next_item(playlist_id:, after: 1)).to include(position: 3)
+      expect(relation.next_item(playlist_id:, after: 1)).to include(
+        position: 3,
+        screen: kind_of(Hash)
+      )
     end
 
     it "answers next item when not at last position" do
@@ -32,7 +41,10 @@ RSpec.describe Terminus::Relations::PlaylistItem, :db do
       Factory[:playlist_item, playlist_id:, position: 1]
       Factory[:playlist_item, playlist_id:, position: 2]
 
-      expect(relation.next_item(after: 1, playlist_id:)).to include(position: 2)
+      expect(relation.next_item(after: 1, playlist_id:)).to include(
+        position: 2,
+        screen: kind_of(Hash)
+      )
     end
 
     it "answers first item when at last position" do
@@ -40,7 +52,10 @@ RSpec.describe Terminus::Relations::PlaylistItem, :db do
       Factory[:playlist_item, playlist_id:, position: 1]
       Factory[:playlist_item, playlist_id:, position: 2]
 
-      expect(relation.next_item(after: 2, playlist_id:)).to include(position: 1)
+      expect(relation.next_item(after: 2, playlist_id:)).to include(
+        position: 1,
+        screen: kind_of(Hash)
+      )
     end
   end
 end

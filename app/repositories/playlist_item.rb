@@ -26,7 +26,7 @@ module Terminus
 
       def find_by(**) = with_associations.where(**).one
 
-      def next_item(after:, playlist_id:) = playlist_item.next_item(after:, playlist_id:)
+      def next_item(playlist_id:, after:) = playlist_item.next_item(playlist_id:, after:)
 
       def where(**)
         with_associations.where(**)
