@@ -17,7 +17,7 @@ RSpec.describe Terminus::Aspects::Screens::Designer::Middleware do
           {
             "Content-Type" => "text/event-stream",
             "Cache-Control" => "no-cache",
-            "Connection" => "keep-alive"
+            "X-Accel-Buffering" => "no"
           },
           instance_of(Terminus::Aspects::Screens::Designer::EventStream)
         )
