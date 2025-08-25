@@ -32,7 +32,7 @@ module Terminus
             playlist_id = playlist.id
             item = repository.create_with_position playlist_id:, **parameters[:playlist_item]
 
-            playlist_repository.update_current_item playlist_id, item.id
+            playlist_repository.update_current_item playlist_id, item
             item
           end
         end

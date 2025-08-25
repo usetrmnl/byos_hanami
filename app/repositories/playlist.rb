@@ -25,11 +25,9 @@ module Terminus
                 .to_a
       end
 
-      def update_current_item id, item_id
-        playlist.transaction do
-          record = find id
-          record.current_item_id ? record : update(id, current_item_id: item_id)
-        end
+      def update_current_item id, item
+        record = find id
+        record && item ? update(id, current_item_id: item.id) : record
       end
 
       def where(**)

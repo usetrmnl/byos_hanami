@@ -73,20 +73,19 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
   end
 
   describe "#update_current_item" do
-    it "updates current item when not set" do
+    it "updates current item when item exists" do
       playlist = Factory[:playlist]
       item = Factory[:playlist_item]
-      update = repository.update_current_item playlist.id, item.id
+      update = repository.update_current_item playlist.id, item
 
       expect(update).to have_attributes(current_item_id: item.id)
     end
 
-    it "doesn't update current item when set" do
-      item = Factory[:playlist_item]
-      playlist = Factory[:playlist, current_item_id: item.id]
-      update = repository.update_current_item playlist.id, 666
+    it "doesn't update current item is nil" do
+      playlist = Factory[:playlist]
+      update = repository.update_current_item playlist.id, nil
 
-      expect(update.current_item_id).to eq(item.id)
+      expect(update.current_item_id).to be(nil)
     end
   end
 
