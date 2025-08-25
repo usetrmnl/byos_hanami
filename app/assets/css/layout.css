@@ -130,7 +130,6 @@
     transition: border-bottom-color 0.3s ease-in-out;
 
     &:hover, &:active, &.active {
-      background-color: var(--site-orange);
       border-bottom-color: var(--site-black);
     }
   }
