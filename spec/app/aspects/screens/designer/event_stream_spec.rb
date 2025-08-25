@@ -5,6 +5,8 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
   subject(:event_stream) { described_class.new screen.name, kernel: }
 
+  include_context "with library dependencies"
+
   let(:screen) { Factory[:screen, :with_image] }
   let(:kernel) { class_spy Kernel }
   let(:at) { Time.now.to_i }
@@ -12,7 +14,7 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
   before { allow(kernel).to receive(:loop).and_yield }
 
   describe "#each" do
-    it "answers screen when found" do
+    it "answers image when screen is found" do
       payload = nil
       event_stream.each(at:) { payload = it }
 
@@ -23,7 +25,14 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
       CONTENT
     end
 
-    it "falls back to loading image when screen doesn't exist" do
+    it "logs debug message when screen is found" do
+      payload = nil
+      event_stream.each(at:) { payload = it }
+
+      expect(logger.reread).to match(%r(DEBUG.+Streaming.+/abc123.png\?\d{10}\.))
+    end
+
+    it "answers loader image when screen doesn't exist" do
       event_stream = described_class.new("bogus", kernel:)
 
       payload = nil
@@ -34,6 +43,15 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
         data: <img src="/assets/loader.svg" alt="Loader" class="image" width="800" height="480"/>
 
       CONTENT
+    end
+
+    it "logs debug message when screen doesn't exist" do
+      event_stream = described_class.new("bogus", kernel:)
+      payload = nil
+
+      event_stream.each(at:) { payload = it }
+
+      expect(logger.reread).to match(%r(DEBUG.+/assets/loader.*\.svg\.))
     end
 
     it "sleeps for one second" do

@@ -1,13 +1,18 @@
 # auto_register: false
 # frozen_string_literal: true
 
+require "terminus/lib_container"
+
+require "terminus/dependencies"
+
 module Terminus
   module Aspects
     module Screens
       module Designer
         # Renders device preview image event streams.
         class EventStream
-          include Deps[repository: "repositories.screen"]
+          include Deps[:assets, repository: "repositories.screen"]
+          include Terminus::Dependencies[:logger]
           include Initable[%i[req name], kernel: Kernel]
 
           def each at: Time.now.to_i
@@ -25,17 +30,29 @@ module Terminus
           private
 
           def load_screen at
-            screen = repository.find_by(name:)
-
-            if screen
-              width, height = screen.image_attributes[:metadata].values_at :width, :height
-
-              %(<img src="#{screen.image_uri}?#{at}" alt="Preview" class="image" ) +
-                %(width="#{width}" height="#{height}"/>)
-            else
-              %(<img src="/assets/loader.svg" alt="Loader" class="image" ) +
-                %(width="800" height="480"/>)
+            repository.find_by(name:).then do |screen|
+              screen ? render_preview(screen, at) : render_loader
             end
+          end
+
+          def render_preview screen, at
+            width, height = screen.image_attributes[:metadata].values_at :width, :height
+            path = "#{screen.image_uri}?#{at}"
+
+            debug path
+            %(<img src="#{path}" alt="Preview" class="image" ) +
+              %(width="#{width}" height="#{height}"/>)
+          end
+
+          def render_loader
+            path = assets["loader.svg"].path
+
+            debug path
+            %(<img src="#{path}" alt="Loader" class="image" width="800" height="480"/>)
+          end
+
+          def debug path
+            logger.debug { "Streaming: #{path}." }
           end
         end
       end
