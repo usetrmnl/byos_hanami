@@ -11,8 +11,9 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
     it "answers all records by created date/time" do
       playlist
       two = Factory[:playlist, name: "two"]
+      records = repository.all.map(&:to_h).each { it.delete :current_item }
 
-      expect(repository.all).to eq([playlist, two])
+      expect(records).to eq([playlist.to_h, two.to_h])
     end
 
     it "answers empty array when records don't exist" do

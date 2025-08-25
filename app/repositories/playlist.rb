@@ -11,8 +11,8 @@ module Terminus
                plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
-        playlist.order { created_at.asc }
-                .to_a
+        with_current_item.order { created_at.asc }
+                         .to_a
       end
 
       def find(id) = (with_current_item.by_pk(id).one if id)
@@ -38,7 +38,7 @@ module Terminus
 
       private
 
-      def with_current_item = playlist.combine :current_item
+      def with_current_item = playlist.combine current_item: :screen
     end
   end
 end
