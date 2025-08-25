@@ -15,11 +15,11 @@ module Terminus
           include Terminus::Dependencies[:logger]
           include Initable[%i[req name], kernel: Kernel]
 
-          def each at: Time.now.to_i
+          def each
             kernel.loop do
               yield <<~CONTENT
                 event: preview
-                data: #{load_screen at}
+                data: #{load_screen}
 
               CONTENT
 
@@ -29,19 +29,18 @@ module Terminus
 
           private
 
-          def load_screen at
+          def load_screen
             repository.find_by(name:).then do |screen|
-              screen ? render_preview(screen, at) : render_loader
+              screen ? render_preview(screen) : render_loader
             end
           end
 
-          def render_preview screen, at
+          def render_preview screen
             width, height = screen.image_attributes[:metadata].values_at :width, :height
-            path = "#{screen.image_uri}?#{at}"
+            path = screen.image_uri
 
             debug path
-            %(<img src="#{path}" alt="Preview" class="image" ) +
-              %(width="#{width}" height="#{height}"/>)
+            %(<img src="#{path}" alt="Preview" class="image" width="#{width}" height="#{height}"/>)
           end
 
           def render_loader

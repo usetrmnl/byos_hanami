@@ -16,31 +16,31 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
   describe "#each" do
     it "answers image when screen is found" do
       payload = nil
-      event_stream.each(at:) { payload = it }
+      event_stream.each { payload = it }
 
       expect(payload).to eq(<<~CONTENT)
         event: preview
-        data: <img src="memory://abc123.png?#{at}" alt="Preview" class="image" width="1" height="1"/>
+        data: <img src="memory://abc123.png" alt="Preview" class="image" width="1" height="1"/>
 
       CONTENT
     end
 
     it "logs debug message when screen is found" do
       payload = nil
-      event_stream.each(at:) { payload = it }
+      event_stream.each { payload = it }
 
-      expect(logger.reread).to match(%r(DEBUG.+Streaming.+/abc123.png\?\d{10}\.))
+      expect(logger.reread).to match(%r(DEBUG.+Streaming.+/abc123.png\.))
     end
 
     it "answers loader image when screen doesn't exist" do
       event_stream = described_class.new("bogus", kernel:)
 
       payload = nil
-      event_stream.each(at:) { payload = it }
+      event_stream.each { payload = it }
 
       expect(payload).to eq(<<~CONTENT)
         event: preview
-        data: <img src="/assets/loader.svg" alt="Loader" class="image" width="800" height="480"/>
+        data: <img src="#{Hanami.app[:assets]["loader.svg"]}" alt="Loader" class="image" width="800" height="480"/>
 
       CONTENT
     end
@@ -49,7 +49,7 @@ RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
       event_stream = described_class.new("bogus", kernel:)
       payload = nil
 
-      event_stream.each(at:) { payload = it }
+      event_stream.each { payload = it }
 
       expect(logger.reread).to match(%r(DEBUG.+/assets/loader.*\.svg\.))
     end
