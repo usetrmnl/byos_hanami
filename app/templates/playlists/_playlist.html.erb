@@ -1,6 +1,13 @@
 <li id="<%= playlist.id %>" class="playlist">
   <h2 class="label"><%= playlist.label %></h2>
 
+  <img src="<%= playlist.current_screen_uri %>"
+       alt="Screen"
+       class="image"
+       loading="lazy"
+       width="200"
+       height="120">
+
   <div class="actions">
     <a href="<%= routes.path :playlist, id: playlist.id %>"
        hx-get="<%= routes.path :playlist, id: playlist.id %>"
