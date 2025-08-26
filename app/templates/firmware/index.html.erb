@@ -28,7 +28,11 @@
     </dialog>
 
     <div class="actions">
-      <%= render :search, firmware:, query: %>
+      <%= render "shared/search",
+                 path: routes.path(:firmware),
+                 query:,
+                 pick: ".bit-container",
+                 target: "next .bit-container" %>
 
       <a href="<%= routes.path :bulk_firmware_delete %>"
          class="bit-button-danger"
