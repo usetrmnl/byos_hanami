@@ -12,3 +12,12 @@ import "../css/models.css";
 import "../css/playlists.css";
 import "../css/screens.css";
 import "../css/problem_details.css";
+
+import htmx from "htmx.org";
+window.htmx = htmx;
+
+import "htmx-ext-sse";
+
+htmx.onLoad(() => {
+  import("htmx-remove/build/htmx-remove.js");
+});
