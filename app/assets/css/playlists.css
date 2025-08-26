@@ -39,6 +39,9 @@
 
     .image {
       border: 0.3rem solid var(--site-black);
+      height: auto;
+      max-width: 100%;
+      object-fit: cover;
     }
 
     .description {
@@ -82,5 +85,12 @@
     display: grid;
     grid-template: 1fr / 1fr 1fr;
     gap: 1rem;
+
+    .labels {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 }
