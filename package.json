@@ -5,8 +5,15 @@
   "license": "MIT",
   "private": true,
   "type": "module",
-  "keywords": ["ruby", "hanami"],
+  "keywords": [
+    "ruby",
+    "hanami",
+    "htmx"
+  ],
   "dependencies": {
-    "hanami-assets": "^2.2.0"
+    "hanami-assets": "^2.2.0",
+    "htmx-ext-sse": "^2.2.3",
+    "htmx-remove": "^2.7.0",
+    "htmx.org": "^2.0.6"
   }
 }
