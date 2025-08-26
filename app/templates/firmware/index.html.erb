@@ -1,16 +1,16 @@
 <%= render "shared/title", text: "Firmware" %>
 
 <section class="page-firmware">
-  <header class="page-header">
+  <header class="bit-header">
     <h1 class="label">
       Firmware
 
-      <button class="popover-trigger" popovertarget="popover-help">
+      <button class="bit-popover-trigger" popovertarget="popover-help">
         <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
       </button>
     </h1>
 
-    <dialog id="popover-help" class="popover-content" popover="auto">
+    <dialog id="popover-help" class="bit-popover-content" popover="auto">
       <button class="close" popovertarget="popover-help" popovertargetaction="hide">
         <span aria-hidden=true>❌</span>
         <span class="screen_reader">Close</span>
@@ -31,17 +31,17 @@
       <%= render :search, firmware:, query: %>
 
       <a href="<%= routes.path :bulk_firmware_delete %>"
-         class="button-danger"
+         class="bit-button-danger"
          hx-delete="<%= routes.path :bulk_firmware_delete %>"
          hx-confirm="Are you sure you want to delete all firmware?"
-         hx-target=".site-container"
+         hx-target=".bit-container"
          hx-swap="swap:0.5s">
         Delete All
       </a>
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="bit-container">
     <% if firmware.any? %>
       <table class="site-table">
         <thead>

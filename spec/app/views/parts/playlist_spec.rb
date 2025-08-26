@@ -28,7 +28,7 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
   describe "#current_pill" do
     it "answers current pill when current item, screen, and image exist" do
       expect(part.current_pill(part.current_item)).to eq(
-        %(<span class="bit-pill bit-active">Current</span>)
+        %(<span class="bit-pill bit-pill-active">Current</span>)
       )
     end
 

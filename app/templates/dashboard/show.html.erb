@@ -1,7 +1,7 @@
 <%= render "shared/title", text: "Dashboard" %>
 
 <section class="page-dashboard">
-  <header class="page-header">
+  <header class="bit-header">
     <h1 class="label">Dashboard</h1>
   </header>
 
@@ -9,7 +9,7 @@
     <fieldset class="box">
       <legend class="label">
         Devices
-        <button id="devices-help" class="popover-trigger" popovertarget="popover-devices">
+        <button id="devices-help" class="bit-popover-trigger" popovertarget="popover-devices">
           <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
         </button>
       </legend>
@@ -24,7 +24,7 @@
       </ul>
     </fieldset>
 
-    <dialog id="popover-devices" class="popover-content" popover="auto">
+    <dialog id="popover-devices" class="bit-popover-content" popover="auto">
       <button class="close" popovertarget="popover-devices" popovertargetaction="hide">
         <span aria-hidden=true>❌</span>
         <span class="screen_reader">Close</span>
@@ -38,21 +38,21 @@
     <fieldset class="box">
       <legend class="label">
         IP Addresses
-        <button class="popover-trigger" popovertarget="popover-ip-addresses">
+        <button class="bit-popover-trigger" popovertarget="popover-ip-addresses">
           <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
         </button>
       </legend>
 
       <ul class="list">
         <% ip_addresses.each do |ip| %>
-          <%= tag.li ip.address_with_kind, class: "site-secret" %>
+          <%= tag.li ip.address_with_kind, class: "bit-secret" %>
         <% end %>
 
-        <li class="site-secret"><%= api_uri %> (API)</li>
+        <li class="bit-secret"><%= api_uri %> (API)</li>
       </ul>
     </fieldset>
 
-    <dialog id="popover-ip-addresses" class="popover-content" popover="auto">
+    <dialog id="popover-ip-addresses" class="bit-popover-content" popover="auto">
       <button class="close" popovertarget="popover-ip-addresses" popovertargetaction="hide">
         <span aria-hidden=true>❌</span>
         <span class="screen_reader">Close</span>
@@ -68,7 +68,7 @@
     <fieldset class="box">
       <legend class="label">
         Firmware
-        <button class="popover-trigger" popovertarget="popover-firmware">
+        <button class="bit-popover-trigger" popovertarget="popover-firmware">
           <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
         </button>
       </legend>
@@ -82,7 +82,7 @@
       </ul>
     </fieldset>
 
-    <dialog id="popover-firmware" class="popover-content" popover="auto">
+    <dialog id="popover-firmware" class="bit-popover-content" popover="auto">
       <button class="close" popovertarget="popover-firmware" popovertargetaction="hide">
         <span aria-hidden=true>❌</span>
         <span class="screen_reader">Close</span>

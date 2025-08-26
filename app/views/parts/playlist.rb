@@ -12,7 +12,7 @@ module Terminus
         def current_pill item
           return unless current_item_id == item.id
 
-          helpers.tag.span "Current", class: "bit-pill bit-active"
+          helpers.tag.span "Current", class: "bit-pill bit-pill-active"
         end
 
         # :reek:ManualDispatch

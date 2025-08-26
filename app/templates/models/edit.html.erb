@@ -1,21 +1,23 @@
 <%= render "shared/title", text: "Edit #{model.label} Model" %>
 
 <section class="page-models">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Models", routes.path(:models), class: :link %></li>
-      <li class="breadcrumb">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Models", routes.path(:models), class: :link %></li>
+
+      <li class="bit-breadcrumb">
         <%= link_to model.label, routes.path(:model, id: model.id), class: :link %>
       </li>
-      <li class="breadcrumb">Edit</li>
+
+      <li class="bit-breadcrumb">Edit</li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="models">
       <form action="<%= routes.path :model_update, id: model.id %>"
             method="put"
-            class="model page-form">
+            class="model bit-form">
 
         <h1 class="label">Edit Model</h1>
 
@@ -25,7 +27,7 @@
           <%= render "save_button", verb: :put, path: routes.path(:model, id: model.id) %>
 
           <a href="<%= routes.path :model, id: model.id %>"
-             class="button-decline"
+             class="bit-button-decline"
              hx-get="<%= routes.path :model, id: model.id %>"
              hx-trigger="click"
              hx-target="closest .page-models"

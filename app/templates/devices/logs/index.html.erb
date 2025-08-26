@@ -1,34 +1,36 @@
 <%= render "shared/title", text: "#{device.label} Logs" %>
 
 <section class="page-devices">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
-      <li class="breadcrumb">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+
+      <li class="bit-breadcrumb">
         <%= link_to device.label, routes.path(:device, id: device.id), class: :link %>
       </li>
-      <li class="breadcrumb">Logs</li>
+
+      <li class="bit-breadcrumb">Logs</li>
     </ul>
 
     <div class="actions">
       <%= render "shared/search",
                  path: routes.path(:device_logs, device_id: device.id),
                  query:,
-                 pick: ".site-container",
-                 target: "next .site-container" %>
+                 pick: ".bit-container",
+                 target: "next .bit-container" %>
 
       <a href="<%= routes.path :bulk_device_logs_delete, device_id: device.id %>"
-         class="button-danger"
+         class="bit-button-danger"
          hx-delete="/bulk/devices/<%= device.id %>/logs"
          hx-confirm="Are you sure you want to delete all logs for this device?"
-         hx-target=".site-container"
+         hx-target=".bit-container"
          hx-swap="swap:0.5s">
         Delete All
       </a>
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="bit-container">
     <% if logs.any? %>
       <table class="site-table">
         <thead>

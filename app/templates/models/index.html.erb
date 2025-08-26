@@ -1,16 +1,16 @@
 <%= render "shared/title", text: "Models" %>
 
 <section class="page-models">
-  <header class="page-header">
+  <header class="bit-header">
     <h1 class="label">
       Models
 
-      <button class="popover-trigger" popovertarget="popover-shortcuts">
+      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
         <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
       </button>
     </h1>
 
-    <dialog id="popover-shortcuts" class="popover-content" popover="auto">
+    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
       <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
         <span aria-hidden=true>❌</span>
         <span class="model_reader">Close</span>
@@ -40,7 +40,7 @@
                  target: "next .models" %>
 
       <a href="/models/new"
-         class="button-accept"
+         class="bit-button-accept"
          hx-get="/models/new"
          hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
          hx-target="closest .page-models"

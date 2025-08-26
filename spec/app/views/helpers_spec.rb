@@ -7,11 +7,11 @@ RSpec.describe Terminus::Views::Helpers do
 
   describe ".boolean" do
     it "answers green span when true" do
-      expect(helper.boolean(true)).to eq(%(<span class="text-green">true</span>))
+      expect(helper.boolean(true)).to eq(%(<span class="bit-text-green">true</span>))
     end
 
     it "answers red span when true" do
-      expect(helper.boolean(false)).to eq(%(<span class="text-red">false</span>))
+      expect(helper.boolean(false)).to eq(%(<span class="bit-text-red">false</span>))
     end
   end
 

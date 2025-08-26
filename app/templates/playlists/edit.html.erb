@@ -1,21 +1,25 @@
 <%= render "shared/title", text: "Edit #{playlist.label} Playlist" %>
 
 <section class="page-playlists">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Playlists", routes.path(:playlists), class: :link %></li>
-      <li class="breadcrumb">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb">
+        <%= link_to "Playlists", routes.path(:playlists), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">
         <%= link_to playlist.label, routes.path(:playlist, id: playlist.id), class: :link %>
       </li>
-      <li class="breadcrumb">Edit</li>
+
+      <li class="bit-breadcrumb">Edit</li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="playlist">
       <form action="<%= routes.path :playlist_update, id: playlist.id %>"
             method="put"
-            class="page-form">
+            class="bit-form">
 
         <h1 class="label">Edit Playlist</h1>
 
@@ -25,7 +29,7 @@
           <%= render "save_button", verb: :put, path: "/playlists/#{playlist.id}" %>
 
           <a href="<%= routes.path :playlist, id: playlist.id %>"
-             class="button-decline"
+             class="bit-button-decline"
              hx-get="<%= routes.path :playlist, id: playlist.id %>"
              hx-trigger="click"
              hx-target="closest .page-playlists"

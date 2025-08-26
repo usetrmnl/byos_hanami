@@ -1,15 +1,19 @@
 <%= render "shared/title", text: "Edit #{device.label} Device" %>
 
 <section class="page-devices">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
-      <li class="breadcrumb"><%= link_to device.label, "/devices/#{device.id}", class: :link %></li>
-      <li class="breadcrumb">Edit</li>
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+
+      <li class="bit-breadcrumb">
+        <%= link_to device.label, "/devices/#{device.id}", class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">Edit</li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="device">
       <figure class="screen">
         <%= render :image, uri: device.image_uri %>
@@ -17,14 +21,14 @@
 
       <%= render "measurements", device: %>
 
-      <form action="/devices" method="put" class="page-form">
+      <form action="/devices" method="put" class="bit-form">
         <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
 
           <a href="<%= routes.path :device, id: device.id %>"
-             class="button-decline"
+             class="bit-button-decline"
              hx-get="<%= routes.path :device, id: device.id %>"
              hx-trigger="click"
              hx-target="closest .page-devices"

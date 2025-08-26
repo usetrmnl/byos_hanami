@@ -1,23 +1,23 @@
 <%= render "shared/title", text: "New Screen" %>
 
 <section class="page-screens">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><a href="/screens" class="link">Screens</a></li>
-      <li class="breadcrumb">New</li>
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/screens" class="link">Screens</a></li>
+      <li class="bit-breadcrumb">New</li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="screens">
-      <form action="/screens" method="post" class="screen page-form">
+      <form action="/screens" method="post" class="screen bit-form">
         <h1 class="label">New Screen</h1>
 
         <%= render :fields, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "save_button", verb: :post, path: routes.path(:screens) %>
-          <%= link_to "Cancel", routes.path(:screens), class: "button-decline" %>
+          <%= link_to "Cancel", routes.path(:screens), class: "bit-button-decline" %>
         </div>
       </form>
     </div>

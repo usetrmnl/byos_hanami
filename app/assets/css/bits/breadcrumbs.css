@@ -1,0 +1,34 @@
+.bit-breadcrumbs {
+  align-items: center;
+  border-radius: 0.5rem;
+  display: flex;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @media only screen and (min-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+.bit-breadcrumb {
+  &:not(:last-child)::after {
+    content: url("../../images/icons/breadcrumb.svg");
+    margin-left: 0.4rem;
+  };
+
+  @media only screen and (min-width: 480px) {
+    &:not(:last-child)::after {
+      content: url("../../images/icons/breadcrumb.svg");
+      margin-left: 0.4rem;
+    }
+  }
+
+  .link {
+    color: var(--site-black);
+  }
+}

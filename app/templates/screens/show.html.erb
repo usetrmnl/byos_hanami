@@ -1,14 +1,14 @@
 <%= render "shared/title", text: "#{screen.label} Screen" %>
 
 <section class="page-screens">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><a href="/screens" class="link">Screens</a></li>
-      <li class="breadcrumb"><%= screen.label %></li>
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/screens" class="link">Screens</a></li>
+      <li class="bit-breadcrumb"><%= screen.label %></li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="screen">
       <%= tag.img src: screen.image_uri,
                   alt: "Screen",
@@ -19,7 +19,7 @@
 
       <h2 class="label"><%= screen.label %></h2>
 
-      <div class="page-actions">
+      <div class="bit-actions">
         <a href="<%= routes.path :screen_edit, id: screen.id %>"
            hx-get="<%= routes.path :screen_edit, id: screen.id %>"
            hx-target="closest .page-screens"
@@ -29,7 +29,7 @@
         </a>
       </div>
 
-      <dl class="site-definition-list">
+      <dl class="bit-definition-list">
         <dt class="key">Name</dt>
         <dd class="value"><%= screen.name %></dd>
 

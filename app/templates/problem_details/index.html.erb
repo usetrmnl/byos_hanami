@@ -1,7 +1,7 @@
 <%= render "shared/title", text: "Problem Details" %>
 
 <section class="page-problem_details">
-  <header class="page-header">
+  <header class="bit-header">
     <h1>Problem Details</h1>
   </header>
 
@@ -22,7 +22,7 @@
 
     <h2 class="label">Required</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">model_id</dt>
       <dd class="value">The model ID (see Models API for details).</dd>
 
@@ -35,7 +35,7 @@
 
     <h2 class="label">Optional</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">playlist_id</dt>
       <dd class="value">The playlist ID. The current device playlist. Default: <code>nil</code>.</dd>
 
@@ -95,14 +95,14 @@
 
     <h2 class="label">Required</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">ID</dt>
       <dd class="value">Must be your device's MAC address and properly formatted. Example: <code>A1:B2:C3:D4:E5:F6</code>.</dd>
     </dl>
 
     <h2 class="label">Optional</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">FW_VERSION</dt>
       <dd class="value">If provided, must adhere to <a href="https://alchemists.io/articles/strict_semantic_versioning">Strict Semantic Versioning</a>. Example: <code>1.2.3</code>.
       </dd>
@@ -147,7 +147,7 @@
 
     <h2 class="label">Required</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">name</dt>
       <dd class="value">The unique name.</dd>
 
@@ -166,7 +166,7 @@
 
     <h2 class="label">Optional</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">description</dt>
       <dd class="value">The model description. This can be any descriptive text that would give more context for the model.</dd>
     </dl>
@@ -191,7 +191,7 @@
 
     <h2 class="label">Required:</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">model_id</dt>
       <dd class="value">Must be the primary ID of an existing model.</dd>
 
@@ -204,7 +204,7 @@
 
     <h2 class="label">Optional (must be one of the following):</h2>
 
-    <dl class="site-definition-list">
+    <dl class="bit-definition-list">
       <dt class="key">content</dt>
       <dd class="value">Must be HTML content. CSS can be provided via the style tags within HTML head element if desired too.</dd>
 

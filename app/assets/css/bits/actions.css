@@ -1,0 +1,5 @@
+.bit-actions {
+  align-items: space-between;
+  display: flex;
+  gap: 1rem;
+}

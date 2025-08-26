@@ -1,23 +1,25 @@
 <%= render "shared/title", text: "Mirror #{playlist.label} Playlist" %>
 
 <section class="page-playlists">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><a href="/playlists" class="link">Playlists</a></li>
-      <li class="breadcrumb">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/playlists" class="link">Playlists</a></li>
+
+      <li class="bit-breadcrumb">
         <a href="<%= routes.path :playlist, id: playlist.id %>" class="link">
           <%= playlist.label %>
         </a>
       </li>
-      <li class="breadcrumb">Mirror</li>
+
+      <li class="bit-breadcrumb">Mirror</li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="playlists">
       <form action="<%= routes.path :playlist_mirror_update, id: playlist.id %>"
             method="put"
-            class="playlist page-form">
+            class="playlist bit-form">
 
         <h1 class="label">Mirror <%= playlist.label %></h1>
 
@@ -35,7 +37,7 @@
           <%= render "playlists/save_button",
                      verb: :put,
                      path: routes.path(:playlist_mirror_update, id: playlist.id) %>
-          <%= link_to "Cancel", routes.path(:playlist, id: playlist.id), class: "button-decline" %>
+          <%= link_to "Cancel", routes.path(:playlist, id: playlist.id), class: "bit-button-decline" %>
         </div>
       </form>
     </div>

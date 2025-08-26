@@ -1,0 +1,14 @@
+.bit-empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .icon {
+    font-size: 10rem;
+  }
+
+  .message {
+    margin: 0;
+    font-style: italic;
+  }
+}

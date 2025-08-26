@@ -1,18 +1,18 @@
 <%= render "shared/title", text: "#{model.label} Model" %>
 
 <section class="page-models">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><a href="/models" class="link">Models</a></li>
-      <li class="breadcrumb"><%= model.label %></li>
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/models" class="link">Models</a></li>
+      <li class="bit-breadcrumb"><%= model.label %></li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="model">
       <h2 class="label"><%= model.label %></h2>
 
-      <div class="page-actions">
+      <div class="bit-actions">
         <a href="<%= routes.path :model_edit, id: model.id %>"
            hx-get="<%= routes.path :model_edit, id: model.id %>"
            hx-target="closest .page-models"
@@ -22,7 +22,7 @@
         </a>
       </div>
 
-      <dl class="site-definition-list">
+      <dl class="bit-definition-list">
          <dt class="key">
            Name
            <%= render "shared/popovers/trigger", name: :name %>

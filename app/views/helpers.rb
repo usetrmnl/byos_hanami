@@ -15,7 +15,7 @@ module Terminus
       module_function
 
       def boolean value
-        css_class = value == true ? "text-green" : "text-red"
+        css_class = value == true ? "bit-text-green" : "bit-text-red"
         tag.span value.to_s, class: css_class
       end
 

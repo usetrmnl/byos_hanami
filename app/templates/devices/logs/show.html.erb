@@ -1,20 +1,23 @@
 <%= render "shared/title", text: "#{device.label} Log #{log.id}" %>
 
 <section class="page-devices">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
-      <li class="breadcrumb">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+
+      <li class="bit-breadcrumb">
         <%= link_to device.label, routes.path(:device, id: device.id), class: :link %>
       </li>
-      <li class="breadcrumb">
+
+      <li class="bit-breadcrumb">
         <%= link_to "Logs", routes.path(:device_logs, device_id: device.id), class: :link %>
       </li>
-      <li class="breadcrumb">Log</li>
+
+      <li class="bit-breadcrumb">Log</li>
     </ul>
   </header>
 
-  <dl class="site-definition-list">
+  <dl class="bit-definition-list">
     <dt class="key">ID</dt>
     <dd class="value"><%= log.id %></dd>
 

@@ -4,7 +4,7 @@
   font-size: 0.8rem;
 }
 
-.bit-active {
+.bit-pill-active {
   color: var(--site-white);
   background-color: var(--site-green);
 }

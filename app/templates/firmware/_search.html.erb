@@ -1,19 +1,19 @@
 <search>
-  <%= tag.form(action: routes.path(:firmware), method: :get, class: "page-search") do %>
+  <%= tag.form(action: routes.path(:firmware), method: :get, class: "bit-search") do %>
     <input id="search"
            name="query"
            value="<%= query %>"
            class="value"
            hx-get="<%= routes.path :firmware %>"
            hx-trigger="search, keyup delay:200ms changed"
-           hx-select=".site-container"
-           hx-target="next .site-container"
+           hx-select=".bit-container"
+           hx-target="next .bit-container"
            hx-swap="outerHTML"
            hx-push-url="true"
-           hx-indicator=".page-loader"/>
+           hx-indicator=".bit-loader"/>
 
-      <div class="page-loader htmx-indicator"></div>
-      <input type="submit" value="Search" class="button-accept"/>
-      <%= link_to "Clear", routes.path(:firmware), class: "button-decline" %>
+      <div class="bit-loader htmx-indicator"></div>
+      <input type="submit" value="Search" class="bit-button-accept"/>
+      <%= link_to "Clear", routes.path(:firmware), class: "bit-button-decline" %>
   <% end %>
 </search>

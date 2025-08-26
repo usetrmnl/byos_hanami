@@ -13,7 +13,7 @@
     <%= link_to "Logs", routes.path(:device_logs, device_id: device.id) %>
 
     <a href="<%= routes.path :device, id: device.id %>"
-       class="link-cancel"
+       class="bit-link-cancel"
        hx-delete="<%= routes.path :device, id: device.id %>"
        hx-confirm="Are you sure you want to delete this device?"
        hx-target="closest .device"

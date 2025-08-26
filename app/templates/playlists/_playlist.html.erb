@@ -8,7 +8,7 @@
        width="200"
        height="120">
 
-  <span class="bit-pill bit-active">Current</span>
+  <span class="bit-pill bit-pill-active">Current</span>
 
   <div class="actions">
     <a href="<%= routes.path :playlist, id: playlist.id %>"
@@ -36,7 +36,7 @@
     </a>
 
     <a href="<%= routes.path :playlist_delete, id: playlist.id %>"
-       class="link-cancel"
+       class="bit-link-cancel"
        hx-delete="<%= routes.path :playlist_delete, id: playlist.id %>"
        hx-confirm="Are you sure you want to delete this playlist?"
        hx-target="closest .playlist"

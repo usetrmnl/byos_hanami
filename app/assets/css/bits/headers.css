@@ -1,0 +1,23 @@
+.bit-header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin: 1rem 0 2rem 0;
+
+  @media only screen and (min-width: 825px) {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .label {
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}

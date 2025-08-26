@@ -1,0 +1,13 @@
+.bit-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0 1rem;
+}
+
+.bit-container {
+  overflow-x: scroll;
+  display: flex;
+  justify-content: center;
+}

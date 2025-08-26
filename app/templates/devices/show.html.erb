@@ -1,14 +1,14 @@
 <%= render "shared/title", text: "#{device.label} Device" %>
 
 <section class="page-devices">
-  <header class="page-header">
-    <ul class="site-breadcrumbs">
-      <li class="breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
-      <li class="breadcrumb"><%= device.label %></li>
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Devices", routes.path(:devices), class: :link %></li>
+      <li class="bit-breadcrumb"><%= device.label %></li>
     </ul>
   </header>
 
-  <div class="page-body">
+  <div class="bit-body">
     <div class="device">
       <figure class="screen">
         <%= render :image, uri: device.image_uri %>
@@ -18,12 +18,12 @@
 
       <%= render "measurements", device: %>
 
-      <div class="page-actions">
+      <div class="bit-actions">
         <%= render "edit_link", device: %>
         <%= link_to "Logs", routes.path(:device_logs, device_id: device.id) %>
       </div>
 
-      <dl class="site-definition-list">
+      <dl class="bit-definition-list">
         <dt class="key">
           Model
           <%= render "shared/popovers/trigger", name: :model %>
@@ -48,13 +48,13 @@
           MAC Address
           <%= render "shared/popovers/trigger", name: :mac_address %>
         </dt>
-        <dd class="value site-secret"><%= device.mac_address %></dd>
+        <dd class="value bit-secret"><%= device.mac_address %></dd>
 
         <dt class="key">
           API Key
           <%= render "shared/popovers/trigger", name: :api_key %>
         </dt>
-        <dd class="value site-secret"><%= device.api_key %></dd>
+        <dd class="value bit-secret"><%= device.api_key %></dd>
 
         <dt class="key">
           Refresh Rate

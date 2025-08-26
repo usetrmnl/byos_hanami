@@ -19,7 +19,7 @@ RSpec.describe Terminus::Views::Scopes::PopoverContent do
       content = scope.render { "<p>A body.</p>" }
 
       expect(content).to eq(<<~CONTENT)
-        <dialog id="popover-test" class="popover-content" popover="auto">
+        <dialog id="popover-test" class="bit-popover-content" popover="auto">
           <button type="button"
                   class="close"
                   popovertarget="popover-test"

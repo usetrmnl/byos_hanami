@@ -1,0 +1,39 @@
+.bit-popover-trigger {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.bit-popover-content {
+  &::backdrop {
+    backdrop-filter: brightness(60%);
+  }
+
+  border-radius: 0.5rem;
+  padding: 2rem;
+  max-width: calc(100vw - 20%);
+
+  .label {
+    text-align: center;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: grayscale(100);
+    position: absolute;
+    right: 0.25rem;
+    top: 0.5rem;
+  }
+
+  .screen_reader:not(:focus):not(:active) {
+    clip-path: inset(50%);
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}

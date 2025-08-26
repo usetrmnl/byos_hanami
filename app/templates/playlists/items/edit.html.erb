@@ -2,21 +2,21 @@
 <% edit_uri = routes.path :playlist_item_edit, playlist_id: item.playlist_id, id: item.id %>
 <% update_uri = routes.path(:playlist_item_update, playlist_id: item.playlist_id, id: item.id) %>
 
-<form action="<%= edit_uri %>" method="put" class="page-form">
+<form action="<%= edit_uri %>" method="put" class="bit-form">
   <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">
     <input type="submit"
            value="Save"
-           class="button-accept"
+           class="bit-button-accept"
            hx-put="<%= update_uri %>"
-           hx-target="closest .page-form"
+           hx-target="closest .bit-form"
            hx-swap="outerHTML">
 
     <a href="<%= show_uri %>"
-       class="link-cancel"
+       class="bit-link-cancel"
        hx-get="<%= show_uri %>"
-       hx-target="closest .page-form"
+       hx-target="closest .bit-form"
        hx-swap="outerHTML">
       Cancel
     </a>

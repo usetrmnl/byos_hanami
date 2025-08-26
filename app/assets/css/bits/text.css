@@ -1,0 +1,11 @@
+.bit-text-left {
+  text-align: left;
+}
+
+.bit-text-green {
+  color: var(--site-green);
+}
+
+.bit-text-red {
+  color: var(--site-red);
+}
