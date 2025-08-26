@@ -1,0 +1,10 @@
+.bit-pill {
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.bit-active {
+  color: var(--site-white);
+  background-color: var(--site-green);
+}
