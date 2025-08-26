@@ -17,8 +17,8 @@ module Terminus
 
         # :reek:ManualDispatch
         def current_screen_uri
-          if value.current_item_id && value.respond_to?(:current_item)
-            value.current_item.screen.image_uri
+          if current_item_id && respond_to?(:current_item)
+            current_item.screen.image_uri
           else
             assets["blank.svg"].path
           end
