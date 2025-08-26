@@ -643,7 +643,7 @@ You'll get an empty hash when there is nothing to delete.
 
 ===== Models
 
-Provides model information which is the core specfication for devices and screens. Models are also differentiated by `kind` which can be:
+Provides model information which is the core specification for devices and screens. Models are also differentiated by `kind` which can be:
 
 * `core`: Originates from our link:https://usetrmnl.com[Core] server and is part of the synchronization process provided by the model xref:_background_pollers[Background Poller].
 * `terminus`: Originates from Terminus only.
@@ -1193,24 +1193,14 @@ device = repository.find 1  # Find by Device ID.
 
 Pure CSS is used in order to avoid pulling in complicated frameworks. The following stylesheets allow you to customize the look and feel of this application as follows:
 
-* *Settings*: Use to customize site settings.
+* *Bits*: These are the bits and small reusable components that make up the site. There is a file for each type.
+* *Pages*: These are the pages that make up the site. There is a file for each unique page.
 * *Colors*: Use to customize site colors.
+* *Defaults*: Use to customize HTML element default styles.
 * *Keyframes*: Use to customize keyframe behavior.
-* *View Transitions*: Use to customize view transitions.
-* *Defaults*: Use to customize HTML element defaults.
 * *Layout*: Use to customize the site layout.
-* *Components*: Use to customize general site components.
-* *Dashboard*: Use to customize the dashboard page.
-* *Devices*: Use to customize the devices page.
-* *Designer*: Use to customize the designer page.
-
-For responsive resolutions, the following measurements are used:
-
-* *Extra Small*: 300px
-* *Small*: 500px
-* *Medium*: 825px
-* *Large*: 1000px
-* *Extra Large*: 1500px
+* *Settings*: Use to customize site settings.
+* *View Transitions*: Use to customize view transitions.
 
 === HTML/CSS Sanitization
 
