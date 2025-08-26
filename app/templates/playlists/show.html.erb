@@ -43,7 +43,7 @@
 
       <div class="show_items">
         <% items.each do |item| %>
-          <%= item.render :item %>
+          <%= item.render :item, playlist: %>
         <% end %>
       </div>
     </div>
