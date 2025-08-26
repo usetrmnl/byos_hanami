@@ -35,20 +35,7 @@
 
     <%= tag.link title: "Terminus: Stylesheet", rel: :stylesheet, href: assets["app.css"] %>
 
-    <script src="https://unpkg.com/htmx.org@2.0.6"
-            integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
-            crossorigin="anonymous">
-    </script>
-
-    <script src="https://unpkg.com/htmx-ext-sse@2.2.3"
-            integrity="sha384-Y4gc0CK6Kg+hmulDc6rZPJu0tqvk7EWlih0Oh+2OkAi1ZDlCbBDCQEE2uVk472Ky"
-            crossorigin="anonymous">
-    </script>
-
-    <script src="https://unpkg.com/htmx-remove@2.6.0"
-            integrity="sha384-v6VOSW2F42qo+95FGFDZCY72+0md5SolbibTa8Kgn8DkCrevZNkgTsWXdEMXyeRX"
-            crossorigin="anonymous">
-    </script>
+    <%= javascript_tag "app" %>
   </head>
 
   <body class="site-page">
