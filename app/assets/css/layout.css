@@ -16,7 +16,7 @@
   justify-content: space-between;
   padding: 0 4rem;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     padding: 0;
   }
 }
@@ -31,6 +31,7 @@
   .label {
     color: var(--site-black);
     font-size: 1.5rem;
+    font-weight: 600;
     text-transform: uppercase;
   }
 }
@@ -56,7 +57,7 @@
     display: block;
     height: 0.2rem;
     position: relative;
-    top: 8px;
+    top: 11px;
     transition: all 0.3s;
     width: 1.5rem;
 
@@ -78,7 +79,7 @@
     }
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     .label {
       display: block;
       z-index: var(--site-z-index-navigation);
@@ -111,6 +112,7 @@
   list-style: none;
   width: 100%;
   gap: 0 1rem;
+  margin: 0;
 
   .item {
     align-items: center;
@@ -134,13 +136,12 @@
     }
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     color: var(--site-black);
     display: none;
     position: absolute;
-    top: -8px;
+    top: 53px;
     left: 0;
-    right: 0;
     flex-direction: column;
     background-color: var(--site-white);
     padding: 0;
@@ -148,8 +149,11 @@
     .item {
       width: 100%;
       border-top: 1px solid #eee;
+      color: var(--site-white);
+      background-color: var(--site-orange);
 
       &:has(.active), &:hover, &:active {
+        color: var(--site-black);
         background-color: var(--site-white);
       }
     }
