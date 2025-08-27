@@ -33,5 +33,5 @@ window.htmx = htmx;
 import "htmx-ext-sse";
 
 htmx.onLoad(() => {
-  import("htmx-remove/build/htmx-remove.js");
+  import("htmx-remove");
 });
