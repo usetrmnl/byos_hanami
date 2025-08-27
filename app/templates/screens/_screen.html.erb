@@ -1,12 +1,8 @@
-<li id="<%= screen.id %>" class="screen">
-   <%= tag.img src: screen.image_uri,
-               alt: "Screen",
-               class: :image,
-               width: 250,
-               height: 150,
-               loading: :lazy %>
-
+<li id="<%= screen.id %>" class="bit-card screen">
   <h2 class="label"><%= screen.label %></h2>
+
+  <%= render "shared/screen", uri: screen.image_uri %>
+
   <span class="type"><%= screen.type %></span>
   <span class="type"><%= screen.dimensions %></span>
 

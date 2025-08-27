@@ -1,10 +1,6 @@
-<li id="<%= device.id %>" class="device">
-  <figure class="screen">
-    <%= render :image, uri: device.image_uri %>
-  </figure>
-
+<li id="<%= device.id %>" class="bit-card device">
   <h2 class="label"><%= device.label %></h2>
-
+  <%= render "shared/screen", uri: device.image_uri %>
   <%= render "measurements", device: %>
 
   <div class="actions">

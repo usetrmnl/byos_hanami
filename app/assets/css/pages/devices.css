@@ -1,75 +1,7 @@
 .page-devices {
   margin-bottom: 2rem;
 
-  .columns, .row {
-    align-items: center;
-    border-radius: 0.5rem;
-    display: grid;
-    gap: 0.5rem;
-    grid-template: 1fr / repeat(auto-fit, 1fr);
-    margin: 0;
-    padding: 0.5rem 1rem;
-  }
-
-  .columns {
-    color: white;
-    background-color: black;
-  }
-
-  .row {
-    width: 100%;
-
-    &:hover {
-      background-color: hsl(213, 79%, 95%);
-    }
-  }
-
-  .devices {
-    display: grid;
-    grid-gap: 2.5rem;
-    grid-template: 1fr / repeat(auto-fit, 320px);
-    justify-content: center;
-    margin-top: 2rem;
-    padding: 0;
-  }
-
   .device {
-    align-items: center;
-    background-color: var(--site-white);
-    border-radius: 0.5rem;
-    box-shadow:
-      0.7px 0.7px 0.7px rgba(0, 0, 0, 0.022),
-      1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
-      3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
-      7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
-      20px 20px 20px rgba(0, 0, 0, 0.07)
-    ;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 320px;
-
-    .screen {
-      background-color: var(--site-black);
-      border: 0.65rem solid var(--site-black);
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-      margin: 0;
-    }
-
-    .details {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 1rem 1rem 1rem;
-    }
-
-    .label {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
     .measurements {
       align-items: center;
       display: flex;
@@ -89,16 +21,6 @@
     .battery, .signal {
       width: 6rem;
       height: 1.5rem;
-    }
-
-    .actions {
-      align-items: space-between;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: space-evenly;
-      margin-top: 0.5rem;
-      padding: 0.5rem 1rem 1.5rem 1rem;
     }
   }
 

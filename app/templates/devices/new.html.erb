@@ -9,10 +9,8 @@
   </header>
 
   <div class="bit-body">
-    <div class="device">
-      <figure class="screen">
-        <%= render :image, uri: assets["setup.svg"]%>
-      </figure>
+    <div class="bit-card device">
+      <h1 class="label">New Device</h1>
 
       <form action="/devices" method="post" class="bit-form">
         <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>

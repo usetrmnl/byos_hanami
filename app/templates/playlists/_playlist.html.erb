@@ -1,13 +1,6 @@
-<li id="<%= playlist.id %>" class="playlist">
+<li id="<%= playlist.id %>" class="bit-card playlist">
   <h2 class="label"><%= playlist.label %></h2>
-
-  <img src="<%= playlist.current_screen_uri %>"
-       alt="Screen"
-       class="image"
-       loading="lazy"
-       width="200"
-       height="120">
-
+  <%= render "shared/screen", uri: playlist.current_screen_uri %>
   <span class="bit-pill bit-pill-active">Current</span>
 
   <div class="actions">

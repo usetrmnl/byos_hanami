@@ -1,61 +1,9 @@
 .page-playlists {
   margin-bottom: 2rem;
 
-  .playlists {
-    display: grid;
-    grid-gap: 2.5rem;
-    grid-template: 1fr / repeat(auto-fit, 300px);
-    justify-content: center;
-    margin-top: 2rem;
-    padding: 0;
-  }
-
   .playlist {
-    align-items: center;
-    background-color: var(--site-white);
-    border-radius: 0.5rem;
-    box-shadow:
-      0.7px 0.7px 0.7px rgba(0, 0, 0, 0.022),
-      1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
-      3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
-      7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
-      20px 20px 20px rgba(0, 0, 0, 0.07)
-    ;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 320px;
-
-    .label {
-      margin: 2rem 0 0 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .name {
-      color: var(--site-lightgrey);
-      margin: 0 0 1rem 0;
-    }
-
-    .image {
-      border: 0.3rem solid var(--site-black);
-      height: auto;
-      max-width: 100%;
-      object-fit: cover;
-    }
-
     .description {
       margin: 0 1rem;
-    }
-
-    .actions {
-      align-items: space-between;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: space-evenly;
-      margin-top: 0.5rem;
-      padding: 0.5rem 1rem 1.5rem 1rem;
     }
   }
 
@@ -63,13 +11,13 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    padding: 0 0 1rem 0;
+    gap: 1rem;
 
     .label {
       align-self: center;
       font-size: 1rem;
       font-weight: 500;
-      margin: 0 0 1rem 0;
+      margin: 1rem 0;
     }
   }
 

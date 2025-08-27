@@ -13,7 +13,10 @@
 
   <div class="bit-body">
     <div class="playlists">
-      <form action="<%= routes.path :playlist_create %>" method="post" class="playlist bit-form">
+      <form action="<%= routes.path :playlist_create %>"
+            method="post"
+            class="bit-card bit-form playlist">
+
         <h1 class="label">New Playlist</h1>
 
         <%= render :fields, playlist:, fields: fields.value, errors: %>

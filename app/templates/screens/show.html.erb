@@ -9,15 +9,10 @@
   </header>
 
   <div class="bit-body">
-    <div class="screen">
-      <%= tag.img src: screen.image_uri,
-                  alt: "Screen",
-                  class: :image,
-                  width: 250,
-                  height: 150,
-                  loading: :lazy %>
-
+    <div class="bit-card screen">
       <h2 class="label"><%= screen.label %></h2>
+
+      <%= render "shared/screen", uri: screen.image_uri %>
 
       <div class="bit-actions">
         <a href="<%= routes.path :screen_edit, id: screen.id %>"

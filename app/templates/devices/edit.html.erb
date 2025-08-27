@@ -14,11 +14,10 @@
   </header>
 
   <div class="bit-body">
-    <div class="device">
-      <figure class="screen">
-        <%= render :image, uri: device.image_uri %>
-      </figure>
+    <div class="bit-card device">
+      <h1 class="label">Edit Device</h1>
 
+      <%= render "shared/screen", uri: device.image_uri %>
       <%= render "measurements", device: %>
 
       <form action="/devices" method="put" class="bit-form">

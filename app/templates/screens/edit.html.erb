@@ -17,17 +17,11 @@
     <div class="screens">
       <form action="<%= routes.path :screen_update, id: screen.id %>"
             method="put"
-            class="screen bit-form">
+            class="bit-card bit-form screen">
 
         <h1 class="label">Edit Screen</h1>
 
-        <img src="<%= screen.image_uri %>"
-             alt="Screen"
-             class="image"
-             width="200"
-             height="120"
-             loading="lazy">
-
+        <%= render "shared/screen", uri: screen.image_uri %>
         <%= render :fields, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
