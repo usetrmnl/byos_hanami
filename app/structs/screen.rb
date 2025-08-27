@@ -34,6 +34,12 @@ module Terminus
 
       def image_name = image_attributes.dig :metadata, :filename
 
+      def image_name_dated
+        path = Pathname(image_attributes.dig(:metadata, :filename))
+        extension = path.extname
+        path.sub_ext("-#{updated_at.to_i}#{extension}").to_s
+      end
+
       def image_open(**)
         io = store.open(image_id, **)
         yield io if block_given?

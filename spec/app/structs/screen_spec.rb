@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Structs::Screen, :db do
-  subject(:screen) { Factory[:screen] }
+  subject(:screen) { Factory[:screen, updated_at: "2025-08-01T10:10:10+0000"] }
 
   let(:path) { SPEC_ROOT.join "support/fixtures/test.png" }
 
@@ -68,6 +68,12 @@ RSpec.describe Terminus::Structs::Screen, :db do
   describe "#image_name" do
     it "answers name" do
       expect(screen.image_name).to eq("test.png")
+    end
+  end
+
+  describe "#image_name_dated" do
+    it "answers name" do
+      expect(screen.image_name_dated).to eq("test-1754043010.png")
     end
   end
 
