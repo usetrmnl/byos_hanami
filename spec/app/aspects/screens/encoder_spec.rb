@@ -7,13 +7,13 @@ RSpec.describe Terminus::Aspects::Screens::Encoder, :db do
 
   describe "#call" do
     let(:path) { SPEC_ROOT.join "support/fixtures/test.png" }
-    let(:screen) { Factory[:screen] }
+    let(:screen) { Factory[:screen, updated_at: "2025-08-01T10:10:10+0000"] }
 
     before { path.open { |io| screen.upload io } }
 
     it "answers default image URI" do
       expect(encrypter.call(screen)).to be_success(
-        filename: "test.png",
+        filename: "test-1754043010.png",
         image_url: "memory://#{screen.image_id}"
       )
     end
@@ -22,7 +22,7 @@ RSpec.describe Terminus::Aspects::Screens::Encoder, :db do
       result = encrypter.call screen, encryption: :base_64
 
       expect(result.success).to match(
-        filename: "test.png",
+        filename: "test-1754043010.png",
         image_url: %r(data:image/png;base64,.+)
       )
     end

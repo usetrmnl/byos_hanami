@@ -17,14 +17,15 @@ module Terminus
           if encryptions.include? encryption
             payload_for screen
           else
-            Success filename: screen.image_name, image_url: screen.image_uri(host: settings.api_uri)
+            Success filename: screen.image_name_dated,
+                    image_url: screen.image_uri(host: settings.api_uri)
           end
         end
 
         private
 
         def payload_for screen
-          Success filename: screen.image_name,
+          Success filename: screen.image_name_dated,
                   image_url: "data:#{screen.mime_type};base64,#{content_for screen}"
         end
 
