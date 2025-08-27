@@ -1,5 +1,5 @@
 <search>
-  <%= tag.form(action: path, method: :get, class: "bit-search") do %>
+  <%= tag.form(action: path, method: :get, class: "bit-search-form") do %>
     <input id="search"
            name="query"
            value="<%= query %>"
@@ -13,7 +13,10 @@
            hx-indicator=".bit-loader"/>
 
       <div class="bit-loader htmx-indicator"></div>
-      <input type="submit" value="Search" class="bit-button-accept"/>
-      <%= link_to "Clear", path, class: "bit-button-decline" %>
+
+      <div class="actions">
+        <input type="submit" value="Search" class="bit-button-accept"/>
+        <%= link_to "Clear", path, class: "bit-button-decline" %>
+      </div>
   <% end %>
 </search>
