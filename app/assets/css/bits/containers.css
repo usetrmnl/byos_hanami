@@ -11,3 +11,12 @@
   display: flex;
   justify-content: center;
 }
+
+.bit-gallery {
+  display: grid;
+  grid-gap: 2.5rem;
+  grid-template: 1fr / repeat(auto-fit, 320px);
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0;
+}
