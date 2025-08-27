@@ -70,10 +70,6 @@
   white-space: nowrap;
 }
 
-:where(li) {
-  margin-bottom: 0.4rem;
-}
-
 :where(pre:not([class^=language])) {
   background-color: var(--site-black);
   color: var(--site-white);
