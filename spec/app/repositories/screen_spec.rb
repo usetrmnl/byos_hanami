@@ -24,9 +24,9 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     let(:struct) { Factory.structs[:screen, :with_image] }
     let(:model) { Factory[:model] }
 
-    let :payload do
-      Terminus::Aspects::Screens::Creators::Payload[
-        model:,
+    let :mold do
+      Terminus::Aspects::Screens::Mold[
+        model_id: model.id,
         name: "test",
         label: "Test",
         content: "<p>test</p>"
@@ -34,7 +34,7 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     end
 
     it "answer success when unique" do
-      result = repository.create_with_image payload, struct
+      result = repository.create_with_image mold, struct
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -58,12 +58,12 @@ RSpec.describe Terminus::Repositories::Screen, :db do
       before { Factory[:screen, name: "test"] }
 
       it "destroys image attachment" do
-        repository.create_with_image payload, struct
+        repository.create_with_image mold, struct
         expect(struct).to have_received(:image_destroy)
       end
 
       it "answer failure when existing" do
-        result = repository.create_with_image payload, struct
+        result = repository.create_with_image mold, struct
         expect(result).to be_failure(%(Screen exists with name: "test".))
       end
     end
