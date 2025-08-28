@@ -6,16 +6,23 @@ require "mini_magick"
 RSpec.describe Terminus::Aspects::Screens::Converters::BMP do
   subject(:converter) { described_class.new }
 
-  include_context "with application dependencies"
+  include_context "with temporary directory"
 
   describe "#call" do
-    let(:model) { Factory.structs[:model, bit_depth: 1, colors: 2] }
-    let(:input_path) { SPEC_ROOT.join "support/fixtures/test.png" }
-    let(:output_path) { temp_dir.join "test.png" }
+    let :mold do
+      Terminus::Aspects::Screens::Mold[
+        bit_depth: 1,
+        colors: 2,
+        width: 800,
+        height: 480,
+        input_path: SPEC_ROOT.join("support/fixtures/test.png"),
+        output_path: temp_dir.join("test.bmp")
+      ]
+    end
 
     it "converts image" do
-      converter.call model, input_path, temp_dir.join("test.png")
-      image = MiniMagick::Image.open temp_dir.join("test.png")
+      converter.call mold
+      image = MiniMagick::Image.open mold.output_path
 
       expect(image).to have_attributes(
         dimensions: [800, 480],
@@ -31,7 +38,7 @@ RSpec.describe Terminus::Aspects::Screens::Converters::BMP do
     end
 
     it "answers path" do
-      expect(converter.call(model, input_path, output_path)).to be_success(output_path)
+      expect(converter.call(mold)).to be_success(mold.output_path)
     end
 
     it "answers failure when MiniMagick can't convert" do
@@ -39,7 +46,7 @@ RSpec.describe Terminus::Aspects::Screens::Converters::BMP do
       allow(mini_magick).to receive(:convert).and_raise(MiniMagick::Error, "Danger!")
       converter = described_class.new(mini_magick:)
 
-      expect(converter.call(model, input_path, output_path)).to be_failure("Danger!")
+      expect(converter.call(mold)).to be_failure("Danger!")
     end
   end
 end

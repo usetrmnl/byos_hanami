@@ -11,28 +11,28 @@ module Terminus
           include Deps[:mini_magick, "aspects.screens.color_mapper"]
           include Dry::Monads[:result]
 
-          def call model, input_path, output_path
-            color_mapper.call(model.bit_depth)
-                        .fmap { |path| convert model, input_path, path, output_path }
-                        .fmap { output_path }
+          def call mold
+            color_mapper.call(mold.bit_depth)
+                        .fmap { |path| convert mold, path }
+                        .fmap { mold.output_path }
           rescue MiniMagick::Error => error then Failure error.message
           end
 
           private
 
-          def convert model, input_path, color_map_path, output_path
+          def convert mold, color_map_path
             mini_magick.convert do |converter|
-              converter << input_path.to_s
-              converter.define "png:bit-depth=#{model.bit_depth}"
+              converter << mold.input_path.to_s
+              converter.define "png:bit-depth=#{mold.bit_depth}"
               converter.define "png:color-type=0"
-              converter.rotate model.rotation if model.rotatable?
-              converter.resize "#{model.dimensions}!"
-              converter.crop model.crop if model.cropable?
+              converter.rotate mold.rotation if mold.rotatable?
+              converter.resize "#{mold.dimensions}!"
+              converter.crop mold.crop if mold.cropable?
               converter.type "Grayscale"
               converter.dither "FloydSteinberg"
               converter.remap color_map_path.to_s if color_map_path.exist?
               converter.strip
-              converter << output_path
+              converter << mold.output_path
             end
           end
         end

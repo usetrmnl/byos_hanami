@@ -18,27 +18,25 @@ module Terminus
             super(**)
           end
 
-          def call(payload) = Pathname.mktmpdir { process payload, it }
+          def call(mold) = Pathname.mktmpdir { process mold, it }
 
           private
 
           attr_reader :decoder, :struct
 
-          def process payload, directory
-            input_path = Pathname(directory).join "input.png"
+          def process mold, directory
+            mold.input_path = Pathname(directory).join "input.png"
+            mold.output_path = directory.join mold.filename
 
-            input_path.binwrite(decoder.strict_decode64(payload.content))
-                      .then { convert payload.model, input_path, directory.join(payload.filename) }
-                      .bind { |path| save payload, path }
+            mold.input_path
+                .binwrite(decoder.strict_decode64(mold.content))
+                .then { converter.call mold }
+                .bind { |path| save mold, path }
           end
 
-          def convert model, input_path, output_path
-            converter.call model, input_path, output_path
-          end
-
-          def save payload, path
-            path.open { |io| struct.upload io, metadata: {"filename" => payload.filename} }
-            repository.create_with_image payload, struct
+          def save mold, path
+            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
+            repository.create_with_image mold, struct
           end
         end
       end

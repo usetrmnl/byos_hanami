@@ -11,24 +11,24 @@ module Terminus
           include Deps[:mini_magick]
           include Dry::Monads[:result]
 
-          def call model, input_path, output_path
-            convert model, input_path, output_path
-            Success output_path
+          def call mold
+            convert mold
+            Success mold.output_path
           rescue MiniMagick::Error => error
             Failure error.message
           end
 
           private
 
-          def convert model, input_path, output_path
+          def convert mold
             mini_magick.convert do |converter|
-              converter << input_path.to_s
-              converter.colors model.colors
-              converter.depth model.bit_depth
+              converter << mold.input_path.to_s
+              converter.colors mold.colors
+              converter.depth mold.bit_depth
               converter.monochrome
-              converter.resize "#{model.dimensions}!"
+              converter.resize "#{mold.dimensions}!"
               converter.strip
-              converter << "bmp3:#{output_path}"
+              converter << "bmp3:#{mold.output_path}"
             end
           end
         end
