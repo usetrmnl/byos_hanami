@@ -20,15 +20,15 @@ module Terminus
                          .to_a
       end
 
-      def create_with_image payload, struct
-        name = payload.name
+      def create_with_image mold, struct
+        name = mold.name
 
         find_by(name:).then do |record|
           if record
             struct.image_destroy
             Failure "Screen exists with name: #{name.inspect}."
           else
-            Success create(image_data: struct.image_attributes, **payload.attributes)
+            Success create(image_data: struct.image_attributes, **mold.image_attributes)
           end
         end
       end
