@@ -1,7 +1,9 @@
 <li id="<%= playlist.id %>" class="bit-card playlist">
   <h2 class="label"><%= playlist.label %></h2>
+
   <%= render "shared/screen", uri: playlist.current_screen_uri %>
-  <span class="bit-pill bit-pill-active">Current</span>
+
+  <div class="bit-pill bit-pill-active">Current Screen</div>
 
   <div class="actions">
     <a href="<%= routes.path :playlist, id: playlist.id %>"
