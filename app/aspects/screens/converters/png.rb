@@ -28,8 +28,9 @@ module Terminus
               converter.rotate model.rotation if model.rotatable?
               converter.resize "#{model.dimensions}!"
               converter.crop model.crop if model.cropable?
-              converter.dither << "FloydSteinberg"
-              converter.remap << color_map_path.to_s
+              converter.type "Grayscale"
+              converter.dither "FloydSteinberg"
+              converter.remap color_map_path.to_s if color_map_path.exist?
               converter.strip
               converter << output_path
             end
