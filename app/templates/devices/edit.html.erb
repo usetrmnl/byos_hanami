@@ -18,6 +18,9 @@
       <h1 class="label">Edit Device</h1>
 
       <%= render "shared/screen", uri: device.image_uri %>
+
+      <div class="bit-pill bit-pill-active">Current Screen</div>
+
       <%= render "measurements", device: %>
 
       <form action="/devices" method="put" class="bit-form">

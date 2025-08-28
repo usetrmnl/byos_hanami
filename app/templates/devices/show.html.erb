@@ -11,7 +11,11 @@
   <div class="bit-body">
     <div class="bit-card device">
       <h2 class="label"><%= device.label %></h2>
+
       <%= render "shared/screen", uri: device.image_uri %>
+
+      <div class="bit-pill bit-pill-active">Current Screen</div>
+
       <%= render "measurements", device: %>
 
       <div class="bit-actions">
