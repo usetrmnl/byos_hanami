@@ -93,6 +93,28 @@ RSpec.describe Terminus::Aspects::Screens::Converters::PNG do
       end
     end
 
+    context "with higher that four bit depth" do
+      let(:model) { Factory.structs[:model, bit_depth: 8] }
+
+      it "converts image" do
+        converter.call model, input_path, temp_dir.join("test.png")
+        image = MiniMagick::Image.open temp_dir.join("test.png")
+
+        expect(image).to have_attributes(
+          dimensions: [800, 480],
+          exif: {},
+          type: "PNG",
+          data: hash_including(
+            "colorspace" => "Gray",
+            "depth" => 8,
+            "geometry" => {"width" => 800, "height" => 480, "x" => 0, "y" => 0},
+            "mimeType" => "image/png",
+            "type" => "Grayscale"
+          )
+        )
+      end
+    end
+
     context "with rotation" do
       let(:model) { Factory.structs[:model, bit_depth: 1, rotation: 90] }
 
