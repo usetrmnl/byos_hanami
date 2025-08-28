@@ -18,6 +18,7 @@ Metrics/MethodLength:
     - battery_percentage
     - wifi_percentage
   Exclude:
+    - app/aspects/screens/color_mapper.rb
     - app/aspects/screens/converters/png.rb
     - app/views/helpers.rb
 Metrics/ParameterLists:

@@ -9,6 +9,7 @@ RSpec.describe Terminus::Aspects::Screens::ColorMapper do
   subject(:color_mapper) { described_class.new }
 
   include_context "with application dependencies"
+  include_context "with library dependencies"
 
   describe "#call" do
     let(:path) { temp_dir.join "2x1.png" }
@@ -78,6 +79,15 @@ RSpec.describe Terminus::Aspects::Screens::ColorMapper do
       end
     end
 
+    it "answers logs debug message when bit depth is higher than four" do
+      color_mapper.call 5
+      expect(logger.reread).to match(/DEBUG.+Color map skipped for bit depth: 5\./)
+    end
+
+    it "answers non-existent path when bit depth is higher than four" do
+      expect(color_mapper.call(5)).to be_success(Pathname.new(""))
+    end
+
     it "answers path when file doesn't exist" do
       expect(color_mapper.call(1)).to be_success(path)
     end
@@ -85,12 +95,6 @@ RSpec.describe Terminus::Aspects::Screens::ColorMapper do
     it "answers path when file does exist" do
       path.touch
       expect(color_mapper.call(1)).to be_success(path)
-    end
-
-    it "answers failure when bit depth is higher than four" do
-      expect(color_mapper.call(5)).to be_failure(
-        "Unable to create grayscale color map for bit depth: 5."
-      )
     end
 
     it "answers failure with command error status" do
