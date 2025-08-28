@@ -23,6 +23,8 @@
       Edit
     </a>
 
+    <a href="<%= screen.image_uri %>" download="<%= screen.image_name %>">Download</a>
+
     <a href="<%= routes.path :screen_delete, id: screen.id %>"
        class="bit-link-cancel"
        hx-delete="<%= routes.path :screen, id: screen.id %>"
