@@ -20,7 +20,7 @@ module Terminus
 
           def process payload, directory
             sanitizer.call(payload.content)
-                     .then { |content| shoter.call(content, directory.join("input.jpg")) }
+                     .then { |content| shoter.call(content, directory.join("input.png")) }
                      .bind { |path| convert payload, path, directory.join(payload.filename) }
                      .bind { |path| block_given? ? yield(path) : path }
           end
