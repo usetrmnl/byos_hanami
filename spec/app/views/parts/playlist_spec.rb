@@ -25,10 +25,16 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
 
   before { allow(rendering).to receive(:context).and_return Terminus::Views::Context.new }
 
-  describe "#current_pill" do
-    it "answers current pill when current item, screen, and image exist" do
-      expect(part.current_pill(part.current_item)).to eq(
-        %(<span class="bit-pill bit-pill-active">Current</span>)
+  describe "#current_screen_pill" do
+    it "answers pill when current item, screen, and image exist" do
+      expect(part.current_screen_pill(part.current_item)).to eq(
+        %(<div class="bit-pill bit-pill-active">Current Screen</div>)
+      )
+    end
+
+    it "answers pill with custom label" do
+      expect(part.current_screen_pill(part.current_item, "Test")).to eq(
+        %(<div class="bit-pill bit-pill-active">Test</div>)
       )
     end
 
@@ -36,7 +42,7 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
       part = described_class.new value: Factory[:playlist], rendering: view.new.rendering
       item = Factory[:playlist_item]
 
-      expect(part.current_pill(item)).to be(nil)
+      expect(part.current_screen_pill(item)).to be(nil)
     end
   end
 

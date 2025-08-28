@@ -9,10 +9,10 @@ module Terminus
       class Playlist < Hanami::View::Part
         include Deps[:assets]
 
-        def current_pill item
+        def current_screen_pill item, label = "Current Screen"
           return unless current_item_id == item.id
 
-          helpers.tag.span "Current", class: "bit-pill bit-pill-active"
+          helpers.tag.div label, class: "bit-pill bit-pill-active"
         end
 
         # :reek:ManualDispatch
