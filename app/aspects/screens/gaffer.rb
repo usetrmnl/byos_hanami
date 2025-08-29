@@ -16,7 +16,7 @@ module Terminus
           model_repository: "repositories.model",
           view: "views.screens.gaffe.new"
         ]
-        include Initable[payload: Creators::Payload]
+        include Initable[mold: Mold]
         include Dry::Monads[:result]
 
         def call device, message
@@ -32,7 +32,7 @@ module Terminus
         end
 
         def update screen, device, message
-          temp_path.call build_payload(device, message) do |path|
+          temp_path.call build_mold(device, message) do |path|
             replace screen.name, path, {"filename" => "#{device.system_name :error}.png"}
           end
         end
@@ -42,13 +42,11 @@ module Terminus
         end
 
         # :reek:FeatureEnvy
-        def build_payload device, message
-          payload[
-            model: model_repository.find(device.model_id),
-            label: device.system_label("Error"),
-            name: device.system_name("error"),
-            content: String.new(view.call(message:))
-          ]
+        def build_mold device, message
+          mold.for model_repository.find(device.model_id),
+                   label: device.system_label("Error"),
+                   name: device.system_name("error"),
+                   content: String.new(view.call(message:))
         end
       end
     end

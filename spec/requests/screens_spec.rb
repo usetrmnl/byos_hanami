@@ -191,7 +191,7 @@ RSpec.describe "/api/screens", :db do
       problem = Petail[
         type: "/problem_details#screen_payload",
         status: :unprocessable_entity,
-        detail: "Unsupported MIME Type for model: #{model.id}.",
+        detail: "Unsupported MIME Type: text/html.",
         instance: "/api/screens"
       ]
 
@@ -288,7 +288,7 @@ RSpec.describe "/api/screens", :db do
       type: "/problem_details#screen_payload",
       status: 422,
       title: "Unprocessable Entity",
-      detail: "Unsupported MIME Type for model: #{model.id}.",
+      detail: "Unsupported MIME Type: image/webp.",
       instance: "/api/screens"
     ]
 

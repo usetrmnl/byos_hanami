@@ -14,10 +14,7 @@ module Terminus
             repository: "repositories.screen",
             model_repository: "repositories.model"
           ]
-          include Initable[
-            payload: Aspects::Screens::Creators::Payload,
-            serializer: Serializers::Screen
-          ]
+          include Initable[mold: Aspects::Screens::Mold, serializer: Serializers::Screen]
           include Dry::Monads[:result]
 
           using Refines::Actions::Response
@@ -70,10 +67,10 @@ module Terminus
                                .slice(:model_id, :label, :name)
                                .merge!(parameters.slice(:model_id, :label, :name, :content))
 
-            payload[
-              model: model_repository.find(attributes[:model_id]),
+            mold.for(
+              model_repository.find(attributes[:model_id]),
               **attributes.slice(:label, :name, :content)
-            ]
+            )
           end
 
           def process result, response
