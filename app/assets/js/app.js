@@ -32,7 +32,4 @@ import htmx from "htmx.org";
 window.htmx = htmx;
 
 import "htmx-ext-sse";
-
-htmx.onLoad(() => {
-  import("htmx-remove");
-});
+import "htmx-remove";

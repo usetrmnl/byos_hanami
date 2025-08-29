@@ -13,7 +13,7 @@
   "dependencies": {
     "hanami-assets": "^2.2.0",
     "htmx-ext-sse": "^2.2.3",
-    "htmx-remove": "^2.7.0",
+    "htmx-remove": "^2.8.0",
     "htmx.org": "^2.0.6"
   }
 }
