@@ -40,13 +40,13 @@ module Terminus
           end
         end
 
-        def handle_html(model, **) = html.call mold.for(model, **)
+        def handle_html(*, **) = html.call mold.for(*, **)
 
-        def handle_unprocessed(model, **) = unprocessed.call mold.for(model, **)
+        def handle_unprocessed(*, **) = unprocessed.call mold.for(*, **)
 
-        def handle_preprocessed(model, **) = preprocessed.call mold.for(model, **)
+        def handle_preprocessed(*, **) = preprocessed.call mold.for(*, **)
 
-        def handle_encoded_data(model, **) = encoded.call mold.for(model, **)
+        def handle_encoded_data(*, **) = encoded.call mold.for(*, **)
       end
     end
   end
