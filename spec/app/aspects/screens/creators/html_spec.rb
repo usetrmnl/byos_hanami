@@ -3,34 +3,19 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Creators::HTML, :db do
+  using Refinements::Struct
+
   subject(:creator) { described_class.new }
+
+  include_context "with screen mold"
 
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    let :content do
-      <<~CONTENT
-        <html>
-          <head>
-            <style>
-              color: black;
-              background-color: black;
-            </style>
-          </head>
-
-          <body>
-            <h1>Test</h1>
-          </body>
-        </html>
-      CONTENT
-    end
-
-    let :payload do
-      Terminus::Aspects::Screens::Creators::Payload[model:, name: "test", label: "Test", content:]
-    end
+    before { mold.merge! model_id: model.id }
 
     it "answers screen" do
-      result = creator.call payload
+      result = creator.call mold
 
       expect(result.success).to have_attributes(
         model_id: model.id,

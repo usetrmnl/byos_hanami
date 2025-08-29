@@ -3,22 +3,23 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Creators::Encoded, :db do
+  using Refinements::Struct
+
   subject(:creator) { described_class.new }
 
-  describe "#call" do
-    let :payload do
-      Terminus::Aspects::Screens::Creators::Payload[
-        model:,
-        name: "test",
-        label: "Test",
-        content: Base64.strict_encode64(SPEC_ROOT.join("support/fixtures/test.png").read)
-      ]
-    end
+  include_context "with temporary directory"
+  include_context "with screen mold"
 
+  describe "#call" do
     let(:model) { Factory[:model] }
 
+    before do
+      mold.merge! model_id: model.id,
+                  content: Base64.strict_encode64(SPEC_ROOT.join("support/fixtures/test.png").read)
+    end
+
     it "answers screen" do
-      result = creator.call payload
+      result = creator.call mold
 
       expect(result.success).to have_attributes(
         model_id: model.id,

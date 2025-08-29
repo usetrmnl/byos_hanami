@@ -14,19 +14,21 @@ module Terminus
           include Dry::Monads[:result]
           include Inspectable[sanitizer: :class]
 
-          def call(payload, &) = Pathname.mktmpdir { process payload, it, & }
+          def call(mold, &) = Pathname.mktmpdir { process mold, it, & }
 
           private
 
-          def process payload, directory
-            sanitizer.call(payload.content)
-                     .then { |content| shoter.call(content, directory.join("input.jpg")) }
-                     .bind { |path| convert payload, path, directory.join(payload.filename) }
-                     .bind { |path| block_given? ? yield(path) : path }
+          def process mold, directory
+            mold.output_path = directory.join mold.filename
+
+            capture_input(mold, directory).bind { converter.call mold }
+                                          .bind { |path| block_given? ? yield(path) : path }
           end
 
-          def convert payload, input_path, output_path
-            converter.call payload.model, input_path, output_path
+          def capture_input mold, directory
+            sanitizer.call(mold.content)
+                     .then { |content| shoter.call content, directory.join("input.png") }
+                     .fmap { |path| mold.input_path = path }
           end
         end
       end

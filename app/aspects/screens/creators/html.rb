@@ -13,13 +13,13 @@ module Terminus
           include Deps["aspects.screens.creators.temp_path", repository: "repositories.screen"]
           include Initable[struct: proc { Terminus::Structs::Screen.new }]
 
-          def call(payload) = temp_path.call(payload) { |path| save payload, path }
+          def call(mold) = temp_path.call(mold) { |path| save mold, path }
 
           private
 
-          def save payload, path
-            path.open { |io| struct.upload io, metadata: {"filename" => payload.filename} }
-            repository.create_with_image payload, struct
+          def save mold, path
+            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
+            repository.create_with_image mold, struct
           end
         end
       end

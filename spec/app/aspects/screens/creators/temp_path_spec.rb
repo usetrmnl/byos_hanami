@@ -3,50 +3,35 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
+  using Refinements::Struct
+
   subject(:creator) { described_class.new }
+
+  include_context "with screen mold"
 
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    let :content do
-      <<~CONTENT
-        <html>
-          <head>
-            <style>
-              color: black;
-              background-color: black;
-            </style>
-          </head>
-
-          <body>
-            <h1>Test</h1>
-          </body>
-        </html>
-      CONTENT
-    end
-
-    let :payload do
-      Terminus::Aspects::Screens::Creators::Payload[model:, name: "test", label: "Test", content:]
-    end
+    before { mold.merge! model_id: model.id }
 
     it "answers path with specific name and extension (without block)" do
-      expect(creator.call(payload).to_s).to match(%r(/test\.png))
+      expect(creator.call(mold).to_s).to match(%r(/test\.png))
     end
 
     it "answers pathname (without block)" do
-      expect(creator.call(payload)).to match(kind_of(Pathname))
+      expect(creator.call(mold)).to match(kind_of(Pathname))
     end
 
     it "answers path with specific name and extension (with block)" do
       capture = nil
-      creator.call(payload) { capture = it.to_s }
+      creator.call(mold) { capture = it.to_s }
 
       expect(capture).to match(%r(/test\.png))
     end
 
     it "answers pathname (with block)" do
       capture = nil
-      creator.call(payload) { capture = it }
+      creator.call(mold) { capture = it }
 
       expect(capture).to match(kind_of(Pathname))
     end

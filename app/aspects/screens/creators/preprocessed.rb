@@ -16,20 +16,20 @@ module Terminus
             super(**)
           end
 
-          def call(payload) = Pathname.mktmpdir { process payload, it }
+          def call(mold) = Pathname.mktmpdir { process mold, it }
 
-          def process payload, directory
+          def process mold, directory
             path = Pathname(directory).join "input.png"
-            mini_magick::Image.open(payload.content).write(path).then { save payload, path }
+            mini_magick::Image.open(mold.content).write(path).then { save mold, path }
           end
 
           private
 
           attr_reader :struct
 
-          def save payload, path
-            path.open { |io| struct.upload io, metadata: {"filename" => payload.filename} }
-            repository.create_with_image payload, struct
+          def save mold, path
+            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
+            repository.create_with_image mold, struct
           end
         end
       end

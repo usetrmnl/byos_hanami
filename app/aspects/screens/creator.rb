@@ -16,7 +16,7 @@ module Terminus
           "aspects.screens.creators.unprocessed",
           model_repository: "repositories.model"
         ]
-        include Initable[payload: Creators::Payload]
+        include Initable[mold: Mold]
 
         def call **parameters
           id = parameters.delete :model_id
@@ -31,22 +31,22 @@ module Terminus
 
         def handle model, parameters
           case parameters
-            in label:, name:, content: then handle_html model:, label:, name:, content:
+            in label:, name:, content: then handle_html model, label:, name:, content:
             in label:, name:, uri:, preprocessed: true
-              handle_preprocessed model:, label:, name:, content: uri
-            in label:, name:, uri: then handle_unprocessed model:, label:, name:, content: uri
-            in label:, name:, data: then handle_encoded_data model:, label:, name:, content: data
+              handle_preprocessed model, label:, name:, content: uri
+            in label:, name:, uri: then handle_unprocessed model, label:, name:, content: uri
+            in label:, name:, data: then handle_encoded_data model, label:, name:, content: data
             else Failure "Invalid parameters: #{parameters.inspect}."
           end
         end
 
-        def handle_html(**) = html.call payload[**]
+        def handle_html(model, **) = html.call mold.for(model, **)
 
-        def handle_unprocessed(**) = unprocessed.call payload[**]
+        def handle_unprocessed(model, **) = unprocessed.call mold.for(model, **)
 
-        def handle_preprocessed(**) = preprocessed.call payload[**]
+        def handle_preprocessed(model, **) = preprocessed.call mold.for(model, **)
 
-        def handle_encoded_data(**) = encoded.call payload[**]
+        def handle_encoded_data(model, **) = encoded.call mold.for(model, **)
       end
     end
   end
