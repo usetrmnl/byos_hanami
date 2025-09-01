@@ -36,10 +36,10 @@ GEM
       rack-test (>= 0.6)
     childprocess (5.1.0)
       logger (~> 1.5)
-    cogger (1.4.0)
+    cogger (1.5.0)
       core (~> 2.0)
       logger (~> 1.7)
-      refinements (~> 13.3)
+      refinements (~> 13.5)
       tone (~> 2.0)
       zeitwerk (~> 2.7)
     concurrent-ruby (1.3.5)
@@ -603,7 +603,7 @@ CHECKSUMS
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   capybara-validate_html5 (2.1.0) sha256=9c5bcac8058f05c8468c0856ccfbf91478e24c7ff07c79b8ac7c64ba9291cf5a
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
-  cogger (1.4.0) sha256=108fff9ece05cee83b650004b56b7e8a3990e40f35540ba24a68ac8add5e593b
+  cogger (1.5.0) sha256=9b372ced53aa22c4faacbf0eb15d60dbc65967f501310883f3b2afd7c9e952da
   concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
   containable (1.3.0) sha256=3128f73e0ca359dbe82b5135d83c227129a4997cb948a7cedba727dcbe5ba227
   content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516

@@ -19,10 +19,7 @@ module Terminus
     register(:sanitizer) { Sanitizer.new }
 
     register :logger do
-      Cogger.add_filter(:api_key)
-            .add_filter(:mac_address)
-            .add_filter(:HTTP_ACCESS_TOKEN)
-            .add_filter(:HTTP_ID)
+      Cogger.add_filters(:api_key, :mac_address, :HTTP_ACCESS_TOKEN, :HTTP_ID)
             .new id: :terminus, formatter: :property
     end
   end
