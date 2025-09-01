@@ -14,8 +14,8 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Encoded, :db do
     let(:model) { Factory[:model] }
 
     before do
-      mold.merge! model_id: model.id,
-                  content: Base64.strict_encode64(SPEC_ROOT.join("support/fixtures/test.png").read)
+      mold.with! model_id: model.id,
+                 content: Base64.strict_encode64(SPEC_ROOT.join("support/fixtures/test.png").read)
     end
 
     it "answers screen" do

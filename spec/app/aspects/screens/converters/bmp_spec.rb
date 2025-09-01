@@ -13,8 +13,8 @@ RSpec.describe Terminus::Aspects::Screens::Converters::BMP do
 
   describe "#call" do
     before do
-      mold.merge! input_path: SPEC_ROOT.join("support/fixtures/test.bmp"),
-                  output_path: temp_dir.join("test.bmp")
+      mold.with! input_path: SPEC_ROOT.join("support/fixtures/test.bmp"),
+                 output_path: temp_dir.join("test.bmp")
     end
 
     it "converts image" do

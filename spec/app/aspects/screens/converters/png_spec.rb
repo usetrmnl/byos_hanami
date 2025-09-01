@@ -13,8 +13,8 @@ RSpec.describe Terminus::Aspects::Screens::Converters::PNG do
 
   describe "#call" do
     before do
-      mold.merge! input_path: SPEC_ROOT.join("support/fixtures/test.png"),
-                  output_path: temp_dir.join("test.png")
+      mold.with! input_path: SPEC_ROOT.join("support/fixtures/test.png"),
+                 output_path: temp_dir.join("test.png")
     end
 
     it "converts to one bit image" do

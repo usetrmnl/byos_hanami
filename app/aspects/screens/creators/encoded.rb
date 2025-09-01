@@ -28,8 +28,8 @@ module Terminus
           attr_reader :decoder, :struct
 
           def process mold, directory
-            mold.merge! input_path: Pathname(directory).join("input.png"),
-                        output_path: directory.join(mold.filename)
+            mold.with! input_path: Pathname(directory).join("input.png"),
+                       output_path: directory.join(mold.filename)
 
             mold.input_path
                 .binwrite(decoder.strict_decode64(mold.content))

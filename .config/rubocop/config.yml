@@ -3,7 +3,6 @@ inherit_gem:
 
 plugins: rubocop-sequel
 
-
 Metrics/AbcSize:
   Exclude:
     - app/aspects/screens/converters/png.rb
@@ -28,10 +27,6 @@ Metrics/ParameterLists:
 RSpec/ExampleLength:
   Exclude:
     - "spec/features/**/*"
-Performance/RedundantMerge:
-  Exclude:
-    - app/aspects/screens/creators/encoded.rb
-    - app/aspects/screens/creators/unprocessed.rb
 RSpec/SpecFilePathFormat:
   CustomTransform:
     Terminus: ""

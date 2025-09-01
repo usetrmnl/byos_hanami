@@ -12,7 +12,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Preprocessed, :db do
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    before { mold.merge! model_id: model.id, content: SPEC_ROOT.join("support/fixtures/test.png") }
+    before { mold.with! model_id: model.id, content: SPEC_ROOT.join("support/fixtures/test.png") }
 
     it "answers screen" do
       result = creator.call mold
