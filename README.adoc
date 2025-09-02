@@ -918,7 +918,7 @@ curl "https://localhost:2443/api/screens" \
 curl -X "POST" "https://localhost:2443/api/screens" \
      -H 'Content-Type: application/json' \
      -d $'{
-  "image": {
+  "screen": {
     "label": "Demo",
     "content": "<h1>Demo</h1>",
     "name": "demo",
@@ -986,7 +986,7 @@ Due to this being so flexible, this also means you can pull in and use our link:
 curl -X "POST" "https://localhost:2443/api/screens" \
      -H 'Content-Type: application/json' \
      -d $'{
-  "image": {
+  "screen": {
     "file_name": "demo.png",
     "label": "Demo",
     "preprocessed": true,
@@ -1008,7 +1008,7 @@ Allows you to render a preprocessed image -- by you -- on your device. The `prep
 curl -X "POST" "https://localhost:2443/api/screens" \
      -H 'Content-Type: application/json' \
      -d $'{
-  "image": {
+  "screen": {
     "file_name": "demo.png",
     "label": "Demo",
     "name": "demo",
@@ -1030,7 +1030,7 @@ Allows you to render a unprocessed image on your device. We'll automatically pro
 curl -X "POST" "https://localhost:2443/api/screens" \
      -H 'Content-Type: application/json' \
      -d $'{
-  "image": {
+  "screen": {
     "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAXNSR0IArs4c6QAAAAtJREFUCFtjYGAAAAADAAHc7H1IAAAAAElFTkSuQmCC",
     "label": "Demo",
     "name": "demo",
@@ -1078,7 +1078,7 @@ No matter what parameters you use for this request, you'll always get a path (un
 curl -X "PATCH" "https://localhost:2443/api/screens/1" \
      -H 'Content-Type: application/json' \
      -d $'{
-  "image": {
+  "screen": {
     "model_id": "1"
     "label": "Demo",
     "name": "demo",
