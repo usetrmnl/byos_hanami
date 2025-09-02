@@ -3,6 +3,9 @@ exclude_paths:
   - vendor
 
 detectors:
+  DataClump:
+    exclude:
+      - Terminus::Aspects::Screens::Shoter
   FeatureEnvy:
     exclude:
       - Terminus::Actions::API::Screens::Create#handle

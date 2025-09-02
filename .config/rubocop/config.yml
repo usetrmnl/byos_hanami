@@ -6,6 +6,7 @@ plugins: rubocop-sequel
 Metrics/AbcSize:
   Exclude:
     - app/aspects/screens/converters/png.rb
+    - app/aspects/screens/shoter.rb
 Metrics/BlockLength:
   Exclude:
     - config/db/migrate/*
@@ -20,6 +21,7 @@ Metrics/MethodLength:
   Exclude:
     - app/aspects/screens/color_mapper.rb
     - app/aspects/screens/converters/png.rb
+    - app/aspects/screens/shoter.rb
     - app/views/helpers.rb
 Metrics/ParameterLists:
   Exclude:
