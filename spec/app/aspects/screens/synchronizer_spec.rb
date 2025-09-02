@@ -48,9 +48,10 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
         label: "Plugin E76a5c",
         name: "plugin-e76a5c",
         image_attributes: {
-          id: /\h{32}\.png/,
+          id: match_md5_checksum(suffix: ".png"),
           metadata: {
             bit_depth: 1,
+            checksum: match_md5_checksum,
             filename: "plugin-e76a5c.png",
             height: 1,
             mime_type: "image/png",
@@ -72,9 +73,10 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
         label: screen.label,
         name: "plugin-e76a5c",
         image_attributes: {
-          id: /\h{32}\.png/,
+          id: match_md5_checksum(suffix: ".png"),
           metadata: {
             bit_depth: 1,
+            checksum: match_md5_checksum,
             filename: "plugin-e76a5c.png",
             height: 1,
             mime_type: "image/png",

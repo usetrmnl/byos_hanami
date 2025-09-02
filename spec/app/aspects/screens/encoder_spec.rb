@@ -12,8 +12,8 @@ RSpec.describe Terminus::Aspects::Screens::Encoder, :db do
     before { path.open { |io| screen.upload io } }
 
     it "answers default image URI" do
-      expect(encrypter.call(screen)).to be_success(
-        filename: "test-1754043010.png",
+      expect(encrypter.call(screen).success).to match(
+        filename: match_md5_checksum(prefix: "test-", suffix: ".png"),
         image_url: "memory://#{screen.image_id}"
       )
     end
@@ -22,7 +22,7 @@ RSpec.describe Terminus::Aspects::Screens::Encoder, :db do
       result = encrypter.call screen, encryption: :base_64
 
       expect(result.success).to match(
-        filename: "test-1754043010.png",
+        filename: match_md5_checksum(prefix: "test-", suffix: ".png"),
         image_url: %r(data:image/png;base64,.+)
       )
     end

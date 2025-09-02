@@ -21,7 +21,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
@@ -38,7 +38,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 10,
@@ -57,7 +57,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
       image_url: %r(data:image/png;base64.+),
       image_url_timeout: 0,
@@ -74,7 +74,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {base_64: true}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
       image_url: %r(data:image/png;base64.+),
       image_url_timeout: 0,
@@ -91,7 +91,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: nil,
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
@@ -107,7 +107,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to include(
-      filename: /terminus_welcome_#{device.friendly_id.downcase}-\d{10}\.png/,
+      filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: nil,
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
