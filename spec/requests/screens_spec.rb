@@ -40,7 +40,7 @@ RSpec.describe "/api/screens", :db do
 
   it "creates image from HTML" do
     post routes.path(:api_screen_create),
-         {image: {model_id: model.id, label: "Test", name: "test", content: "<p>Test</p>"}}.to_json,
+         {screen: {model_id: model.id, label: "Test", name: "test", content: "<p>n/a</p>"}}.to_json,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -64,7 +64,7 @@ RSpec.describe "/api/screens", :db do
 
   it "creates preprocessed image from URI" do
     payload = {
-      image: {
+      screen: {
         model_id: model.id,
         label: "Test",
         name: "test",
@@ -96,7 +96,7 @@ RSpec.describe "/api/screens", :db do
 
   it "creates unprocessed image from URI" do
     payload = {
-      image: {
+      screen: {
         model_id: model.id,
         label: "Test",
         name: "test",
@@ -129,7 +129,7 @@ RSpec.describe "/api/screens", :db do
     data = Base64.strict_encode64 SPEC_ROOT.join("support/fixtures/test.png").read
 
     post routes.path(:api_screen_create),
-         {image: {model_id: model.id, label: "Test", name: "test", data:}}.to_json,
+         {screen: {model_id: model.id, label: "Test", name: "test", data:}}.to_json,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -154,7 +154,7 @@ RSpec.describe "/api/screens", :db do
   context "with unknown model" do
     before do
       post routes.path(:api_screen_create),
-           {image: {model_id: 666, label: "Test", name: "test", content: "<p>Test.</p>"}}.to_json,
+           {screen: {model_id: 666, label: "Test", name: "test", content: "<p>Test.</p>"}}.to_json,
            "CONTENT_TYPE" => "application/json"
     end
 
@@ -183,7 +183,7 @@ RSpec.describe "/api/screens", :db do
 
     before do
       post routes.path(:api_screen_create),
-           {image: {model_id: model.id, label: "Test", name: "test", content: "test"}}.to_json,
+           {screen: {model_id: model.id, label: "Test", name: "test", content: "test"}}.to_json,
            "CONTENT_TYPE" => "application/json"
     end
 
@@ -215,7 +215,7 @@ RSpec.describe "/api/screens", :db do
         status: :unprocessable_entity,
         detail: "Validation failed.",
         instance: "/api/screens",
-        extensions: {errors: {image: ["is missing"]}}
+        extensions: {errors: {screen: ["is missing"]}}
       ]
 
       expect(json_payload).to eq(problem.to_h)
@@ -231,7 +231,7 @@ RSpec.describe "/api/screens", :db do
 
   it "patches screen content" do
     patch routes.path(:api_screen_patch, id: screen.id),
-          {image: {content: "<p>Test</p>"}}.to_json,
+          {screen: {content: "<p>Test</p>"}}.to_json,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -255,7 +255,7 @@ RSpec.describe "/api/screens", :db do
 
   it "patches screen model ID" do
     patch routes.path(:api_screen_patch, id: screen.id),
-          {image: {model_id: model.id}}.to_json,
+          {screen: {model_id: model.id}}.to_json,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -281,7 +281,7 @@ RSpec.describe "/api/screens", :db do
     model = Factory[:model, mime_type: "image/webp"]
 
     patch routes.path(:api_screen_patch, id: screen.id),
-          {image: {model_id: model.id, content: "<h1>Test</h2>"}}.to_json,
+          {screen: {model_id: model.id, content: "<h1>Test</h2>"}}.to_json,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -297,7 +297,7 @@ RSpec.describe "/api/screens", :db do
 
   it "answers problem details when payload has no content" do
     patch routes.path(:api_screen_patch, id: screen.id),
-          {image: {}}.to_json,
+          {screen: {}}.to_json,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -308,7 +308,7 @@ RSpec.describe "/api/screens", :db do
       instance: "/api/screens",
       extensions: {
         errors: {
-          image: ["must be filled"]
+          screen: ["must be filled"]
         }
       }
     ]

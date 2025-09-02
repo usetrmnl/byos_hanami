@@ -22,7 +22,7 @@ module Terminus
           params do
             required(:id).filled(:integer)
 
-            required(:image).filled(:hash) do
+            required(:screen).filled(:hash) do
               optional(:model_id).filled :integer
               optional(:label).filled :string
               optional(:name).filled :string
@@ -35,7 +35,7 @@ module Terminus
             screen = repository.find parameters[:id]
 
             if parameters.valid? && screen
-              process update(screen, parameters[:image]), response
+              process update(screen, parameters[:screen]), response
             else
               unprocessable_entity parameters.errors.to_h, response
             end

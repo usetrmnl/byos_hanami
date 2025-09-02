@@ -20,7 +20,7 @@ module Terminus
           using Refines::Actions::Response
 
           params do
-            required(:image).filled(:hash) do
+            required(:screen).filled(:hash) do
               required(:model_id).filled :integer
               required(:label).filled :string
               required(:name).filled :string
@@ -35,7 +35,7 @@ module Terminus
             parameters = request.params
 
             if parameters.valid?
-              save parameters[:image], response
+              save parameters[:screen], response
             else
               unprocessable_entity_for_parameters parameters.errors.to_h, response
             end
