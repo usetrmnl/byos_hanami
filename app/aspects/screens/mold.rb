@@ -3,6 +3,18 @@
 module Terminus
   module Aspects
     module Screens
+      MOLD_MODEL_KEYS = %i[
+        mime_type
+        bit_depth
+        colors
+        rotation
+        offset_x
+        offset_y
+        width
+        height
+        scale_factor
+      ].freeze
+
       # Defines the mold in which to convert (cast) a screen.
       Mold = Struct.new(
         :model_id,
@@ -18,14 +30,11 @@ module Terminus
         :offset_y,
         :width,
         :height,
+        :scale_factor,
         :input_path,
         :output_path
       ) do
-        def self.for(
-          model,
-          keys: %i[mime_type bit_depth colors rotation offset_x offset_y width height].freeze,
-          **
-        )
+        def self.for(model, keys: MOLD_MODEL_KEYS, **)
           new(model_id: model.id, **model.to_h.slice(*keys), **)
         end
 
@@ -42,6 +51,8 @@ module Terminus
         def image_attributes = {model_id:, name:, label:}
 
         def rotatable? = rotation.positive?
+
+        def viewport = {width:, height:, scale_factor:}
       end
     end
   end
