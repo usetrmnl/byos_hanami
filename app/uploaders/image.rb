@@ -11,6 +11,8 @@ module Terminus
         mini_magick::Image.open(io.path).data["depth"] if io.respond_to? :path
       end
 
+      add_metadata(:checksum) { |io| calculate_signature io, :md5 }
+
       Attacher.validate do
         validate_mime_type %w[image/bmp image/png]
         validate_extension %w[bmp png]

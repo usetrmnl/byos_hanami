@@ -24,6 +24,9 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Exclude:
     - app/aspects/screens/converters/png.rb
+Naming/VariableNumber:
+  AllowedPatterns:
+    - md5
 RSpec/ExampleLength:
   Exclude:
     - "spec/features/**/*"

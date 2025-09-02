@@ -23,6 +23,21 @@ RSpec.describe Terminus::Uploaders::Image do
       expect(attributes[:metadata]).to include(bit_depth: nil)
     end
 
+    it "answers checksum when found" do
+      path = SPEC_ROOT.join "support/fixtures/test.png"
+      path.open { |io| attacher.assign io }
+      attributes = JSON attacher.column_values[nil], symbolize_names: true
+
+      expect(attributes[:metadata]).to include(checksum: match_md5_checksum)
+    end
+
+    it "answers checksum when unknown" do
+      attacher.assign StringIO.new
+      attributes = JSON attacher.column_values[nil], symbolize_names: true
+
+      expect(attributes[:metadata]).to include(checksum: match_md5_checksum)
+    end
+
     it "answers zero errors when valid BMP" do
       path = SPEC_ROOT.join "support/fixtures/test.bmp"
       path.open { |io| attacher.assign io }
