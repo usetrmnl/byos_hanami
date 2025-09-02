@@ -26,9 +26,10 @@ module Terminus
           end
 
           def capture_input mold, directory
-            sanitizer.call(mold.content)
-                     .then { |content| shoter.call content, directory.join("input.png") }
-                     .fmap { |path| mold.input_path = path }
+            content = sanitizer.call mold.content
+
+            shoter.call(content, directory.join("input.png"), viewport: mold.viewport)
+                  .fmap { |path| mold.input_path = path }
           end
         end
       end

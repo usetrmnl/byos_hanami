@@ -12,7 +12,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    before { mold.with! model_id: model.id }
+    before { mold.with! model_id: model.id, scale_factor: 1 }
 
     it "answers path with specific name and extension (without block)" do
       expect(creator.call(mold).to_s).to match(%r(/test\.png))
