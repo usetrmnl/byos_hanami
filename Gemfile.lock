@@ -316,7 +316,7 @@ GEM
     petail (0.5.0)
       rack (>= 2.2, < 4.0)
       rexml (~> 3.4)
-    pg (1.6.1)
+    pg (1.6.2)
     pipeable (1.4.0)
       containable (~> 1.1)
       dry-monads (~> 1.9)
@@ -710,7 +710,7 @@ CHECKSUMS
   parallel (1.27.0) sha256=4ac151e1806b755fb4e2dc2332cbf0e54f2e24ba821ff2d3dcf86bf6dc4ae130
   parser (3.3.9.0) sha256=94d6929354b1a6e3e1f89d79d4d302cc8f5aa814431a6c9c7e0623335d7687f2
   petail (0.5.0) sha256=c4fda0ca64b9338e75739e2cc60258742eb0960dbaddaeb637d3543dc1a10653
-  pg (1.6.1) sha256=e210a75e5f702954537e73bb82f90dfbe0c6d9273c018cd0e93e779181028e6b
+  pg (1.6.2) sha256=58614afd405cc9c2c9e15bffe8432e0d6cfc58b722344ad4a47c73a85189c875
   pipeable (1.4.0) sha256=14719455b4e2d362fa69563265586fedd7191940400d3f32377f0bbcaddc476a
   pp (0.6.2) sha256=947ec3120c6f92195f8ee8aa25a7b2c5297bb106d83b41baa02983686577b6ff
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
