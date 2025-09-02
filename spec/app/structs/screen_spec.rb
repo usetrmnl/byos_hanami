@@ -34,6 +34,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}\.png/,
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           height: 1,
           mime_type: "image/png",
@@ -71,9 +72,9 @@ RSpec.describe Terminus::Structs::Screen, :db do
     end
   end
 
-  describe "#image_name_dated" do
+  describe "#image_name_with_checksum" do
     it "answers name" do
-      expect(screen.image_name_dated).to eq("test-1754043010.png")
+      expect(screen.image_name_with_checksum).to match_md5_checksum(suffix: ".png")
     end
   end
 
@@ -112,6 +113,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}\.png/,
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           height: 1,
           size: 81,
@@ -127,6 +129,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}/,
         metadata: {
           bit_depth: nil,
+          checksum: match_md5_checksum,
           filename: nil,
           height: nil,
           size: 0,
@@ -152,6 +155,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}\.png/,
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           height: 1,
           size: 81,
@@ -170,6 +174,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         storage: "store",
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           size: 81,
           mime_type: "image/png",
@@ -192,6 +197,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}/,
         metadata: {
           bit_depth: nil,
+          checksum: match_md5_checksum,
           filename: nil,
           height: nil,
           size: 0,
@@ -211,6 +217,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}\.png/,
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           height: 1,
           size: 81,
@@ -229,6 +236,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         storage: "store",
         metadata: {
           bit_depth: 1,
+          checksum: match_md5_checksum,
           filename: "test.png",
           size: 81,
           mime_type: "image/png",
@@ -245,6 +253,7 @@ RSpec.describe Terminus::Structs::Screen, :db do
         id: /\h{32}/,
         metadata: {
           bit_depth: nil,
+          checksum: match_md5_checksum,
           filename: nil,
           height: nil,
           size: 0,

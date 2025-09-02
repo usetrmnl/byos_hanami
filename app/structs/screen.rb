@@ -34,10 +34,10 @@ module Terminus
 
       def image_name = image_attributes.dig :metadata, :filename
 
-      def image_name_dated
+      def image_name_with_checksum
         path = Pathname(image_attributes.dig(:metadata, :filename))
         extension = path.extname
-        path.sub_ext("-#{updated_at.to_i}#{extension}").to_s
+        path.sub_ext("-#{image_attributes.dig :metadata, :checksum}#{extension}").to_s
       end
 
       def image_open(**)
