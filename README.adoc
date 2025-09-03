@@ -1291,6 +1291,31 @@ You can also confirm the above changes are applied by running `docker-compose up
 
 Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project.
 
+=== Standalone
+
+Should you not want to use Docker Compose, you can run the Terminus image as a standalone instance. This does mean you've got more work to do but the command would look like this:
+
+[source,bash]
+----
+docker run \
+       --init \
+       --rm \
+       --env-file .env \
+     --publish 2345:2345 \
+       -e DATABASE_URL="postgres://$USER:@host.docker.internal:5432/terminus_production" \
+       terminus
+----
+
+Here's the breakdown of what the above is doing:
+
+- `run`: Allows you to run the Terminus image.
+- `--init`: Ensures program signals are forwarded and processes are reaped (cleaned up) after terminating otherwise you could run out of memory from too many zombie processes.
+- `--rm`: Ensures the container is automatically removed once you are done running Terminus.
+- `--env-file`: Ensures your environment settings are properly picked up from the global `.env` file.
+- `--publish`: Ensures the `DATABASE_URL` (and ports) are mapped for connection on your local network by using the special `host.docker.internal` host.
+
+You might need to customize depending on how you've configured and setup PostgreSQL. Otherwise, using Docker Compose is the recommended route.
+
 === Development
 
 To develop with Docker, you can use the following scripts:
