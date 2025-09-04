@@ -32,14 +32,14 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
     let(:browser) { class_double Ferrum::Browser, new: instance }
 
     it "creates screenshot" do
-      shoter.call content, path
+      shoter.call content, path, width: 800, height: 480
       image = MiniMagick::Image.open path
 
       expect(image).to have_attributes(width: 800, height: 480, type: "JPEG", exif: {})
     end
 
     it "answers image path" do
-      expect(shoter.call(content, path)).to be_success(path)
+      expect(shoter.call(content, path, width: 800, height: 480)).to be_success(path)
     end
 
     context "with browser error" do

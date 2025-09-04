@@ -24,15 +24,13 @@ module Terminus
           js_errors: true
         }.freeze
 
-        VIEWPORT = {width: 800, height: 480}.freeze
-
         def initialize(settings: SETTINGS, browser: Ferrum::Browser, **)
           @settings = settings
           @browser = browser
           super(**)
         end
 
-        def call(content, output_path, viewport: VIEWPORT) = save content, viewport, output_path
+        def call(content, output_path, **viewport) = save content, viewport, output_path
 
         private
 
