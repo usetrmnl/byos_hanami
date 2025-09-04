@@ -277,6 +277,22 @@ RSpec.describe "/api/screens", :db do
     )
   end
 
+  it "answers problem details for invalid model ID" do
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {screen: {model_id: 666, content: "<h1>Test</h2>"}}.to_json,
+          "CONTENT_TYPE" => "application/json"
+
+    problem = Petail[
+      type: "/problem_details#screen_payload",
+      status: 422,
+      title: "Unprocessable Entity",
+      detail: "Unable to find model for ID: 666.",
+      instance: "/api/screens"
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
+  end
+
   it "answers problem details for unsupported model" do
     model = Factory[:model, mime_type: "image/webp"]
 

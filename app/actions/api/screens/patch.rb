@@ -8,6 +8,7 @@ module Terminus
     module API
       module Screens
         # The patch action.
+        # :reek:DataClump
         class Patch < Base
           include Deps[
             "aspects.screens.creators.temp_path",
@@ -35,7 +36,7 @@ module Terminus
             screen = repository.find parameters[:id]
 
             if parameters.valid? && screen
-              process update(screen, parameters[:screen]), response
+              render update(screen, parameters[:screen]), response
             else
               unprocessable_entity parameters.errors.to_h, response
             end
@@ -43,42 +44,48 @@ module Terminus
 
           private
 
-          # :reek:TooManyStatements
-          def update screen, parameters
-            id = screen.id
-
-            if parameters.key? :content
-              temp_path.call build_payload(screen, parameters) do |path|
-                replace path, screen, **parameters
-              end
-            else
-              Success repository.update(id, **parameters)
+          def render result, response
+            case result
+              in Success(update) then response.body = {data: serializer.new(update).to_h}.to_json
+              else unprocessable_entity_on_failure result, response
             end
+          end
+
+          def update screen, parameters
+            if parameters.key? :content
+              merge(screen, parameters).bind { |attributes| build_mold attributes }
+                                       .bind { |instance| screenshot instance, screen, parameters }
+            else
+              Success repository.update(screen.id, **parameters)
+            end
+          end
+
+          def merge screen, parameters
+            Success screen.to_h
+                          .slice(:model_id, :label, :name)
+                          .merge! parameters.slice(:model_id, :label, :name, :content)
+          end
+
+          def build_mold attributes
+            id = attributes[:model_id]
+
+            model_repository.find(id).then do |record|
+              if record
+                Success mold.for(record, **attributes.slice(:label, :name, :content))
+              else
+                Failure "Unable to find model for ID: #{id}."
+              end
+            end
+          end
+
+          def screenshot mold, screen, parameters
+            temp_path.call(mold) { |path| replace path, screen, **parameters }
           end
 
           # :reek:FeatureEnvy
           def replace(path, screen, **)
             path.open { |io| screen.replace io, metadata: {"filename" => path.basename} }
             Success repository.update(screen.id, image_data: screen.image_attributes, **)
-          end
-
-          def build_payload screen, parameters
-            attributes = screen.to_h
-                               .slice(:model_id, :label, :name)
-                               .merge!(parameters.slice(:model_id, :label, :name, :content))
-
-            mold.for(
-              model_repository.find(attributes[:model_id]),
-              **attributes.slice(:label, :name, :content)
-            )
-          end
-
-          def process result, response
-            case result
-              in Success(update)
-                response.body = {data: serializer.new(update).to_h}.to_json
-              else unprocessable_entity_on_failure result, response
-            end
           end
 
           def unprocessable_entity errors, response
