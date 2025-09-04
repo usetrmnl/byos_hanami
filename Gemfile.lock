@@ -268,6 +268,9 @@ GEM
       childprocess (~> 5.0)
       logger (~> 1.6)
     lint_roller (1.1.0)
+    liquid (5.8.7)
+      bigdecimal
+      strscan (>= 3.1.1)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -505,6 +508,7 @@ GEM
       versionaire (~> 14.0)
       zeitwerk (~> 2.7)
     stringio (3.1.7)
+    strscan (3.1.5)
     temple (0.10.4)
     tilt (2.6.1)
     timeout (0.4.3)
@@ -587,6 +591,7 @@ DEPENDENCIES
   irb-kit (~> 1.1)
   jwt (~> 3.1)
   launchy (~> 3.1)
+  liquid (~> 5.8)
   localhost (~> 1.3)
   mail (~> 2.8)
   marcel (~> 1.0)
@@ -708,6 +713,7 @@ CHECKSUMS
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   launchy (3.1.1) sha256=72b847b5cc961589dde2c395af0108c86ff0119f42d4648d25b5440ebb10059e
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
+  liquid (5.8.7) sha256=b14ef9391096783dc187ff59348dffc9d6153840fbc9a811e12f033d066cbbad
   listen (3.9.0) sha256=db9e4424e0e5834480385197c139cb6b0ae0ef28cc13310cfd1ca78377d59c67
   llhttp-ffi (0.5.1) sha256=9a25a7fc19311f691a78c9c0ac0fbf4675adbd0cca74310228fdf841018fa7bc
   localhost (1.6.0) sha256=d99697c6344283d39d8ae8572c22fcd556c95347a30d361594c36846b112fa17
@@ -799,6 +805,7 @@ CHECKSUMS
   sod (1.4.0) sha256=13238af4b50486a68d56e6e106af4e9ba916070d8ca040b55227c14a0a36a700
   spek (4.5.0) sha256=9d11adfad45fc038a1172fdc360c26c622e189c41960a9fd8dd687fb6197c1fe
   stringio (3.1.7) sha256=5b78b7cb242a315fb4fca61a8255d62ec438f58da2b90be66048546ade4507fa
+  strscan (3.1.5) sha256=f8413b90ea9395a69609a4414a8c88551bcda64337e234272c24fcd4c83e5947
   temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
   tilt (2.6.1) sha256=35a99bba2adf7c1e362f5b48f9b581cce4edfba98117e34696dde6d308d84770
   timeout (0.4.3) sha256=9509f079b2b55fe4236d79633bd75e34c1c1e7e3fb4b56cb5fda61f80a0fe30e
