@@ -32,6 +32,11 @@ RSpec.describe Terminus::Views::Helpers do
       expect(helper.field_for(:label, attributes, record)).to eq("Test")
     end
 
+    it "answers formatted Sequel time string when an instance of SQL Time" do
+      record = Data.define(:start_at).new start_at: Sequel::SQLTime.new(2025, 1, 1, 10, 5, 1)
+      expect(helper.field_for(:start_at, attributes, record)).to eq("10:05:01")
+    end
+
     it "answers formatted time string when an instance of Time" do
       record = Data.define(:published_at).new published_at: Time.local(2025, 1, 2, 3, 4)
       expect(helper.field_for(:published_at, attributes, record)).to eq("2025-01-02T03:04")

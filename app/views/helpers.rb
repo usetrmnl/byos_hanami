@@ -24,7 +24,11 @@ module Terminus
 
         value = attributes.fetch_value key, record.public_send(key)
 
-        value.is_a?(Time) ? value.strftime("%Y-%m-%dT%H:%M") : value
+        case value
+          when Sequel::SQLTime then value.strftime("%H:%M:%S")
+          when Time then value.strftime("%Y-%m-%dT%H:%M")
+          else value
+        end
       end
 
       def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
