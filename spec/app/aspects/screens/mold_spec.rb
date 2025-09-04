@@ -22,7 +22,7 @@ RSpec.describe Terminus::Aspects::Screens::Mold do
     ]
   end
 
-  let(:model) { Factory.structs[:model, bit_depth: 1, colors: 2, scale_factor: 1] }
+  let(:model) { Factory.structs[:model, bit_depth: 1, colors: 2] }
 
   describe ".for" do
     it "answers instance with model attributes" do
@@ -36,8 +36,7 @@ RSpec.describe Terminus::Aspects::Screens::Mold do
           offset_x: 0,
           offset_y: 0,
           width: 800,
-          height: 480,
-          scale_factor: 1
+          height: 480
         ]
       )
     end
@@ -55,8 +54,7 @@ RSpec.describe Terminus::Aspects::Screens::Mold do
           offset_x: 0,
           offset_y: 0,
           width: 800,
-          height: 480,
-          scale_factor: 1
+          height: 480
         ]
       )
     end
@@ -122,7 +120,7 @@ RSpec.describe Terminus::Aspects::Screens::Mold do
 
   describe "#viewport" do
     it "answers viewport specific attributes" do
-      viewport = {width: 800, height: 480, scale_factor: 1}
+      viewport = {width: 800, height: 480}
       expect(mold.with(**viewport).viewport).to eq(viewport)
     end
   end

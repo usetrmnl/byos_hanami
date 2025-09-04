@@ -661,4 +661,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250723140455_add_model_detail_columns.rb'),
 ('20250730094230_change_model_scale_factor_to_float.rb'),
 ('20250813132657_add_model_timestamps.rb'),
-('20250821094444_add_model_kind_column.rb');
+('20250821094444_add_model_kind_column.rb'),
+('20250904100039_drop_model_scale_factor.rb');

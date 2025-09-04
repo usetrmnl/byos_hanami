@@ -14,7 +14,6 @@ module Terminus
         mime_type
         colors
         bit_depth
-        scale_factor
         rotation
         offset_x
         offset_y

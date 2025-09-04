@@ -16,7 +16,6 @@ RSpec.describe Terminus::Serializers::Model do
       mime_type: "image/bmp",
       colors: 4,
       bit_depth: 2,
-      scale_factor: 2,
       rotation: 90,
       offset_x: 10,
       offset_y: 15,

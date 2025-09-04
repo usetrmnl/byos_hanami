@@ -12,7 +12,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::HTML, :db do
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    before { mold.with! model_id: model.id, scale_factor: 1 }
+    before { mold.with! model_id: model.id }
 
     it "answers screen" do
       result = creator.call mold

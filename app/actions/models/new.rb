@@ -14,7 +14,6 @@ module Terminus
           mime_type: "image/png",
           colors: 2,
           bit_depth: 1,
-          scale_factor: 1,
           rotation: 0,
           offset_x: 0,
           offset_y: 0,

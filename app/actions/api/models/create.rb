@@ -21,7 +21,6 @@ module Terminus
               optional(:mime_type).filled :string
               optional(:colors).filled :integer
               optional(:bit_depth).filled :integer
-              optional(:scale_factor).filled :integer
               optional(:rotation).filled :integer
               optional(:offset_x).filled :integer
               optional(:offset_y).filled :integer

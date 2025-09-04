@@ -12,7 +12,6 @@ module Terminus
         offset_y
         width
         height
-        scale_factor
       ].freeze
 
       # Defines the mold in which to convert (cast) a screen.
@@ -30,7 +29,6 @@ module Terminus
         :offset_y,
         :width,
         :height,
-        :scale_factor,
         :input_path,
         :output_path
       ) do
@@ -52,7 +50,7 @@ module Terminus
 
         def rotatable? = rotation.positive?
 
-        def viewport = {width:, height:, scale_factor:}
+        def viewport = {width:, height:}
       end
     end
   end
