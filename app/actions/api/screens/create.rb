@@ -9,11 +9,7 @@ module Terminus
       module Screens
         # The create action.
         class Create < Base
-          include Deps[
-            "aspects.screens.creator",
-            model_repository: "repositories.model",
-            repository: "repositories.screen"
-          ]
+          include Deps["aspects.screens.creator", repository: "repositories.screen"]
           include Initable[serializer: Serializers::Screen]
           include Dry::Monads[:result]
 
