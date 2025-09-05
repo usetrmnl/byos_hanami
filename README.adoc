@@ -16,6 +16,7 @@
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
+:render_link: link:https://render.com[Render]
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
@@ -31,6 +32,10 @@ image:https://alchemists.io/images/badges/style.svg[Style, link=https://alchemis
 Terminus is a {ruby_link}/{hanami_link} web server that allows you to manage {trmnl_link} devices running on your own local network or hosted cloud. This is also the flagship BYOS implementation officially supported by {trmnl_link}. For a quick introduction on TRMNL devices, check out the following 9to5Mac overview:
 
 link:https://www.youtube.com/watch?v=BxMRP_ASa-s[image:https://img.youtube.com/vi/BxMRP_ASa-s/maxresdefault.jpg[YouTube Video,width=960,height=540]]
+
+image:https://render.com/images/deploy-to-render-button.svg[Deploy to Render,link=https://render.com/deploy]
+
+Click the above button to immediately to deploy to {render_link}, using the _Free Plan_, as a self-hosted solution.
 
 ⚠️ This is a Beta software as we haven't reached 1.0.0 status as of yet. This means -- while we strive to reduce the number of changes that require effort on your part to a minimum -- there will be times when changes can't be avoided.
 
@@ -86,6 +91,7 @@ The following is a high level overview you can use to compare/contrast when deci
 . {postgres_link} (optional, for development).
 . {hanami_link} (optional, for development).
 . {chrome_link} (optional, for development): For screen generation via the headless browser.
+. {overmind_link} (optional, for development): Uses your `Procfile` to launch all processes.
 . A {trmnl_link} device (can use a virtual device too).
 
 == Quick Start
