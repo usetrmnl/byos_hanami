@@ -33,6 +33,8 @@ link:https://www.youtube.com/watch?v=BxMRP_ASa-s[image:https://img.youtube.com/v
 
 ⚠️ This is a Beta software as we haven't reached 1.0.0 status as of yet. This means -- while we strive to reduce the number of changes that require effort on your part to a minimum -- there will be times when changes can't be avoided.
 
+image:https://render.com/images/deploy-to-render-button.svg[Deploy to Render,link=https://render.com/deploy]
+
 toc::[]
 
 == Features
