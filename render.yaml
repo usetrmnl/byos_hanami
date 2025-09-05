@@ -1,0 +1,23 @@
+databases:
+  - name: terminus
+    plan: free
+    databaseName: terminus
+    postgresMajorVersion: 17
+    user: terminus
+
+services:
+  - type: web
+    name: terminus
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /up
+    runtime: docker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: terminus
+          property: connectionString
+      - key: API_URI
+        value: $RENDER_EXTERNAL_URL
+      - key: HANAMI_PORT
+        value: 10000
