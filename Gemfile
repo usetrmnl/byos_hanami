@@ -29,7 +29,7 @@ gem "overmind", "~> 2.5"
 gem "petail", "~> 0.3"
 gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 1.2"
-gem "puma", "~> 6.6"
+gem "puma", "~> 7.0"
 gem "rack-attack", "~> 6.7"
 gem "refinements", "~> 13.0"
 gem "rom", "~> 5.4"
