@@ -5,13 +5,13 @@
 }
 
 .bit-popover-content {
-  &::backdrop {
-    backdrop-filter: brightness(60%);
-  }
-
   border-radius: 0.5rem;
   padding: 2rem;
   max-width: calc(100vw - 20%);
+
+  &::backdrop {
+    backdrop-filter: brightness(60%);
+  }
 
   .label {
     text-align: center;

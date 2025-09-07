@@ -37,7 +37,6 @@
   }
 
   .source {
-    box-sizing: border-box;
     height: 40vh;
     padding: 1rem;
     width: 100%;

@@ -1,24 +1,39 @@
-:where(html, body) {
-  overscroll-behavior: none;
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(html) {
+    interpolate-size: allow-keywords;
+  }
 }
 
 :where(html) {
   accent-color: var(--site-red);
   background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
   font-family: var(--site-font-family);
+  line-height: 1.5;
+  overscroll-behavior: none;
   scrollbar-color: var(--site-white) var(--site-red);
+  scrollbar-gutter: stable;
   text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
-}
-
-:where(body) {
-  margin: 0;
-  padding: 0;
 
   ::selection {
     background-color: var(--site-orange);
     color: var(--site-white);
   }
+}
+
+:where(audio, iframe, img, svg, video) {
+  max-block-size: 100%;
+  max-inline-size: 100%;
+}
+
+:where(button, input, select, textarea) {
+  font: inherit;
 }
 
 :where(a) {
@@ -29,6 +44,12 @@
     text-decoration: underline;
     text-underline-position: under;
   }
+}
+
+:where(abbr[title]) {
+  cursor: help;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
 }
 
 :where(code) {
@@ -47,12 +68,21 @@
   margin-block-start: 0px;
 }
 
+:where(h1, h2, h3, h4, h5, h6, p) {
+  overflow-wrap: break-word;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
+}
+
 :where(h1, h2) {
   font-weight: 400;
   font-size: 2.75em;
 }
 
 :where(img) {
+  display: block;
   height: auto;
   max-width: 100%;
   object-fit: cover;
@@ -70,10 +100,17 @@
   white-space: nowrap;
 }
 
+:where(label):has(+:where(textarea, input, select)) {
+  display: block;
+}
+
+:where(p) {
+  text-wrap: pretty;
+}
+
 :where(pre:not([class^=language])) {
   background-color: var(--site-black);
   color: var(--site-white);
-  line-height: 1.5rem;
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   white-space: pre-wrap;
@@ -87,6 +124,10 @@
 
 :where(table) {
   width: 100%;
+}
+
+:where(textarea:not([rows])) {
+  min-block-size: 6em;
 }
 
 :where(thead) {

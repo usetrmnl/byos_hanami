@@ -23,7 +23,6 @@
   .value {
     background-color: oklch(from var(--site-lightgrey) l c h / 0.3);
     border-radius: 0rem 0.5rem 0.5rem 0;
-    line-height: 1.5rem;
     font-weight: 350;
   }
 }
