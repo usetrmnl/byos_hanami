@@ -22,16 +22,25 @@ module Terminus
 
     config.inflections { it.acronym "BMP", "HTML", "IP", "PNG" }
 
+    config.actions.content_security_policy.then do |csp|
+      csp[:manifest_src] = "'self'"
+      csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://unpkg.com/"
+    end
+
     config.actions
           .formats
           .add(:all, "application/octet-stream")
           .add(:all, "*/*")
           .add :problem_details, Petail::MEDIA_TYPE_JSON
 
-    config.actions.content_security_policy.then do |csp|
-      csp[:manifest_src] = "'self'"
-      csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://unpkg.com/"
-    end
+    # rubocop:todo Layout/FirstArrayElementLineBreak
+    config.actions.sessions = :cookie,
+                              {
+                                key: "terminus.session",
+                                secret: settings.app_secret,
+                                expire_after: 3_600 # 1 hour.
+                              }
+    # rubocop:enable Layout/FirstArrayElementLineBreak
 
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
