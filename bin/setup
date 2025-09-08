@@ -14,7 +14,6 @@ TEMPLATES_ROOT="$PROJECT_ROOT/.config/setup"
 create_global_environment() {
   local template_path="$TEMPLATES_ROOT/.env.tt"
   local output_path="$PROJECT_ROOT/.env"
-  local password="$((RANDOM * RANDOM * RANDOM))"
 
   if [[ -f "$output_path" ]]; then
     printf "%s\n" ".env exists. Skipped."
@@ -23,7 +22,12 @@ create_global_environment() {
 
   printf "%s\n" "Creating .env..."
   cp "$template_path" "$output_path"
+
+  password="$(head -c 40 /dev/urandom | uuencode -m -r -)"
   sed -i.tmp "s|<password>|$password|g" "$output_path" && rm "$output_path.tmp"
+
+  secret="$(head -c 40 /dev/urandom | uuencode -m -r -)"
+  sed -i.tmp "s|<secret>|$secret|g" "$output_path" && rm "$output_path.tmp"
 }
 
 # Label: Create Development Environment
