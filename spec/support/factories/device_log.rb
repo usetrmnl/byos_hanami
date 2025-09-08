@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Factory.define :device_log do |factory|
+Factory.define :device_log, relation: :device_log do |factory|
   factory.association :device
   factory.sequence(:external_id) { it }
   factory.message "Danger!"

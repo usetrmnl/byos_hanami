@@ -3,7 +3,7 @@
 module Terminus
   module Repositories
     # The device log repository.
-    class DeviceLog < DB::Repository[:device_logs]
+    class DeviceLog < DB::Repository[:device_log]
       commands :create, delete: :by_pk
 
       commands update: :by_pk,
@@ -11,28 +11,28 @@ module Terminus
                plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
-        device_logs.combine(:device)
-                   .order { created_at.desc }
-                   .to_a
+        device_log.combine(:device)
+                  .order { created_at.desc }
+                  .to_a
       end
 
-      def find(id) = (device_logs.combine(:device).by_pk(id).one if id)
+      def find(id) = (device_log.combine(:device).by_pk(id).one if id)
 
-      def delete_by_device(device_id, id) = device_logs.where(device_id:, id:).delete
+      def delete_by_device(device_id, id) = device_log.where(device_id:, id:).delete
 
-      def delete_all_by_device(device_id) = device_logs.where(device_id:).command(:delete).call
+      def delete_all_by_device(device_id) = device_log.where(device_id:).command(:delete).call
 
       def search(key, value, **)
-        device_logs.where(**)
-                   .where(Sequel.ilike(key, "%#{value}%"))
-                   .order { created_at.asc }
-                   .to_a
+        device_log.where(**)
+                  .where(Sequel.ilike(key, "%#{value}%"))
+                  .order { created_at.asc }
+                  .to_a
       end
 
       def where(**)
-        device_logs.where(**)
-                   .order { created_at.desc }
-                   .to_a
+        device_log.where(**)
+                  .order { created_at.desc }
+                  .to_a
       end
     end
   end

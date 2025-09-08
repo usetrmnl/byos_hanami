@@ -8,7 +8,7 @@ module Terminus
         associations do
           belongs_to :model, relation: :model
           belongs_to :playlist, relation: :playlist
-          has_many :device_logs, as: :logs
+          has_many :device_logs, relation: :device_log, as: :logs
         end
       end
     end
