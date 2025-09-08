@@ -7,6 +7,7 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
   subject(:shoter) { described_class.new }
 
   include_context "with temporary directory"
+  include_context "with application dependencies"
   include_context "with library dependencies"
 
   describe "#call" do
@@ -72,11 +73,6 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
         allow(instance).to receive(:create_page).and_raise(Ferrum::DeadBrowserError, "Danger!")
       end
 
-      it "quits browser instance" do
-        shoter.call content, path
-        expect(instance).to have_received(:quit)
-      end
-
       it "logs debug message" do
         shoter.call content, path
         expect(logger.reread).to match(/DEBUG.+Screen shoter has dead browser: Danger!/)
@@ -94,23 +90,34 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
     context "with timeout error" do
       subject(:shoter) { described_class.new browser: }
 
-      before { allow(instance).to receive(:create_page).and_raise(Ferrum::TimeoutError) }
-
-      it "answers failure" do
-        expect(shoter.call(content, path)).to be_failure(
-          "Unable to capture screenshot due to timming out while waiting for response. " \
-          "This might have happened due to the page taking a long time to load."
-        )
-      end
-
-      it "logs debug message" do
+      it "doesn't quit browser when nil" do
+        allow(browser).to receive(:new).and_raise(Ferrum::TimeoutError)
         shoter.call content, path
-        expect(logger.reread).to match(/DEBUG.+Screen shoter has timeout.+/)
+
+        expect(instance).not_to have_received(:quit)
       end
 
       it "quits browser instance" do
+        allow(instance).to receive(:create_page).and_raise(Ferrum::TimeoutError)
         shoter.call content, path
+
         expect(instance).to have_received(:quit)
+      end
+
+      it "logs debug message" do
+        allow(instance).to receive(:create_page).and_raise(Ferrum::TimeoutError)
+        shoter.call content, path
+
+        expect(logger.reread).to match(/DEBUG.+Screen shoter has timeout.+/)
+      end
+
+      it "answers failure" do
+        allow(instance).to receive(:create_page).and_raise(Ferrum::TimeoutError)
+
+        expect(shoter.call(content, path)).to be_failure(
+          "Unable to capture screenshot due to timming out after 0 seconds. " \
+          "This might have happened due to the page taking a long time to load."
+        )
       end
     end
 
@@ -139,18 +146,7 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
     end
 
     context "with processing timeout error" do
-      subject(:shoter) { described_class.new browser: }
-
-      before do
-        allow(instance).to receive(:create_page).and_raise(
-          Ferrum::ProcessTimeoutError.new(1, "n/a")
-        )
-      end
-
-      it "quits browser instance" do
-        shoter.call content, path
-        expect(instance).to have_received(:quit)
-      end
+      before { allow(settings).to receive(:browser).and_return({process_timeout: 0.01}) }
 
       it "logs debug message" do
         shoter.call content, path
@@ -160,7 +156,7 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
       it "answers failure" do
         expect(shoter.call(content, path)).to be_failure(
           "Unable to capture screenshot because the browser could not produce a " \
-          "websocket URL within the expected amount of time."
+          "websocket URL within 0.01 seconds."
         )
       end
     end
