@@ -9,6 +9,13 @@ module Terminus
   module Types
     include Dry.Types(default: :strict)
 
+    Browser = Types::JSON::Hash.constructor(-> value { JSON value, symbolize_names: true })
+                               .schema(
+                                 js_errors?: Types::Bool,
+                                 process_timeout?: Types::Float,
+                                 timeout?: Types::Float
+                               )
+
     Pathname = Constructor ::Pathname
 
     MACAddress = String.constrained(
