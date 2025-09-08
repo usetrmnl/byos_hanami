@@ -3,31 +3,31 @@
 require "dry/monads"
 require "ferrum"
 require "refinements/pathname"
+require "refinements/string"
 
 module Terminus
   module Aspects
     module Screens
       # Saves web page as screenshot.
       class Shoter
+        include Deps[:settings]
         include Dependencies[:logger]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
+        using Refinements::String
 
-        SETTINGS = {
-          browser_options: {
-            "disable-dev-shm-usage" => nil,
-            "disable-gpu" => nil,
-            "hide-scrollbar" => nil,
-            "no-sandbox" => nil
-          },
-          js_errors: true
+        OPTIONS = {
+          "disable-dev-shm-usage" => nil,
+          "disable-gpu" => nil,
+          "hide-scrollbar" => nil,
+          "no-sandbox" => nil
         }.freeze
 
-        def initialize(settings: SETTINGS, browser: Ferrum::Browser, **)
-          @settings = settings
-          @browser = browser
+        def initialize(browser: Ferrum::Browser, options: OPTIONS, **)
           super(**)
+          @browser = browser
+          @settings = settings.browser.merge! browser_options: options
         end
 
         def call(content, output_path, **viewport) = save content, viewport, output_path
@@ -50,11 +50,10 @@ module Terminus
 
           Success output_path
         rescue Ferrum::BrowserError => error then handle_browser_error instance, error
-        rescue Ferrum::DeadBrowserError => error then handle_dead_browser_error instance, error
+        rescue Ferrum::DeadBrowserError => error then handle_dead_browser_error error
         rescue Ferrum::TimeoutError => error then handle_timeout_error instance, error
         rescue Ferrum::NoSuchTargetError => error then handle_no_such_target_error instance, error
-        rescue Ferrum::ProcessTimeoutError => error
-          handle_process_timeout_error instance, error
+        rescue Ferrum::ProcessTimeoutError => error then handle_process_timeout_error error
         end
 
         def handle_browser_error instance, error
@@ -65,8 +64,7 @@ module Terminus
                   "page navigation, element interaction, or something else."
         end
 
-        def handle_dead_browser_error instance, error
-          instance.quit
+        def handle_dead_browser_error error
           logger.debug { "Screen shoter has dead browser: #{error.message}" }
 
           Failure "Unable to capture screenshot due to a dead browser. " \
@@ -75,11 +73,14 @@ module Terminus
         end
 
         def handle_timeout_error instance, error
-          instance.quit
+          instance.quit if instance
           logger.debug { "Screen shoter has timeout: #{error.message}" }
 
-          Failure "Unable to capture screenshot due to timming out while waiting for response. " \
-                  "This might have happened due to the page taking a long time to load."
+          seconds = settings.fetch :timeout, 0
+
+          Failure "Unable to capture screenshot due to timming out after " \
+                  + %(#{seconds} #{"second".pluralize "s"}. ) \
+                  + "This might have happened due to the page taking a long time to load."
         end
 
         def handle_no_such_target_error instance, error
@@ -88,12 +89,13 @@ module Terminus
           Failure "Unable to capture screenshot because the page closed or crashed."
         end
 
-        def handle_process_timeout_error instance, error
-          instance.quit
+        def handle_process_timeout_error error
           logger.debug { "Screen shoter has process timeout: #{error.message}" }
 
+          seconds = settings.fetch :process_timeout, 0
+
           Failure "Unable to capture screenshot because the browser could not produce a " \
-                  "websocket URL within the expected amount of time."
+                  + %(websocket URL within #{seconds} #{"second".pluralize "s"}.)
         end
       end
     end
