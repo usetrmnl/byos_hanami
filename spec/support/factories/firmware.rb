@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Factory.define :firmware do |factory|
+Factory.define :firmware, relation: :firmware do |factory|
   factory.version "0.0.0"
 
   factory.trait :with_attachment do |trait|
