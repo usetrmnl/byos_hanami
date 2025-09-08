@@ -368,6 +368,11 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     rexml (3.4.4)
+    roda (3.96.0)
+      rack
+    rodauth (2.40.0)
+      roda (>= 2.6.0)
+      sequel (>= 4)
     rom (5.4.2)
       rom-changeset (~> 5.4)
       rom-core (~> 5.4)
@@ -583,6 +588,7 @@ DEPENDENCIES
   refinements (~> 13.0)
   repl_type_completor (~> 0.1)
   rerun (~> 0.14)
+  rodauth (~> 2.40)
   rom (~> 5.4)
   rom-factory (~> 0.13)
   rom-sql (~> 3.7)
@@ -742,6 +748,8 @@ CHECKSUMS
   repl_type_completor (0.1.11) sha256=d302df8892a7f5992ca97df6943b5e44bdc94479caa65e34f812a26b669b624c
   rerun (0.14.0) sha256=996a5af2b2b34dcb30146c6c728addab9113e07c119003370daa9bf27feb88fd
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
+  roda (3.96.0) sha256=e89397269a2713c3ce8e95156c7579309e514e808dc124b50657c7bdadff90df
+  rodauth (2.40.0) sha256=b0877c80616cea6d76cc4ac0c0d8afd52a2a9794be96a391637955d3589e00f6
   rom (5.4.2) sha256=a8085e9018104f00b0af6ece68160a2241b60bdb45968bc7b104c79b80cdfd9d
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
   rom-core (5.4.0) sha256=a08264e40892cf86a57e32f6c09803b30e4fb3b1da86a64d41e71d92575df08f

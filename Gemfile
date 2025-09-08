@@ -34,13 +34,13 @@ gem "pipeable", "~> 1.2"
 gem "puma", "~> 7.0"
 gem "rack-attack", "~> 6.7"
 gem "refinements", "~> 13.0"
+gem "rodauth", "~> 2.40"
 gem "rom", "~> 5.4"
 gem "rom-sql", "~> 3.7"
 gem "sanitize", "~> 7.0"
 gem "sequel", "~> 5.89"
 gem "shrine", "~> 3.6"
 gem "trmnl-api", "~> 0.5"
-
 gem "versionaire", "~> 14.1"
 
 group :quality do
