@@ -9,6 +9,10 @@ RSpec.shared_context "with application dependencies" do
   let(:json_payload) { JSON last_response.body, symbolize_names: true }
 
   before do
-    allow(settings).to receive_messages(api_uri: "https://localhost", color_maps_root: temp_dir)
+    allow(settings).to receive_messages(
+      api_uri: "https://localhost",
+      browser: {},
+      color_maps_root: temp_dir
+    )
   end
 end
