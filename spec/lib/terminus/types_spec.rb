@@ -5,6 +5,38 @@ require "hanami_helper"
 RSpec.describe Terminus::Types do
   using Versionaire::Cast
 
+  describe "Browser" do
+    subject(:type) { described_class::Browser }
+
+    let(:settings) { {js_errors: true, process_timeout: 1.0, timeout: 2.0} }
+
+    it "answers primitive" do
+      expect(type.primitive).to eq(Hash)
+    end
+
+    it "answers valid settings" do
+      expect(type.call(settings.to_json)).to eq(settings)
+    end
+
+    it "answers defaults when empty" do
+      expect(type.call("{}")).to eq({})
+    end
+
+    it "ignores unknown settings" do
+      expect(type.call({timeout: 1.0, bogus: true}.to_json)).to eq(timeout: 1.0)
+    end
+
+    it "fails when unable to parse" do
+      expectation = proc { type.call "" }
+      expect(&expectation).to raise_error(JSON::ParserError, /unexpected end of input/)
+    end
+
+    it "fails with invalid type" do
+      expectation = proc { type.call %({"timeout": "danger!"}) }
+      expect(&expectation).to raise_error(Dry::Types::SchemaError, /invalid type/)
+    end
+  end
+
   describe "Pathname" do
     subject(:type) { described_class::Pathname }
 
