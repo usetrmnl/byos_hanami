@@ -14,10 +14,9 @@ module Terminus
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/assets/color_maps")
 
-    setting :browser, constructor: Terminus::Types::Browser, default: {js_errors: true}.to_json
-
-    setting :firmware_poller, constructor: Types::Params::Bool, default: true
-    setting :model_poller, constructor: Types::Params::Bool, default: true
-    setting :screen_poller, constructor: Types::Params::Bool, default: true
+    setting :browser, constructor: Terminus::Types::Browser, default: "{}"
+    setting :firmware_poller, constructor: Types::Bool, default: true
+    setting :model_poller, constructor: Types::Bool, default: true
+    setting :screen_poller, constructor: Types::Bool, default: true
   end
 end

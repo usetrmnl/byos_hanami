@@ -19,11 +19,13 @@ RSpec.describe Terminus::Types do
     end
 
     it "answers defaults when empty" do
-      expect(type.call("{}")).to eq({})
+      expect(type.call("{}")).to eq(js_errors: true, process_timeout: 10, timeout: 10)
     end
 
     it "ignores unknown settings" do
-      expect(type.call({timeout: 1.0, bogus: true}.to_json)).to eq(timeout: 1.0)
+      expect(type.call({bogus: true}.to_json)).to eq(
+        js_errors: true, process_timeout: 10, timeout: 10
+      )
     end
 
     it "fails when unable to parse" do

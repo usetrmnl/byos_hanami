@@ -11,9 +11,9 @@ module Terminus
 
     Browser = Types::JSON::Hash.constructor(-> value { JSON value, symbolize_names: true })
                                .schema(
-                                 js_errors?: Types::Bool,
-                                 process_timeout?: Types::Float,
-                                 timeout?: Types::Float
+                                 js_errors: Types::Bool.default(true),
+                                 process_timeout: (Types::Integer | Types::Float).default(10),
+                                 timeout: (Types::Integer | Types::Float).default(10)
                                )
 
     Pathname = Constructor ::Pathname
