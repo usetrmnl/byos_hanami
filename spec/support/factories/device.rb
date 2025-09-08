@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Factory.define :device do |factory|
+Factory.define :device, relation: :device do |factory|
   factory.association :model
 
   factory.friendly_id "ABC123"

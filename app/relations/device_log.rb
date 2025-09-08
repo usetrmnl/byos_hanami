@@ -5,7 +5,7 @@ module Terminus
     # The device log relation.
     class DeviceLog < DB::Relation
       schema :device_logs, infer: true do
-        associations { belongs_to :device }
+        associations { belongs_to :device, relation: :device }
       end
     end
   end

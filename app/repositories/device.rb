@@ -3,7 +3,7 @@
 module Terminus
   module Repositories
     # The device repository.
-    class Device < DB::Repository[:devices]
+    class Device < DB::Repository[:device]
       commands :create, delete: :by_pk
 
       commands update: :by_pk,
@@ -20,13 +20,13 @@ module Terminus
       def find_by(**) = with_associations.where(**).one
 
       def mirror_playlist ids, playlist_id
-        devices.update playlist_id: Sequel.case({{id: ids} => playlist_id}, nil)
+        device.update playlist_id: Sequel.case({{id: ids} => playlist_id}, nil)
       end
 
       def search key, value
-        devices.where(Sequel.ilike(key, "%#{value}%"))
-               .order { created_at.asc }
-               .to_a
+        device.where(Sequel.ilike(key, "%#{value}%"))
+              .order { created_at.asc }
+              .to_a
       end
 
       def update_by_mac_address(value, **attributes)
@@ -46,7 +46,7 @@ module Terminus
 
       private
 
-      def with_associations = devices.combine :model, :playlist
+      def with_associations = device.combine :model, :playlist
     end
   end
 end

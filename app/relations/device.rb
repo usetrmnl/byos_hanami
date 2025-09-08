@@ -4,7 +4,7 @@ module Terminus
   module Relations
     # The device relation.
     class Device < DB::Relation
-      schema :devices, infer: true do
+      schema :device, infer: true do
         associations do
           belongs_to :model, relation: :model
           belongs_to :playlist, relation: :playlist

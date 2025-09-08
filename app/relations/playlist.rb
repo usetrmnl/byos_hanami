@@ -7,7 +7,7 @@ module Terminus
       schema :playlist, infer: true do
         associations do
           belongs_to :current_item, relation: :playlist_item
-          has_many :devices
+          has_many :devices, relation: :device
         end
       end
     end
