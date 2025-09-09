@@ -14,6 +14,7 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
                           name: "test",
                           label: "Test",
                           description: "A test.",
+                          kind: "core",
                           colors: 3,
                           bit_depth: 5,
                           rotation: 90,
