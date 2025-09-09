@@ -8,7 +8,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
 
   include_context "with library dependencies"
 
-  let(:model) { Factory[:model, width: 1, height: 1] }
+  let(:model) { Factory[:model, kind: "trmnl", width: 1, height: 1] }
   let(:downloader) { instance_double Terminus::Downloader, call: response }
 
   let :response do
@@ -39,7 +39,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
 
   describe "#call" do
     it "creates new record with attachment" do
-      model_repository = instance_spy Terminus::Repositories::Model, find_by_dimensions: model
+      model_repository = instance_spy Terminus::Repositories::Model, find_by: model
       synchronizer = described_class.new(downloader:, model_repository:)
       response = synchronizer.call(display).success
 

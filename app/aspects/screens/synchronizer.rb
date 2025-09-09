@@ -68,10 +68,7 @@ module Terminus
             if screen
               update screen, struct
             else
-              metadata = struct.image_attributes.fetch :metadata, Dry::Core::EMPTY_HASH
-              model = model_repository.find_by_dimensions(**metadata.slice(:width, :height))
-
-              create pathname.name.to_s, struct, model
+              create pathname.name.to_s, struct, find_model(struct)
             end
           end
         end
@@ -92,6 +89,11 @@ module Terminus
 
         def update screen, struct
           Success screen_repository.update screen.id, image_data: struct.image_attributes
+        end
+
+        def find_model struct
+          metadata = struct.image_attributes.fetch :metadata, Dry::Core::EMPTY_HASH
+          model_repository.find_by kind: "trmnl", **metadata.slice(:bit_depth, :width, :height)
         end
 
         def create name, struct, model
