@@ -25,11 +25,6 @@ module Terminus
         model.where(key => value).one.then { |record| record || create(name: value, **) }
       end
 
-      # FIX: Remove once the Core Models API can differentiate between company and community models.
-      def find_by_dimensions width:, height:
-        (find_by(name: "og_png", width:, height:) if width == 800)
-      end
-
       def search key, value
         model.where(Sequel.ilike(key, "%#{value}%"))
              .order { created_at.asc }

@@ -88,24 +88,6 @@ RSpec.describe Terminus::Repositories::Model, :db do
     end
   end
 
-  describe "#find_by_dimensions" do
-    let(:model) { Factory[:model, name: "og_png", width: 800, height: 480] }
-
-    before { model }
-
-    it "answers record when found by known width" do
-      expect(repository.find_by_dimensions(width: 800, height: 480)).to eq(model)
-    end
-
-    it "answers nil when width doesn't match" do
-      expect(repository.find_by_dimensions(width: 13, height: 480)).to be(nil)
-    end
-
-    it "answers nil when height doesn't match" do
-      expect(repository.find_by_dimensions(width: 800, height: 13)).to be(nil)
-    end
-  end
-
   describe "#search" do
     let(:model) { Factory[:model, label: "Test"] }
 
