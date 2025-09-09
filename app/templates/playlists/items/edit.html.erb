@@ -3,6 +3,8 @@
 <% update_uri = routes.path(:playlist_item_update, playlist_id: item.playlist_id, id: item.id) %>
 
 <form action="<%= edit_uri %>" method="put" class="bit-form">
+  <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
   <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">

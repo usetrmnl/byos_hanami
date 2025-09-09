@@ -33,7 +33,7 @@ RSpec.describe "Models", :db do
     model = Factory[:model]
 
     visit routes.path(:models)
-    accept_prompt { click_link "Delete" }
+    accept_prompt { click_button "Delete" }
 
     expect(page).to have_no_content(model.label)
   end

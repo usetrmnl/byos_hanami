@@ -1,5 +1,4 @@
 <% edit_uri = routes.path :playlist_item_edit, playlist_id: item.playlist_id, id: item.id %>
-<% delete_uri = routes.path :playlist_item_delete, playlist_id: item.playlist_id, id: item.id %>
 
 <div class="item">
   <%= render "shared/screen", uri: item.screen.image_uri %>
@@ -12,13 +11,9 @@
       Edit
     </a>
 
-    <a href="<%= delete_uri %>"
-       class="bit-link-cancel"
-       hx-delete="<%= delete_uri %>"
-       hx-confirm="Are you sure you want to delete this item?"
-       hx-target="closest .item"
-       hx-swap="outerHTML">
-      Delete
-    </a>
+    <%= render "shared/delete",
+               path: routes.path(:playlist_item_delete, playlist_id: item.playlist_id, id: item.id),
+               confirm: "Are you sure you want to delete this item?",
+               target: "closest .item" %>
   </div>
 </div>

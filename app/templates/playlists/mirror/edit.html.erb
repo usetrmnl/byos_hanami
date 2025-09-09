@@ -21,6 +21,8 @@
             method="put"
             class="bit-card bit-form playlist">
 
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <h1 class="label">Mirror <%= playlist.label %></h1>
 
         <p class="description">

@@ -19,14 +19,13 @@
                  pick: ".bit-container",
                  target: "next .bit-container" %>
 
-      <a href="<%= routes.path :bulk_device_logs_delete, device_id: device.id %>"
-         class="bit-button-danger"
-         hx-delete="/bulk/devices/<%= device.id %>/logs"
-         hx-confirm="Are you sure you want to delete all logs for this device?"
-         hx-target=".bit-container"
-         hx-swap="swap:0.5s">
-        Delete All
-      </a>
+
+      <%= render "shared/delete",
+                 path: routes.path(:bulk_device_logs_delete, device_id: device.id),
+                 label: "Delete All",
+                 class: "bit-button-danger",
+                 confirm: "Are you sure you want to delete all logs for this device?",
+                 target: ".bit-container" %>
     </div>
   </header>
 

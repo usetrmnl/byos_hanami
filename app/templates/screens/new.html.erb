@@ -11,6 +11,8 @@
   <div class="bit-body">
     <div class="screens">
       <form action="/screens" method="post" class="bit-card bit-form screen">
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <h1 class="label">New Screen</h1>
 
         <%= render :fields, models:, screen:, fields: fields.value, errors: %>

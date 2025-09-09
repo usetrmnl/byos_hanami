@@ -11,6 +11,8 @@
   <div class="bit-body">
     <div class="models">
       <form action="/models" method="post" class="bit-card bit-form model">
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <h1 class="label">New Model</h1>
 
         <%= render :fields, model:, fields: fields.value, errors: %>

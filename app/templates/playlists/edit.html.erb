@@ -21,6 +21,8 @@
             method="put"
             class="bit-form">
 
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <h1 class="label">Edit Playlist</h1>
 
         <%= render :fields, playlist:, fields: fields.value, errors: %>

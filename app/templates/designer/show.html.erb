@@ -31,8 +31,10 @@
     </figure>
 
     <form action="/designer" method="post" class="form">
+      <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
       <%= tag.input name: "template[name]", type: :hidden, value: name %>
       <%= tag.input name: "template[label]", type: :hidden, value: label %>
+
       <textarea name="template[content]"
                 class="source"
                 hx-post="/designer"

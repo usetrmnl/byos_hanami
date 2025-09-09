@@ -1,6 +1,8 @@
 <% new_uri = routes.path :playlist_item_new, playlist_id: playlist.id %>
 
 <form action="<%= new_uri %>" method="post" class="bit-form" hx-ext="remove">
+  <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
   <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">

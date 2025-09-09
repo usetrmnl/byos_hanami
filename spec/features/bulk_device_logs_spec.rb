@@ -8,7 +8,7 @@ RSpec.describe "Bulk Device Logs", :db do
   it "deletes all device logs", :js do
     log
     visit routes.path(:device_logs, device_id: log.device_id)
-    accept_prompt { click_link "Delete All" }
+    accept_prompt { click_button "Delete All" }
 
     expect(page).to have_content("No logs found.")
   end

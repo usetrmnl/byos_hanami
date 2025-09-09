@@ -17,6 +17,8 @@
             method="post"
             class="bit-card bit-form playlist">
 
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <h1 class="label">New Playlist</h1>
 
         <%= render :fields, playlist:, fields: fields.value, errors: %>

@@ -24,6 +24,8 @@
       <%= render "measurements", device: %>
 
       <form action="/devices" method="put" class="bit-form">
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
         <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>
 
         <div class="form-actions">

@@ -36,7 +36,7 @@ RSpec.describe "Screens", :db do
     screen = Factory[:screen]
 
     visit routes.path(:screens)
-    accept_prompt { click_link "Delete" }
+    accept_prompt { click_button "Delete" }
 
     expect(page).to have_no_content(screen.label)
   end
