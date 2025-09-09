@@ -35,3 +35,16 @@
     text-decoration: none;
   }
 }
+
+.bit-button-delete {
+  background: none;
+  border: none;
+  color: var(--site-red);
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+}
