@@ -14,9 +14,11 @@ module Terminus
           super(**)
         end
 
-        private
+        protected
 
         attr_reader :problem
+
+        def verify_csrf_token?(*) = false
       end
     end
   end
