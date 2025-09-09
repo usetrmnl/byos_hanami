@@ -9,7 +9,12 @@ module Terminus
       class Model < Hanami::View::Part
         def dimensions = "#{width}x#{height}"
 
-        def kind_label = kind.capitalize
+        def kind_label
+          case kind
+            when "byod", "trmnl" then kind.upcase
+            else kind.capitalize
+          end
+        end
 
         def type = mime_type ? mime_type.delete_prefix("image/").upcase : "Unknown"
       end

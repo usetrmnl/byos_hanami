@@ -32,6 +32,22 @@ RSpec.describe Terminus::Views::Parts::Model do
     it "answers capitalized label" do
       expect(part.kind_label).to eq("Terminus")
     end
+
+    context "with byod" do
+      let(:model) { Factory.structs[:model, kind: "byod"] }
+
+      it "answers upcase" do
+        expect(part.kind_label).to eq("BYOD")
+      end
+    end
+
+    context "with trmnl" do
+      let(:model) { Factory.structs[:model, kind: "trmnl"] }
+
+      it "answers upcase" do
+        expect(part.kind_label).to eq("TRMNL")
+      end
+    end
   end
 
   describe "#type" do
