@@ -31,12 +31,12 @@ module Terminus
         def upsert payload
           payload.each do |item|
             attributes = item.to_h
-            record = repository.find_by name: item.name, kind: "core"
+            record = repository.find_by name: item.name
 
             if record
-              repository.update record.id, kind: "core", **attributes
+              repository.update(record.id, **attributes)
             else
-              repository.create kind: "core", **attributes
+              repository.create(**attributes)
             end
           end
         end
