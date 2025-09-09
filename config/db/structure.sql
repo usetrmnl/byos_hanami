@@ -33,7 +33,10 @@ CREATE TYPE public.firmware_kind_enum AS ENUM (
 
 CREATE TYPE public.model_kind_enum AS ENUM (
     'terminus',
-    'core'
+    'core',
+    'byod',
+    'kindle',
+    'trmnl'
 );
 
 
@@ -235,7 +238,6 @@ CREATE TABLE public.model (
     mime_type text DEFAULT 'image/png'::text NOT NULL,
     colors integer DEFAULT 2 NOT NULL,
     bit_depth integer DEFAULT 1 NOT NULL,
-    scale_factor double precision DEFAULT 1 NOT NULL,
     rotation integer DEFAULT 0 NOT NULL,
     offset_x integer DEFAULT 0 NOT NULL,
     offset_y integer DEFAULT 0 NOT NULL,
@@ -665,4 +667,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250904100039_drop_model_scale_factor.rb'),
 ('20250908152041_rename_devices.rb'),
 ('20250908153411_rename_firmwares.rb'),
-('20250908153842_rename_device_logs.rb');
+('20250908153842_rename_device_logs.rb'),
+('20250909142527_alter_model_kinds.rb');
