@@ -11,6 +11,7 @@ Metrics/BlockLength:
   Exclude:
     - config/db/migrate/*
     - slices/authentication/feature.rb
+    - slices/authentication/middleware.rb
 Metrics/CyclomaticComplexity:
   AllowedMethods:
     - battery_percentage
