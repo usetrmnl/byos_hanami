@@ -1259,31 +1259,39 @@ Continue reading to learn more.
 
 === Setup
 
-Please ensure your have read and followed all xref:_setup[Setup] steps.
+To get setup, run:
+
+[source,]
+----
+git clone https://github.com/usetrmnl/byos_hanami terminus
+cd terminus
+bin/setup docker
+----
 
 === Configuration
 
-Please ensure your have read and customized (optional) your xref:_configuration[Configuration] as necessary.
+You'll want to customize the environment variables in `.env` so your device can connect to your Docker service. Here's a few examples:
+
+[source,bash]
+----
+# With specific IP address and port.
+HANAMI_PORT=2300
+API_URI=http://192.168.1.1
+
+# With hostname.
+API_URI=https://terminus.demo.io
+----
+
+You'll also want ensure your credentials are secure as well.
 
 === Compose
 
-You can use {docker_compose_link} to quickly launch the entire stack for development or production environments.
+Use {docker_compose_link} to quickly launch the entire stack for development or production environments. Example:
 
-To start, you'll want to customize your `API_URI` environment variable so the URI points to the server from where you are running the full stack. This is important because the API IP address shown via the Dashboard page will only show the URI of your Docker image/container which devices can't connect to. You can fix by adding updating your `HANAMI_PORT` and `API_URI` in the environment section. Here's a few examples:
-
-[source,yaml]
+[source,bash]
 ----
-# With specific IP address.
-environment:
-  HANAMI_PORT=2300
-  API_URI: http://192.168.1.1:$HANAMI_PORT
-
-# With hostname.
-environment:
-  API_URI: https://terminus.demo.io
+docker-compose up
 ----
-
-You can also confirm the above changes are applied by running `docker-compose up` and viewing the Dashboard (look for the API IP address).
 
 Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project.
 
