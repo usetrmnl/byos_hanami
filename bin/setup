@@ -23,10 +23,10 @@ create_global_environment() {
   printf "%s\n" "Creating .env..."
   cp "$template_path" "$output_path"
 
-  password="$(head -c 40 /dev/urandom | uuencode -m -r -)"
+  password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
   sed -i.tmp "s|<password>|$password|g" "$output_path" && rm "$output_path.tmp"
 
-  secret="$(head -c 40 /dev/urandom | uuencode -m -r -)"
+  secret="$((RANDOM * RANDOM * RANDOM * RANDOM))"
   sed -i.tmp "s|<secret>|$secret|g" "$output_path" && rm "$output_path.tmp"
 }
 
@@ -111,12 +111,21 @@ prepare_database() {
   bundle exec hanami db prepare
 }
 
-printf "%s\n\n" "Setting up Terminus..."
-create_global_environment
-create_development_environment
-create_test_environment
-create_development_procfile
-create_docker_compose_development_configuration
-install_gems
-install_packages
-prepare_database
+if [[ "${1:-}" == "docker" ]]; then
+  printf "%s\n" "Setting up Docker..."
+  create_global_environment
+else
+  printf "%s\n\n" "Setting up Terminus..."
+
+  create_global_environment
+  create_development_environment
+  create_test_environment
+  create_development_procfile
+  create_docker_compose_development_configuration
+  install_gems
+  install_packages
+  prepare_database
+fi
+
+printf "%s\n" "Setup complete!"
+printf "%s\n" "Please review the generated .env settings and make them unique for your environment."
