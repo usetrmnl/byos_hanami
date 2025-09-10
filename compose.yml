@@ -8,6 +8,7 @@ services:
     environment:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
+      APP_SECRET: ${APP_SECRET}
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
     ports:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
