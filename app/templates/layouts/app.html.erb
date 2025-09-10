@@ -14,20 +14,14 @@
     <meta name="htmx-config" content='{"selfRequestsOnly":true}'>
     <meta name="view-transition" content="same-origin">
 
-    <link title="Terminus: Favicon"
-          rel="icon"
-          href="https://usetrmnl.com/favicon.ico"
-          sizes="32x32">
-
     <%= tag.link title: "Terminus: Icon",
                  rel: :icon,
                  href: assets["logo/salmon.svg"],
                  type: "image/svg+xml" %>
 
-    <link title="Terminus: Apple Icon"
-          rel="apple-touch-icon"
-          href="https://usetrmnl.com/images/brand/icon--brand.png"
-          type="image/png">
+    <%= tag.link title: "Terminus: Apple Icon",
+                 rel: "apple-touch-icon",
+                 href: assets["logo/apple.png"] %>
 
     <%= tag.link title: "Terminus: Manifest",
                  rel: :manifest,
