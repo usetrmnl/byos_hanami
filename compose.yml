@@ -3,8 +3,7 @@ name: "terminus"
 services:
   web:
     init: true
-    build:
-      context: .
+    image: ghcr.io/usetrmnl/terminus:latest
     environment:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
