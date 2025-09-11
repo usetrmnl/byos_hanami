@@ -9,6 +9,34 @@ SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_ROOT/.." && pwd)"
 TEMPLATES_ROOT="$PROJECT_ROOT/.config/setup"
 
+# Label: Find Linux IP Address
+# Description: Finds current machine's first IP address.
+find_linux_ip_address() {
+  ip route get 1 2>/dev/null | awk '{print $7; exit}'
+}
+
+# Label: Find macOS IP Address
+# Description: Finds current machine's first IP address.
+find_mac_ip_address() {
+  ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null
+}
+
+# Label: Find IP Address
+# Description: Automatically finds local IP address of current machine.
+find_ip_address() {
+  case "$(uname)" in
+    Linux*)
+      find_linux_ip_address
+      ;;
+    Darwin*)
+      find_mac_ip_address
+      ;;
+    *)
+      return
+      ;;
+  esac
+}
+
 # Label: Create Global Environment
 # Description: Create global environment.
 create_global_environment() {
@@ -22,6 +50,15 @@ create_global_environment() {
 
   printf "%s\n" "Creating .env..."
   cp "$template_path" "$output_path"
+
+  ip_address="$(find_ip_address)"
+
+  if [[ -n "$ip_address" ]]; then
+    sed -i.tmp "s|localhost|$ip_address|g" "$output_path" && rm "$output_path.tmp"
+  else
+    read -r -p "Please enter the IP address of your machine (example: 192.168.0.25): " response
+    sed -i.tmp "s|localhost|$response|g" "$output_path" && rm "$output_path.tmp"
+  fi
 
   password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
   sed -i.tmp "s|<password>|$password|g" "$output_path" && rm "$output_path.tmp"
@@ -128,4 +165,3 @@ else
 fi
 
 printf "%s\n" "Setup complete!"
-printf "%s\n" "Please review the generated .env settings and make them unique for your environment."
