@@ -1,0 +1,945 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:core_link: link:https://usetrmnl.com[Core]
+:image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
+:petail_link: link:https://alchemists.io/projects/petail[Petail]
+:trmnl_firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[TRMNL Firmware]
+
+= API
+
+The API is divided into two categories: Firmware and Server. The former is more stable and mimics what we use on the {core_link} server. The latter is still in development and is unique to Terminus only. The following sections detail each.
+
+toc::[]
+
+== Firmware
+
+The following endpoints are used to communicate with your device's {trmnl_firmware_link}. These endpoints typically require authentication via the HTTP `ID` header which is your device's MAC address. Any changes to these endpoints require updates to both the firmware and this implementation so they don't change often.
+
+=== Display
+
+Used for displaying new content to your device. Your device's refresh rate determines how often this occurs.
+
+.Request
+[%collapsible]
+====
+*Without Base64 Encryption*
+
+[source,bash]
+----
+curl "https://localhost:2443/api/display" \
+     -H 'ID: <redacted>' \
+     -H 'Content-Type: application/json'
+----
+
+*With Base64 Encryption via HTTP Header*
+
+[source,bash]
+----
+curl "https://localhost:2443/api/display" \
+     -H 'ID: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -H 'BASE64: true'
+----
+
+*With Base64 Encryption via Parameter*
+
+[source,bash]
+----
+curl "https://localhost:2443/api/display?base_64=true" \
+     -H 'ID: <redacted>' \
+     -H 'Content-Type: application/json'
+----
+
+Only the `ID` HTTP header is required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
+
+* `ACCESS_TOKEN`: Can be the API key or an empty string.
+* `BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
+* `FW_VERSION`: The firmware version (i.e. `1.2.3`).
+* `HOST`: The host (usually the IP address).
+* `REFRESH_RATE`: The refresh rate as saved on the device. Example: 100.
+* `RSSI`: The signal strength (usually -100 to 100).
+* `USER_AGENT`: The device name.
+* `WIDTH`: The device width. Example: 800.
+* `HEIGHT`: :The device height. Example: 480.
+====
+
+.Response
+[%collapsible]
+====
+*Without Base64 Encryption*
+[source,json]
+----
+{
+  "filename": "demo.bmp",
+  "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
+  "image_url": "https://localhost:2443/assets/screens/A1B2C3D4E5F6/demo.bmp",
+  "image_url_timeout": 0,
+  "refresh_rate": 130,
+  "reset_firmware": false,
+  "special_function": "sleep",
+  "update_firmware": false
+}
+----
+
+*With Base64 Encryption*
+
+[source,json]
+----
+{
+  "filename": "demo.bmp",
+  "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
+  "image_url": "data:image/bmp;base64,<truncated>",
+  "image_url_timeout": 0,
+  "refresh_rate": 200,
+  "reset_firmware": false,
+  "special_function": "sleep",
+  "update_firmware": false
+}
+----
+====
+
+=== Log
+
+Used by device firmware to log information about your device. Mostly used for debugging purposes. You can find device specific logs within the UI by clicking on your device logs.
+
+.Request
+[%collapsible]
+====
+[source,bash]
+----
+## Log
+curl -X "POST" "https://localhost:2443/api/log" \
+     -H 'ID: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "logs": [
+    {
+      "id": 666,
+      "message": "An API test.",
+      "wifi_status": "connected",
+      "created_at": 1742022124,
+      "sleep_duration": 31,
+      "refresh_rate": 30,
+      "free_heap_size": 160656,
+      "max_alloc_size": 180000,
+      "source_path": "src/bl.cpp",
+      "wake_reason": "timer",
+      "firmware_version": "1.5.2",
+      "retry": 1,
+      "battery_voltage": 4.772,
+      "source_line": 597,
+      "special_function": "none",
+      "wifi_signal": -54
+    }
+  ]
+}'
+----
+====
+
+.Response
+[%collapsible]
+====
+Logs details and answers a HTTP 204 status with no content.
+====
+
+=== Setup
+
+Used for new device setup and then never used after.
+
+.Request
+[%collapsible]
+====
+[source,bash]
+----
+curl "https://localhost:2443/api/setup/" \
+     -H 'ID: <redacted>' \
+     -H 'Content-Type: application/json'
+----
+====
+
+.Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "api_key": "<redacted>",
+  "friendly_id": "ABC123",
+  "image_url": "https://localhost:2443/assets/setup.bmp",
+  "message": "Welcome to TRMNL BYOS"
+}
+----
+====
+
+== Server
+
+⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware there might be action on your part when new changes are released.*
+
+The following endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. Most of these endpoints require an HTTP `Access-Token` header which is your device's API key.
+
+These endpoints are faster to change/update since they won't break any communication with your device. Any/all error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which also means you can use Petail to easily parse the error responses in your own application if desired.
+
+=== Devices
+
+Allows you to manage your devices.
+
+.GET Request
+[%collapsible]
+====
+[source,bash]
+----
+# All devices.
+curl "https://localhost:2443/api/devices" \
+     -H 'Content-Type: application/json'
+
+# Single device.
+curl "https://localhost:2443/api/devices/1" \
+     -H 'Content-Type: application/json'
+----
+====
+
+.GET Response
+[%collapsible]
+====
+[source,json]
+----
+# All devices.
+{
+  "data": [
+    {
+      "id": 1,
+      "model_id": 1,
+      "playlist_id": 1,
+      "friendly_id": "DEMO11",
+      "label": "Demo",
+      "mac_address": "A1:B2:C3:D4:E5:F6",
+      "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+      "firmware_version": "1.5.12",
+      "firmware_beta": false,
+      "wifi": -71,
+      "battery": 4.0,
+      "refresh_rate": 500,
+      "image_timeout": 0,
+      "width": 800,
+      "height": 480,
+      "proxy": true,
+      "firmware_update": true,
+      "sleep_start_at": "22:30:00",
+      "sleep_stop_at": "05:30:00",
+      "created_at": "2025-07-29T16:19:05+0000",
+      "updated_at": "2025-07-29T16:19:05+0000"
+    }
+  ]
+}
+
+# Single device.
+{
+  "data": {
+    "id": 1,
+    "model_id": 1,
+    "playlist_id": 1,
+    "friendly_id": "DEMO11",
+    "label": "Demo",
+    "mac_address": "A1:B2:C3:D4:E5:F6",
+    "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+    "firmware_version": "1.5.12",
+    "firmware_beta": false,
+    "wifi": -71,
+    "battery": 4.0,
+    "refresh_rate": 500,
+    "image_timeout": 0,
+    "width": 800,
+    "height": 480,
+    "proxy": true,
+    "firmware_update": true,
+    "sleep_start_at": "22:30:00",
+    "sleep_stop_at": "05:30:00",
+    "created_at": "2025-07-29T16:19:05+0000",
+    "updated_at": "2025-07-29T16:19:05+0000"
+  }
+}
+----
+
+You'll get an empty array when no devices exist.
+====
+
+.POST Request
+[%collapsible]
+====
+[source,bash]
+----
+# Minimum
+curl -X "POST" "https://localhost:2443/api/devices" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "device": {
+    "label": "Demo",
+    "model_id": 1,
+    "mac_address": "A1:B2:C3:D4:E5:F6"
+  }
+}'
+----
+
+[source,bash]
+----
+# Maximum (all possible fields)
+curl -X "POST" "https://localhost:2443/api/devices" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "device": {
+    "model_id": 1,
+    "playlist_id": null,
+    "label": "Demo",
+    "friendly_id": "DEMO11",
+    "mac_address": "A1:B2:C3:D4:E5:F6",
+    "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+    "refresh_rate": "500",
+    "image_timeout": "0",
+    "firmware_beta": false,
+    "firmware_update": true,
+    "proxy": true,
+    "sleep_start_at": "23:00:00",
+    "sleep_stop_at": "06:00:00"
+  }
+}'
+----
+
+====
+
+.POST Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 1,
+    "model_id": 1,
+    "playlist_id": 1,
+    "friendly_id": "DEMO11",
+    "label": "Demo",
+    "mac_address": "A1:B2:C3:D4:E5:F6",
+    "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+    "firmware_version": "1.5.12",
+    "firmware_beta": false,
+    "wifi": -71,
+    "battery": 4.0,
+    "refresh_rate": 500,
+    "image_timeout": 0,
+    "width": 800,
+    "height": 480,
+    "proxy": true,
+    "firmware_update": true,
+    "sleep_start_at": "22:30:00",
+    "sleep_stop_at": "05:30:00",
+    "created_at": "2025-07-29T16:19:05+0000",
+    "updated_at": "2025-07-29T16:19:05+0000"
+  }
+}
+----
+====
+
+.PATCH Request
+[%collapsible]
+====
+[source,bash]
+----
+## Devices (patch)
+curl -X "PATCH" "https://localhost:2443/api/devices/1" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "device": {
+    "refresh_rate": 250
+  }
+}'
+----
+
+You you change a single attribute or multiple attributes at once.
+====
+
+.PATCH Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 1,
+    "model_id": 1,
+    "playlist_id": 3,
+    "friendly_id": "DEMO11",
+    "label": "Demo",
+    "mac_address": "A1:B2:C3:D4:E5:F6",
+    "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+    "firmware_version": "1.5.12",
+    "firmware_beta": false,
+    "wifi": -71,
+    "battery": 4.0,
+    "refresh_rate": 250,
+    "image_timeout": 0,
+    "width": 800,
+    "height": 480,
+    "proxy": true,
+    "firmware_update": true,
+    "sleep_start_at": "22:30:00",
+    "sleep_stop_at": "05:30:00",
+    "created_at": "2025-07-29T16:19:05+0000",
+    "updated_at": "2025-07-29T16:19:05+0000"
+  }
+}
+----
+====
+
+.DELETE Request
+[%collapsible]
+====
+[source,bash]
+----
+## Devices (delete)
+curl -X "DELETE" "https://localhost:2443/api/devices/1" \
+     -H 'Content-Type: application/json' \
+     -d $'{}'
+----
+====
+
+.DELETE Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 1,
+    "model_id": 1,
+    "playlist_id": 3,
+    "friendly_id": "DEMO11",
+    "label": "Demo",
+    "mac_address": "A1:B2:C3:D4:E5:F6",
+    "api_key": "OScdcN0kFbKjFcid9Kz6Cx",
+    "firmware_version": "1.5.12",
+    "firmware_beta": false,
+    "wifi": -71,
+    "battery": 4.0,
+    "refresh_rate": 500,
+    "image_timeout": 0,
+    "width": 800,
+    "height": 480,
+    "proxy": true,
+    "firmware_update": true,
+    "sleep_start_at": "22:30:00",
+    "sleep_stop_at": "05:30:00",
+    "created_at": "2025-07-29T16:19:05+0000",
+    "updated_at": "2025-07-29T16:19:05+0000"
+  }
+}
+----
+
+You'll get an empty hash when there is nothing to delete.
+====
+
+=== Models
+
+Provides model information which is the core specification for devices and screens. Models are also differentiated by `kind` which can be:
+
+* `core`: Originates from our {core_link} server and is part of the synchronization process provided by the model link:/doc/background_pollers.adoc[Background Pollers].
+* `terminus`: Originates from Terminus only.
+
+.GET Request
+[%collapsible]
+====
+[source,bash]
+----
+# All models.
+curl "https://localhost:2443/api/models" \
+     -H 'Content-Type: application/json'
+
+# Single model.
+curl "https://localhost:2443/api/models/1" \
+     -H 'Content-Type: application/json'
+----
+====
+
+.GET Response
+[%collapsible]
+====
+[source,json]
+----
+# All models.
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "og_png",
+      "label": "TRMNL (1-bit)",
+      "description": "TRMNL (1-bit)",
+      "kind": "terminus",
+      "mime_type": "image/png",
+      "colors": 2,
+      "bit_depth": 1,
+      "rotation": 0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "width": 800,
+      "height": 480,
+      "published_at": "2024-01-01T00:00:00+0000",
+      "created_at": "2025-08-13T19:34:08+0000",
+      "updated_at": "2025-08-13T19:34:08+0000"
+    }
+  ]
+}
+
+# Single model.
+{
+  "data": {
+    "id": 1,
+    "name": "og_png",
+    "label": "TRMNL (1-bit)",
+    "description": "TRMNL (1-bit)",
+    "kind": "terminus",
+    "mime_type": "image/png",
+    "colors": 2,
+    "bit_depth": 1,
+    "rotation": 0,
+    "offset_x": 0,
+    "offset_y": 0,
+    "width": 800,
+    "height": 480,
+    "published_at": "2024-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:34:08+0000",
+    "updated_at": "2025-08-13T19:34:08+0000"
+  }
+}
+----
+
+You'll get an empty array when no models exist.
+====
+
+.POST Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/models" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "model": {
+    "name": "demo",
+    "label": "Demo",
+    "description": "A demonstration.",
+    "kind": "terminus",
+    "rotation": 25,
+    "width": "1000",
+    "colors": 4,
+    "mime_type": "image/png",
+    "bit_depth": 2,
+    "offset_x": 50,
+    "height": "500",
+    "offset_y": 100,
+    "published_at": "2025-01-01T00:00:00+00:00",
+    "created_at": "2025-08-13T19:34:08+0000",
+    "updated_at": "2025-08-13T19:34:08+0000"
+  }
+}'
+----
+====
+
+.POST Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 12,
+    "name": "demo",
+    "label": "Demo",
+    "description": "A demonstration.",
+    "kind": "terminus",
+    "mime_type": "image/png",
+    "colors": 4,
+    "bit_depth": 2,
+    "rotation": 25,
+    "offset_x": 50,
+    "offset_y": 100,
+    "width": 1000,
+    "height": 500,
+    "published_at": "2025-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:42:06+0000",
+    "updated_at": "2025-08-13T19:42:06+0000"
+  }
+}
+----
+====
+
+.PATCH Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PUT" "https://localhost:2443/api/models/12" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "model": {
+    "description": "A patch demonstration."
+  }
+}'
+----
+
+You you change a single attribute or multiple attributes at once.
+====
+
+.PATCH Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 12,
+    "name": "demo",
+    "label": "Demo",
+    "description": "A patch demonstration.",
+    "kind": "terminus",
+    "mime_type": "image/png",
+    "colors": 4,
+    "bit_depth": 2,
+    "rotation": 25,
+    "offset_x": 50,
+    "offset_y": 100,
+    "width": 1000,
+    "height": 500,
+    "published_at": "2025-01-01T00:00:00+0000",
+    "created_at": "2025-08-13T19:42:06+0000",
+    "updated_at": "2025-08-13T19:42:31+0000"
+  }
+}
+----
+====
+
+.DELETE Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "DELETE" "https://localhost:2443/api/models/2" \
+     -H 'Content-Type: application/json' \
+     -d $'{}'
+----
+====
+
+.DELETE Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 12,
+    "name": "demo",
+    "label": "Demo",
+    "description": "A patch demonstration.",
+    "kind": "terminus",
+    "width": 1000,
+    "height": 500,
+    "published_at": "2025-01-01 00:00:00 UTC",
+    "mime_type": "image/png",
+    "colors": 4,
+    "bit_depth": 2,
+    "rotation": 25,
+    "offset_x": 50,
+    "offset_y": 100,
+    "created_at": "2025-08-13 19:42:06 UTC",
+    "updated_at": "2025-08-13 19:42:31 UTC"
+  }
+}
+----
+
+You'll get an empty hash when there is nothing to delete.
+====
+
+=== Screens
+
+Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
+
+When making requests, the `Access-Token` is your device's API key. You can obtain this information from within the UI for your specific device.
+
+.GET Request
+[%collapsible]
+====
+[source,bash]
+----
+curl "https://localhost:2443/api/screens" \
+     -H 'Content-Type: application/json'
+----
+====
+
+.GET Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": [
+    {
+      "id": 3,
+      "model_id": 1,
+      "label": "Moon",
+      "name": "plugin-6e6740",
+      "created_at": "2025-07-29T16:29:02+0000",
+      "updated_at": "2025-07-29T16:29:02+0000",
+      "filename": "plugin-6e6740.bmp",
+      "mime_type": "image/bmp",
+      "bit_depth": 1,
+      "width": 800,
+      "height": 480,
+      "size": 48062,
+      "uri": "/uploads/9fb384c1aa9043ccfee781ab21d99aa0.bmp"
+    }
+  ]
+}
+----
+====
+
+.POST Request (HTML Content)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "label": "Demo",
+    "content": "<h1>Demo</h1>",
+    "name": "demo",
+    "file_name": "demo.png",
+    "model_id": "1"
+  }
+}'
+----
+
+Allows you to render custom HTML content as an image on your device. Full HTML is supported so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
+
+[source,css]
+----
+* {
+  margin: 0;
+}
+----
+
+Here's a more complete example using CSS and HTML that you can supply via the API request:
+
+[source,html]
+----
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <title>Demo</title>
+
+    <meta charset="utf-8">
+
+    <style type="text/css">
+      * {
+        margin: 0;
+      }
+    </style>
+
+    <script type="text/javascript">
+    </script>
+  </head>
+
+  <body>
+    <img src="uri/to/image" alt="Image"/>
+  </body>
+</html>
+----
+
+Due to this being so flexible, this also means you can pull in and use our link:https://usetrmnl.com/framework[Design Framework] when building custom screens by linking to the following:
+
+* Plugins
+** link:https://usetrmnl.com/css/latest/plugins.css[Stylesheet]
+** link:https://usetrmnl.com/js/latest/plugins.js[JavaScript]
+* Components
+** link:https://usetrmnl.com/js/latest/trmnl-component.js[JavaScript]
+
+💡 You can use the Designer within the UI to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
+====
+
+.POST Request (Preprocessed URI)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "file_name": "demo.png",
+    "label": "Demo",
+    "preprocessed": true,
+    "name": "demo",
+    "uri": "https://leonardo.ai/wp-content/uploads/2023/07/image-131.jpeg",
+    "model_id": "1"
+  }
+}'
+----
+
+Allows you to render a preprocessed image -- by you -- on your device. The `preprocessed` value must be `true` when supplied. This assumes the URI you want have rendered on your device is fully compatible with the device in terms of greyscale, bit depth, color depth, and so forth. We _do not process this image_ and only cache the image locally for display on your device. I you want want your image processed then see the Unprocessed URI API Request example.
+====
+
+.POST Request (Unprocessed URI)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "file_name": "demo.png",
+    "label": "Demo",
+    "name": "demo",
+    "uri": "https://leonardo.ai/wp-content/uploads/2023/07/image-131.jpeg",
+    "model_id": "1"
+  }
+}'
+----
+
+Allows you to render a unprocessed image on your device. We'll automatically process the image for rendering on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
+====
+
+.POST Request (Base64 Encoded Data)
+[%collapsible]
+====
+
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAXNSR0IArs4c6QAAAAtJREFUCFtjYGAAAAADAAHc7H1IAAAAAElFTkSuQmCC",
+    "label": "Demo",
+    "name": "demo",
+    "file_name": "demo.png",
+    "model_id": "1"
+  }
+}'
+----
+
+Allows you to render a strictly Base64 encoded image on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
+====
+
+.POST Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 13,
+    "model_id": 1,
+    "label": "Demo",
+    "name": "demo",
+    "created_at": "2025-07-29T19:06:04+0000",
+    "updated_at": "2025-07-29T19:06:04+0000",
+    "filename": "demo.png",
+    "mime_type": "image/png",
+    "bit_depth": 1,
+    "width": 800,
+    "height": 480,
+    "size": 415,
+    "uri": "/uploads/619415a00830fa630649706977e95302.png"
+  }
+}
+----
+
+No matter what parameters you use for this request, you'll always get a path (unless an error is encountered).
+====
+
+.PATCH Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "model_id": "1"
+    "label": "Demo",
+    "name": "demo",
+    "content": "<h1>Demo</h1>"
+  }
+}'
+----
+
+Unlike the POST request, only HTML content is supported at the moment.
+
+All of the above attributes are optional which means you can update only the attribute you care about or multiple attributes at once. At least one attribute must be supplied, though.
+====
+
+.PATCH Response
+[%collapsible]
+====
+[source,bash]
+----
+{
+  "data": {
+    "id": 1,
+    "model_id": 1,
+    "label": "Demo",
+    "name": "demo",
+    "created_at": "2025-08-12T19:23:17+0000",
+    "updated_at": "2025-08-12T19:23:17+0000",
+    "filename": "demo.png",
+    "mime_type": "image/png",
+    "bit_depth": 1,
+    "width": 800,
+    "height": 480,
+    "size": 462,
+    "uri": "/uploads/71d0f2ec47b861ea8fe7807705d6e87b.png"
+  }
+}
+----
+====
+
+.DELETE Request
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "DELETE" "https://localhost:2443/api/screens/13" \
+     -H 'Content-Type: application/json'
+----
+====
+
+.DELETE Response
+[%collapsible]
+====
+[source,json]
+----
+{
+  "data": {
+    "id": 13,
+    "model_id": 1,
+    "label": "Demo",
+    "name": "demo",
+    "created_at": "2025-07-29T19:11:04+0000",
+    "updated_at": "2025-07-29T19:11:04+0000",
+    "filename": "demo.png",
+    "mime_type": "image/png",
+    "bit_depth": 1,
+    "width": 800,
+    "height": 480,
+    "size": 126,
+    "uri": "/uploads/e27dc53657963e5ad765fdc246e60a3c.png"
+  }
+}
+----
+====

@@ -1,0 +1,65 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:core_link: link:https://usetrmnl.com[Core]
+
+= Background Pollers
+
+There are a few background pollers that cache data from the remote {core_link} server for improved performance:
+
+* *Firmware* (`bin/pollers/firmware`): Downloads the latest firmware for updating your local devices. Ensure you have enabled firmware updates for your devices if you'd like to have these updated applied automatically. By default, this checks for updates every six hours. In situations where your device updated to a newer Firmware version and it was a bad/broken version, you can revert to and older version by following these steps:
+** Ensure the device you want to downgrade has firmware updates turned on (you'll also want to ensure devices you don't want to downgrade have this setting _turned off_).
+** Visit the Firmwares page within the UI.
+** Delete all latest versions until you only have the version you want to downgrade to listed at the top of the list.
+** Short click the button on the back of your device to force a refresh and wait for the firmware downgrade to complete.
+* *Model* (`bin/pollers/model`): Synchronizes model information from the {core_api_link}. New models, as they become available, are added to the database while existing models, if updated, will be updated. By default, this checks for updates once a day.
+* *Screen* (`bin/pollers/screen`): Downloads device screens for any device you have set up to proxy to the Core server. You only need to toggle _proxy_ support for any/all devices you want to pull from Core. This allows you to leverage any/all recipes/plugins you have configured via your remote account. By default, this checks for updates every five minutes.
+
+== Configuration
+
+All pollers can be configured to use different polling intervals by supplying the desired seconds in which to poll. You can do this by modifying each script. Example:
+
+[source,ruby]
+----
+# bin/pollers/firmware
+poller.call seconds: 21_600
+
+# bin/pollers/model
+poller.call seconds: 36_000
+
+# bin/pollers/screen
+poller.call seconds: 300
+----
+
+Each automatically runs in the background as separate processes in both the `Procfile` and `Procfile.dev` files. The latter is built for you when running `bin/setup`.
+
+== Restarts
+
+When using {overmind_link}, you can restart these pollers (as with any process managed by Overmind) as follows:
+
+[source,bash]
+----
+overmind restart firmware_poller
+overmind restart model_poller
+overmind restart screen_poller
+----
+
+This can be handy if you want to force either of these poller's to check for new content.
+
+== Disablement
+
+To disable any of the pollers, use the following environment variables:
+
+----
+FIRMWARE_POLLER=0
+MODEL_POLLER=0
+SCREEN_POLLER=0
+----
+
+You are not limited to using `0`. Any falsey value would work, example: `false`, "no", etc. When any of the pollers are disabled, you'll see the following messages in your logs (where `<poller>` is replaced with the specific poller that is disabled):
+
+----
+<poller> polling disabled.
+----
+

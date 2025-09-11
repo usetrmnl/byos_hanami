@@ -1,0 +1,117 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:docker_compose_link: link:https://docs.docker.com/compose[Docker Compose]
+:docker_link: link:https://www.docker.com[Docker]
+:ruby_link: link:https://www.ruby-lang.org[Ruby]
+
+= Docker
+
+We provide {docker_link} support in case you don't want to use our {ruby_link} stack. Both a development and production environment is provided for you. In most cases, you'll want to use {docker_compose_link} to manage the stack. We also provide pre-built Docker link:https://github.com/usetrmnl/byos_hanami/pkgs/container/terminus[images] for AMD 64 and ARM 64.
+
+Continue reading to learn more.
+
+toc::[]
+
+== Setup
+
+To get setup, run:
+
+[source,]
+----
+git clone https://github.com/usetrmnl/byos_hanami terminus
+cd terminus
+bin/setup docker
+----
+
+== Configuration
+
+You'll want to customize the environment variables in your `.env` file so your device can connect. This is automatically setup for you but, depending on your specific needs, you'll want to customize further. Specifically, to ensure the `API_URI` and `HANAMI_PORT` environment variables are set for your host. See link:/#configuration[Configuration] for details.
+
+💡 When making environment variable changes (or the `.env` file in general), ensure you restart Docker (or Docker Compose) to apply the changes.
+
+== Images
+
+To use pre-built images, run either of the following:
+
+[source,bash]
+----
+# Latest
+docker pull ghcr.io/usetrmnl/terminus:latest
+
+# Specific version.
+docker pull ghcr.io/usetrmnl/terminus:<version>
+----
+
+== Compose
+
+Use {docker_compose_link} to quickly launch the entire stack for development or production environments. You can also update `compose.dev.yml` or `compose.yml` to use the pre-built or local images as follows:
+
+*Local Image Only*
+
+[source,yaml]
+----
+build:
+  context: .
+----
+
+*Pre-Built Image Only*
+
+[source,yaml]
+----
+image: ghcr.io/usetrmnl/terminus:latest
+----
+
+Further details can be found in the `compose.yml` or `compose.dev.yml` files at the root of this project.
+
+== Development
+
+To develop with Docker, use the following scripts:
+
+* `bin/docker/up`: Use to start up all services via Docker Compose.
+* `bin/docker/down`: Use to shut down all services via Docker Compose.
+* `bin/docker/compose`: Use to run any Docker Compose command.
+** `web`: Pass this argument to rebuild the web service in order to pick up the local changes.
+** `exec web bash`: This'll give you a Bash shell within root of the project. Use `bin/console` to launch a Hanami console.
+** `docker logs terminus-web-1`: Use this to view the web service logs.
+* `bin/docker/entrypoint-dev`: Used by `compose.dev.yml` to ensure the web service is setup properly.
+
+If you only care about the web image, then you can use the `Dockerfile` via these scripts:
+
+* `bin/docker/build`: This will build a new image based on latest changes to this project.
+* `bin/docker/console`: This will immediately give you a console for which to explore you Docker image from the command line.
+
+You can also run the image as a standalone instance. This does mean you've got more work to do but the command would look like this:
+
+[source,bash]
+----
+docker run \
+       --init \
+       --rm \
+       --env-file .env \
+     --publish 2345:2345 \
+       -e DATABASE_URL="postgres://$USER:@host.docker.internal:5432/terminus_production" \
+       terminus
+----
+
+Here's the breakdown of what the above is doing:
+
+- `run`: Allows you to run the Terminus image.
+- `--init`: Ensures program signals are forwarded and processes are reaped (cleaned up) after terminating otherwise you could run out of memory from too many zombie processes.
+- `--rm`: Ensures the container is automatically removed once you are done running Terminus.
+- `--env-file`: Ensures your environment settings are properly picked up from the global `.env` file.
+- `--publish`: Ensures the `DATABASE_URL` (and ports) are mapped for connection on your local network by using the special `host.docker.internal` host.
+
+You might need to customize depending on how you've configured and setup PostgreSQL. Otherwise, using Docker Compose is the recommended route.
+
+== Production
+
+To launch the production stack, run:
+
+[source,bash]
+----
+docker-compose up
+----
+
+That's it!
