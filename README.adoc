@@ -150,17 +150,10 @@ See link:doc/docker.adoc[Docker] documentation for details.
 
 === Devices
 
-There are a couple of ways you can provision a device with this server.
+Connecting your device to this server is as simple as using the captive WiFi portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request. For more information (including dealing with tricky WiFi situations), check out the help guides below:
 
-The first is automatic which happens immediately after you have successfully used the captive WiFi portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request.
-
-The second way is to manually create your device via the UI or API.
-
-Additional documentation is provided is provided below. Keep in mind that these docs are written for connecting to our Core server, not Terminus. When the docs say to *Connect*, make sure you fill in the *API Server* details (i.e. the `API_URI` as mentioned in the link:#configuration[Configuration] section) _before_ connecting.
-
-* link:https://help.usetrmnl.com/en/articles/9416306-how-to-set-up-a-new-device[How to set up a new device].
+* link:https://help.usetrmnl.com/en/articles/12263392-connect-your-device-to-terminus-byos[How to connect your device to Terminus].
 * link:https://help.usetrmnl.com/en/articles/11663377-setting-up-a-trmnl-on-tricky-wi-fi-situations[Dealing with tricky Wi-Fi situations].
-* When switching servers, you'll need to reset the device to connect to the new server. Do this by pressing and holding the button the back of the device for five seconds and then releasing to cause the device to reconnect. Once you connect to the TRMNL Captive Portal, click on the *Soft Reset* button to force the device to reset. Once reset, connect to the TRMNL Captive Portal one last time to fill in your *API Server* details and then click the *Connect* button to finally connect to your server.
 
 === Background Pollers
 
