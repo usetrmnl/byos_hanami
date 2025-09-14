@@ -24,7 +24,7 @@ module Terminus
 
     config.actions.content_security_policy.then do |csp|
       csp[:manifest_src] = "'self'"
-      csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://unpkg.com/"
+      csp[:script_src] += " 'unsafe-eval' 'unsafe-inline'"
     end
 
     config.actions
