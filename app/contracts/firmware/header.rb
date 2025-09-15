@@ -11,6 +11,7 @@ module Terminus
         optional(:HTTP_HEIGHT).filled :integer
         optional(:HTTP_HOST).filled :string
         required(:HTTP_ID).filled :string
+        optional(:HTTP_MODEL).filled :string
         optional(:HTTP_REFRESH_RATE).filled :integer
         optional(:HTTP_RSSI).filled :integer
         optional(:HTTP_USER_AGENT).filled :string

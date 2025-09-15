@@ -11,6 +11,7 @@ module Terminus
         HTTP_FW_VERSION: :firmware_version,
         HTTP_HOST: :host,
         HTTP_ID: :mac_address,
+        HTTP_MODEL: :model_name,
         HTTP_REFRESH_RATE: :refresh_rate,
         HTTP_RSSI: :wifi,
         HTTP_USER_AGENT: :user_agent,

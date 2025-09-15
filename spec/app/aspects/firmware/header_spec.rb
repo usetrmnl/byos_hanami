@@ -21,6 +21,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
         \[HTTP_HEIGHT=.+\]\s
         \[HTTP_HOST=.+\]\s
         \[HTTP_ID=.+\]\s
+        \[HTTP_MODEL=.+\]\s
         \[HTTP_REFRESH_RATE=.+\]\s
         \[HTTP_RSSI=.+\]\s
         \[HTTP_USER_AGENT=.+\]\s
@@ -40,6 +41,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
           host: "https://localhost",
           user_agent: "ESP32HTTPClient",
           mac_address: "A1:B2:C3:D4:E5:F6",
+          model_name: "og_png",
           api_key: "abc123",
           refresh_rate: 25,
           battery: 4.74,
