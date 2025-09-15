@@ -4,6 +4,7 @@ ruby file: ".ruby-version"
 
 source "https://rubygems.org"
 
+gem "bcrypt", "~> 3.1"
 gem "cogger", "~> 1.4"
 gem "containable", "~> 1.1"
 gem "dry-monads", "~> 1.8"
