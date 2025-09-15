@@ -5,6 +5,8 @@ require_relative "../app/aspects/screens/designer/middleware"
 module Terminus
   # The application base routes.
   class Routes < Hanami::Routes
+    slice(:authentication, at: "/") { use Authentication::Middleware }
+
     get "/", to: "dashboard.show", as: :root
 
     get "/api/devices", to: "api.devices.index", as: :api_devices
