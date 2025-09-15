@@ -29,6 +29,7 @@ detectors:
     enabled: false
   TooManyStatements:
     exclude:
+      - Terminus::Action#handle_rodauth_redirect
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Aspects::Screens::ColorMapper#colorize
       - Terminus::Aspects::Screens::ColorMapper#run
