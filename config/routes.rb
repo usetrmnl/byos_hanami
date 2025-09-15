@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require_relative "../app/aspects/authentication/middleware"
 require_relative "../app/aspects/screens/designer/middleware"
 
 module Terminus
   # The application base routes.
   class Routes < Hanami::Routes
+    use Aspects::Authentication::Middleware
+
     get "/", to: "dashboard.show", as: :root
 
     get "/api/devices", to: "api.devices.index", as: :api_devices
