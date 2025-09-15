@@ -41,6 +41,13 @@ services:
     networks:
       - terminus-network
 
+  mail:
+    image: axllent/mailpit
+    ports:
+      - "1025:1025" # SMTP Server
+      - "8025:8025" # Web UI
+    restart: unless-stopped
+
 networks:
   terminus-network:
 
