@@ -322,11 +322,6 @@ GEM
       racc (~> 1.4)
     openssl (3.3.1)
     optparse (0.6.0)
-    overmind (2.5.1)
-    overmind (2.5.1-aarch64-linux)
-    overmind (2.5.1-arm-linux)
-    overmind (2.5.1-arm64-darwin)
-    overmind (2.5.1-x86_64-darwin)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -596,7 +591,6 @@ DEPENDENCIES
   mail (~> 2.8)
   marcel (~> 1.0)
   mini_magick (~> 5.2)
-  overmind (~> 2.5)
   petail (~> 0.3)
   pg (~> 1.6)
   pipeable (~> 1.2)
@@ -741,11 +735,6 @@ CHECKSUMS
   nokogiri (1.18.10-x86_64-linux-musl) sha256=0651fccf8c2ebbc2475c8b1dfd7ccac3a0a6d09f8a41b72db8c21808cb483385
   openssl (3.3.1) sha256=d6682286baedc205e57928111bafa595d6902b086c1dc7abd88ae20acb1cf837
   optparse (0.6.0) sha256=25e90469c1cd44048a89dc01c1dde9d5f0bdf717851055fb18237780779b068c
-  overmind (2.5.1) sha256=df4676e787845173c3929029d2b2952055ffaf02fde0106054f98f4c2611ec9a
-  overmind (2.5.1-aarch64-linux) sha256=13a979e61278fb5a214600e844268460a86787a8f1a8ed962dcf6aa018f3f50e
-  overmind (2.5.1-arm-linux) sha256=5e12b5fb973dce118769648cf6549a48a0d424f947b40fbb30012f53308d23e1
-  overmind (2.5.1-arm64-darwin) sha256=8b1c9ea304ef524eaf335b4524d5dbd58e02ed9492397243f61cc49a8bd4eca7
-  overmind (2.5.1-x86_64-darwin) sha256=6db525d57350f78bbee1f9862202eb2ad04416367f956e4e94cb47d7f060bc79
   parallel (1.27.0) sha256=4ac151e1806b755fb4e2dc2332cbf0e54f2e24ba821ff2d3dcf86bf6dc4ae130
   parser (3.3.9.0) sha256=94d6929354b1a6e3e1f89d79d4d302cc8f5aa814431a6c9c7e0623335d7687f2
   petail (0.5.0) sha256=c4fda0ca64b9338e75739e2cc60258742eb0960dbaddaeb637d3543dc1a10653
