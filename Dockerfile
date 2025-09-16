@@ -102,4 +102,4 @@ ENTRYPOINT ["/app/bin/docker/entrypoint"]
 
 EXPOSE 2300
 
-CMD ["bundle", "exec", "overmind", "start", "--port-step", "10", "--can-die", "migrate,assets"]
+CMD ["bundle", "exec", "puma", "--config", "./config/puma.rb"]
