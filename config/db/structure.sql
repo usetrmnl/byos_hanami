@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict Rl6h9sSZEi9qWTlgnefO3G0Vga5poFExMNwuJxXHgXUlmgIeghbf7UyY4dZuoCx
+\restrict 9txTp7jbcPLjO43LIHuh8mt1xa67auKCvJuQOM7NmJwcCY2owoOelb3BIImAnGf
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -121,6 +121,43 @@ CREATE TYPE public.wifi_status_enum AS ENUM (
     'connection_lost',
     'disconnected'
 );
+
+
+--
+-- Name: rodauth_get_salt(bigint); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.rodauth_get_salt(acct_id bigint) RETURNS text
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'public', 'pg_temp'
+    AS $$
+DECLARE salt text;
+BEGIN
+SELECT
+substr(password_hash, 0, 30) INTO salt
+FROM "user_password_hash"
+WHERE acct_id = id;
+RETURN salt;
+END;
+$$;
+
+
+--
+-- Name: rodauth_valid_password_hash(bigint, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.rodauth_valid_password_hash(acct_id bigint, hash text) RETURNS boolean
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'public', 'pg_temp'
+    AS $$
+DECLARE valid boolean;
+BEGIN
+SELECT password_hash = hash INTO valid 
+FROM "user_password_hash"
+WHERE acct_id = id;
+RETURN valid;
+END;
+$$;
 
 
 SET default_tablespace = '';
@@ -546,6 +583,16 @@ CREATE TABLE public.user_login_failure (
 
 
 --
+-- Name: user_password_hash; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_password_hash (
+    id bigint NOT NULL,
+    password_hash text NOT NULL
+);
+
+
+--
 -- Name: user_password_reset_key; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -804,6 +851,14 @@ ALTER TABLE ONLY public.user_login_change_key
 
 ALTER TABLE ONLY public.user_login_failure
     ADD CONSTRAINT user_login_failure_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_password_hash user_password_hash_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_password_hash
+    ADD CONSTRAINT user_password_hash_pkey PRIMARY KEY (id);
 
 
 --
@@ -1101,6 +1156,14 @@ ALTER TABLE ONLY public.user_login_failure
 
 
 --
+-- Name: user_password_hash user_password_hash_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_password_hash
+    ADD CONSTRAINT user_password_hash_id_fkey FOREIGN KEY (id) REFERENCES public."user"(id);
+
+
+--
 -- Name: user_password_reset_key user_password_reset_key_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1144,7 +1207,7 @@ ALTER TABLE ONLY public.user_verification_key
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Rl6h9sSZEi9qWTlgnefO3G0Vga5poFExMNwuJxXHgXUlmgIeghbf7UyY4dZuoCx
+\unrestrict 9txTp7jbcPLjO43LIHuh8mt1xa67auKCvJuQOM7NmJwcCY2owoOelb3BIImAnGf
 
 SET search_path TO "$user", public;
 
@@ -1177,4 +1240,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250909142527_alter_model_kinds.rb'),
 ('20250916111723_add_citext_extension.rb'),
 ('20250916111947_create_account.rb'),
-('20250916112018_create_rodauth_user.rb');
+('20250916112018_create_rodauth_user.rb'),
+('20250916112035_create_rodauth_user_password_hash.rb');
