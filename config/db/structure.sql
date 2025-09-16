@@ -20,6 +20,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: firmware_kind_enum; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -672,4 +686,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250908152041_rename_devices.rb'),
 ('20250908153411_rename_firmwares.rb'),
 ('20250908153842_rename_device_logs.rb'),
-('20250909142527_alter_model_kinds.rb');
+('20250909142527_alter_model_kinds.rb'),
+('20250916111723_add_citext_extension.rb');
