@@ -28,7 +28,6 @@ gem "jwt", "~> 3.1"
 gem "mail", "~> 2.8"
 gem "marcel", "~> 1.0"
 gem "mini_magick", "~> 5.2"
-gem "overmind", "~> 2.5"
 gem "petail", "~> 0.3"
 gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 1.2"
