@@ -23,7 +23,7 @@ services:
       - terminus-network
 
   database:
-    image: postgres:17.5
+    image: postgres:17.6
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
