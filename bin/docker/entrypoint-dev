@@ -5,8 +5,11 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
+cd /app
 ./bin/setup
 
-[ -S .overmind.sock ] && rm .overmind.sock
+for poller in firmware screen model; do
+  ./bin/pollers/"$poller" &
+done
 
-bundle exec overmind start -f Procfile.dev --port-step 10 --can-die migrate,assets
+exec "$@"
