@@ -93,7 +93,7 @@ curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scri
 
 Once launched, open `http://localhost:2300` in your browser. That's it, enjoy!
 
-💡 To learn more about how all of this works in Docker, see the link:doc/docker.adoc[Docker] documentation for further details.
+💡 This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. It's only meant for getting up and running quickly. To customize, see the link:doc/docker.adoc[Docker] documentation.
 
 == Setup
 
