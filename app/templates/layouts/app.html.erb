@@ -38,6 +38,18 @@
     </header>
 
     <main class="site-body">
+      <% if flash[:alert] %>
+        <div class="site-alert">
+          <p><%= flash[:alert] %></p>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <div class="site-notice">
+          <p><%= flash[:notice] %></p>
+        </div>
+      <% end %>
+
       <%= yield %>
     </main>
 
