@@ -179,6 +179,22 @@
   }
 }
 
+.site-alert, .site-notice {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0 1rem;
+}
+
+.site-alert {
+  background-color: var(--site-red);
+  color: var(--site-white);
+}
+
+.site-notice {
+  background-color: var(--site-blue);
+  color: var(--site-white);
+}
+
 .site-footer {
   align-items: center;
   background-color: oklch(from var(--site-lightgrey) l c h / 0.8);
