@@ -12,6 +12,7 @@ require "spec_helper"
 
 ENV["HANAMI_ENV"] = "test"
 
+require "hanami/cli"
 require "hanami/prepare"
 
 using Refinements::Pathname
@@ -50,8 +51,11 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
+    Hanami::CLI::Commands::App::DB::Seed.new.call
+
     databases.call.each do |db|
-      DatabaseCleaner[:sequel, db:].clean_with :truncation, except: ["schema_migrations"]
+      DatabaseCleaner[:sequel, db:].clean_with :truncation,
+                                               except: %w[schema_migrations user_status]
     end
   end
 
