@@ -11,4 +11,5 @@ ENV["LD_PRELOAD"] = jemalloc_path.first unless ENV.key?("LD_PRELOAD") && jemallo
 Pathname(".overmind.sock").tap { it.delete if it.exist? }
 
 system "bundle exec hanami db migrate"
+system "bundle exec hanami db seed"
 system ARGV.join(" ")
