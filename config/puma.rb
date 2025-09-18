@@ -21,4 +21,8 @@ ssl_bind "localhost", 2443 if development
 pidfile ENV.fetch("PIDFILE", "tmp/server.pid")
 plugin :tmp_restart
 
-preload_app! && before_fork { Hanami.shutdown } if concurrency.to_i.positive?
+if concurrency.to_i.positive?
+  preload_app! && before_fork { Hanami.shutdown and Sequel::DATABASES.each(&:disconnect) }
+else
+  puts "Puam preload and before fork skipped due to zero concurrency."
+end
