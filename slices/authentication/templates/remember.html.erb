@@ -1,0 +1,47 @@
+<form method="post" class="rodauth" role="form" id="remember-form">
+  <h1 class="label">Remember Settings</h1>
+
+  <%== rodauth.remember_additional_form_tags %>
+  <%== rodauth.csrf_tag %>
+
+  <fieldset class="form-group mb-3">
+    <div class="form-check radio">
+      <input type="radio"
+             name="<%= rodauth.remember_param %>"
+             id="remember-remember"
+             value="<%= h rodauth.remember_remember_param_value %>"
+             class="form-check-input" />
+
+      <label class="form-check-label" for="remember-remember">
+        <%== rodauth.remember_remember_label %>
+      </label>
+    </div>
+
+    <div class="form-check radio">
+      <input type="radio"
+             name="<%= rodauth.remember_param %>"
+             id="remember-forget"
+             value="<%= h rodauth.remember_forget_param_value %>"
+             class="form-check-input" />
+
+      <label class="form-check-label" for="remember-forget">
+        <%== rodauth.remember_forget_label %>
+      </label>
+    </div>
+
+    <div class="form-check radio">
+      <input type="radio"
+             name="<%= rodauth.remember_param %>"
+             id="remember-disable"
+             value="<%= h rodauth.remember_disable_param_value %>"
+             class="form-check-input" />
+
+      <label class="form-check-label" for="remember-disable">
+        <%== rodauth.remember_disable_label %>
+      </label>
+    </div>
+  </fieldset>
+
+  <%== rodauth.button(rodauth.remember_button) %>
+</form>
+

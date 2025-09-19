@@ -1,0 +1,10 @@
+<form method="post" class="rodauth" role="form" id="change-login-form">
+  <h1 class="label">Login Update</h1>
+
+  <%== rodauth.change_login_additional_form_tags %>
+  <%== rodauth.csrf_tag %>
+  <%== rodauth.render "login-field" %>
+  <%== rodauth.render("login-confirm-field") if rodauth.require_login_confirmation? %>
+  <%== rodauth.render("password-field") if rodauth.change_login_requires_password? %>
+  <%== rodauth.button rodauth.change_login_button %>
+</form>
