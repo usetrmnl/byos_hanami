@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The index action.
-        class Index < Hanami::Action
+        class Index < Terminus::Action
           include Deps[repository: "repositories.playlist_item"]
 
           def handle request, response

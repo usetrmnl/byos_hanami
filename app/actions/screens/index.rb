@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Screens
       # The index action.
-      class Index < Hanami::Action
+      class Index < Terminus::Action
         include Deps[:htmx, repository: "repositories.screen"]
 
         def handle request, response

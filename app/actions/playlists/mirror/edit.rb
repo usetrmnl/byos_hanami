@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Mirror
         # The edit action.
-        class Edit < Hanami::Action
+        class Edit < Terminus::Action
           include Deps[
             :htmx,
             repository: "repositories.playlist",
