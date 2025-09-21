@@ -168,7 +168,8 @@ curl "https://localhost:2443/api/setup/" \
   "api_key": "<redacted>",
   "friendly_id": "ABC123",
   "image_url": "https://localhost:2443/assets/setup.bmp",
-  "message": "Welcome to TRMNL BYOS"
+  "message": "Welcome to TRMNL BYOS",
+  "status": 200
 }
 ----
 ====
