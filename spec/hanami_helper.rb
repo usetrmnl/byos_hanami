@@ -12,6 +12,7 @@ require "spec_helper"
 
 ENV["HANAMI_ENV"] = "test"
 
+require "bcrypt"
 require "hanami/cli"
 require "hanami/prepare"
 
@@ -41,6 +42,7 @@ RSpec.configure do |config|
 
   config.include_context "with application dependencies", type: :request
   config.include_context "with application dependencies", type: :feature
+  config.include_context "with login", type: :feature
 
   databases = proc do
     Hanami.app.slices.with_nested.prepend(Hanami.app).each.with_object Set.new do |slice, dbs|
