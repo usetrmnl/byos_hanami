@@ -32,6 +32,10 @@ module Terminus
             end
           end
 
+          protected
+
+          def authorize(*) = nil
+
           private
 
           def process device, request, response

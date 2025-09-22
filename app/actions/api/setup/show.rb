@@ -32,6 +32,10 @@ module Terminus
             end
           end
 
+          protected
+
+          def authorize(*) = nil
+
           private
 
           def create environment, response

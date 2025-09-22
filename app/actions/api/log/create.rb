@@ -46,6 +46,10 @@ module Terminus
             save device, parameters, response
           end
 
+          protected
+
+          def authorize(*) = nil
+
           private
 
           def save device, parameters, response
