@@ -6,7 +6,7 @@ module Terminus
   module Actions
     module API
       # The base action.
-      class Base < Hanami::Action
+      class Base < Terminus::Action
         format :json
 
         def initialize(problem: Petail, **)
