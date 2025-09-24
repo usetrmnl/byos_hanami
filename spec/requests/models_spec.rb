@@ -3,6 +3,8 @@
 require "hanami_helper"
 
 RSpec.describe "/api/models", :db do
+  include_context "with JWT"
+
   let(:model) { Factory[:model] }
 
   let :attributes do
@@ -25,7 +27,11 @@ RSpec.describe "/api/models", :db do
 
   it "answers models" do
     model
-    get routes.path(:api_models), "CONTENT_TYPE" => "application/json"
+
+    get routes.path(:api_models),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: [
@@ -52,12 +58,19 @@ RSpec.describe "/api/models", :db do
   end
 
   it "answers empty array when no records exist" do
-    get routes.path(:api_models), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_models),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
     expect(json_payload).to eq(data: [])
   end
 
   it "answers existing model" do
-    get routes.path(:api_model, id: model.id), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_model, id: model.id),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -82,12 +95,19 @@ RSpec.describe "/api/models", :db do
   end
 
   it "answers not found error with invalid ID" do
-    get routes.path(:api_model, id: 666), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_model, id: 666),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
     expect(json_payload).to eq(Petail[status: :not_found].to_h)
   end
 
   it "creates model when valid" do
-    post routes.path(:api_models), {model: attributes}.to_json, "CONTENT_TYPE" => "application/json"
+    post routes.path(:api_models),
+         {model: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
+         "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -113,7 +133,11 @@ RSpec.describe "/api/models", :db do
 
   it "answers error when creation fails" do
     attributes.delete :width
-    post routes.path(:api_models), {model: attributes}.to_json, "CONTENT_TYPE" => "application/json"
+
+    post routes.path(:api_models),
+         {model: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
+         "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
       type: "/problem_details#model_payload",
@@ -135,6 +159,7 @@ RSpec.describe "/api/models", :db do
   it "patches model when valid" do
     patch routes.path(:api_model_patch, id: model.id),
           {model: attributes}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -162,6 +187,7 @@ RSpec.describe "/api/models", :db do
   it "answers error when patch fails" do
     patch routes.path(:api_model_patch, id: model.id),
           {model: {}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -180,7 +206,10 @@ RSpec.describe "/api/models", :db do
   end
 
   it "deletes existing record" do
-    delete routes.path(:api_model_delete, id: model.id), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_model_delete, id: model.id),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -205,7 +234,10 @@ RSpec.describe "/api/models", :db do
   end
 
   it "answers empty payload with invalid ID" do
-    delete routes.path(:api_model_delete, id: 666), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_model_delete, id: 666),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(data: {})
   end
