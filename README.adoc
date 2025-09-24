@@ -15,6 +15,7 @@
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
+:rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
@@ -30,17 +31,20 @@ Terminus is a {ruby_link}/{hanami_link} web server that allows you to manage {tr
 
 link:https://www.youtube.com/watch?v=BxMRP_ASa-s[image:https://img.youtube.com/vi/BxMRP_ASa-s/maxresdefault.jpg[YouTube Video,width=960,height=540]]
 
+⚠️ This is a Beta software as we haven't reached 1.0.0 status as of yet. This means -- while we strive to reduce the number of changes that require effort on your part to a minimum -- there will be times when changes can't be avoided.
+
 toc::[]
 
 == Features
 
 * Allows you to run your own server on your own private network.
 * Built atop {ruby_link} and {hanami_link}.
-* Uses {htmx_link}.
-* Uses {imagemagick_link}.
-* Uses {overmind_link}.
-* Uses {postgres_link}.
-* Uses {puma_link}.
+* Uses {htmx_link} for Hypermedia-Driven user interfaces.
+* Uses {imagemagick_link} for image processing.
+* Uses {overmind_link} for running multiple processes.
+* Uses {postgres_link} for the database.
+* Uses {puma_link} for the server.
+* Uses {rodauth_link} for authentication.
 * Supports {yjit_link}.
 * Supports {docker_link}.
 * Supports {trmnl_link} devices.
@@ -67,7 +71,7 @@ The following is a high level overview you can use to compare/contrast when deci
 | Playlists                         | 🟢       | 🟢
 | Plugins^*^                        | 🟢       | 🟢
 | Recipes^*^                        | 🟢       | 🟢
-| Account Management                | ⚪️       | 🟢
+| Account Management                | 🟢       | 🟢
 | Docker                            | 🟢       | 🔴
 |===
 
@@ -91,7 +95,7 @@ To immediately spin up Terminus on your local machine, run:
 curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scripts/quick.sh | bash
 ----
 
-Once launched, open `http://localhost:2300` in your browser. That's it, enjoy!
+Once launched, open `http://localhost:2300` in your browser then click on the _Register_ link to register and log into the system.
 
 💡 This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. It's only meant for getting up and running quickly. To customize, see the link:doc/docker.adoc[Docker] documentation.
 
@@ -126,11 +130,14 @@ To view the app, use either of the following:
 * *Secure*: https://localhost:2443
 * *Insecure*: http://localhost:2300
 
+From your browser, you can then click on the _Register_ link to register and log into the system.
+
 === Configuration
 
 There are several environment variables you can use to customize behavior by updating the `.env` file created for you during setup. They are:
 
 * `API_URI`: Used for connecting your device to this server or via link:doc/docker.adoc[Docker]. Defaults to your host machine's IP address and port. This assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to use `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
+* `API_ACCESS_TOKEN_PERIOD`: Used to set the amount of time, in seconds, the JWT access token remains valid before needing to refresh your token. This is only necessary when using the link:doc/api.adoc[Server APIs]. Default: 1,800 seconds (30 minutes).
 * `APP_SECRET`: Used for session, cookie, and Cross-Site Request Forgery (CSRF) protection. This is automatically created for you during setup but is recommended that you update this with your own secure value.
 * `BROWSER`: Used for configuring headless browser behavior when creating screens for your device. Must be a JSON object. Default: `'{"js_errors": true, "process_timeout": 10, "timeout": 10}'`. Additional keys are ignored. For more details, see the link:https://github.com/rubycdp/ferrum#customization[Ferrum Customization Documentation].
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
@@ -143,6 +150,14 @@ There are several environment variables you can use to customize behavior by upd
 * `PG_PORT`: Defines your database port. Used by {docker_doc_link} only. Default: `5432`.
 * `PG_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
 * `SCREEN_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
+
+=== Users
+
+Once logged in, you can manage your settings as follows:
+
+* Visit `/me/login` to update your email address.
+* Visit `/me/password` to update your password.
+* Visit `/me/remember` to enable, disable, or forget if you should be remembered.
 
 === Docker
 

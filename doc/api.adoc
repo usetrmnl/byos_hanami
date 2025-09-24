@@ -5,6 +5,7 @@
 :core_link: link:https://usetrmnl.com[Core]
 :image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 :petail_link: link:https://alchemists.io/projects/petail[Petail]
+:rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :trmnl_firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[TRMNL Firmware]
 
 = API
@@ -175,11 +176,69 @@ curl "https://localhost:2443/api/setup/" \
 
 == Server
 
-⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware there might be action on your part when new changes are released.*
+⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware there might require action on your part when new changes are released.*
 
-The following endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. Most of these endpoints require an HTTP `Access-Token` header which is your device's API key.
+These endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. The following features are supported:
 
-These endpoints are faster to change/update since they won't break any communication with your device. Any/all error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which also means you can use Petail to easily parse the error responses in your own application if desired.
+* All endpoints require authentication using JWT tokens which is explained further below.
+* All error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which also means you can use Petail to easily parse the error responses in your own application if desired.
+
+=== Authentication
+
+All server specific endpoints require authentication using JWT tokens as powered by the {rodauth_link} gem. The following explains how this works.
+
+==== Login
+
+To acquire the JWT token necessary for making API requests, you only need to send the following request to the login endpoint as follows:
+
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/login" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "login": "<redacted>",
+  "password": "<redacted>"
+}'
+----
+
+The above will yeild the following response:
+
+[source,json]
+----
+{
+  "access_token": "<redacted>",
+  "refresh_token": "1_3_jm6ajAaXyUoaL6cdehXLPKRxvj9RJMmJecA_3p7lmj8",
+  "success": "You have been logged in."
+}
+----
+
+Your login (email) and password must be identical to what you supplied during the registration process via the Web UI.
+
+==== Refresh Tokens
+
+To refresh your `access_token` before it has expired (default: 30 minutes), you'll need to make an API request to the following endpoint:
+
+[source,bash]
+----
+curl -X "POST" "https://localhost:2443/api/jwt" \
+     -H 'Authorization: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "refresh_token": "<redacted>"
+}'
+----
+
+The above will yield the following response:
+
+[source,json]
+----
+{
+  "refresh_token": "<redacted>",
+  "access_token": "<redacted>"
+}
+----
+
+With the above response in hand, you can now make new requests to refresh your access token by using the response's `access_token` for your authorization header along with the `refresh_token` for your payload body. A refresh token is valid for 14 days before expiring.
 
 === Devices
 
@@ -192,10 +251,12 @@ Allows you to manage your devices.
 ----
 # All devices.
 curl "https://localhost:2443/api/devices" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
 # Single device.
 curl "https://localhost:2443/api/devices/1" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 ====
@@ -272,6 +333,7 @@ You'll get an empty array when no devices exist.
 ----
 # Minimum
 curl -X "POST" "https://localhost:2443/api/devices" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "device": {
@@ -286,6 +348,7 @@ curl -X "POST" "https://localhost:2443/api/devices" \
 ----
 # Maximum (all possible fields)
 curl -X "POST" "https://localhost:2443/api/devices" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "device": {
@@ -348,6 +411,7 @@ curl -X "POST" "https://localhost:2443/api/devices" \
 ----
 ## Devices (patch)
 curl -X "PATCH" "https://localhost:2443/api/devices/1" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "device": {
@@ -399,6 +463,7 @@ You you change a single attribute or multiple attributes at once.
 ----
 ## Devices (delete)
 curl -X "DELETE" "https://localhost:2443/api/devices/1" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{}'
 ----
@@ -453,10 +518,12 @@ Provides model information which is the core specification for devices and scree
 ----
 # All models.
 curl "https://localhost:2443/api/models" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
 # Single model.
 curl "https://localhost:2443/api/models/1" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 ====
@@ -522,6 +589,7 @@ You'll get an empty array when no models exist.
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/models" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "model": {
@@ -579,6 +647,7 @@ curl -X "POST" "https://localhost:2443/api/models" \
 [source,bash]
 ----
 curl -X "PUT" "https://localhost:2443/api/models/12" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "model": {
@@ -624,6 +693,7 @@ You you change a single attribute or multiple attributes at once.
 [source,bash]
 ----
 curl -X "DELETE" "https://localhost:2443/api/models/2" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{}'
 ----
@@ -671,6 +741,7 @@ When making requests, the `Access-Token` is your device's API key. You can obtai
 [source,bash]
 ----
 curl "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 ====
@@ -708,6 +779,7 @@ curl "https://localhost:2443/api/screens" \
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
@@ -776,6 +848,7 @@ Due to this being so flexible, this also means you can pull in and use our link:
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
@@ -798,6 +871,7 @@ Allows you to render a preprocessed image -- by you -- on your device. The `prep
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
@@ -820,6 +894,7 @@ Allows you to render a unprocessed image on your device. We'll automatically pro
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
@@ -868,6 +943,7 @@ No matter what parameters you use for this request, you'll always get a path (un
 [source,bash]
 ----
 curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
@@ -915,6 +991,7 @@ All of the above attributes are optional which means you can update only the att
 [source,bash]
 ----
 curl -X "DELETE" "https://localhost:2443/api/screens/13" \
+     -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 ----
 ====
