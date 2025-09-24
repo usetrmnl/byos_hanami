@@ -3,6 +3,8 @@
 require "hanami_helper"
 
 RSpec.describe "/api/devices", :db do
+  include_context "with JWT"
+
   let(:device) { Factory[:device, model_id: model.id, playlist_id: playlist.id] }
   let(:model) { Factory[:model] }
   let(:playlist) { Factory[:playlist] }
@@ -27,7 +29,11 @@ RSpec.describe "/api/devices", :db do
 
   it "answers devices" do
     device
-    get routes.path(:api_devices), "CONTENT_TYPE" => "application/json"
+
+    get routes.path(:api_devices),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: [
@@ -59,12 +65,19 @@ RSpec.describe "/api/devices", :db do
   end
 
   it "answers empty array when devices don't exist" do
-    get routes.path(:api_devices), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_devices),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
     expect(json_payload).to eq(data: [])
   end
 
   it "answers device when it exists" do
-    get routes.path(:api_device, id: device.id), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_device, id: device.id),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -94,13 +107,18 @@ RSpec.describe "/api/devices", :db do
   end
 
   it "answers not found error when device doesn't exist" do
-    get routes.path(:api_device, id: 666), "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_device, id: 666),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
     expect(json_payload).to eq(Petail[status: :not_found].to_h)
   end
 
   it "creates device with valid attributes" do
     post routes.path(:api_devices),
          {device: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -140,6 +158,7 @@ RSpec.describe "/api/devices", :db do
 
     post routes.path(:api_devices),
          {device: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -174,6 +193,7 @@ RSpec.describe "/api/devices", :db do
 
     post routes.path(:api_devices),
          {device: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -198,6 +218,7 @@ RSpec.describe "/api/devices", :db do
 
     post routes.path(:api_devices),
          {device: attributes}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -213,6 +234,7 @@ RSpec.describe "/api/devices", :db do
   it "patches device when valid" do
     patch routes.path(:api_device_patch, id: device.id),
           {device: {label: "Test Patch"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload.dig(:data, :label)).to eq("Test Patch")
@@ -221,6 +243,7 @@ RSpec.describe "/api/devices", :db do
   it "answers original record when there is nothing to patch" do
     patch routes.path(:api_device_patch, id: device.id),
           {device: {}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -241,6 +264,7 @@ RSpec.describe "/api/devices", :db do
   it "answers error when patch fails" do
     patch routes.path(:api_device_patch, id: device.id),
           {device: {sleep_stop_at: "10:10:10"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -262,7 +286,10 @@ RSpec.describe "/api/devices", :db do
   end
 
   it "deletes existing record" do
-    delete routes.path(:api_device_delete, id: device.id), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_device_delete, id: device.id),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -292,7 +319,10 @@ RSpec.describe "/api/devices", :db do
   end
 
   it "answers empty payload with invalid ID" do
-    delete routes.path(:api_device_delete, id: 666), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_device_delete, id: 666),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(data: {})
   end

@@ -5,12 +5,18 @@ require "hanami_helper"
 RSpec.describe "/api/screens", :db do
   using Refinements::Pathname
 
+  include_context "with JWT"
+
   let(:model) { Factory[:model] }
   let(:screen) { Factory[:screen, :with_image] }
 
   it "answers records when screens exist" do
     screen
-    get routes.path(:api_screens), {}, "CONTENT_TYPE" => "application/json"
+
+    get routes.path(:api_screens),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: [
@@ -34,13 +40,18 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "answers empty array when screens don't exist" do
-    get routes.path(:api_screens), {}, "CONTENT_TYPE" => "application/json"
+    get routes.path(:api_screens),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
     expect(json_payload).to eq(data: [])
   end
 
   it "creates image from HTML" do
     post routes.path(:api_screen_create),
          {screen: {model_id: model.id, label: "Test", name: "test", content: "<p>n/a</p>"}}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -73,7 +84,10 @@ RSpec.describe "/api/screens", :db do
       }
     }
 
-    post routes.path(:api_screen_create), payload.to_json, "CONTENT_TYPE" => "application/json"
+    post routes.path(:api_screen_create),
+         payload.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
+         "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -104,7 +118,10 @@ RSpec.describe "/api/screens", :db do
       }
     }
 
-    post routes.path(:api_screen_create), payload.to_json, "CONTENT_TYPE" => "application/json"
+    post routes.path(:api_screen_create),
+         payload.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
+         "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -130,6 +147,7 @@ RSpec.describe "/api/screens", :db do
 
     post routes.path(:api_screen_create),
          {screen: {model_id: model.id, label: "Test", name: "test", data:}}.to_json,
+         "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -155,6 +173,7 @@ RSpec.describe "/api/screens", :db do
     before do
       post routes.path(:api_screen_create),
            {screen: {model_id: 666, label: "Test", name: "test", content: "<p>Test.</p>"}}.to_json,
+           "HTTP_AUTHORIZATION" => access_token,
            "CONTENT_TYPE" => "application/json"
     end
 
@@ -184,6 +203,7 @@ RSpec.describe "/api/screens", :db do
     before do
       post routes.path(:api_screen_create),
            {screen: {model_id: model.id, label: "Test", name: "test", content: "test"}}.to_json,
+           "HTTP_AUTHORIZATION" => access_token,
            "CONTENT_TYPE" => "application/json"
     end
 
@@ -207,7 +227,12 @@ RSpec.describe "/api/screens", :db do
   end
 
   context "without body" do
-    before { post routes.path(:api_screen_create), {}, "CONTENT_TYPE" => "application/json" }
+    before do
+      post routes.path(:api_screen_create),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
+    end
 
     it "answers problem details" do
       problem = Petail[
@@ -232,6 +257,7 @@ RSpec.describe "/api/screens", :db do
   it "patches screen content" do
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {content: "<p>Test</p>"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -256,6 +282,7 @@ RSpec.describe "/api/screens", :db do
   it "patches screen model ID" do
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {model_id: model.id}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
@@ -280,6 +307,7 @@ RSpec.describe "/api/screens", :db do
   it "answers problem details for invalid model ID" do
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {model_id: 666, content: "<h1>Test</h2>"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -298,6 +326,7 @@ RSpec.describe "/api/screens", :db do
 
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {model_id: model.id, content: "<h1>Test</h2>"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -314,6 +343,7 @@ RSpec.describe "/api/screens", :db do
   it "answers problem details when payload has no content" do
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
     problem = Petail[
@@ -333,7 +363,10 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "answers deleted screen" do
-    delete routes.path(:api_screen_delete, id: screen.id), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_screen_delete, id: screen.id),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to match(
       data: {
@@ -355,7 +388,10 @@ RSpec.describe "/api/screens", :db do
   end
 
   it "answers not found problem details when deleting non-existing screen" do
-    delete routes.path(:api_screen_delete, id: 666), {}, "CONTENT_TYPE" => "application/json"
+    delete routes.path(:api_screen_delete, id: 666),
+           {},
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to eq(status: 404, title: "Not Found", type: "about:blank")
   end
