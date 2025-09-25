@@ -14,6 +14,7 @@ module Terminus
 
       def delete id
         find(id).then { it.attachment_destroy if it }
+
         firmware.by_pk(id).delete
       end
 
@@ -21,7 +22,7 @@ module Terminus
         firmware.where { attachment_data.has_key "id" }
                 .select { attachment_data.get_text("id").as(:attachment_id) }
                 .map(:attachment_id)
-                .each { shrine_store.delete it }
+                .each { |id| shrine_store.delete id }
 
         firmware.delete
       end

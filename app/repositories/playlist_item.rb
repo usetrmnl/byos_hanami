@@ -17,8 +17,9 @@ module Terminus
 
       def create_with_position(offset: 1, **)
         playlist_item.transaction do
-          playlist_item.command(:create).call(position: playlist_item.count + offset, **)
-                       .then { find it.id }
+          playlist_item.command(:create)
+                       .call(position: playlist_item.count + offset, **)
+                       .then { |item| find item.id }
         end
       end
 

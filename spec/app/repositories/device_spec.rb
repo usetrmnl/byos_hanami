@@ -44,7 +44,7 @@ RSpec.describe Terminus::Repositories::Device, :db do
     it "answers record when found by multiple attributes" do
       record = repository.find_by(label: device.label, friendly_id: device.friendly_id)
                          .to_h
-                         .tap { it.delete :playlist }
+                         .tap { |attributes| attributes.delete :playlist }
 
       expect(record).to eq(device.to_h)
     end
