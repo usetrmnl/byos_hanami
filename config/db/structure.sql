@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict jcmXQxqyU2Z2jdGVrUtdyz8PFOxl2gEdqlTQuW5kHPoapGy4QiNE7MtWOQMulv8
+\restrict jbmLlJWie7dB2JamkZDDNkQoDvyU9kPEtuErfR30XPxDLgOnxjha7rlyKXMHHTq
 
--- Dumped from database version 17.6
--- Dumped by pg_dump version 17.6
+-- Dumped from database version 18.0
+-- Dumped by pg_dump version 18.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -118,23 +118,23 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.device (
-    id integer NOT NULL,
+    id integer CONSTRAINT devices_id_not_null NOT NULL,
     friendly_id text,
     label text,
     mac_address text,
     api_key text,
     firmware_version text,
-    firmware_beta boolean DEFAULT false NOT NULL,
-    wifi integer DEFAULT 0 NOT NULL,
-    battery double precision DEFAULT 0 NOT NULL,
-    refresh_rate integer DEFAULT 900 NOT NULL,
-    image_timeout integer DEFAULT 0 NOT NULL,
-    width integer DEFAULT 0 NOT NULL,
-    height integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    proxy boolean DEFAULT false NOT NULL,
-    firmware_update boolean DEFAULT false NOT NULL,
+    firmware_beta boolean DEFAULT false CONSTRAINT devices_firmware_beta_not_null NOT NULL,
+    wifi integer DEFAULT 0 CONSTRAINT devices_wifi_not_null NOT NULL,
+    battery double precision DEFAULT 0 CONSTRAINT devices_battery_not_null NOT NULL,
+    refresh_rate integer DEFAULT 900 CONSTRAINT devices_refresh_rate_not_null NOT NULL,
+    image_timeout integer DEFAULT 0 CONSTRAINT devices_image_timeout_not_null NOT NULL,
+    width integer DEFAULT 0 CONSTRAINT devices_width_not_null NOT NULL,
+    height integer DEFAULT 0 CONSTRAINT devices_height_not_null NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT devices_created_at_not_null NOT NULL,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT devices_updated_at_not_null NOT NULL,
+    proxy boolean DEFAULT false CONSTRAINT devices_proxy_not_null NOT NULL,
+    firmware_update boolean DEFAULT false CONSTRAINT devices_firmware_update_not_null NOT NULL,
     sleep_start_at time without time zone,
     sleep_stop_at time without time zone,
     model_id integer,
@@ -147,25 +147,25 @@ CREATE TABLE public.device (
 --
 
 CREATE TABLE public.device_log (
-    id integer NOT NULL,
-    device_id integer NOT NULL,
-    external_id integer NOT NULL,
-    message text NOT NULL,
-    source_path text NOT NULL,
-    source_line integer NOT NULL,
-    retry integer DEFAULT 0 NOT NULL,
-    wifi_signal integer DEFAULT 0 NOT NULL,
-    wifi_status public.wifi_status_enum DEFAULT 'disconnected'::public.wifi_status_enum NOT NULL,
-    refresh_rate integer DEFAULT 0 NOT NULL,
-    sleep_duration integer DEFAULT 0 NOT NULL,
-    firmware_version text NOT NULL,
-    special_function public.special_function_enum DEFAULT 'none'::public.special_function_enum NOT NULL,
-    wake_reason public.wake_reason_enum DEFAULT 'timer'::public.wake_reason_enum NOT NULL,
-    battery_voltage double precision DEFAULT 0 NOT NULL,
-    free_heap_size integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    max_alloc_size integer DEFAULT 0 NOT NULL
+    id integer CONSTRAINT device_logs_id_not_null NOT NULL,
+    device_id integer CONSTRAINT device_logs_device_id_not_null NOT NULL,
+    external_id integer CONSTRAINT device_logs_external_id_not_null NOT NULL,
+    message text CONSTRAINT device_logs_message_not_null NOT NULL,
+    source_path text CONSTRAINT device_logs_source_path_not_null NOT NULL,
+    source_line integer CONSTRAINT device_logs_source_line_not_null NOT NULL,
+    retry integer DEFAULT 0 CONSTRAINT device_logs_retry_not_null NOT NULL,
+    wifi_signal integer DEFAULT 0 CONSTRAINT device_logs_wifi_signal_not_null NOT NULL,
+    wifi_status public.wifi_status_enum DEFAULT 'disconnected'::public.wifi_status_enum CONSTRAINT device_logs_wifi_status_not_null NOT NULL,
+    refresh_rate integer DEFAULT 0 CONSTRAINT device_logs_refresh_rate_not_null NOT NULL,
+    sleep_duration integer DEFAULT 0 CONSTRAINT device_logs_sleep_duration_not_null NOT NULL,
+    firmware_version text CONSTRAINT device_logs_firmware_version_not_null NOT NULL,
+    special_function public.special_function_enum DEFAULT 'none'::public.special_function_enum CONSTRAINT device_logs_special_function_not_null NOT NULL,
+    wake_reason public.wake_reason_enum DEFAULT 'timer'::public.wake_reason_enum CONSTRAINT device_logs_wake_reason_not_null NOT NULL,
+    battery_voltage double precision DEFAULT 0 CONSTRAINT device_logs_battery_voltage_not_null NOT NULL,
+    free_heap_size integer DEFAULT 0 CONSTRAINT device_logs_free_heap_size_not_null NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT device_logs_created_at_not_null NOT NULL,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT device_logs_updated_at_not_null NOT NULL,
+    max_alloc_size integer DEFAULT 0 CONSTRAINT device_logs_max_alloc_size_not_null NOT NULL
 );
 
 
@@ -202,12 +202,12 @@ ALTER TABLE public.device ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
 --
 
 CREATE TABLE public.firmware (
-    id integer NOT NULL,
-    version text NOT NULL,
-    kind public.firmware_kind_enum DEFAULT 'stable'::public.firmware_kind_enum NOT NULL,
-    attachment_data jsonb DEFAULT '{}'::jsonb NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    id integer CONSTRAINT firmwares_id_not_null NOT NULL,
+    version text CONSTRAINT firmwares_version_not_null NOT NULL,
+    kind public.firmware_kind_enum DEFAULT 'stable'::public.firmware_kind_enum CONSTRAINT firmwares_kind_not_null NOT NULL,
+    attachment_data jsonb DEFAULT '{}'::jsonb CONSTRAINT firmwares_attachment_data_not_null NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT firmwares_created_at_not_null NOT NULL,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT firmwares_updated_at_not_null NOT NULL
 );
 
 
@@ -642,7 +642,7 @@ ALTER TABLE ONLY public.screen
 -- PostgreSQL database dump complete
 --
 
-\unrestrict jcmXQxqyU2Z2jdGVrUtdyz8PFOxl2gEdqlTQuW5kHPoapGy4QiNE7MtWOQMulv8
+\unrestrict jbmLlJWie7dB2JamkZDDNkQoDvyU9kPEtuErfR30XPxDLgOnxjha7rlyKXMHHTq
 
 SET search_path TO "$user", public;
 
