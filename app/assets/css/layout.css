@@ -205,10 +205,10 @@
   gap: 1rem;
   grid-area: site-footer;
   justify-content: flex-end;
-  padding: 1.5rem 4rem 1rem 4rem;
+  padding: 1.5rem 4rem;
 
   @media only screen and (max-width: 480px) {
-    padding: 1.5rem 1rem 1rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .links {
@@ -222,34 +222,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  .social {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    justify-content: center;
-    list-style: none;
-    margin-top: 0.3rem;
-    padding: 0;
-  }
-
-  .icon {
-    align-items: center;
-    background-color: oklch(from var(--site-white) l c h / 0.4);
-    border-radius: 100px;
-    color: var(--site-darkgrey);
-    display: flex;
-    height: 32px;
-    justify-content: center;
-    padding: 0.1rem;
-    width: 32px;
-
-    &:hover {
-      background-color: oklch(from var(--site-white) l c h / 0.8);
-      color: var(--site-black);
-    }
   }
 
   .link {

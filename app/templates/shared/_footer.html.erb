@@ -1,20 +1,7 @@
 <ul class="links">
-  <li><a href="https://usetrmnl.com" class="link">TRMNL</a></li>
-  <li><a href="https://docs.usetrmnl.com/go/diy/byos" class="link">Guides</a></li>
-  <li><a href="https://help.usetrmnl.com" class="link">Support</a></li>
-  <li>
-    <ul class="social">
-      <li>
-        <a href="https://www.youtube.com/@useTRMNL" class="icon">
-          <%= image_tag "icons/youtube.svg" %>
-        </a>
-      </li>
-
-      <li>
-        <a href="https://github.com/usetrmnl/byos_hanami" class="icon">
-          <%= image_tag "icons/github.svg" %>
-        </a>
-      </li>
-    </ul>
-  </li>
+  <li><%= link_to "TRMNL", "https://usetrmnl.com", class: :link %></li>
+  <li><%= link_to "Guides", "https://docs.usetrmnl.com/go/diy/byos", class: :link %></li>
+  <li><%= link_to "Help", "https://help.usetrmnl.com", class: :link %></li>
+  <li><%= link_to "YouTube", "https://www.youtube.com/@useTRMNL", class: :link %></li>
+  <li><%= link_to "Source", "https://github.com/usetrmnl/byos_hanami", class: :link %></li>
 </ul>
