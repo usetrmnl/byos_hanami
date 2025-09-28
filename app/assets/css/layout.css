@@ -6,7 +6,6 @@
     "site-header"
     "site-body"
     "site-footer";
-  min-height: 100vh;
 }
 
 .site-header {

@@ -33,7 +33,7 @@
     background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
     border-radius: 0.7rem;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
-    padding: 0.7rem 0.6rem;
+    padding: 0.6rem;
     outline: none;
   }
 
@@ -42,13 +42,9 @@
   }
 
   .checkbox {
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
     background-color: oklch(from var(--site-white) l c h / 0.5);
     accent-color: oklch(from var(--site-orange) l c h / 0.5);
-
   }
 
   .form-actions {
