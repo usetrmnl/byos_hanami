@@ -100,6 +100,7 @@ module Terminus
     delete "/screens/:id", to: "screens.delete", as: :screen_delete
 
     get "/users", to: "users.index", as: :users
+    get "/users/:id", to: "users.show", as: :user
 
     slice(:health, at: "/up") { root to: "show" }
 
