@@ -1,0 +1,27 @@
+<%= render "shared/title", text: "New User" %>
+
+<section class="page-users">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Users", routes.path(:users), class: :link %></li>
+      <li class="bit-breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="users">
+      <form action="/users" method="post" class="bit-card bit-form user">
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
+        <h1 class="label">New Model</h1>
+
+        <%= render :fields, user:, statuses:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :post, path: routes.path(:users) %>
+          <%= link_to "Cancel", routes.path(:users), class: "bit-button-decline" %>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

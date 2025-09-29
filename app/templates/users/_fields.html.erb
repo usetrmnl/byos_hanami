@@ -1,0 +1,48 @@
+<fieldset role="group" class="group">
+  <%= scope(:form_field, key: :name, errors:).render do %>
+    <label class="key" for="user_name">Name</label>
+
+    <%= tag.input id: :user_name,
+                  name: "user[name]",
+                  value: field_for(:name, fields, user),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :email, errors:).render do %>
+    <label class="key" for="user_email">Email</label>
+
+    <%= tag.input id: :user_email,
+                  name: "user[email]",
+                  value: field_for(:email, fields, user),
+                  class: :value,
+                  autocomplete: :email %>
+  <% end %>
+
+  <%= scope(:form_field, key: :password, errors:).render do %>
+    <label class="key" for="user_password">Password</label>
+
+    <%= tag.input id: :user_password,
+                  name: "user[password]",
+                  type: :password,
+                  value: field_for(:password, fields, user),
+                  class: :value,
+                  autocomplete: :password %>
+  <% end %>
+
+  <%= scope(:form_field, key: :status_id, errors:).render do %>
+    <label class="key" for="user_status_id">
+      Status
+      <%= render "shared/popovers/trigger", name: :status %>
+    </label>
+
+    <%= tag.select id: :user_status_id, name: "user[status_id]", class: :value do %>
+      <% select_options_for(statuses, label: :name).each do |label, id| %>
+        <%= tag.option label, value: id, selected: id == field_for(:status_id, fields, user) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</fieldset>
+
+<%= render "popovers/all" %>
