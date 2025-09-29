@@ -1,0 +1,66 @@
+<%= render "shared/title", text: "Users" %>
+
+<section class="page-users">
+  <header class="bit-header">
+    <h1 class="label">
+      Users
+
+      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
+      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="user_reader">Close</span>
+      </button>
+
+      <h3 class="label">Overview</h3>
+
+      <p>These are the users that have access to this system.</p>
+
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by user name using partial or full name.</p>
+
+      <h3 class="label">Keyboard Shortcuts</h3>
+
+      <ul>
+        <li><kbd>CONTROL + n</kbd>: New user.</li>
+        <li><kbd>CONTROL + s</kbd>: Save user (when within form).</li>
+      </ul>
+    </dialog>
+
+    <div class="actions">
+      <%= render "shared/search",
+                 path: routes.path(:users),
+                 query:,
+                 pick: ".users",
+                 target: "next .users" %>
+
+      <a href="/users/new"
+         class="bit-button-accept"
+         hx-get="/users/new"
+         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+         hx-target="closest .page-users"
+         hx-swap="outerHTML"
+         hx-push-url="true">
+        New
+      </a>
+    </div>
+  </header>
+
+  <% if users.any? %>
+    <ul class="bit-gallery users">
+      <% users.each do |user| %>
+        <%= user.render :user %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="users">
+      <%= render "shared/empty", message: "No users found." %>
+    </div>
+  <% end %>
+</section>
+

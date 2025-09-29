@@ -1,0 +1,24 @@
+<li id="<%= user.id %>" class="bit-card user">
+  <h2 class="label"><%= user.name %></h2>
+
+  <%= tag.a user.email, href: "mailto:#{user.email}" %>
+  <%= tag.span user.status.name, class: "bit-pill bit-pill-#{user.pill}" %>
+
+  <div class="actions">
+   <a href="<%= routes.path :user, id: user.id %>"
+      hx-get="<%= routes.path :user, id: user.id %>"
+      hx-target="closest .page-users"
+      hx-swap="outerHTML"
+      hx-push-url="true">
+     View
+   </a>
+
+    <a href="<%= routes.path :user_edit, id: user.id %>"
+       hx-get="<%= routes.path :user_edit, id: user.id %>"
+       hx-target="closest .page-users"
+       hx-swap="outerHTML"
+       hx-push-url="true">
+      Edit
+    </a>
+  </div>
+</li>
