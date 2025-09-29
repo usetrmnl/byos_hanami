@@ -99,6 +99,8 @@ module Terminus
     put "/screens/:id", to: "screens.update", as: :screen_update
     delete "/screens/:id", to: "screens.delete", as: :screen_delete
 
+    get "/users", to: "users.index", as: :users
+
     slice(:health, at: "/up") { root to: "show" }
 
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/uploads"]
