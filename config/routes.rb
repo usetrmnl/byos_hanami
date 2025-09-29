@@ -104,6 +104,7 @@ module Terminus
     get "/users/new", to: "users.new", as: :user_new
     post "/users", to: "users.create", as: :user_create
     get "/users/:id/edit", to: "users.edit", as: :user_edit
+    put "/users/:id", to: "users.update", as: :user_update
 
     slice(:health, at: "/up") { root to: "show" }
 
