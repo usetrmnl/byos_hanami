@@ -25,10 +25,16 @@
       </div>
 
       <dl class="bit-definition-list">
-        <dt class="key">Name</dt>
+        <dt class="key">
+          Name
+          <%= render "shared/popovers/trigger", name: :name %>
+        </dt>
         <dd class="value"><%= screen.name %></dd>
 
-        <dt class="key">Model</dt>
+        <dt class="key">
+          Model
+          <%= render "shared/popovers/trigger", name: :model %>
+        </dt>
         <dd class="value"><%= screen.model.label %></dd>
 
         <dt class="key">MIME Type</dt>
@@ -52,3 +58,5 @@
     </div>
   </div>
 </section>
+
+<%= render "popovers/all" %>

@@ -23,7 +23,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :name, errors:).render do %>
-    <label class="key" for="screen_name">Name</label>
+    <label class="key" for="screen_name">
+      Name
+      <%= render "shared/popovers/trigger", name: :name %>
+    </label>
 
     <%= tag.input id: :screen_name,
                   name: "screen[name]",
@@ -32,3 +35,5 @@
                   autocomplete: :name %>
   <% end %>
 </fieldset>
+
+<%= render "popovers/all" %>
