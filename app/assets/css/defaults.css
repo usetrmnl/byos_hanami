@@ -58,6 +58,7 @@
 :where(body) {
   line-height: 1.5;
   min-height: 100vh;
+  margin: 0;
 }
 
 :where(button, input, select, textarea) {

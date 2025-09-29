@@ -13,10 +13,10 @@
   grid-area: site-header;
   display: flex;
   justify-content: space-between;
-  padding: 0 4rem;
+  margin: 1rem calc(20vw - 10rem);
 
   @media only screen and (max-width: 700px) {
-    padding: 0;
+    margin: 0.5rem 1rem;
   }
 }
 
@@ -25,12 +25,12 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 1rem;
-  margin-left: 1rem;
 
   .label {
     color: var(--site-black);
     font-size: 1.5rem;
     font-weight: 600;
+    margin: 0;
     text-transform: uppercase;
   }
 }
