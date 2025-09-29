@@ -15,10 +15,9 @@ module Terminus
       end
     end
 
-    # :reek:FeatureEnvy
     def wired pattern: /\A(en[1-9]|eth)/
       all.find { |address| address.name.match? pattern }
-         .then { |address| address.addr.ip_address if address }
+         .then { it.addr.ip_address if it }
     end
   end
 end

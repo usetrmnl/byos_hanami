@@ -22,7 +22,7 @@ module Terminus
         firmware.where { attachment_data.has_key "id" }
                 .select { attachment_data.get_text("id").as(:attachment_id) }
                 .map(:attachment_id)
-                .each { |id| shrine_store.delete id }
+                .each { shrine_store.delete it }
 
         firmware.delete
       end

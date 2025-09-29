@@ -19,7 +19,7 @@ module Terminus
         playlist_item.transaction do
           playlist_item.command(:create)
                        .call(position: playlist_item.count + offset, **)
-                       .then { |item| find item.id }
+                       .then { find it.id }
         end
       end
 
