@@ -1,0 +1,8 @@
+<input type="submit"
+       value="Save"
+       class="bit-button-accept"
+       <%= "hx-#{verb}=#{path}" %>
+       hx-trigger="click, keyup[ctrlKey&&key=='s'] from:closest .model"
+       hx-target="closest .page-users"
+       hx-swap="outerHTML"
+       hx-push-url="true">
