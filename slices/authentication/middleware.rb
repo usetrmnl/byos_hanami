@@ -1,7 +1,6 @@
 # auto_register: false
 # frozen_string_literal: true
 
-require "refinements/string"
 require "roda"
 require "rodauth"
 
@@ -10,8 +9,6 @@ require_relative "feature"
 module Authentication
   # Specialized Roda middleware for authentication.
   class Middleware < Roda
-    using Refinements::String
-
     plugin :middleware
 
     plugin :rodauth, json: true do
@@ -71,10 +68,10 @@ module Authentication
 
       after_create_account do
         user_id = account[:id]
-        user_name = param "name"
-        account_id = db[:account].insert label: user_name, name: user_name.snakecase
+        account_id = db[:account].insert_conflict(target: :name, update: {name: "default"})
+                                 .insert name: "default", label: "Default"
 
-        db[:user].where(id: user_id).update name: user_name
+        db[:user].where(id: user_id).update name: param("name")
         db[:membership].insert user_id: user_id, account_id:
       end
 

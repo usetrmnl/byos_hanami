@@ -22,4 +22,32 @@ RSpec.describe "Registration", :db do
 
     expect(page).to have_content "Your account has been created"
   end
+
+  it "registers multiple users for the default account", :aggregate_failures do
+    visit "/logout"
+    check "Logout all Logged In Sessions?"
+    click_button "Logout"
+
+    visit "/register"
+    fill_in "Name", with: "Jill Test"
+    fill_in "Email", with: "jill@test.io"
+    fill_in "Confirm Email", with: "jill@test.io"
+    fill_in "Password", with: "password-123"
+    click_button "Create"
+
+    expect(page).to have_content "Your account has been created"
+
+    visit "/logout"
+    check "Logout all Logged In Sessions?"
+    click_button "Logout"
+
+    visit "/register"
+    fill_in "Name", with: "Jim Test"
+    fill_in "Email", with: "jim@test.io"
+    fill_in "Confirm Email", with: "jim@test.io"
+    fill_in "Password", with: "password-123"
+    click_button "Create"
+
+    expect(page).to have_content "Your account has been created"
+  end
 end
