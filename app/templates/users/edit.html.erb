@@ -1,0 +1,44 @@
+<%= render "shared/title", text: "Edit #{user.name}" %>
+
+<section class="page-users">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Users", routes.path(:users), class: :link %></li>
+
+      <li class="bit-breadcrumb">
+        <%= link_to user.name, routes.path(:user, id: user.id), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="users">
+      <form action="<%= routes.path :user_update, id: user.id %>"
+            method="put"
+            class="bit-card bit-form user">
+
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
+        <h1 class="label">Edit User</h1>
+
+        <%= render :fields, user:, statuses:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "save_button", verb: :put, path: routes.path(:user, id: user.id) %>
+
+          <a href="<%= routes.path :user, id: user.id %>"
+             class="bit-button-decline"
+             hx-get="<%= routes.path :user, id: user.id %>"
+             hx-trigger="click"
+             hx-target="closest .page-users"
+             hx-swap="outerHTML"
+             hx-push-url="true">
+             Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
