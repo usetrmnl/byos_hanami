@@ -1,0 +1,9 @@
+<%= scope(:popover_content, name: :status, label: "Status").render do %>
+  <p>Allows you to determine user status as follows:</p>
+
+  <ul>
+    <li><strong>Unverified</strong>: User is registered but is not confirmed and can't be authenticated yet.</li>
+    <li><strong>Verified</strong>: User is registered, verified, and can be authenticated.</li>
+    <li><strong>Closed</strong>: User is registered but is no longer active.</li>
+  </ul>
+<% end %>
