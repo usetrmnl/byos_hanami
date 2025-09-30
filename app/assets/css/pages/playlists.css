@@ -30,8 +30,8 @@
 
   .show_item {
     align-items: center;
-    display: grid;
-    grid-template: 1fr / 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
 
     .labels {

@@ -5,6 +5,10 @@
 @media (prefers-reduced-motion: no-preference) {
   :where(html) {
     interpolate-size: allow-keywords;
+
+    &:focus-within {
+      scroll-behavior: smooth;
+    }
   }
 }
 
@@ -12,10 +16,13 @@
   accent-color: var(--site-red);
   background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
   font-family: var(--site-font-family);
+  font-size: clamp(1rem, 0.95rem + 0.35dvw, 1.25rem);
+  hanging-punctuation: first allow-end last;
   overscroll-behavior: none;
   scrollbar-color: var(--site-white) var(--site-red);
   scrollbar-gutter: stable;
   text-size-adjust: none;
+  word-break: break-word;
   -moz-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
@@ -29,10 +36,6 @@
 :where(audio, iframe, img, svg, video) {
   max-block-size: 100%;
   max-inline-size: 100%;
-}
-
-:where(button, input, select, textarea) {
-  font: inherit;
 }
 
 :where(a) {
@@ -59,6 +62,12 @@
   line-height: 1.5;
   min-height: 100vh;
   margin: 0;
+}
+
+button, input:where([type="submit"], [type="reset"], [type="button"]) {
+  background: CanvasText;
+  color: Canvas;
+  border: 0.1rem solid transparent;
 }
 
 :where(button, input, select, textarea) {
@@ -91,8 +100,7 @@
 }
 
 :where(h1, h2) {
-  font-weight: 400;
-  font-size: 2.75em;
+  font-weight: 500;
 }
 
 :where(img) {
@@ -107,14 +115,12 @@
   border-radius: 0.2rem;
   border: 0.1rem solid var(--site-lightgrey);
   color: var(--site-black);
-  font-size: 0.85em;
   font-weight: 600;
-  line-height: 1rem;
   padding: 0.1rem 0.3rem;
   white-space: nowrap;
 }
 
-:where(label):has(+:where(textarea, input, select)) {
+:where(label):has(+:where(input, select, textarea)) {
   display: block;
 }
 
@@ -122,18 +128,18 @@
   text-wrap: pretty;
 }
 
+:where(pre) {
+  border-radius: 0.5rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  white-space: pre-wrap;
+}
+
 :where(pre:not([class^=language])) {
   background-color: var(--site-black);
   color: var(--site-white);
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  white-space: pre-wrap;
-}
-
-:where(pre) {
-  border-radius: 0.5rem;
-  font-weight: 400;
-  padding: 0.5rem;
 }
 
 :where(table) {
@@ -141,7 +147,7 @@
 }
 
 :where(textarea:not([rows])) {
-  min-block-size: 6em;
+  min-block-size: 10lh;
 }
 
 :where(thead) {
@@ -150,7 +156,7 @@
 }
 
 :where(th) {
-  padding: 1rem;
+  padding: 0.5rem;
 
   &:first-child {
     border-top-left-radius: 0.5rem;

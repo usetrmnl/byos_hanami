@@ -1,13 +1,11 @@
 .bit-definition-list {
   display: grid;
   grid-template: auto / auto 1fr;
-  padding: 0 1rem;
 
   .key, .value {
     font-size: 0.9rem;
     margin-bottom: 0.25rem;
-    padding: 0.5rem;
-    word-break: break-word;
+    padding: 0.4rem;
   }
 
   .key {

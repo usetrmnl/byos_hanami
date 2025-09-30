@@ -39,7 +39,6 @@
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  margin-right: 1rem;
 
   .label {
     cursor: pointer;
@@ -110,7 +109,7 @@
   justify-content: space-around;
   list-style: none;
   width: 100%;
-  gap: 0 1rem;
+  gap: 0 0.5rem;
   margin: 0;
 
   .item {

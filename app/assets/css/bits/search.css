@@ -8,7 +8,7 @@
   .value {
     border-radius: 0.5rem;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
-    padding: 0.7rem 0.4rem;
+    padding: 0.4rem;
     outline: none;
 
     &:focus {
