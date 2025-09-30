@@ -43,7 +43,7 @@ RUN <<STEPS
   echo "deb [signed-by=/usr/share/keyrings/postgresql-keyring.gpg] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
   curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
   apt-get update -qq
-  apt-get install --no-install-recommends -y postgresql-client-17 nodejs
+  apt-get install --no-install-recommends -y postgresql-client-18 nodejs
   rm -rf /var/lib/apt/lists /var/cache/apt/archives
 STEPS
 
