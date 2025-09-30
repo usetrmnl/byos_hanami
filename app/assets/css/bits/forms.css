@@ -32,7 +32,7 @@
     background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
     border-radius: 0.7rem;
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
-    padding: 0.6rem;
+    padding: 0.4rem;
     outline: none;
   }
 

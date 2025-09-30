@@ -34,10 +34,6 @@
   max-inline-size: 100%;
 }
 
-:where(button, input, select, textarea) {
-  font: inherit;
-}
-
 :where(a) {
   color: var(--site-orange);
   text-decoration: none;
@@ -62,6 +58,12 @@
   line-height: 1.5;
   min-height: 100vh;
   margin: 0;
+}
+
+button, input:where([type="submit"], [type="reset"], [type="button"]) {
+  background: CanvasText;
+  color: Canvas;
+  border: 0.1rem solid transparent;
 }
 
 :where(button, input, select, textarea) {
@@ -104,18 +106,6 @@
   object-fit: cover;
 }
 
-input:not(
-  :where(
-    [type="submit"],
-    [type="checkbox"],
-    [type="radio"],
-    [type="button"],
-    [type="reset"]
-  )
-) {
-  inline-size: 100%;
-}
-
 :where(kbd) {
   background-color: oklch(from var(--site-lightgrey) l c h / 0.1);
   border-radius: 0.2rem;
@@ -153,7 +143,7 @@ input:not(
 }
 
 :where(textarea:not([rows])) {
-  min-block-size: 6em;
+  min-block-size: 10lh;
 }
 
 :where(thead) {
