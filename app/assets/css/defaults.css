@@ -12,10 +12,13 @@
   accent-color: var(--site-red);
   background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
   font-family: var(--site-font-family);
+  font-size: clamp(1rem, 0.95rem + 0.35dvw, 1.25rem);
+  hanging-punctuation: first allow-end last;
   overscroll-behavior: none;
   scrollbar-color: var(--site-white) var(--site-red);
   scrollbar-gutter: stable;
   text-size-adjust: none;
+  word-break: break-word;
   -moz-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
@@ -91,8 +94,7 @@
 }
 
 :where(h1, h2) {
-  font-weight: 400;
-  font-size: 2.75em;
+  font-weight: 500;
 }
 
 :where(img) {
@@ -102,19 +104,29 @@
   object-fit: cover;
 }
 
+input:not(
+  :where(
+    [type="submit"],
+    [type="checkbox"],
+    [type="radio"],
+    [type="button"],
+    [type="reset"]
+  )
+) {
+  inline-size: 100%;
+}
+
 :where(kbd) {
   background-color: oklch(from var(--site-lightgrey) l c h / 0.1);
   border-radius: 0.2rem;
   border: 0.1rem solid var(--site-lightgrey);
   color: var(--site-black);
-  font-size: 0.85em;
   font-weight: 600;
-  line-height: 1rem;
   padding: 0.1rem 0.3rem;
   white-space: nowrap;
 }
 
-:where(label):has(+:where(textarea, input, select)) {
+:where(label):has(+:where(input, select, textarea)) {
   display: block;
 }
 
@@ -122,18 +134,18 @@
   text-wrap: pretty;
 }
 
+:where(pre) {
+  border-radius: 0.5rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  white-space: pre-wrap;
+}
+
 :where(pre:not([class^=language])) {
   background-color: var(--site-black);
   color: var(--site-white);
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  white-space: pre-wrap;
-}
-
-:where(pre) {
-  border-radius: 0.5rem;
-  font-weight: 400;
-  padding: 0.5rem;
 }
 
 :where(table) {
