@@ -4,20 +4,20 @@ module Terminus
   module Repositories
     # The user repository.
     class User < DB::Repository[:user]
-      commands :create, delete: :by_pk
+      commands :create
 
       commands update: :by_pk,
                use: :timestamps,
                plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
-        user.order { created_at.asc }
-            .to_a
+        with_status.order { created_at.asc }
+                   .to_a
       end
 
-      def find(id) = (user.by_pk(id).one if id)
+      def find(id) = (with_status.by_pk(id).one if id)
 
-      def find_by(**) = user.where(**).one
+      def find_by(**) = with_status.where(**).one
 
       def search key, value
         user.where(Sequel.ilike(key, "%#{value}%"))
@@ -26,10 +26,14 @@ module Terminus
       end
 
       def where(**)
-        user.where(**)
-            .order { created_at.asc }
-            .to_a
+        with_status.where(**)
+                   .order { created_at.asc }
+                   .to_a
       end
+
+      private
+
+      def with_status = user.combine :status
     end
   end
 end

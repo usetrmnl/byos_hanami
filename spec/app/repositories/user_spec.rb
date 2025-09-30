@@ -13,7 +13,7 @@ RSpec.describe Terminus::Repositories::User, :db do
     it "answers all records by created date/time" do
       user
       two = Factory[:user, name: "two"]
-      records = repository.all.map(&:to_h).each { it.delete :current_item }
+      records = repository.all.map(&:to_h).each { it.delete :status }
 
       expect(records).to eq([user.to_h, two.to_h])
     end
@@ -75,11 +75,16 @@ RSpec.describe Terminus::Repositories::User, :db do
 
   describe "#where" do
     it "answers record for single attribute" do
-      expect(repository.where(name: user.name)).to contain_exactly(user)
+      records = repository.where(name: user.name).map { it.to_h.tap { it.delete :status } }
+
+      expect(records).to contain_exactly(user.to_h)
     end
 
     it "answers record for multiple attributes" do
-      expect(repository.where(name: user.name, email: user.email)).to contain_exactly(user)
+      records = repository.where(name: user.name, email: user.email)
+                          .map { it.to_h.tap { it.delete :status } }
+
+      expect(records).to contain_exactly(user.to_h)
     end
 
     it "answers empty array for unknown value" do
