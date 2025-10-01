@@ -3,6 +3,9 @@ exclude_paths:
   - vendor
 
 detectors:
+  Attribute:
+    exclude:
+      - Terminus::Views::Parts::User#password
   DataClump:
     exclude:
       - Terminus::Aspects::Screens::Shoter
