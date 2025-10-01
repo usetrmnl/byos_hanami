@@ -3,6 +3,7 @@
 :figure-caption!:
 
 :background_pollers_link: link:doc/background_pollers.adoc[Background Pollers]
+:chrome_link: link:https://www.google.com/chrome[Google Chrome]
 :cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
 :core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
 :docker_doc_link: link:doc/docker.adoc[Docker]
@@ -84,7 +85,8 @@ The following is a high level overview you can use to compare/contrast when deci
 . {ruby_link} (optional, for development).
 . {postgres_link} (optional, for development).
 . {hanami_link} (optional, for development).
-. A {trmnl_link} device (optional, can use virtual device instead).
+. {chrome_link} (optional, for development): For screen generation via the headless browser.
+. A {trmnl_link} device (can use a virtual device too).
 
 == Quick Start
 
