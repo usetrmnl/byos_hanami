@@ -40,8 +40,10 @@ RSpec.configure do |config|
   config.define_derived_metadata(file_path: %r(/spec/features/)) { it[:type] = :feature }
   config.define_derived_metadata(file_path: %r(/spec/requests/)) { it[:type] = :request }
 
-  config.include_context "with application dependencies", type: :request
   config.include_context "with application dependencies", type: :feature
+  config.include_context "with application dependencies", type: :request
+  config.include_context "with user statuses", type: :feature
+  config.include_context "with user statuses", type: :request
   config.include_context "with login", type: :feature
 
   databases = proc do
@@ -53,11 +55,8 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    Hanami::CLI::Commands::App::DB::Seed.new.call
-
     databases.call.each do |db|
-      DatabaseCleaner[:sequel, db:].clean_with :truncation,
-                                               except: %w[schema_migrations user_status]
+      DatabaseCleaner[:sequel, db:].clean_with :truncation, except: %w[schema_migrations]
     end
   end
 

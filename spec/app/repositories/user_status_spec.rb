@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Repositories::UserStatus, :db do
   subject(:repository) { described_class.new }
 
-  before { Hanami::CLI::Commands::App::DB::Seed.new.call }
+  include_context "with user statuses"
 
   describe "#all" do
     it "answers predefined records" do

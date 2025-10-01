@@ -5,9 +5,9 @@ require "hanami_helper"
 RSpec.describe Terminus::Repositories::User, :db do
   subject(:repository) { described_class.new }
 
-  let(:user) { Factory[:user] }
+  include_context "with user statuses"
 
-  before { Hanami::CLI::Commands::App::DB::Seed.new.call }
+  let(:user) { Factory[:user] }
 
   describe "#all" do
     it "answers all records by created date/time" do

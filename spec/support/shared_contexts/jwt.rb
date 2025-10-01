@@ -11,8 +11,5 @@ RSpec.shared_context "with JWT" do
     JSON[last_response.body, symbolize_names: true].fetch :access_token
   end
 
-  before do
-    Hanami::CLI::Commands::App::DB::Seed.new.call
-    Factory[:user_password_hash, id: user.id]
-  end
+  before { Factory[:user_password_hash, id: user.id] }
 end
