@@ -19,6 +19,8 @@ module Terminus
 
       def find_by(**) = account.where(**).one
 
+      def find_or_create(**) = find_by(**) || create(**)
+
       def search key, value
         account.where(Sequel.ilike(key, "%#{value}%"))
                .order { created_at.asc }
