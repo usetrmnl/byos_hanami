@@ -20,9 +20,9 @@ module Terminus
       def find_by(**) = with_status.where(**).one
 
       def search key, value
-        user.where(Sequel.ilike(key, "%#{value}%"))
-            .order { created_at.asc }
-            .to_a
+        with_status.where(Sequel.ilike(key, "%#{value}%"))
+                   .order { created_at.asc }
+                   .to_a
       end
 
       def where(**)
