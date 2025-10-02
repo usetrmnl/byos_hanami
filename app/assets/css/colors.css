@@ -1,11 +1,12 @@
 :root {
   --site-black: oklch(0% 0% 0deg);
+  --site-blue: oklch(61% 54% 258deg);
+  --site-darkgrey: oklch(47% 0% 0deg);
+  --site-darkorange: oklch(0.61 0.1931 37.38);
+  --site-green: oklch(65% 35% 155deg);
+  --site-lightgrey: oklch(83% 0% 264deg);
+  --site-orange: oklch(0.69 0.1855 32.11);
   --site-red: oklch(53% 54% 29deg);
   --site-white: oklch(100% 0% 90deg);
-  --site-lightgrey: oklch(83% 0% 264deg);
-  --site-darkgrey: oklch(47% 0% 0deg);
-  --site-green: oklch(65% 35% 155deg);
-  --site-blue: oklch(61% 54% 258deg);
-  --site-orange: oklch(0.69 0.1855 32.11);
-  --site-darkorange: oklch(0.61 0.1931 37.38);
+  --site-yellow: hsl(44.875, 100%, 75%);
 }
