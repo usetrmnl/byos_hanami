@@ -18,7 +18,7 @@ module Terminus
 
       handle_rodauth_redirect(rodauth, response) { rodauth.require_account }
 
-      response[:current_account_id] = rodauth.account_id
+      response[:current_user_id] = rodauth.account_id
     end
 
     private
