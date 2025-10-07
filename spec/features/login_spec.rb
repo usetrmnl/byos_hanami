@@ -3,7 +3,9 @@
 require "hanami_helper"
 
 RSpec.describe "Login", :db do
-  it "logout and login", :aggregate_failures do
+  let(:repository) { Hanami.app["repositories.user"] }
+
+  it "logs out and in", :aggregate_failures do
     visit "/logout"
     check "Logout all Logged In Sessions?"
     click_button "Logout"
@@ -15,5 +17,19 @@ RSpec.describe "Login", :db do
     click_button "Login"
 
     expect(page).to have_content "You have been logged in."
+  end
+
+  it "logs out but can't log in when account is not verified", :aggregate_failures do
+    repository.update user.id, status_id: 1
+
+    visit "/logout"
+    check "Logout all Logged In Sessions?"
+    click_button "Logout"
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Login"
+
+    expect(page).to have_content "Your account requires verification before proceeding. " \
+                                 "Please contact administration for access"
   end
 end

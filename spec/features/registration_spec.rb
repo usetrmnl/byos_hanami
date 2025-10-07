@@ -3,11 +3,21 @@
 require "hanami_helper"
 
 RSpec.describe "Registration", :db do
-  it "logout and register", :aggregate_failures do
+  let(:database) { Hanami.app["db.gateway"].connection }
+
+  before do
     visit "/logout"
     check "Logout all Logged In Sessions?"
     click_button "Logout"
 
+    database[:user_active_session_key].delete
+    database[:user_authentication_audit_log].delete
+    database[:user_jwt_refresh_key].delete
+    database[:user_password_hash].delete
+    database[:user].delete
+  end
+
+  it "register first user", :aggregate_failures do
     visit "/register"
     fill_in "Name", with: "Jill Test"
     fill_in "Email", with: "jill@test.io"
@@ -24,10 +34,6 @@ RSpec.describe "Registration", :db do
   end
 
   it "registers multiple users for the default account", :aggregate_failures do
-    visit "/logout"
-    check "Logout all Logged In Sessions?"
-    click_button "Logout"
-
     visit "/register"
     fill_in "Name", with: "Jill Test"
     fill_in "Email", with: "jill@test.io"
@@ -36,6 +42,7 @@ RSpec.describe "Registration", :db do
     click_button "Create"
 
     expect(page).to have_content "Your account has been created"
+    expect(database[:user].where(email: "jill@test.io").first).to include(status_id: 2)
 
     visit "/logout"
     check "Logout all Logged In Sessions?"
@@ -48,6 +55,7 @@ RSpec.describe "Registration", :db do
     fill_in "Password", with: "password-123"
     click_button "Create"
 
-    expect(page).to have_content "Your account has been created"
+    expect(page).to have_content "Your account requires verification before proceeding. " \
+                                 "Please contact administration for access"
   end
 end

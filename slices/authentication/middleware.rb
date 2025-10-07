@@ -9,6 +9,9 @@ require_relative "feature"
 module Authentication
   # Specialized Roda middleware for authentication.
   class Middleware < Roda
+    UNVERIFIED_ID = 1
+    VERIFIED_ID = 2
+
     plugin :middleware
 
     plugin :rodauth, json: true do
@@ -39,6 +42,15 @@ module Authentication
       template_opts layout: nil
       unverified_account_message "Unverified user, please verify before logging in."
 
+      after_login do
+        unless account[:status_id] == VERIFIED_ID
+          logout
+          set_redirect_error_flash "Your account requires verification before proceeding. " \
+                                   "Please contact administration for access."
+          redirect "/login"
+        end
+      end
+
       # Feature (automatic): login_password_requirements_base
       require_password_confirmation? false
 
@@ -68,11 +80,19 @@ module Authentication
 
       after_create_account do
         user_id = account[:id]
+        status_id = db[:user].one? ? VERIFIED_ID : UNVERIFIED_ID
         account_id = db[:account].insert_conflict(target: :name, update: {name: "default"})
                                  .insert name: "default", label: "Default"
 
-        db[:user].where(id: user_id).update name: param("name")
-        db[:membership].insert user_id: user_id, account_id:
+        db[:user].where(id: user_id).update(name: param("name"), status_id:)
+        db[:membership].insert(user_id: user_id, account_id:)
+
+        unless status_id == VERIFIED_ID
+          logout
+          set_redirect_error_flash "Your account requires verification before proceeding. " \
+                                   "Please contact administration for access."
+          redirect "/login"
+        end
       end
 
       # Feature (custom): hanami
