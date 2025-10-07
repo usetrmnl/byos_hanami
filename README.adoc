@@ -155,7 +155,9 @@ There are several environment variables you can use to customize behavior by upd
 
 === Users
 
-Once logged in, you can manage your settings as follows:
+When launching this application for the first time, there will be no users. The first user to register will automatically be given _Verified_ status along with full access to the system. All subsequent users will marked as _Unverified_ and must be manually _Verified_ in order to have access to the system. In the future, more fine grained control will be provided for individual users, roles, and permissions.
+
+Also, once logged in, you can manage your settings as follows:
 
 * Visit `/me/login` to update your email address.
 * Visit `/me/password` to update your password.
