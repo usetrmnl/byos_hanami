@@ -15,7 +15,7 @@ services:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     volumes:
       - ".:/app"
-    command: bin/docker/entrypoint-dev
+    command: bin/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
     depends_on:
       database:
         condition: service_healthy
