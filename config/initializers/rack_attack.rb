@@ -17,5 +17,3 @@ allowed_subnets = [
 Rack::Attack.safelist "allow subnets" do |request|
   allowed_subnets.any? { |subnet| subnet.include? request.ip }
 end
-
-Rack::Attack.throttle("requests by IP", limit: 100, period: 60, &:ip)
