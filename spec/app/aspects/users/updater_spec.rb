@@ -35,7 +35,7 @@ RSpec.describe Terminus::Aspects::Users::Updater, :db do
         )
       end
 
-      it "updated password" do
+      it "updates password" do
         user
         Factory[:user_password_hash, id: user.id]
         attributes[:user][:password] = "test-12345"
@@ -49,6 +49,14 @@ RSpec.describe Terminus::Aspects::Users::Updater, :db do
 
       it "doesn't update password when not supplied" do
         user
+        updater.call(**attributes).value!
+
+        expect(Hanami.app["relations.user_password_hash"].by_pk(user.id).one).to be(nil)
+      end
+
+      it "doesn't update password when blank" do
+        user
+        attributes[:user][:password] = ""
         updater.call(**attributes).value!
 
         expect(Hanami.app["relations.user_password_hash"].by_pk(user.id).one).to be(nil)

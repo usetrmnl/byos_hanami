@@ -2,6 +2,7 @@
 
 require "bcrypt"
 require "initable"
+require "refinements/string"
 
 module Terminus
   module Aspects
@@ -15,6 +16,8 @@ module Terminus
         ]
         include Initable[encryptor: BCrypt::Password]
         include Dry::Monads[:result]
+
+        using Refinements::String
 
         def call(**attributes)
           result = contract.call(attributes).to_monad
@@ -34,7 +37,7 @@ module Terminus
         end
 
         def update_password user, value
-          return user unless value
+          return user if String(value).blank?
 
           id = user.id
 
