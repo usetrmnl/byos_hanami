@@ -28,8 +28,13 @@ import "../css/pages/playlists.css";
 import "../css/pages/problem_details.css";
 import "../css/pages/screens.css";
 
+import Alpine from "alpinejs";
 import htmx from "htmx.org";
+
+window.Alpine = Alpine;
 window.htmx = htmx;
+
+Alpine.start();
 
 import "htmx-ext-sse";
 import "htmx-remove";

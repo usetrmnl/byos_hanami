@@ -29,7 +29,7 @@
 
     <%= tag.link title: "Terminus: Stylesheet", rel: :stylesheet, href: assets["app.css"] %>
 
-    <%= javascript_tag "app" %>
+    <%= javascript_tag "app", defer: true %>
   </head>
 
   <body class="site-page">
