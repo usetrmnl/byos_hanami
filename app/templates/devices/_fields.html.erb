@@ -54,11 +54,15 @@
       <%= render "shared/popovers/trigger", name: :mac_address %>
     </label>
 
-    <%= tag.input id: :device_mac_address,
-                  name: "device[mac_address]",
-                  type: :password,
-                  value: field_for(:mac_address, fields, device),
-                  class: :value %>
+    <div class="input-group" x-data="{ show: false }">
+      <%= tag.input id: :device_mac_address,
+                    name: "device[mac_address]",
+                    value: field_for(:mac_address, fields, device),
+                    class: "value value-half",
+                    "x-bind:type" => "show ? 'text' : 'password'"%>
+
+      <%= render "shared/visibility_button" %>
+    </div>
   <% end %>
 
   <%= scope(:form_field, key: :api_key, errors:).render do %>
@@ -67,12 +71,15 @@
       <%= render "shared/popovers/trigger", name: :api_key %>
     </label>
 
-    <%= tag.input id: :device_api_key,
-                  name: "device[api_key]",
-                  type: :password,
-                  value: field_for(:api_key, fields, device),
-                  class: :value %>
+    <div class="input-group" x-data="{ show: false }">
+      <%= tag.input id: :device_api_key,
+                    name: "device[api_key]",
+                    value: field_for(:api_key, fields, device),
+                    class: "value value-half",
+                    "x-bind:type" => "show ? 'text' : 'password'"%>
 
+      <%= render "shared/visibility_button" %>
+    </div>
   <% end %>
 
   <%= scope(:form_field, key: :refresh_rate, errors:).render do %>

@@ -22,12 +22,15 @@
   <%= scope(:form_field, key: :password, errors:).render do %>
     <label class="key" for="user_password">Password</label>
 
-    <%= tag.input id: :user_password,
-                  name: "user[password]",
-                  type: :password,
-                  value: field_for(:password, fields, user),
-                  class: :value,
-                  autocomplete: :password %>
+    <div class="input-group" x-data="{ show: false }">
+      <%= tag.input id: :user_password,
+                    name: "user[password]",
+                    value: field_for(:password, fields, user),
+                    class: "value value-half",
+                    "x-bind:type" => "show ? 'text' : 'password'"%>
+
+      <%= render "shared/visibility_button" %>
+    </div>
   <% end %>
 
   <%= scope(:form_field, key: :status_id, errors:).render do %>
