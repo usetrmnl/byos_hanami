@@ -56,7 +56,7 @@ curl "https://localhost:2443/api/display?base_64=true" \
 Only the `ID` HTTP header is required for all of these API calls but these _optional_ headers can be supplied as well which mimics what each device includes each request:
 
 * `ACCESS_TOKEN`: Can be the API key or an empty string.
-* `BATTERY_VOLTAGE`: Must a a float (usually 0.0 to 4.1).
+* `BATTERY_VOLTAGE`: Must be a float (usually 0.0 to 4.1).
 * `FW_VERSION`: The firmware version (i.e. `1.2.3`).
 * `HOST`: The host (usually the IP address).
 * `REFRESH_RATE`: The refresh rate as saved on the device. Example: 100.
@@ -176,7 +176,7 @@ curl "https://localhost:2443/api/setup/" \
 
 == Server
 
-⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware action might be requried on your part when new changes are released.*
+⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware action might be required on your part when new changes are released.*
 
 These endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. The following features are supported:
 
@@ -201,7 +201,7 @@ curl -X "POST" "https://localhost:2443/login" \
 }'
 ----
 
-The above will yeild the following response:
+The above will yield the following response:
 
 [source,json]
 ----
@@ -424,7 +424,7 @@ curl -X "PATCH" "https://localhost:2443/api/devices/1" \
 }'
 ----
 
-You you change a single attribute or multiple attributes at once.
+You can change a single attribute or multiple attributes at once.
 ====
 
 .PATCH Response
@@ -951,7 +951,7 @@ curl -X "PATCH" "https://localhost:2443/api/screens/1" \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
-    "model_id": "1"
+    "model_id": "1",
     "label": "Demo",
     "name": "demo",
     "content": "<h1>Demo</h1>"
