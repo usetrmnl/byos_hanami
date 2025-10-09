@@ -58,9 +58,9 @@ RSpec.describe Terminus::Views::Scopes::FormField do
       content = scope.render { "Test" }
 
       expect(content).to eq(<<~CONTENT)
-        <p class="form-field">
+        <div class="form-field">
           Test
-        </p>
+        </div>
       CONTENT
     end
 
@@ -68,10 +68,10 @@ RSpec.describe Terminus::Views::Scopes::FormField do
       content = scope.render { "Test" }
 
       expect(content).to eq(<<~CONTENT)
-        <p class="form-field error">
+        <div class="form-field error">
           Test
             <em class="message">invalid and missing</em>
-        </p>
+        </div>
       CONTENT
     end
   end
