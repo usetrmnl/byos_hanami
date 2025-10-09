@@ -176,11 +176,11 @@ curl "https://localhost:2443/api/setup/" \
 
 == Server
 
-⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware there might require action on your part when new changes are released.*
+⚠️ *These endpoints are constantly evolving. We do our best to minimize impact but please be aware action might be requried on your part when new changes are released.*
 
 These endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. The following features are supported:
 
-* All endpoints require authentication using JWT tokens which is explained further below.
+* All endpoints require authentication using JWT tokens which is explained below.
 * All error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which also means you can use Petail to easily parse the error responses in your own application if desired.
 
 === Authentication
@@ -239,6 +239,10 @@ The above will yield the following response:
 ----
 
 With the above response in hand, you can now make new requests to refresh your access token by using the response's `access_token` for your authorization header along with the `refresh_token` for your payload body. A refresh token is valid for 14 days before expiring.
+
+==== Configuration
+
+If you wish to lengthen the amount of time before your JWT token expires, you can configure the `API_ACCESS_TOKEN_PERIOD` environment variable as documented in the link:/README.adoc#_configuration[Configuration].
 
 === Devices
 
@@ -511,6 +515,8 @@ Provides model information which is the core specification for devices and scree
 * `core`: Originates from our {core_link} server and is part of the synchronization process provided by the model link:/doc/background_pollers.adoc[Background Pollers].
 * `terminus`: Originates from Terminus only.
 
+The following provides details on all requests and responses.
+
 .GET Request
 [%collapsible]
 ====
@@ -731,9 +737,7 @@ You'll get an empty hash when there is nothing to delete.
 
 === Screens
 
-Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name. You can find all generated images in `public/assets/screens`.
-
-When making requests, the `Access-Token` is your device's API key. You can obtain this information from within the UI for your specific device.
+Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name.
 
 .GET Request
 [%collapsible]
