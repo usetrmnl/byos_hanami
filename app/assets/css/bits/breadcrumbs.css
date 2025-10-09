@@ -17,15 +17,13 @@
 
 .bit-breadcrumb {
   &:not(:last-child)::after {
-    content: url("../../images/icons/breadcrumb.svg");
+    background: url("../../images/icons/chevron-right.svg") no-repeat center / contain;
+    content: "";
+    display: inline-block;
+    height: 1rem;
     margin-left: 0.4rem;
-  };
-
-  @media only screen and (min-width: 480px) {
-    &:not(:last-child)::after {
-      content: url("../../images/icons/breadcrumb.svg");
-      margin-left: 0.4rem;
-    }
+    width: 1rem;
+    vertical-align: middle;
   }
 
   .link {
