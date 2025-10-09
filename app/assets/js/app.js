@@ -17,7 +17,6 @@ import "../css/bits/links.css";
 import "../css/bits/loaders.css";
 import "../css/bits/pills.css";
 import "../css/bits/popovers.css";
-import "../css/bits/search.css";
 import "../css/bits/secrets.css";
 import "../css/bits/text.css";
 import "../css/pages/dashboard.css";
