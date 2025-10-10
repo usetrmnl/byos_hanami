@@ -61,6 +61,8 @@ STEPS
 COPY .ruby-version Gemfile Gemfile.lock .node-version package.json package-lock.json ./
 
 RUN <<STEPS
+  git clone --bare --depth 1 --single-branch https://github.com/usetrmnl/byos_hanami .git
+  git -C .git fetch --tags
   bundle install
   npm ci
   rm -rf "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
