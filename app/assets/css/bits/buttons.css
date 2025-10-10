@@ -3,13 +3,18 @@
   border: none;
   cursor: pointer;
   padding: 0.3rem 1rem;
+
+  &:disabled {
+    background-color: var(--site-darkgrey);
+    cursor: not-allowed;
+  }
 }
 
 .bit-button-accept {
   background: var(--site-orange);
   color: var(--site-white);
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--site-darkorange);
     text-decoration: none;
   }
@@ -19,7 +24,7 @@
   background: var(--site-white);
   color: var(--site-black);
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
     text-decoration: none;
   }
@@ -29,7 +34,7 @@
   background-color: oklch(from var(--site-red) l c h / 0.8);
   color: var(--site-white);
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--site-red);
     text-decoration: none;
   }
@@ -42,7 +47,7 @@
   cursor: pointer;
   padding: 0;
 
-  &:hover {
+  &:not(:disabled):hover {
     text-decoration: underline;
     text-underline-position: under;
   }
