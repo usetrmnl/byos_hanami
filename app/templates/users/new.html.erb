@@ -13,7 +13,7 @@
       <form action="/users" method="post" class="bit-card bit-form user">
         <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
 
-        <h1 class="label">New Model</h1>
+        <h1 class="label">New User</h1>
 
         <%= render :fields, user:, statuses:, fields: fields.value, errors: %>
 
