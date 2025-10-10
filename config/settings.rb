@@ -7,7 +7,7 @@ module Terminus
   # The application base settings.
   class Settings < Hanami::Settings
     setting :api_uri, constructor: Types::String, default: "http://#{IPFinder.new.wired}:2300"
-    setting :api_access_token_period, constructor: Types::Integer, default: 1_800
+    setting :api_access_token_period, constructor: Types::Params::Integer, default: 1_800
 
     setting :app_secret,
             constructor: Types::String.constrained(filled: true),

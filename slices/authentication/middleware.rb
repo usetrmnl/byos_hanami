@@ -103,7 +103,7 @@ module Authentication
       jwt_refresh_route "api/jwt"
 
       # Feature: jwt_refresh
-      jwt_access_token_not_before_period Hanami.app[:settings].api_access_token_period
+      jwt_access_token_period Hanami.app[:settings].api_access_token_period
       jwt_refresh_token_account_id_column :user_id
       jwt_refresh_token_table :user_jwt_refresh_key
 
