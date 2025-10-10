@@ -19,14 +19,5 @@ RSpec.describe Terminus::Views::Screens::Welcome::New do
     it "includes MAC Address" do
       expect(view.call(device:).to_s).to include(%(<dd class="value">A1:B2:C3:D4:E5:F6</dd>))
     end
-
-    it "includes firmware version" do
-      expect(view.call(device:).to_s).to include(%(<dd class="value">1.2.3</dd>))
-    end
-
-    it "includes question mark when firmware version isn't defined" do
-      device = Factory.structs[:device, firmware_version: nil]
-      expect(view.call(device:).to_s).to include(%(<dd class="value">?</dd>))
-    end
   end
 end
