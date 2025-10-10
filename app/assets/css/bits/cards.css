@@ -37,7 +37,7 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+    gap: 1rem;
     justify-content: center;
   }
 }
