@@ -29,7 +29,10 @@
         <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "save_button", verb: :put, path: "/devices/#{device.id}" %>
+          <%= render "shared/save_button",
+                     verb: :put,
+                     path: routes.path(:device_update, id: device.id),
+                     target: ".page-devices" %>
 
           <a href="<%= routes.path :device, id: device.id %>"
              class="bit-button-decline"

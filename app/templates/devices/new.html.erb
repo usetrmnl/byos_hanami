@@ -18,7 +18,11 @@
         <%= render :fields, models:, playlists:, device:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "save_button", verb: :post, path: "/devices" %>
+          <%= render "shared/save_button",
+                     verb: :post,
+                     path: routes.path(:device_create),
+                     target: ".page-devices" %>
+
           <%= link_to "Cancel", routes.path(:devices), class: "bit-button-decline" %>
         </div>
       </form>

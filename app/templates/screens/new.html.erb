@@ -18,7 +18,11 @@
         <%= render :fields, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "save_button", verb: :post, path: routes.path(:screens) %>
+          <%= render "shared/save_button",
+                     verb: :post,
+                     path: routes.path(:screen_create),
+                     target: ".page-screens" %>
+
           <%= link_to "Cancel", routes.path(:screens), class: "bit-button-decline" %>
         </div>
       </form>

@@ -26,7 +26,10 @@
         <%= render :fields, model:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "save_button", verb: :put, path: routes.path(:model, id: model.id) %>
+          <%= render "shared/save_button",
+                     verb: :put,
+                     path: routes.path(:model_update, id: model.id),
+                     target: ".page-models" %>
 
           <a href="<%= routes.path :model, id: model.id %>"
              class="bit-button-decline"
