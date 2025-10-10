@@ -1,0 +1,11 @@
+<%= tag.input type: :submit,
+              value: "Save",
+              class: "bit-button-accept",
+              **HTMX[
+                verb => path,
+                trigger: "click, keyup[ctrlKey&&key=='s'] from:body",
+                target: "closest #{target}",
+                swap: "outerHTML",
+                disabled_elt: "this",
+                push_url: "true"
+              ] %>
