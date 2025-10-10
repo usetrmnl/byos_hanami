@@ -6,21 +6,13 @@
   <%= tag.span model.dimensions %>
 
   <div class="actions">
-   <a href="<%= routes.path :model, id: model.id %>"
-      hx-get="<%= routes.path :model, id: model.id %>"
-      hx-target="closest .page-models"
-      hx-swap="outerHTML"
-      hx-push-url="true">
-     View
-   </a>
+    <%= render "shared/view",
+               path: routes.path(:model, id: model.id),
+               target: "closest .page-models" %>
 
-    <a href="<%= routes.path :model_edit, id: model.id %>"
-       hx-get="<%= routes.path :model_edit, id: model.id %>"
-       hx-target="closest .page-models"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      Edit
-    </a>
+    <%= render "shared/edit",
+               path: routes.path(:model_edit, id: model.id),
+               target: "closest .page-models" %>
 
     <%= render "shared/delete",
                path: routes.path(:model_delete, id: model.id),
