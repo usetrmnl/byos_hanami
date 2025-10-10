@@ -200,24 +200,28 @@
   background-color: oklch(from var(--site-lightgrey) l c h / 0.8);
   color: var(--site-darkgrey);
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
   grid-area: site-footer;
-  justify-content: flex-end;
-  padding: 1.5rem 4rem;
+  justify-content: center;
+  padding: 1rem;
 
-  @media only screen and (max-width: 480px) {
-    padding: 1.5rem 1rem;
+  @media only screen and (min-width: 700px) {
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+  }
+
+  .item {
+    text-align: center;
   }
 
   .links {
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 1.2rem;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: 500;
-    align-items: center;
+    gap: 1rem;
     justify-content: center;
     list-style: none;
     margin: 0;
