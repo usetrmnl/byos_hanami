@@ -142,6 +142,13 @@ button, input:where([type="submit"], [type="reset"], [type="button"]) {
   font-size: 0.9rem;
 }
 
+:where(search) {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
 :where(table) {
   width: 100%;
 }

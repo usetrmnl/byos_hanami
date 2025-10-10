@@ -45,21 +45,39 @@
     }
   }
 
-  .value-half {
+  .value-cap {
     border-radius: 0.5rem 0 0 0.5rem;
     border-right: none;
   }
 
-  .action-half {
-    background: none;
-    border-radius: 0 0.5rem 0.5rem 0;
+  .action, .action-end {
+    background-color: var(--site-white);
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
     cursor: pointer;
     outline: none;
+    padding: 0 0.5rem;
+
+    &:active, &:hover {
+      background-color: oklch(from var(--site-lightgrey) l c h / 0.5);
+    }
 
     &:focus {
       border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
     }
+  }
+
+  .action {
+    display: flex;
+    align-items: center;
+    border-right-color: transparent;
+
+    :where(img) {
+      vertical-align: middle;
+    }
+  }
+
+  .action-end {
+    border-radius: 0 0.5rem 0.5rem 0;
   }
 
   .checkbox {
