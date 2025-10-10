@@ -58,7 +58,7 @@
       <%= tag.input id: :device_mac_address,
                     name: "device[mac_address]",
                     value: field_for(:mac_address, fields, device),
-                    class: "value value-half",
+                    class: "value value-cap",
                     "x-bind:type" => "show ? 'text' : 'password'"%>
 
       <%= render "shared/visibility_button" %>
@@ -75,7 +75,7 @@
       <%= tag.input id: :device_api_key,
                     name: "device[api_key]",
                     value: field_for(:api_key, fields, device),
-                    class: "value value-half",
+                    class: "value value-cap",
                     "x-bind:type" => "show ? 'text' : 'password'"%>
 
       <%= render "shared/visibility_button" %>

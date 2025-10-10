@@ -1,22 +1,29 @@
 <search>
-  <%= tag.form(action: path, method: :get, class: "bit-search-form") do %>
-    <input id="search"
-           name="query"
-           value="<%= query %>"
-           class="value"
-           hx-get="<%= path %>"
-           hx-trigger="search, keyup delay:200ms changed"
-           hx-select="<%= pick %>"
-           hx-target="<%= target %>"
-           hx-swap="outerHTML"
-           hx-push-url="true"
-           hx-indicator=".bit-loader"/>
+  <%= tag.form(action: path, method: :get, class: "bit-form") do %>
+    <div class="input-group">
+      <%= tag.input id: :search,
+                    name: :query,
+                    class: "value value-cap",
+                    tabindex: 1,
+                    **HTMX[
+                      get: path,
+                      trigger: "search, keyup delay:200ms changed",
+                      select: pick,
+                      target:,
+                      swap: "outerHTML",
+                      push_url: true,
+                      indicator: ".bit-loader"
+                    ] %>
 
-      <div class="bit-loader htmx-indicator"></div>
+      <%= link_to path, class: "action", tabindex: 2 do %>
+        <%= image_tag "icons/cancel.svg", alt: "Clear", width: 25, height: 25 %>
+      <% end %>
 
-      <div class="actions">
-        <input type="submit" value="Search" class="bit-button-accept"/>
-        <%= link_to "Clear", path, class: "bit-button-decline" %>
-      </div>
+      <button type="submit" class="action-end" tabindex="3">
+        <%= image_tag "icons/search.svg", alt: "Search", width: 25, height: 25 %>
+      </button>
+    </div>
   <% end %>
+
+  <div class="bit-loader htmx-indicator"></div>
 </search>

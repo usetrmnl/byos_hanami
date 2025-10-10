@@ -26,7 +26,7 @@
       <%= tag.input id: :user_password,
                     name: "user[password]",
                     value: field_for(:password, fields, user),
-                    class: "value value-half",
+                    class: "value value-cap",
                     "x-bind:type" => "show ? 'text' : 'password'"%>
 
       <%= render "shared/visibility_button" %>
