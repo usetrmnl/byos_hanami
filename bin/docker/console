@@ -10,5 +10,5 @@ docker run \
        --pull never \
        --interactive \
        --tty \
-       --rm terminus:latest \
+       --rm terminus-development-web:latest \
        bash
