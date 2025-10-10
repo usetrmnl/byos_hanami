@@ -64,7 +64,7 @@
   margin: 0;
 }
 
-button, input:where([type="submit"], [type="reset"], [type="button"]) {
+:where(button), input:where([type="submit"], [type="reset"], [type="button"]) {
   background: CanvasText;
   color: Canvas;
   border: 0.1rem solid transparent;
