@@ -8,12 +8,15 @@
   <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">
-    <input type="submit"
-           value="Save"
-           class="bit-button-accept"
-           hx-put="<%= update_uri %>"
-           hx-target="closest .bit-form"
-           hx-swap="outerHTML">
+    <%= tag.input type: :submit,
+                  value: "Save",
+                  class: "bit-button-accept",
+                  **HTMX[
+                    put: update_uri,
+                    target: "closest .bit-form",
+                    swap: "outerHTML",
+                    disabled_elt: "this"
+                  ] %>
 
     <a href="<%= show_uri %>"
        class="bit-link-cancel"
