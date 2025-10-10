@@ -1,0 +1,5 @@
+<% if path && name %>
+  <%= link_to path, download: name, class: :action do %>
+    <%= image_tag "icons/download.svg", alt: "Download", width: 25, height: 25 %>
+  <% end %>
+<% end %>
