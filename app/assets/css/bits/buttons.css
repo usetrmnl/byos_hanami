@@ -2,6 +2,7 @@
   border-radius: 1.5rem;
   border: none;
   cursor: pointer;
+  display: flex;
   padding: 0.3rem 1rem;
 
   &:disabled {
@@ -45,6 +46,7 @@
   border: none;
   color: var(--site-red);
   cursor: pointer;
+  display: flex;
   padding: 0;
 
   &:not(:disabled):hover {

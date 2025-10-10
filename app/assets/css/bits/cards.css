@@ -37,7 +37,16 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
     justify-content: center;
+    border: 0.1rem solid var(--site-lightgrey);
+    border-radius: 0.5rem;
+  }
+
+  .action {
+    padding: 0.5rem;
+
+    &:hover {
+      background-color: oklch(from var(--site-lightgrey) l c h / 0.3);
+    }
   }
 }
