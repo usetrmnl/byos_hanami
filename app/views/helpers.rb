@@ -31,6 +31,16 @@ module Terminus
         end
       end
 
+      def git_sha_link
+        sha = Hanami.app[:settings].git_sha
+        link_to sha, "https://github.com/usetrmnl/byos_hanami/commit/#{sha}", class: :link
+      end
+
+      def git_tag_link
+        tag = Hanami.app[:settings].git_tag
+        link_to tag, "https://github.com/usetrmnl/byos_hanami/releases/tag/#{tag}", class: :link
+      end
+
       def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
 
       def human_time(value) = (value.strftime "%I:%M %p" if value)

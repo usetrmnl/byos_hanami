@@ -5,6 +5,8 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Helpers do
   subject(:helper) { described_class }
 
+  include_context "with application dependencies"
+
   describe ".boolean" do
     it "answers green span when true" do
       expect(helper.boolean(true)).to eq(%(<span class="bit-text-green">true</span>))
@@ -40,6 +42,24 @@ RSpec.describe Terminus::Views::Helpers do
     it "answers formatted time string when an instance of Time" do
       record = Data.define(:published_at).new published_at: Time.local(2025, 1, 2, 3, 4)
       expect(helper.field_for(:published_at, attributes, record)).to eq("2025-01-02T03:04")
+    end
+  end
+
+  describe "#git_sha_link" do
+    it "answers link" do
+      expect(helper.git_sha_link).to eq(
+        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/commit/abcdefghijkl">) \
+        "abcdefghijkl</a>"
+      )
+    end
+  end
+
+  describe "#git_tag_link" do
+    it "answers link" do
+      expect(helper.git_tag_link).to eq(
+        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/releases/tag/1.2.3">) \
+        "1.2.3</a>"
+      )
     end
   end
 
