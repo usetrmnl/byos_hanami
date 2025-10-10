@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::Screens::Index, :db do
   subject(:action) { described_class.new }
 
   describe "#call" do
-    let(:screen) { Factory[:screen, label: "Test", name: "test"] }
+    let(:screen) { Factory[:screen, :with_image, label: "Test", name: "test"] }
 
     it "renders standard response with search results" do
       response = Rack::MockRequest.new(action).get "", params: {query: screen.label}

@@ -7,25 +7,17 @@
   <span class="type"><%= screen.dimensions %></span>
 
   <div class="actions">
-   <a href="<%= routes.path :screen, id: screen.id %>"
-      hx-get="<%= routes.path :screen, id: screen.id %>"
-      hx-target="closest .page-screens"
-      hx-swap="outerHTML"
-      hx-push-url="true">
-     View
-   </a>
+    <%= render "shared/actions/show",
+               path: routes.path(:screen, id: screen.id),
+               target: "closest .page-screens" %>
 
-    <a href="<%= routes.path :screen_edit, id: screen.id %>"
-       hx-get="<%= routes.path :screen_edit, id: screen.id %>"
-       hx-target="closest .page-screens"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      Edit
-    </a>
+    <%= render "shared/actions/edit",
+               path: routes.path(:screen_edit, id: screen.id),
+               target: "closest .page-screens" %>
 
-    <a href="<%= screen.image_uri %>" download="<%= screen.image_name %>">Download</a>
+    <%= render "shared/actions/download", path: screen.image_uri, name: screen.image_name %>
 
-    <%= render "shared/delete",
+    <%= render "shared/actions/delete",
                path: routes.path(:screen_delete, id: screen.id),
                confirm: "Are you sure you want to delete this screen?",
                target: "closest .screen" %>

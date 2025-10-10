@@ -6,7 +6,7 @@
   <%= tag.td human_at(firmware.created_at) %>
 
   <td class="actions">
-    <%= render "shared/delete",
+    <%= render "shared/actions/delete",
                path: routes.path(:firmware_delete, id: firmware.id),
                confirm: "Are you sure you want to delete this firmware?",
                target: "closest .firmware" %>

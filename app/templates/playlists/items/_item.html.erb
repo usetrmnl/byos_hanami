@@ -1,17 +1,12 @@
-<% edit_uri = routes.path :playlist_item_edit, playlist_id: item.playlist_id, id: item.id %>
-
 <div class="item">
   <%= render "shared/screen", uri: item.screen.image_uri %>
 
   <div class="actions">
-    <a href="<%= edit_uri %>"
-       hx-get="<%= edit_uri %>"
-       hx-target="closest .item"
-       hx-swap="outerHTML">
-      Edit
-    </a>
+    <%= render "shared/actions/edit",
+               path: routes.path(:playlist_item_edit, playlist_id: item.playlist_id, id: item.id),
+               target: "closest .item" %>
 
-    <%= render "shared/delete",
+    <%= render "shared/actions/delete",
                path: routes.path(:playlist_item_delete, playlist_id: item.playlist_id, id: item.id),
                confirm: "Are you sure you want to delete this item?",
                target: "closest .item" %>

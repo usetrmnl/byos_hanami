@@ -1,5 +1,5 @@
-.bit-button-accept, .bit-button-decline, .bit-button-danger {
-  border-radius: 1.5rem;
+.bit-button, .bit-button-accept, .bit-button-decline {
+  background: none;
   border: none;
   cursor: pointer;
   display: flex;
@@ -12,7 +12,8 @@
 }
 
 .bit-button-accept {
-  background: var(--site-orange);
+  background-color: var(--site-orange);
+  border-radius: 1.5rem;
   color: var(--site-white);
 
   &:not(:disabled):hover {
@@ -22,35 +23,12 @@
 }
 
 .bit-button-decline {
-  background: var(--site-white);
+  background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
+  border-radius: 1.5rem;
   color: var(--site-black);
 
   &:not(:disabled):hover {
-    background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
+    background-color: var(--site-lightgrey);
     text-decoration: none;
-  }
-}
-
-.bit-button-danger {
-  background-color: oklch(from var(--site-red) l c h / 0.8);
-  color: var(--site-white);
-
-  &:not(:disabled):hover {
-    background-color: var(--site-red);
-    text-decoration: none;
-  }
-}
-
-.bit-button-delete {
-  background: none;
-  border: none;
-  color: var(--site-red);
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-
-  &:not(:disabled):hover {
-    text-decoration: underline;
-    text-underline-position: under;
   }
 }

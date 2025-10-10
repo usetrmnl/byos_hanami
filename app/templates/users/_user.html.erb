@@ -5,20 +5,12 @@
   <%= tag.span user.status.name, class: "bit-pill bit-pill-#{user.pill}" %>
 
   <div class="actions">
-   <a href="<%= routes.path :user, id: user.id %>"
-      hx-get="<%= routes.path :user, id: user.id %>"
-      hx-target="closest .page-users"
-      hx-swap="outerHTML"
-      hx-push-url="true">
-     View
-   </a>
+   <%= render "shared/actions/show",
+              path: routes.path(:user, id: user.id),
+              target: "closest .page-users" %>
 
-    <a href="<%= routes.path :user_edit, id: user.id %>"
-       hx-get="<%= routes.path :user_edit, id: user.id %>"
-       hx-target="closest .page-users"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      Edit
-    </a>
+   <%= render "shared/actions/edit",
+              path: routes.path(:user_edit, id: user.id),
+              target: "closest .page-users" %>
   </div>
 </li>

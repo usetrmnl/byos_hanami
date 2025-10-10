@@ -8,6 +8,11 @@ RSpec.describe Terminus::Actions::Devices::Show, :db do
   describe "#call" do
     let(:device) { Factory[:device] }
 
+    it "renders default response" do
+      response = Rack::MockRequest.new(action).get "", params: {id: device.id}
+      expect(response.body).to include("<!DOCTYPE html>")
+    end
+
     it "renders htmx response" do
       response = Rack::MockRequest.new(action)
                                   .get "", "HTTP_HX_REQUEST" => "true", params: {id: device.id}

@@ -20,10 +20,10 @@
                  target: "next .bit-container" %>
 
 
-      <%= render "shared/delete",
+      <%= render "shared/actions/delete",
                  path: routes.path(:bulk_device_logs_delete, device_id: device.id),
                  label: "Delete All",
-                 class: "bit-button-danger",
+                 class: "bit-button",
                  confirm: "Are you sure you want to delete all logs for this device?",
                  target: ".bit-container" %>
     </div>

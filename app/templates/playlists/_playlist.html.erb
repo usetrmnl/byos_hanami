@@ -6,31 +6,19 @@
   <div class="bit-pill bit-pill-active">Current Screen</div>
 
   <div class="actions">
-    <a href="<%= routes.path :playlist, id: playlist.id %>"
-       hx-get="<%= routes.path :playlist, id: playlist.id %>"
-       hx-target="closest .page-playlists"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      View
-    </a>
+    <%= render "shared/actions/show",
+               path: routes.path(:playlist, id: playlist.id),
+               target: "closest .page-playlists" %>
 
-    <a href="<%= routes.path :playlist_edit, id: playlist.id %>"
-       hx-get="<%= routes.path :playlist_edit, id: playlist.id %>"
-       hx-target="closest .page-playlists"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      Edit
-    </a>
+    <%= render "shared/actions/edit",
+               path: routes.path(:playlist_edit, id: playlist.id),
+               target: "closest .page-playlists" %>
 
-    <a href="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
-       hx-get="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
-       hx-target="closest .page-playlists"
-       hx-swap="outerHTML"
-       hx-push-url="true">
-      Mirror
-    </a>
+    <%= render "shared/actions/mirror",
+               path: routes.path(:playlist_mirror_edit, id: playlist.id),
+               target: "closest .page-playlists" %>
 
-    <%= render "shared/delete",
+    <%= render "shared/actions/delete",
                path: routes.path(:playlist_delete, id: playlist.id),
                confirm: "Are you sure you want to delete this playlist?",
                target: "closest .playlist" %>

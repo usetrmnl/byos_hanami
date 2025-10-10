@@ -8,11 +8,17 @@
   <%= render "measurements", device: %>
 
   <div class="actions">
-    <%= link_to "View", routes.path(:device, id: device.id) %>
-    <%= render "edit_link", device: %>
-    <%= link_to "Logs", routes.path(:device_logs, device_id: device.id) %>
+    <%= render "shared/actions/show",
+               path: routes.path(:device, id: device.id),
+               target: "closest .page-devices" %>
 
-    <%= render "shared/delete",
+    <%= render "shared/actions/edit",
+               path: routes.path(:device_edit, id: device.id),
+               target: "closest .page-devices" %>
+
+    <%= render "shared/actions/logs", path: routes.path(:device_logs, device_id: device.id) %>
+
+    <%= render "shared/actions/delete",
                path: routes.path(:device_delete, id: device.id),
                confirm: "Are you sure you want to delete this device?",
                target: "closest .device" %>

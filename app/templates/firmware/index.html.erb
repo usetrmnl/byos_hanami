@@ -34,10 +34,10 @@
                  pick: ".bit-container",
                  target: "next .bit-container" %>
 
-      <%= render "shared/delete",
+      <%= render "shared/actions/delete",
                  path: routes.path(:bulk_firmware_delete),
                  label: "Delete All",
-                 class: "bit-button-danger",
+                 class: "bit-button",
                  confirm: "Are you sure you want to delete all firmware?",
                  target: ".bit-container" %>
     </div>

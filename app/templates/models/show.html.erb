@@ -12,14 +12,10 @@
     <div class="bit-card model">
       <h2 class="label"><%= model.label %></h2>
 
-      <div class="bit-actions">
-        <a href="<%= routes.path :model_edit, id: model.id %>"
-           hx-get="<%= routes.path :model_edit, id: model.id %>"
-           hx-target="closest .page-models"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-          Edit
-        </a>
+      <div class="actions">
+        <%= render "shared/actions/edit",
+                   path: routes.path(:model_edit, id: model.id),
+                   target: "closest .page-models" %>
       </div>
 
       <dl class="bit-definition-list">

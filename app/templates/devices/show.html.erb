@@ -18,9 +18,12 @@
 
       <%= render "measurements", device: %>
 
-      <div class="bit-actions">
-        <%= render "edit_link", device: %>
-        <%= link_to "Logs", routes.path(:device_logs, device_id: device.id) %>
+      <div class="actions">
+        <%= render "shared/actions/edit",
+                   path: routes.path(:device_edit, id: device.id),
+                   target: "closest .page-devices" %>
+
+        <%= render "shared/actions/logs", path: routes.path(:device_logs, device_id: device.id) %>
       </div>
 
       <dl class="bit-definition-list">

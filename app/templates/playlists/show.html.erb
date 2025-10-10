@@ -15,22 +15,14 @@
     <div class="bit-card playlist">
       <h2 class="label"><%= playlist.label %></h2>
 
-      <div class="bit-actions">
-        <a href="<%= routes.path :playlist_edit, id: playlist.id %>"
-           hx-get="<%= routes.path :playlist_edit, id: playlist.id %>"
-           hx-target="closest .page-playlists"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-          Edit
-        </a>
+      <div class="actions">
+        <%= render "shared/actions/edit",
+                   path: routes.path(:playlist_edit, id: playlist.id),
+                   target: "closest .page-playlists" %>
 
-        <a href="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
-           hx-get="<%= routes.path :playlist_mirror_edit, id: playlist.id %>"
-           hx-target="closest .page-playlists"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-          Mirror
-        </a>
+        <%= render "shared/actions/mirror",
+                   path: routes.path(:playlist_mirror_edit, id: playlist.id),
+                   target: "closest .page-playlists" %>
       </div>
 
       <dl class="bit-definition-list">

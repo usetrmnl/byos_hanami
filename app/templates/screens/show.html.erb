@@ -14,14 +14,12 @@
 
       <%= render "shared/screen", uri: screen.image_uri %>
 
-      <div class="bit-actions">
-        <a href="<%= routes.path :screen_edit, id: screen.id %>"
-           hx-get="<%= routes.path :screen_edit, id: screen.id %>"
-           hx-target="closest .page-screens"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-          Edit
-        </a>
+      <div class="actions">
+        <%= render "shared/actions/edit",
+                   path: routes.path(:screen_edit, id: screen.id),
+                   target: "closest .page-screens" %>
+
+        <%= render "shared/actions/download", path: screen.image_uri, name: screen.image_name %>
       </div>
 
       <dl class="bit-definition-list">

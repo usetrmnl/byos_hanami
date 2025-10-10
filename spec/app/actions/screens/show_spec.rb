@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::Screens::Show, :db do
   subject(:action) { described_class.new }
 
   describe "#call" do
-    let(:screen) { Factory[:screen] }
+    let(:screen) { Factory[:screen, :with_image] }
 
     it "renders default response" do
       response = Rack::MockRequest.new(action).get "", params: {id: screen.id}

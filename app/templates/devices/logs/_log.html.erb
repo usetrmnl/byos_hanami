@@ -6,7 +6,7 @@
   <%= tag.td log.retry %>
 
   <td class="actions">
-    <%= render "shared/delete",
+    <%= render "shared/actions/delete",
                path: routes.path(:device_log, device_id: device.id, id: log.id),
                confirm: "Are you sure you want to delete this device log?",
                target: "closest .log" %>
