@@ -1,5 +1,0 @@
-<%= form_for path, **HTMX[delete: path, confirm:, target:, swap: "outerHTML swap:0.3s"] do |form| %>
-  <%= form.hidden_field :_csrf_token, value: csrf_token %>
-  <%= form.submit locals.fetch(:label, "Delete"),
-                  class: locals.fetch(:class, "bit-button-delete") %>
-<% end %>
