@@ -1,7 +1,25 @@
 <ul class="links">
-  <li><%= link_to "TRMNL", "https://usetrmnl.com", class: :link %></li>
-  <li><%= link_to "Guides", "https://docs.usetrmnl.com/go/diy/byos", class: :link %></li>
-  <li><%= link_to "Help", "https://help.usetrmnl.com", class: :link %></li>
-  <li><%= link_to "YouTube", "https://www.youtube.com/@useTRMNL", class: :link %></li>
-  <li><%= link_to "Source", "https://github.com/usetrmnl/byos_hanami", class: :link %></li>
+  <li class="item">Version <%= git_tag_link %> (<%= git_sha_link %>)</li>
+</ul>
+
+<ul class="links">
+  <li class="item">
+    <%= link_to "TRMNL", "https://usetrmnl.com", class: :link %>
+  </li>
+
+  <li class="item">
+    <%= link_to "Guides", "https://docs.usetrmnl.com/go/diy/byos", class: :link %>
+  </li>
+
+  <li class="item">
+    <%= link_to "Help", "https://help.usetrmnl.com", class: :link %>
+  </li>
+
+  <li class="item">
+    <%= link_to "YouTube", "https://www.youtube.com/@useTRMNL", class: :link %>
+  </li>
+
+  <li class="item">
+    <%= link_to "Source", "https://github.com/usetrmnl/byos_hanami", class: :link %>
+  </li>
 </ul>
