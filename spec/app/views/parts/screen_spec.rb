@@ -26,6 +26,14 @@ RSpec.describe Terminus::Views::Parts::Screen do
         expect(part.dimensions).to eq("800x480")
       end
     end
+
+    context "with no dimensions" do
+      let(:screen) { Factory.structs[:screen, image_data: {metadata: {width: nil, height: nil}}] }
+
+      it "answers custom width and height" do
+        expect(part.dimensions).to eq("Unknown")
+      end
+    end
   end
 
   describe "#type" do
