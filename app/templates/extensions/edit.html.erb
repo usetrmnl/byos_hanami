@@ -1,0 +1,75 @@
+<%= render "shared/title", text: "Edit #{extension.label} Extension" %>
+
+<section class="bit-page page-extensions">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb">
+        <%= link_to "Extensions", routes.path(:extensions), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">
+        <%= link_to extension.label, routes.path(:extension, id: extension.id), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="extensions">
+      <form action="<%= routes.path :extension_update, id: extension.id %>"
+            method="put"
+            class="bit-card bit-form extension">
+
+        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
+
+        <h1 class="label">Edit Extension</h1>
+
+        <button type="button"
+                class="bit-button-accept"
+                popovertarget="popover-preview">
+
+          <img src="/assets/icons/eye.svg"
+               alt="Info"
+               class="icon"
+               width="25"
+               height="25"
+               loading="lazy">
+
+          Preview
+        </button>
+
+        <dialog id="popover-preview" class="bit-popover-content" popover="auto">
+          <button type="button"
+                  class="close"
+                  popovertarget="popover-preview"
+                  popovertargetaction="hide">
+            <span aria-hidden="true">❌</span>
+            <span class="screen_reader">Close</span>
+          </button>
+
+          <%= tag.iframe src: routes.path(:extension_preview, id: extension.id),
+                         class: "bit-frame" %>
+        </dialog>
+
+        <%= render :fields, extension:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "shared/save_button",
+                     verb: :put,
+                     path: routes.path(:extension_update, id: extension.id),
+                     target: ".page-extensions" %>
+
+          <a href="<%= routes.path :extension, id: extension.id %>"
+             class="bit-button-decline"
+             hx-get="<%= routes.path :extension, id: extension.id %>"
+             hx-trigger="click"
+             hx-target="closest .page-extensions"
+             hx-push-url="true">
+             Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
