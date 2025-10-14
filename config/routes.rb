@@ -62,6 +62,7 @@ module Terminus
     post "/designer", to: "designer.create", as: :designer_create
 
     get "/extensions", to: "extensions.index", as: :extensions
+    get "/extensions/:id", to: "extensions.show", as: :extension
 
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
