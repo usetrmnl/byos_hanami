@@ -1,0 +1,11 @@
+<%= scope(:popover_content, name: :kind, label: "Kind").render do %>
+  <p>The kind of extension which can have the following behavior:</p>
+
+  <ul>
+    <li><strong>Image</strong>: Use to render a remotely hosted image.</li>
+    <li><strong>Poll</strong>: Use to render API data.</li>
+    <li><strong>Secure</strong>: Use to render authenticated (OAuth) API data.</li>
+    <li><strong>Static</strong>: Use to render static JSON data.</li>
+    <li><strong>Webhook</strong>: Use to render data via a webhook.</li>
+  </ul>
+<% end %>
