@@ -1,0 +1,16 @@
+<li id="<%= extension.id %>" class="bit-card extension">
+  <h2 class="label"><%= extension.label %></h2>
+
+  <%= tag.span extension.kind %>
+
+  <div class="actions">
+    <%= link_to routes.path(:extension_edit, id: extension.id), class: :action do %>
+      <%= image_tag "icons/edit.svg", alt: "Edit", width: 25, height: 25 %>
+    <% end %>
+
+    <%= render "shared/actions/delete",
+               path: routes.path(:extension_delete, id: extension.id),
+               confirm: "Are you sure you want to delete this extension?",
+               target: "closest .extension" %>
+  </div>
+</li>
