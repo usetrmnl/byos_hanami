@@ -1,0 +1,398 @@
+<fieldset class="row">
+  <fieldset class="column"
+            x-data="{
+              kind: '<%= field_for :kind, fields, extension %>',
+              mode: '<%= field_for :mode, fields, extension %>',
+              verb: '<%= field_for :verb, fields, extension %>'
+            }">
+
+    <legend class="legend">Settings</legend>
+
+    <%= scope(:form_field, key: :label, errors:).render do %>
+      <label class="key" for="extension_label">
+        Label
+        <%= render "shared/popovers/trigger", name: :label %>
+      </label>
+
+      <%= tag.input id: :extension_label,
+                    name: "extension[label]",
+                    value: field_for(:label, fields, extension),
+                    class: :value,
+                    autocomplete: :label %>
+    <% end %>
+
+    <%= scope(:form_field, key: :name, errors:).render do %>
+      <label class="key" for="extension_name">
+        Name
+        <%= render "shared/popovers/trigger", name: :name %>
+      </label>
+
+      <%= tag.input id: :extension_name,
+                    name: "extension[name]",
+                    value: field_for(:name, fields, extension),
+                    class: :value,
+                    autocomplete: :name %>
+    <% end %>
+
+    <%= scope(:form_field, key: :description, errors:).render do %>
+      <label class="key" for="extension_description">
+        Description
+        <%= render "shared/popovers/trigger", name: :description %>
+      </label>
+
+      <%= tag.input id: :extension_description,
+                    name: "extension[description]",
+                    value: field_for(:description, fields, extension),
+                    class: :value,
+                    autocomplete: :name %>
+    <% end %>
+
+    <%= scope(
+          :form_field,
+          key: :tags,
+          errors:,
+          alpine: {data: "{tags: #{extension ? extension.alpine_tags : []}, nascence: '', index: 0}"}
+        ).render do %>
+
+      <%= tag.input id: :extension_tags,
+                    name: "extension[tags]",
+                    type: :hidden,
+                    "x-bind:value" => "tags.join(',')" %>
+
+      <label class="key" for="tag">
+        Tags
+        <%= render "shared/popovers/trigger", name: :tags %>
+      </label>
+
+      <%= tag.input id: :tag,
+                    name: :tag,
+                    class: :value,
+                    placeholder: "Type your tag and hit enter to create.",
+                    "x-model" => "nascence",
+                    "x-on:keydown.enter.prevent" => "if (nascence.trim() !== '') { tags.push(nascence.trim()); nascence = '';}" %>
+
+      <div class="bit-pills">
+        <template x-for="(tag, index) in tags" x-bind="index">
+          <button type="button"
+                  class="bit-pill bit-pill-active"
+                  x-text="tag"
+                  x-on:click="tags.splice(index, 1)">
+          </button>
+        </template>
+      </div>
+    <% end %>
+
+    <div class="bit-toggle-field">
+      <h2 class="bit-toggle-label">Mode</h2>
+
+      <%= render "shared/radios/bar",
+                 items: [%w[Dark dark], %w[Light light]],
+                 name: "extension[mode]",
+                 model: "mode" %>
+
+      <p class="help" x-show="mode === 'dark'">Use a dark color scheme.</p>
+      <p class="help" x-show="mode === 'light'">Use a light color scheme.</p>
+    </div>
+
+    <div class="bit-toggle-field">
+      <h2 class="bit-toggle-label">Kind</h2>
+
+      <%= render "shared/radios/bar",
+                 items: [
+                   %w[Image image],
+                   %w[Poll poll],
+                   %w[Static static]
+                 ],
+                 name: "extension[kind]",
+                 model: "kind" %>
+
+      <p class="help" x-show="kind === 'image'">
+        Render a remote image.
+      </p>
+
+      <p class="help" x-show="kind === 'poll'">
+        Render remote API data.
+      </p>
+
+      <p class="help" x-show="kind === 'static'">
+        Render local JSON data.
+      </p>
+    </div>
+
+    <%= scope(:form_field, key: :headers, errors:, alpine: {show: "kind === 'poll'"}).render do %>
+      <label class="key" for="extension_headers">
+        Headers
+        <%= render "shared/popovers/trigger", name: :headers %>
+      </label>
+
+      <textarea id="extension_headers"
+                name="extension[headers]"
+                class="value"
+                autocomplete="name"><%= field_for :formatted_headers, fields, extension %></textarea>
+    <% end %>
+
+    <div class="bit-toggle-field" x-show="kind === 'poll'">
+      <h2 class="bit-toggle-label">Verb</h2>
+
+      <%= render "shared/radios/bar",
+                 items: [%w[GET get], %w[POST post]],
+                 name: "extension[verb]",
+                 show: "kind === 'static'",
+                 model: "verb" %>
+
+      <p class="help" x-show="verb === 'get'">Make a HTTP GET request.</p>
+      <p class="help" x-show="verb === 'post'">Make a HTTP POST request.</p>
+    </div>
+
+    <%= scope(
+          :form_field,
+          key: :uris,
+          errors:,
+          alpine: {show: "kind === 'image' || kind === 'poll'"}
+        ).render do %>
+
+      <label class="key" for="extension_uris">
+        URIs
+        <%= render "shared/popovers/trigger", name: :uris %>
+      </label>
+
+      <textarea id="extension_uris"
+                name="extension[uris]"
+                class="value"
+                autocomplete="name"><%= field_for :formatted_uris, fields, extension %></textarea>
+    <% end %>
+
+    <%= scope(
+          :form_field,
+          key: :poll_body,
+          errors:,
+          alpine: {show: "kind === 'poll'"}
+        ).render do %>
+
+      <label class="key" for="extension_poll_body">
+        Poll Body
+        <%= render "shared/popovers/trigger", name: :poll_body %>
+      </label>
+
+      <textarea id="extension_poll_body"
+                name="extension[poll_body]"
+                class="value"
+                autocomplete="name"><%= field_for :formatted_poll_body, fields, extension %></textarea>
+    <% end %>
+
+    <%= scope(
+          :form_field,
+          key: :static_body,
+          errors:,
+          alpine: {show: "kind === 'static'"}
+        ).render do %>
+
+      <label class="key" for="extension_static_body">
+        Static Body
+        <%= render "shared/popovers/trigger", name: :static_body %>
+      </label>
+
+      <textarea id="extension_static_body"
+                name="extension[static_body]"
+                class="value"
+                autocomplete="name"><%= field_for :formatted_static_body, fields, extension %></textarea>
+    <% end %>
+  </fieldset>
+
+  <fieldset class="column">
+    <fieldset class="column" x-data="{template: 'full'}">
+      <legend class="legend">Templates</legend>
+
+      <div class="bit-toggle-field">
+        <h2 class="bit-toggle-label">Template</h2>
+
+        <%= render "shared/radios/bar",
+                   items: [
+                     %w[Full full],
+                     %w[Horizontal horizontal],
+                     %w[Vertical vertical],
+                     %w[Quarter quarter],
+                     %w[Shared shared]
+                   ],
+                   name: "template",
+                   model: "template" %>
+      </div>
+
+      <%= scope(
+            :form_field,
+            key: :template_full,
+            errors:,
+            alpine: {show: %(template === 'full')}
+          ).render do %>
+
+        <p class="help">
+          Render a full screen of information using a <a href="https://shopify.github.io/liquid">Liquid</a> template.
+        </p>
+
+        <textarea id="extension_template_full"
+                  name="extension[template_full]"
+                  class="value"
+                  autocomplete="name"><%= field_for :template_full, fields, extension %></textarea>
+      <% end %>
+
+      <%= scope(
+            :form_field,
+            key: :template_horizontal,
+            errors:, alpine: {show: %(template === 'horizontal')}
+          ).render do %>
+
+        <p class="help">
+          Render a horizontal screen of information using a <a href="https://shopify.github.io/liquid">Liquid</a> template.
+        </p>
+
+        <textarea id="extension_template_horizontal"
+                  name="extension[template_horizontal]"
+                  class="value"
+                  autocomplete="name"><%= field_for :template_horizontal, fields, extension %></textarea>
+      <% end %>
+
+      <%= scope(:form_field,
+            key: :template_vertical,
+            errors:, alpine: {show: %(template === 'vertical')}
+          ).render do %>
+
+        <p class="help">
+          Render a vertical screen of information using a <a href="https://shopify.github.io/liquid">Liquid</a> template.
+        </p>
+
+        <textarea id="extension_template_vertical"
+                  name="extension[template_vertical]"
+                  class="value"
+                  autocomplete="name"><%= field_for :template_vertical, fields, extension %></textarea>
+      <% end %>
+
+      <%= scope(
+            :form_field,
+            key: :template_quarter,
+            errors:, alpine: {show: %(template === 'quarter')}
+          ).render do %>
+
+        <p class="help">
+          Render a quarter screen of information using a <a href="https://shopify.github.io/liquid">Liquid</a> template.
+        </p>
+
+        <textarea id="extension_template_quarter"
+                  name="extension[template_quarter]"
+                  class="value"
+                  autocomplete="name"><%= field_for :template_quarter, fields, extension %></textarea>
+      <% end %>
+
+      <%= scope(
+            :form_field,
+            key: :template_shared,
+            errors:,
+            alpine: {show: %(template === 'shared')}
+          ).render do %>
+
+         <p class="help">
+           Share common data across all of your <a href="https://shopify.github.io/liquid">Liquid</a> templates.
+         </p>
+
+        <textarea id="extension_template_shared"
+                  name="extension[template_shared]"
+                  class="value"
+                  autocomplete="name"><%= field_for :template_shared, fields, extension %></textarea>
+      <% end %>
+    </fieldset>
+
+    <fieldset class="column">
+      <legend class="legend">Schedule</legend>
+
+      <%= scope(:form_field, key: :repeat_days, errors:).render do %>
+        <label class="key" for="extension_repeat_days">
+          Repeat Days
+          <%= render "shared/popovers/trigger", name: :repeat_days %>
+        </label>
+
+        <%= tag.input id: :extension_repeat_days,
+                      name: "extension[repeat_days]",
+                      value: field_for(:formatted_repeat_days, fields, extension),
+                      class: :value,
+                      autocomplete: :name %>
+      <% end %>
+
+      <%= scope(:form_field, key: :repeat_type, errors:).render do %>
+        <label class="key" for="extension_repeat_type">
+          Repeat Type
+          <%= render "shared/popovers/trigger", name: :repeat_type %>
+        </label>
+
+        <%= tag.select id: :extension_repeat_type, name: "extension[repeat_type]", class: :value do %>
+          <%= tag.option "Select...", value: :none %>
+
+          <% %w[none minute hour day week month year].each do |repeat_type| %>
+            <%= tag.option repeat_type.capitalize,
+                           value: repeat_type,
+                           selected: repeat_type == field_for(:repeat_type, fields, extension) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= scope(:form_field, key: :repeat_interval, errors:).render do %>
+        <label class="key" for="extension_repeat_interval">
+          Repeat Interval
+          <%= render "shared/popovers/trigger", name: :repeat_interval %>
+        </label>
+
+        <%= tag.input id: :extension_repeat_interval,
+                      name: "extension[repeat_interval]",
+                      type: :number,
+                      value: field_for(:repeat_interval, fields, extension),
+                      min: 1,
+                      class: :value %>
+      <% end %>
+
+      <%= scope(:form_field, key: :last_day_of_month, errors:).render do %>
+        <label class="key" for="extension_last_day_of_month">
+          Last Day Of Month
+          <%= render "shared/popovers/trigger", name: :last_day_of_month %>
+        </label>
+
+        <%= tag.input id: :extension_last_day_of_month,
+                      name: "extension[last_day_of_month]",
+                      type: :checkbox,
+                      checked: field_for(:last_day_of_month, fields, extension),
+                      switch: true,
+                      class: :checkbox %>
+      <% end %>
+    </fieldset>
+
+    <fieldset class="column">
+      <legend class="legend">Miscellaneous</legend>
+
+      <%= scope(:form_field, key: :fields, errors:).render do %>
+        <label class="key" for="extension_fields">
+          Fields
+          <%= render "shared/popovers/trigger", name: :fields %>
+        </label>
+
+        <textarea id="extension_fields"
+                  name="extension[fields]"
+                  class="value"
+                  autocomplete="name"><%= field_for :fields, fields, extension %></textarea>
+      <% end %>
+
+      <%= scope(:form_field, key: :padding, errors:).render do %>
+        <label class="key" for="extension_padding">
+          Padding
+          <%= render "shared/popovers/trigger", name: :padding %>
+        </label>
+
+        <%= tag.input id: :extension_padding,
+                      name: "extension[padding]",
+                      type: :checkbox,
+                      checked: field_for(:padding, fields, extension),
+                      switch: true,
+                      class: :checkbox %>
+      <% end %>
+    </fieldset>
+
+  </fieldset>
+</fieldset>
+
+<%= render "popovers/all" %>
