@@ -1,0 +1,158 @@
+<%= render "shared/title", text: "#{extension.label} Extension" %>
+
+<section class="bit-page page-extensions">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/extensions" class="link">Extensions</a></li>
+      <li class="bit-breadcrumb"><%= extension.label %></li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="bit-card extension">
+      <h2 class="label"><%= extension.label %></h2>
+
+      <div class="actions">
+        <%= render "shared/actions/edit",
+                   path: routes.path(:extension_edit, id: extension.id),
+                   target: "closest .page-extensions" %>
+      </div>
+
+      <dl class="bit-definition-list">
+        <dt class="key">
+          Name
+          <%= render "shared/popovers/trigger", name: :name %>
+        </dt>
+        <dd class="value"><%= extension.name %></dd>
+
+        <dt class="key">
+          Description
+          <%= render "shared/popovers/trigger", name: :description %>
+        </dt>
+        <dd class="value"><%= extension.description %></dd>
+
+        <dt class="key">
+          Kind
+          <%= render "shared/popovers/trigger", name: :kind %>
+        </dt>
+        <dd class="value"><%= extension.kind %></dd>
+
+        <dt class="key">
+          Mode
+          <%= render "shared/popovers/trigger", name: :mode %>
+        </dt>
+        <dd class="value"><%= extension.mode %></dd>
+
+        <dt class="key">
+          Tags
+          <%= render "shared/popovers/trigger", name: :tags %>
+        </dt>
+        <dd class="value"><%= extension.tags %></dd>
+
+        <dt class="key">
+          Headers
+          <%= render "shared/popovers/trigger", name: :headers %>
+        </dt>
+        <dd class="value"><%= extension.headers %></dd>
+
+        <dt class="key">
+          Verb
+          <%= render "shared/popovers/trigger", name: :verb %>
+        </dt>
+        <dd class="value"><%= extension.verb %></dd>
+
+        <dt class="key">
+          URIs
+          <%= render "shared/popovers/trigger", name: :uris %>
+        </dt>
+        <dd class="value"><%= extension.formatted_uris %></dd>
+
+        <dt class="key">
+          Poll Body
+          <%= render "shared/popovers/trigger", name: :poll_body %>
+        </dt>
+        <dd class="value"><%= extension.poll_body %></dd>
+
+        <dt class="key">
+          Static Body
+          <%= render "shared/popovers/trigger", name: :static_body %>
+        </dt>
+        <dd class="value"><%= extension.static_body %></dd>
+
+        <dt class="key">
+          Fields
+          <%= render "shared/popovers/trigger", name: :fields %>
+        </dt>
+        <dd class="value"><%= extension.fields %></dd>
+
+        <dt class="key">
+          Padding
+          <%= render "shared/popovers/trigger", name: :padding %>
+        </dt>
+        <dd class="value"><%= extension.padding %></dd>
+
+        <dt class="key">
+          Template (full)
+          <%= render "shared/popovers/trigger", name: :template_full %>
+        </dt>
+        <dd class="value"><%= extension.template_full %></dd>
+
+        <dt class="key">
+          Template (horizontal)
+          <%= render "shared/popovers/trigger", name: :template_horizontal %>
+        </dt>
+        <dd class="value"><%= extension.template_horizontal %></dd>
+
+        <dt class="key">
+          Template (vertical)
+          <%= render "shared/popovers/trigger", name: :template_vertical %>
+        </dt>
+        <dd class="value"><%= extension.template_vertical %></dd>
+
+        <dt class="key">
+          Template (quarter)
+          <%= render "shared/popovers/trigger", name: :template_quarter %>
+        </dt>
+        <dd class="value"><%= extension.template_quarter %></dd>
+
+        <dt class="key">
+          Template (shared)
+          <%= render "shared/popovers/trigger", name: :template_shared %>
+        </dt>
+        <dd class="value"><%= extension.template_shared %></dd>
+
+        <dt class="key">
+          Repeat Interval
+          <%= render "shared/popovers/trigger", name: :repeat_interval %>
+        </dt>
+        <dd class="value"><%= extension.repeat_interval %></dd>
+
+        <dt class="key">
+          Repeat Type
+          <%= render "shared/popovers/trigger", name: :repeat_type %>
+        </dt>
+        <dd class="value"><%= extension.repeat_type %></dd>
+
+        <dt class="key">
+          Repeat Days
+          <%= render "shared/popovers/trigger", name: :repeat_days %>
+        </dt>
+        <dd class="value"><%= extension.repeat_days %></dd>
+
+        <dt class="key">
+          Last Day of Month
+          <%= render "shared/popovers/trigger", name: :last_day_of_month %>
+        </dt>
+        <dd class="value"><%= extension.last_day_of_month %></dd>
+
+        <dt class="key">Created</dt>
+        <dd class="value"><%= human_at extension.created_at %></dd>
+
+        <dt class="key">Updated</dt>
+        <dd class="value"><%= human_at extension.updated_at %></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<%= render "popovers/all" %>
