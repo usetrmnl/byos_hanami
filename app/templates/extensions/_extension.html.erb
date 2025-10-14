@@ -1,0 +1,21 @@
+<li id="<%= extension.id %>" class="bit-card extension">
+  <h2 class="label"><%= extension.label %></h2>
+
+  <%= tag.span extension.name %>
+  <%= tag.span extension.description %>
+
+  <div class="actions">
+    <%= render "shared/actions/show",
+               path: routes.path(:extension, id: extension.id),
+               target: "closest .page-extensions" %>
+
+    <%= render "shared/actions/edit",
+               path: routes.path(:extension_edit, id: extension.id),
+               target: "closest .page-extensions" %>
+
+    <%= render "shared/actions/delete",
+               path: routes.path(:extension_delete, id: extension.id),
+               confirm: "Are you sure you want to delete this extension?",
+               target: "closest .extension" %>
+  </div>
+</li>
