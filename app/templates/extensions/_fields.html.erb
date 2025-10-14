@@ -1,0 +1,300 @@
+<fieldset role="group" class="group">
+  <p>TODO: Logo (logo_data)</p>
+
+  <%= scope(:form_field, key: :label, errors:).render do %>
+    <label class="key" for="extension_label">
+      Label
+      <%= render "shared/popovers/trigger", name: :label %>
+    </label>
+
+    <%= tag.input id: :extension_label,
+                  name: "extension[label]",
+                  value: field_for(:label, fields, extension),
+                  class: :value,
+                  autocomplete: :label %>
+  <% end %>
+
+  <%= scope(:form_field, key: :name, errors:).render do %>
+    <label class="key" for="extension_name">
+      Name
+      <%= render "shared/popovers/trigger", name: :name %>
+    </label>
+
+    <%= tag.input id: :extension_name,
+                  name: "extension[name]",
+                  value: field_for(:name, fields, extension),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :description, errors:).render do %>
+    <label class="key" for="extension_description">
+      Description
+      <%= render "shared/popovers/trigger", name: :description %>
+    </label>
+
+    <%= tag.input id: :extension_description,
+                  name: "extension[description]",
+                  value: field_for(:description, fields, extension),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :kind, errors:).render do %>
+    <label class="key" for="extension_kind">
+      Kind
+      <%= render "shared/popovers/trigger", name: :kind %>
+    </label>
+
+    <%= tag.select id: :extension_kind, name: "extension[kind]", class: :value do %>
+      <%= tag.option "Poll", value: :poll %>
+
+      <% %w[image poll secure static webhook].each do |kind| %>
+        <%= tag.option kind.capitalize,
+                       value: kind,
+                       selected: kind == field_for(:kind, fields, extension) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :mode, errors:).render do %>
+    <label class="key" for="extension_mode">
+      Mode
+      <%= render "shared/popovers/trigger", name: :mode %>
+    </label>
+
+    <%= tag.select id: :extension_mode, name: "extension[mode]", class: :value do %>
+      <%= tag.option "Light", value: :light %>
+
+      <% %w[dark light].each do |mode| %>
+        <%= tag.option mode.capitalize,
+                       value: mode,
+                       selected: mode == field_for(:mode, fields, extension) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :tags, errors:).render do %>
+    <label class="key" for="extension_tags">
+      Tags
+      <%= render "shared/popovers/trigger", name: :tags %>
+    </label>
+
+    <textarea id="extension_tags"
+              name="extension[tags]"
+              class="value"
+              autocomplete="name"><%= field_for :tags, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :headers, errors:).render do %>
+    <label class="key" for="extension_headers">
+      Headers
+      <%= render "shared/popovers/trigger", name: :headers %>
+    </label>
+
+    <textarea id="extension_headers"
+              name="extension[headers]"
+              class="value"
+              autocomplete="name"><%= field_for :headers, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :verb, errors:).render do %>
+    <label class="key" for="extension_verb">
+      Verb
+      <%= render "shared/popovers/trigger", name: :verb %>
+    </label>
+
+    <%= tag.select id: :extension_verb, name: "extension[verb]", class: :value do %>
+      <%= tag.option "GET", value: :get %>
+
+      <% %w[get post].each do |verb| %>
+        <%= tag.option verb.upcase,
+                       value: verb,
+                       selected: verb == field_for(:verb, fields, extension) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :uri, errors:).render do %>
+    <label class="key" for="extension_uri">
+      URI
+      <%= render "shared/popovers/trigger", name: :uri %>
+    </label>
+
+    <%= tag.input id: :extension_uri,
+                  name: "extension[uri]",
+                  value: field_for(:uri, fields, extension),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :poll_body, errors:).render do %>
+    <label class="key" for="extension_poll_body">
+      Poll Body
+      <%= render "shared/popovers/trigger", name: :poll_body %>
+    </label>
+
+    <textarea id="extension_poll_body"
+              name="extension[poll_body]"
+              class="value"
+              autocomplete="name"><%= field_for :poll_body, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :static_body, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Static Body
+      <%= render "shared/popovers/trigger", name: :static_body %>
+    </label>
+
+    <textarea id="extension_static_body"
+              name="extension[static_body]"
+              class="value"
+              autocomplete="name"><%= field_for :static_body, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :fields, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Fields
+      <%= render "shared/popovers/trigger", name: :fields %>
+    </label>
+
+    <textarea id="extension_fields"
+              name="extension[fields]"
+              class="value"
+              autocomplete="name"><%= field_for :fields, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :padding, errors:).render do %>
+    <label class="key" for="extension_padding">
+      Padding
+      <%= render "shared/popovers/trigger", name: :padding %>
+    </label>
+
+    <%= tag.input id: :extension_padding,
+                  name: "extension[padding]",
+                  type: :checkbox,
+                  checked: field_for(:padding, fields, extension),
+                  switch: true,
+                  class: :checkbox %>
+  <% end %>
+
+  <%= scope(:form_field, key: :template_full, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Template (full)
+      <%= render "shared/popovers/trigger", name: :template_full %>
+    </label>
+
+    <textarea id="extension_template_full"
+              name="extension[template_full]"
+              class="value"
+              autocomplete="name"><%= field_for :template_full, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :template_horizontal, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Template (horizontal)
+      <%= render "shared/popovers/trigger", name: :template_horizontal %>
+    </label>
+
+    <textarea id="extension_template_horizontal"
+              name="extension[template_horizontal]"
+              class="value"
+              autocomplete="name"><%= field_for :template_horizontal, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :template_vertical, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Template (vertical)
+      <%= render "shared/popovers/trigger", name: :template_vertical %>
+    </label>
+
+    <textarea id="extension_template_vertical"
+              name="extension[template_vertical]"
+              class="value"
+              autocomplete="name"><%= field_for :template_vertical, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :template_quarter, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Template (quarter)
+      <%= render "shared/popovers/trigger", name: :template_quarter %>
+    </label>
+
+    <textarea id="extension_template_quarter"
+              name="extension[template_quarter]"
+              class="value"
+              autocomplete="name"><%= field_for :template_quarter, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :template_shared, errors:).render do %>
+    <label class="key" for="extension_static_body">
+      Template (shared)
+      <%= render "shared/popovers/trigger", name: :template_shared %>
+    </label>
+
+    <textarea id="extension_template_shared"
+              name="extension[template_shared]"
+              class="value"
+              autocomplete="name"><%= field_for :template_shared, fields, extension %></textarea>
+  <% end %>
+
+  <%= scope(:form_field, key: :repeat_interval, errors:).render do %>
+    <label class="key" for="extension_repeat_interval">
+      Repeat Interval
+      <%= render "shared/popovers/trigger", name: :repeat_interval %>
+    </label>
+
+    <%= tag.input id: :extension_repeat_interval,
+                  name: "extension[repeat_interval]",
+                  type: :number,
+                  value: field_for(:repeat_interval, fields, extension),
+                  min: 1,
+                  class: :value %>
+  <% end %>
+
+  <%= scope(:form_field, key: :repeat_type, errors:).render do %>
+    <label class="key" for="extension_repeat_type">
+      Repeat Type
+      <%= render "shared/popovers/trigger", name: :repeat_type %>
+    </label>
+
+    <%= tag.select id: :extension_repeat_type, name: "extension[repeat_type]", class: :value do %>
+      <%= tag.option "None", value: :none %>
+
+      <% %w[none minute hour day week month year].each do |repeat_type| %>
+        <%= tag.option repeat_type.capitalize,
+                       value: repeat_type,
+                       selected: repeat_type == field_for(:repeat_type, fields, extension) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :repeat_days, errors:).render do %>
+    <label class="key" for="extension_repeat_days">
+      Repeat Days
+      <%= render "shared/popovers/trigger", name: :repeat_days %>
+    </label>
+
+    <%= tag.input id: :extension_repeat_days,
+                  name: "extension[repeat_days]",
+                  value: field_for(:repeat_days, fields, extension),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
+  <%= scope(:form_field, key: :last_day_of_month, errors:).render do %>
+    <label class="key" for="extension_last_day_of_month">
+      Last Day Of Month
+      <%= render "shared/popovers/trigger", name: :last_day_of_month %>
+    </label>
+
+    <%= tag.input id: :extension_last_day_of_month,
+                  name: "extension[last_day_of_month]",
+                  type: :checkbox,
+                  checked: field_for(:last_day_of_month, fields, extension),
+                  switch: true,
+                  class: :checkbox %>
+  <% end %>
+</fieldset>
+
+<%= render "popovers/all" %>
