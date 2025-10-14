@@ -1,0 +1,32 @@
+<%= render "shared/title", text: "New Extension" %>
+
+<section class="bit-page page-extensions">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/extensions" class="link">Extensions</a></li>
+      <li class="bit-breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="extensions">
+      <%= form_for :extension,
+                   routes.path(:extension_create),
+                   class: "bit-card bit-form extension" do |form| %>
+
+        <h1 class="label">New Extension</h1>
+
+        <%= render :fields, form:, models:, extension:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+         <%= render "shared/save_button",
+                    verb: :post,
+                    path: routes.path(:extension_create),
+                    target: ".page-extensions" %>
+
+         <%= link_to "Cancel", routes.path(:extensions), class: "bit-button-decline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
