@@ -1,4 +1,4 @@
-<%= form_for path, **HTMX[delete: path, confirm:, target:, swap: "outerHTML swap:0.3s"] do |form| %>
+<%= form_for path, **HTMX[delete: path, confirm:, target:, swap: "swap:0.3s"] do |form| %>
   <%= form.hidden_field :_csrf_token, value: csrf_token %>
   <%= form.submit class: locals.fetch(:class, "action bit-button") do %>
     <%= image_tag "icons/trash.svg", alt: locals.fetch(:label, "Delete"), width: 25, height: 25 %>

@@ -14,15 +14,13 @@
                   **HTMX[
                     put: update_uri,
                     target: "closest .bit-form",
-                    swap: "outerHTML",
                     disabled_elt: "this"
                   ] %>
 
     <a href="<%= show_uri %>"
        class="bit-link-cancel"
        hx-get="<%= show_uri %>"
-       hx-target="closest .bit-form"
-       hx-swap="outerHTML">
+       hx-target="closest .bit-form">
       Cancel
     </a>
   </div>

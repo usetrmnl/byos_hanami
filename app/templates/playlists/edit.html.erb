@@ -38,16 +38,13 @@
              hx-get="<%= routes.path :playlist, id: playlist.id %>"
              hx-trigger="click"
              hx-target="closest .page-playlists"
-             hx-swap="outerHTML"
              hx-push-url="true">
              Cancel
           </a>
         </div>
       </form>
 
-      <div hx-get="<%= routes.path :playlist_items, playlist_id: playlist.id %>"
-           hx-trigger="load"
-           hx-swap="outerHTML">
+      <div hx-get="<%= routes.path :playlist_items, playlist_id: playlist.id %>" hx-trigger="load">
       </div>
     </div>
   </div>
