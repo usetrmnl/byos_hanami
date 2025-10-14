@@ -1,0 +1,13 @@
+<%= scope(:popover_content, name: :data, label: "Data").render do %>
+  <p>Share common JSON data across all of your <a href="https://shopify.github.io/liquid">Liquid</a> templates. All keys are wrapped within a top-level <code>extension</code> key. For example, let's assume you have the following data associated with your extension:</p>
+
+  <p>
+    <code>
+      {
+        "demo": "This is a demo!"
+      }
+    </code>
+  </p>
+
+  <p>This means can leverage the above in your Liquid template as <code>{{extension.demo}}</code>.</p>
+<% end %>
