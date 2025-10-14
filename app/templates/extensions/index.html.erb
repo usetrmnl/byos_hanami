@@ -1,0 +1,65 @@
+<%= render "shared/title", text: "Extensions" %>
+
+<section class="bit-page page-extensions">
+  <header class="bit-header">
+    <h1 class="label">
+      Extensions
+
+      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
+        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
+      </button>
+    </h1>
+
+    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
+      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
+        <span aria-hidden=true>❌</span>
+        <span class="extension_reader">Close</span>
+      </button>
+
+      <h3 class="label">Overview</h3>
+
+      <p>Extensions allow you to extend existing functionality with custom behavior. These are an enhanced version of what you get when using <a href="https://usetrmnl.com/integrations">Core Plugins</a>.</p>
+
+      <h3 class="label">Search</h3>
+
+      <p>You can fuzzy search by extension label using partial or full label.</p>
+
+      <h3 class="label">Keyboard Shortcuts</h3>
+
+      <ul>
+        <li><kbd>CONTROL + n</kbd>: New extension.</li>
+        <li><kbd>CONTROL + s</kbd>: Save extension (when within form).</li>
+      </ul>
+    </dialog>
+
+    <div class="actions">
+      <%= render "shared/search",
+                 path: routes.path(:extensions),
+                 query:,
+                 pick: ".extensions",
+                 target: "next .extensions" %>
+
+      <a href="/extensions/new"
+         class="bit-button-accept"
+         hx-get="/extensions/new"
+         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
+         hx-target="closest .page-extensions"
+         hx-push-url="true">
+        New
+      </a>
+    </div>
+  </header>
+
+  <% if extensions.any? %>
+    <ul class="bit-gallery extensions">
+      <% extensions.each do |extension| %>
+        <%= extension.render :extension %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="extensions">
+      <%= render "shared/empty", message: "No extensions found." %>
+    </div>
+  <% end %>
+</section>
+
