@@ -65,6 +65,7 @@ module Terminus
     get "/extensions/new", to: "extensions.new", as: :extension_new
     post "/extensions", to: "extensions.create", as: :extension_create
     get "/extensions/:id/edit", to: "extensions.edit", as: :extension_edit
+    put "/extensions/:id", to: "extensions.update", as: :extension_update
 
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
