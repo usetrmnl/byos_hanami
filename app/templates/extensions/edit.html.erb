@@ -1,0 +1,65 @@
+<%= render "shared/title", text: "Edit #{extension.label} Extension" %>
+
+<section class="bit-page page-extensions">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb">
+        <%= link_to "Extensions", routes.path(:extensions), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">
+        <%= link_to extension.label, routes.path(:extensions), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="extensions">
+      <%= form_for :extension,
+                   routes.path(:extension_update, id: extension.id),
+                   method: :put,
+                   class: "bit-card bit-form extension" do |form| %>
+
+        <h1 class="label">Edit Extension</h1>
+
+        <button type="button"
+                class="bit-button-accept"
+                popovertarget="popover-preview">
+
+          <img src="/assets/icons/eye.svg"
+               alt="Info"
+               class="icon"
+               width="25"
+               height="25"
+               loading="lazy">
+
+          Preview
+        </button>
+
+        <dialog id="popover-preview" class="bit-popover-content" popover="auto">
+          <button type="button"
+                  class="close"
+                  popovertarget="popover-preview"
+                  popovertargetaction="hide">
+            <span aria-hidden="true">❌</span>
+            <span class="screen_reader">Close</span>
+          </button>
+
+          <% model_id = extension.models.any? ? extension.models.first.id : nil %>
+          <%= tag.iframe src: routes.path(:extension_preview, id: extension.id, model_id:),
+                         class: "bit-frame" %>
+        </dialog>
+
+        <%= render :fields, form:, models:, extension:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= tag.input type: :submit, value: "Save", class: "bit-button-accept" %>
+
+          <%= link_to "Cancel", routes.path(:extensions), class: "bit-button-decline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
