@@ -20,7 +20,9 @@ module Terminus
         optional(:sleep_start_at).maybe :string
         optional(:sleep_stop_at).maybe :string
 
-        after(:value_coercer, &Coercers::DeviceValue)
+        after(:value_coercer, &Coercers::Boolean.curry[:proxy])
+        after(:value_coercer, &Coercers::Boolean.curry[:firmware_beta])
+        after(:value_coercer, &Coercers::Boolean.curry[:firmware_update])
       end
     end
   end
