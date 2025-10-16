@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    <title><%= content_for :title %></title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="A TRMNL server.">
+    <meta name="author" content="TRMNL">
+
+    <%= tag.link title: "TRMNL: Stylesheet",
+                 rel: :stylesheet,
+                 href: "https://usetrmnl.com/css/latest/plugins.css" %>
+
+    <%= javascript_tag "https://usetrmnl.com/js/latest/plugins.js" %>
+  </head>
+
+  <body class="trmnl environment">
+    <%= yield %>
+  </body>
+</html>
