@@ -11,7 +11,7 @@ module Terminus
                plugins_options: {timestamps: {timestamps: :updated_at}}
 
       def all
-        model.order { published_at.asc }
+        model.order { label.asc }
              .to_a
       end
 
