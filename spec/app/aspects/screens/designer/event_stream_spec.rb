@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::Designer::EventStream, :db do
   subject(:event_stream) { described_class.new screen.name, kernel: }
 
-  include_context "with library dependencies"
+  include_context "with application dependencies"
 
   let(:screen) { Factory[:screen, :with_image] }
   let(:kernel) { class_spy Kernel }

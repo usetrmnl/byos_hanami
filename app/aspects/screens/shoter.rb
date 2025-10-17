@@ -10,8 +10,7 @@ module Terminus
     module Screens
       # Saves web page as screenshot.
       class Shoter
-        include Deps[:settings]
-        include Dependencies[:logger]
+        include Deps[:settings, :logger]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
