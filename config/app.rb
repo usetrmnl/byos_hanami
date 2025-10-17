@@ -4,6 +4,8 @@ require "hanami"
 require "petail"
 
 require_relative "initializers/rack_attack"
+require_relative "initializers/rack_logger_patch"
+require_relative "initializers/sql_logger_patch"
 
 module Terminus
   # The application base configuration.
@@ -46,16 +48,5 @@ module Terminus
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
     config.middleware.use :body_parser, :json
-
-    environment :development do
-      # :nocov:
-      config.logger.options[:colorize] = true
-
-      config.logger = config.logger.instance.add_backend(
-        colorize: false,
-        stream: root.join("log/development.log")
-      )
-      # :nocov:
-    end
   end
 end
