@@ -6,7 +6,7 @@ require "trmnl/api"
 RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
   subject(:synchronizer) { described_class.new downloader: }
 
-  include_context "with library dependencies"
+  include_context "with application dependencies"
 
   let(:model) { Factory[:model, kind: "trmnl", width: 1, height: 1] }
   let(:downloader) { instance_double Terminus::Downloader, call: response }

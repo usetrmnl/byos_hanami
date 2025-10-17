@@ -9,7 +9,6 @@ RSpec.describe Terminus::Aspects::Screens::ColorMapper do
   subject(:color_mapper) { described_class.new }
 
   include_context "with application dependencies"
-  include_context "with library dependencies"
 
   describe "#call" do
     let(:path) { temp_dir.join "2x1.png" }

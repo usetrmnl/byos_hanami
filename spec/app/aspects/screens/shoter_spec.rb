@@ -8,7 +8,6 @@ RSpec.describe Terminus::Aspects::Screens::Shoter do
 
   include_context "with temporary directory"
   include_context "with application dependencies"
-  include_context "with library dependencies"
 
   describe "#call" do
     let :content do

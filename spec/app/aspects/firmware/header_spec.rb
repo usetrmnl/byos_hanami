@@ -9,7 +9,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
   subject(:parser) { described_class.new }
 
   include_context "with firmware headers"
-  include_context "with library dependencies"
+  include_context "with application dependencies"
 
   describe "#call" do
     let :debug_message_pattern do
