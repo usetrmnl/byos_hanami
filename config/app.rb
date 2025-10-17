@@ -45,16 +45,5 @@ module Terminus
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
     config.middleware.use :body_parser, :json
-
-    environment :development do
-      # :nocov:
-      config.logger.options[:colorize] = true
-
-      config.logger = config.logger.instance.add_backend(
-        colorize: false,
-        stream: root.join("log/development.log")
-      )
-      # :nocov:
-    end
   end
 end
