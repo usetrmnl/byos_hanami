@@ -8,8 +8,8 @@ module Terminus
     module Firmware
       # Parses firmware HTTP headers.
       class Header
+        include Deps[:logger]
         include Pipeable
-        include Dependencies[:logger]
 
         using Refinements::Hash
 

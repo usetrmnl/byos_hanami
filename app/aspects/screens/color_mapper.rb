@@ -8,8 +8,7 @@ module Terminus
     module Screens
       # Creates a color map for use in PNG image conversion.
       class ColorMapper
-        include Deps[:settings]
-        include Dependencies[:logger]
+        include Deps[:settings, :logger]
         include Dry::Monads[:result]
         include Initable[base: 2, command: "magick", shell: Open3]
 
