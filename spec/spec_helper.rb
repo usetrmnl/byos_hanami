@@ -40,7 +40,7 @@ Pathname.require_tree SPEC_ROOT.join("support/matchers")
 Pathname.require_tree SPEC_ROOT.join("support/shared_examples")
 Pathname.require_tree SPEC_ROOT.join("support/shared_contexts")
 
-Gem.path.each { |path| Warning.ignore(/shrine/, path) }
+Gem.path.each { |path| Warning.ignore %r(hanami/web/rack_logger|shrine), path }
 
 RSpec.configure do |config|
   config.color = true
