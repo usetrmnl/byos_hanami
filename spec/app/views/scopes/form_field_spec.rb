@@ -4,10 +4,10 @@ require "hanami_helper"
 
 RSpec.describe Terminus::Views::Scopes::FormField do
   subject :scope do
-    described_class.new locals: {key: :label, errors:}, rendering: view.new.rendering
+    described_class.new locals:, rendering: view.new.rendering
   end
 
-  let(:errors) { {label: %w[invalid missing]} }
+  let(:locals) { {key: :label, errors: {label: %w[invalid missing]}} }
 
   let :view do
     Class.new Hanami::View do
@@ -16,14 +16,25 @@ RSpec.describe Terminus::Views::Scopes::FormField do
     end
   end
 
+  describe "#alpine" do
+    it "answers attributes when present" do
+      locals[:alpine] = {show: "test === 'test'", on: "test"}
+      expect(scope.alpine).to eq(%( x-show="test === 'test'" x-on="test"))
+    end
+
+    it "answers nil when missing" do
+      expect(scope.alpine).to be(nil)
+    end
+  end
+
   describe "#toggle_error" do
     it "answers default kind without errors" do
-      errors.clear
+      locals[:errors].clear
       expect(scope.toggle_error).to eq("form-field")
     end
 
     it "answers default kind for key with no errors" do
-      scope = described_class.new locals: {key: :clean, errors:}, rendering: view.new.rendering
+      locals[:key] = :clean
       expect(scope.toggle_error).to eq("form-field")
     end
 
@@ -38,7 +49,7 @@ RSpec.describe Terminus::Views::Scopes::FormField do
 
   describe "#error_message" do
     it "answers empty string when given no errors" do
-      errors.clear
+      locals[:errors].clear
       expect(scope.error_message).to eq("")
     end
 
@@ -54,7 +65,7 @@ RSpec.describe Terminus::Views::Scopes::FormField do
 
   describe "#render" do
     it "renders without errors" do
-      errors.clear
+      locals[:errors].clear
       content = scope.render { "Test" }
 
       expect(content).to eq(<<~CONTENT)

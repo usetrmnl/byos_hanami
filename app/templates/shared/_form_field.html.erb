@@ -1,4 +1,4 @@
-<div class="<%= toggle_error %>">
+<div class="<%= toggle_error %>"<%== alpine %>>
   <%= yield %>
   <% unless error_message.empty? %>
     <em class="message"><%= error_message %></em>
