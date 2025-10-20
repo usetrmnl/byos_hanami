@@ -10,6 +10,15 @@ module Terminus
       class FormField < Hanami::View::Scope
         using Refinements::Array
 
+        def alpine
+          return unless locals.key? :alpine
+
+          locals[:alpine].transform_keys! { "x-#{it}" }
+                         .map { |key, value| %(#{key}="#{value}") }
+                         .join(" ")
+                         .then { %( #{it}) }
+        end
+
         def toggle_error kind = "form-field"
           errors.fetch(key, Dry::Core::EMPTY_ARRAY).any? ? [kind, "error"].compact.join(" ") : kind
         end
