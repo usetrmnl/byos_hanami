@@ -1,15 +1,34 @@
 .bit-form {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
 
-  .group {
+  .legend {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .row {
+    align-items: flex-start;
+    border: none;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    justify-content: center;
+
+    @media (min-width: 800px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .column {
     border: none;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     justify-content: center;
+    padding: 0;
   }
 
   .input-group {
@@ -48,6 +67,12 @@
   .value-cap {
     border-radius: 0.5rem 0 0 0.5rem;
     border-right: none;
+  }
+
+  .help {
+    color: var(--site-darkgrey);
+    padding-left: 0.3rem;
+    margin: 0;
   }
 
   .action, .action-end {
@@ -89,9 +114,10 @@
   }
 
   .form-actions {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 1rem;
+    margin-top: 1rem;
   }
 
   .error {
