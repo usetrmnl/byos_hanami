@@ -1,3 +1,9 @@
+.bit-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .bit-pill {
   border-radius: 0.5rem;
   padding: 0.2rem 0.5rem;
