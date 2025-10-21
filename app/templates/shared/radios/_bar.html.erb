@@ -1,0 +1,5 @@
+<div class="bit-toggle-bar">
+  <% items.each do |label, value| %>
+    <%= render "shared/radios/item", label:, value:, name:, model: %>
+  <% end %>
+</div>
