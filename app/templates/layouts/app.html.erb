@@ -11,8 +11,8 @@
     <meta name="author" content="TRMNL">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="htmx-config" content='{"allowScriptTags": false, "defaultSwapStyle": "outerHTML"}'>
     <meta name="view-transition" content="same-origin">
+    <%= tag.meta name: "htmx-config", content: htmx_configuration %>
 
     <%= tag.link title: "Terminus: Icon",
                  rel: :icon,
