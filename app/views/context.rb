@@ -9,7 +9,14 @@ module Terminus
     class Context < Hanami::View::Context
       include Deps[:htmx]
 
+      HTMX_CONFIGURATION = {"allowScriptTags" => false, "defaultSwapStyle" => "outerHTML"}.freeze
+
       def htmx? = htmx.request? request.env, :request, "true"
+
+      def htmx_configuration default: HTMX_CONFIGURATION
+        content_for(:htmx_merge).then { it ? default.merge(it) : default }
+                                .to_json
+      end
     end
   end
 end

@@ -20,4 +20,18 @@ RSpec.describe Terminus::Views::Context do
       expect(a_context.htmx?).to be(false)
     end
   end
+
+  describe "#htmx_configuration" do
+    it "answers default configuration" do
+      expect(a_context.htmx_configuration).to eq(described_class::HTMX_CONFIGURATION.to_json)
+    end
+
+    it "answers custom configuration" do
+      a_context.content_for :htmx_merge, "defaultSwapStyle" => "innerHTML"
+
+      expect(a_context.htmx_configuration).to eq(
+        {"allowScriptTags" => false, "defaultSwapStyle" => "innerHTML"}.to_json
+      )
+    end
+  end
 end
