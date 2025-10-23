@@ -3,6 +3,7 @@
   border: none;
   cursor: pointer;
   display: flex;
+  gap: 0.5rem;
   padding: 0.3rem 1rem;
 
   &:disabled {
@@ -19,6 +20,10 @@
   &:not(:disabled):hover {
     background-color: var(--site-darkorange);
     text-decoration: none;
+  }
+
+  .icon {
+    filter: invert(1);
   }
 }
 
