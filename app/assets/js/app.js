@@ -11,6 +11,7 @@ import "../css/bits/containers.css";
 import "../css/bits/definition_lists.css";
 import "../css/bits/empty.css";
 import "../css/bits/forms.css";
+import "../css/bits/frames.css";
 import "../css/bits/headers.css";
 import "../css/bits/links.css";
 import "../css/bits/loaders.css";
