@@ -48,14 +48,6 @@
     }
   }
 
-  .group {
-    border: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
-  }
-
   .legend {
     font-weight: 500;
     margin-bottom: 1rem;
