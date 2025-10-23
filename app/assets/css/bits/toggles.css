@@ -1,0 +1,44 @@
+.bit-toggle-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bit-toggle-label {
+  font-size: 1rem;
+  padding: 0rem 0rem 0.1rem 0.3rem;
+  margin: 0;
+}
+
+.bit-toggle-bar {
+  background-color: oklch(from var(--site-lightgrey) l c h / 0.3);
+  border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.3);
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.bit-toggle-button {
+  cursor: pointer;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  transition: background-color 0.2s;
+}
+
+.bit-toggle-text {
+  border-radius: 0.4rem;
+  display: block;
+  padding: 0.1rem 0.5rem;
+  text-align: center;
+  width: 100%;
+  word-break: normal;
+}
+
+.bit-toggle-input {
+  display: none;
+
+  &:checked + .bit-toggle-text {
+    background-color: var(--site-white);
+  }
+}
