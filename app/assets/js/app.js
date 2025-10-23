@@ -20,6 +20,7 @@ import "../css/bits/pills.css";
 import "../css/bits/popovers.css";
 import "../css/bits/secrets.css";
 import "../css/bits/text.css";
+import "../css/bits/toggles.css";
 import "../css/pages/dashboard.css";
 import "../css/pages/designer.css";
 import "../css/pages/devices.css";
