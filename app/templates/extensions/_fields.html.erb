@@ -102,9 +102,7 @@
                  items: [
                    %w[Image image],
                    %w[Poll poll],
-                   %w[Secure secure],
-                   %w[Static static],
-                   %w[Webhook webhook]
+                   %w[Static static]
                  ],
                  name: "extension[kind]",
                  model: "kind" %>
@@ -117,17 +115,9 @@
         Render remote API data.
       </p>
 
-      <p class="help" x-show="kind === 'secure'">
-        Render authenticated (OAuth) API data.
-      </p>
-
       <p class="help" x-show="kind === 'static'">
         Render local JSON data.
       </p>
-
-      <span class="help" x-show="kind === 'webhook'">
-        Render data via a webhook.
-      </span>
     </div>
 
     <%= scope(:form_field, key: :headers, errors:, alpine: {show: "kind === 'poll'"}).render do %>
