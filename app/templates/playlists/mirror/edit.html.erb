@@ -29,7 +29,7 @@
           Check (or uncheck) the devices you'd like this playlist mirrored too.
         </p>
 
-        <fieldset role="group" class="group">
+        <fieldset class="column">
           <% devices.each do |device| %>
             <%= render :device, device:, playlist_id: playlist.id %>
           <% end %>
