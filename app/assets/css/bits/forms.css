@@ -81,7 +81,7 @@
   }
 
   .checkbox {
-    accent-color: oklch(from var(--site-orange) l c h / 0.5);
+    accent-color: var(--site-orange);
     background-color: oklch(from var(--site-white) l c h / 0.5);
     border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
     height: 1rem;
