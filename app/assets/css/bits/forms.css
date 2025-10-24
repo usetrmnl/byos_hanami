@@ -1,4 +1,6 @@
 .bit-form {
+  --input-border-width: 0.15rem;
+
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -54,7 +56,7 @@
   .value {
     background-color: oklch(from var(--site-lightgrey) l c h / 0.2);
     border-radius: 0.7rem;
-    border: 0.1rem solid oklch(from var(--site-lightgrey) l c h / 0.5);
+    border: var(--input-border-width) solid oklch(from var(--site-lightgrey) l c h / 0.5);
     outline: none;
     padding: 0.4rem;
     width: 100%;
@@ -122,7 +124,7 @@
 
   .error {
     .value {
-      border: 0.15rem solid var(--site-red);
+      border: var(--input-border-width) solid var(--site-red);
     }
 
     .message {
