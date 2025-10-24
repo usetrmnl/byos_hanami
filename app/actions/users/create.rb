@@ -16,7 +16,7 @@ module Terminus
 
         def handle request, response
           case creator.call(**request.params.to_h.slice(:user))
-            in Success(user) then response.render index_view, **view_settings(request)
+            in Success(Structs::User) then response.render index_view, **view_settings(request)
             in Failure(result) then error request, response, result
             # :nocov:
             # :nocov:
