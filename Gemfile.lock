@@ -279,11 +279,6 @@ GEM
       rake (~> 13.0)
     localhost (1.6.0)
     logger (1.7.0)
-    mail (2.8.1)
-      mini_mime (>= 0.1.1)
-      net-imap
-      net-pop
-      net-smtp
     marameters (4.5.0)
       refinements (~> 13.5)
       zeitwerk (~> 2.7)
@@ -297,15 +292,6 @@ GEM
     mustermann-contrib (3.0.4)
       hansi (~> 0.2.0)
       mustermann (= 3.0.4)
-    net-imap (0.5.12)
-      date
-      net-protocol
-    net-pop (0.1.2)
-      net-protocol
-    net-protocol (0.2.2)
-      timeout
-    net-smtp (0.5.1)
-      net-protocol
     nio4r (2.7.4)
     nokogiri (1.18.10-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -511,7 +497,6 @@ GEM
     strscan (3.1.5)
     temple (0.10.4)
     tilt (2.6.1)
-    timeout (0.4.3)
     tone (2.5.0)
       refinements (~> 13.5)
       zeitwerk (~> 2.7)
@@ -593,7 +578,6 @@ DEPENDENCIES
   launchy (~> 3.1)
   liquid (~> 5.8)
   localhost (~> 1.3)
-  mail (~> 2.8)
   marcel (~> 1.0)
   mini_magick (~> 5.2)
   petail (~> 0.3)
@@ -718,7 +702,6 @@ CHECKSUMS
   llhttp-ffi (0.5.1) sha256=9a25a7fc19311f691a78c9c0ac0fbf4675adbd0cca74310228fdf841018fa7bc
   localhost (1.6.0) sha256=d99697c6344283d39d8ae8572c22fcd556c95347a30d361594c36846b112fa17
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  mail (2.8.1) sha256=ec3b9fadcf2b3755c78785cb17bc9a0ca9ee9857108a64b6f5cfc9c0b5bfc9ad
   marameters (4.5.0) sha256=6c0a9b39721031d605de67b6258d1556fa275531cea0a09fc2c55adfbf3b8597
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
@@ -726,10 +709,6 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   mustermann (3.0.4) sha256=85fadcb6b3c6493a8b511b42426f904b7f27b282835502233dd154daab13aa22
   mustermann-contrib (3.0.4) sha256=aa39f90e5febbd2625ed437dbb91f379fb441e1f0627f66b699031665bdea687
-  net-imap (0.5.12) sha256=cb8cd05bd353fcc19b6cbc530a9cb06b577a969ea10b7ddb0f37787f74be4444
-  net-pop (0.1.2) sha256=848b4e982013c15b2f0382792268763b748cce91c9e91e36b0f27ed26420dff3
-  net-protocol (0.2.2) sha256=aa73e0cba6a125369de9837b8d8ef82a61849360eba0521900e2c3713aa162a8
-  net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
   nio4r (2.7.4) sha256=d95dee68e0bb251b8ff90ac3423a511e3b784124e5db7ff5f4813a220ae73ca9
   nokogiri (1.18.10-aarch64-linux-gnu) sha256=7fb87235d729c74a2be635376d82b1d459230cc17c50300f8e4fcaabc6195344
   nokogiri (1.18.10-aarch64-linux-musl) sha256=7e74e58314297cc8a8f1b533f7212d1999dbe2639a9ee6d97b483ea2acc18944
@@ -808,7 +787,6 @@ CHECKSUMS
   strscan (3.1.5) sha256=f8413b90ea9395a69609a4414a8c88551bcda64337e234272c24fcd4c83e5947
   temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
   tilt (2.6.1) sha256=35a99bba2adf7c1e362f5b48f9b581cce4edfba98117e34696dde6d308d84770
-  timeout (0.4.3) sha256=9509f079b2b55fe4236d79633bd75e34c1c1e7e3fb4b56cb5fda61f80a0fe30e
   tone (2.5.0) sha256=8e02283107508f933db86f51500d43a57dddde370f31fa9ed35f07b01e1e457c
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
   trmnl-api (0.6.0) sha256=6286b97ecc6e049e45f0a236e7c33fb96e9ef24392745fd365aad38a4e48ced2
