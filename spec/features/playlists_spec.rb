@@ -33,7 +33,7 @@ RSpec.describe "Playlists", :db do
     playlist = Factory[:playlist]
 
     visit routes.path(:playlists)
-    click_button "Delete"
+    accept_prompt { click_button "Delete" }
 
     expect(page).to have_no_content(playlist.label)
   end
