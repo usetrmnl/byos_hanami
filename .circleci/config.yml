@@ -69,6 +69,10 @@ jobs:
             - node_modules
 
       - run:
+          name: Project Setup
+          command: mkdir log
+
+      - run:
           name: Database Setup
           command: bin/hanami db prepare
 
