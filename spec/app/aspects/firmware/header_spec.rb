@@ -15,18 +15,18 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
     let :debug_message_pattern do
       /
         DEBUG.+
-        \[HTTP_ACCESS_TOKEN=.+\]\s
-        \[HTTP_BATTERY_VOLTAGE=.+\]\s
-        \[HTTP_FW_VERSION=.+\]\s
-        \[HTTP_HEIGHT=.+\]\s
-        \[HTTP_HOST=.+\]\s
-        \[HTTP_ID=.+\]\s
-        \[HTTP_MODEL=.+\]\s
-        \[HTTP_REFRESH_RATE=.+\]\s
-        \[HTTP_RSSI=.+\]\s
-        \[HTTP_USER_AGENT=.+\]\s
-        \[HTTP_WIDTH=.+\]\s
-        Processing\sdevice\srequest\sheaders\.
+        Processing\sdevice\srequest\sheaders.+
+        HTTP_ACCESS_TOKEN.+
+        HTTP_BATTERY_VOLTAGE.+
+        HTTP_FW_VERSION.+
+        HTTP_HEIGHT.+
+        HTTP_HOST.+
+        HTTP_ID.+
+        HTTP_MODEL.+
+        HTTP_REFRESH_RATE.+
+        HTTP_RSSI.+
+        HTTP_USER_AGENT.+
+        HTTP_WIDTH.+
       /x
     end
 
