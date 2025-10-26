@@ -7,6 +7,7 @@ RSpec.shared_context "with application dependencies" do
   let(:settings) { app[:settings] }
   let(:routes) { app[:routes] }
   let(:json_payload) { JSON last_response.body, symbolize_names: true }
+  let(:logger) { app[:logger] }
 
   before do
     allow(settings).to receive_messages(
