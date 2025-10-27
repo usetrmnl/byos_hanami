@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Sanitizer do
+RSpec.describe Terminus::Aspects::Sanitizer do
   subject(:sanitizer) { described_class.new }
 
   describe "#call" do

@@ -39,7 +39,7 @@ RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
 
   describe "#inspect" do
     it "only displays the sanitizer class" do
-      expect(creator.inspect).to include("@sanitizer=Terminus::Sanitizer")
+      expect(creator.inspect).to include("@sanitizer=Terminus::Aspects::Sanitizer")
     end
   end
 end

@@ -9,8 +9,7 @@ module Terminus
       module Creators
         # Saves HTML content as image to temporary file path for optional processing.
         class TempPath
-          include Deps["aspects.screens.shoter", "aspects.screens.converter"]
-          include Terminus::Dependencies[:sanitizer]
+          include Deps["aspects.sanitizer", "aspects.screens.shoter", "aspects.screens.converter"]
           include Dry::Monads[:result]
           include Inspectable[sanitizer: :class]
 
