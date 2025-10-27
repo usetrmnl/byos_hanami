@@ -5,8 +5,7 @@ module Terminus
     module Firmware
       # A firmware attachment synchronizer with Core server.
       class Synchronizer
-        include Deps[:trmnl_api, repository: "repositories.firmware"]
-        include Dependencies[:downloader]
+        include Deps[:trmnl_api, "aspects.downloader", repository: "repositories.firmware"]
         include Dry::Monads[:result]
 
         def initialize(struct: Structs::Firmware.new, **)

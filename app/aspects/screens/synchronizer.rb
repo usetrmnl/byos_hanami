@@ -16,12 +16,12 @@ module Terminus
         include Deps[
           :mini_magick,
           :logger,
+          "aspects.downloader",
           "aspects.screens.compressor",
           model_repository: "repositories.model",
           screen_repository: "repositories.screen"
         ]
 
-        include Dependencies[:downloader]
         include Initable[struct: proc { Terminus::Structs::Screen.new }, cgi: CGI]
         include Dry::Monads[:result]
 

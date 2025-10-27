@@ -16,7 +16,7 @@ RSpec.describe Terminus::Aspects::Firmware::Synchronizer, :db do
                     )
   end
 
-  let(:downloader) { instance_double Terminus::Downloader, call: download_response }
+  let(:downloader) { instance_double Terminus::Aspects::Downloader, call: download_response }
 
   let :download_response do
     Success(
@@ -76,7 +76,9 @@ RSpec.describe Terminus::Aspects::Firmware::Synchronizer, :db do
     end
 
     context "with download failure" do
-      let(:downloader) { instance_double Terminus::Downloader, call: Failure(message: "Danger!") }
+      let :downloader do
+        instance_double Terminus::Aspects::Downloader, call: Failure(message: "Danger!")
+      end
 
       it "answers failure" do
         expect(synchronizer.call).to be_failure(message: "Danger!")

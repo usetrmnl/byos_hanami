@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
+require "http"
 require "trmnl/api"
 
 RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
@@ -9,7 +10,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
   include_context "with application dependencies"
 
   let(:model) { Factory[:model, kind: "trmnl", width: 1, height: 1] }
-  let(:downloader) { instance_double Terminus::Downloader, call: response }
+  let(:downloader) { instance_double Terminus::Aspects::Downloader, call: response }
 
   let :response do
     Success(
@@ -120,7 +121,7 @@ RSpec.describe Terminus::Aspects::Screens::Synchronizer, :db do
     end
 
     context "with download failure" do
-      let(:downloader) { instance_double Terminus::Downloader, call: Failure("Danger!") }
+      let(:downloader) { instance_double Terminus::Aspects::Downloader, call: Failure("Danger!") }
 
       it "answers failure" do
         expect(synchronizer.call(display)).to be_failure("Danger!")

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
+require "http"
 
-RSpec.describe Terminus::Downloader do
+RSpec.describe Terminus::Aspects::Downloader do
   subject(:downloader) { described_class.new http: }
 
-  include_context "with library dependencies"
+  include_context "with application dependencies"
 
   let(:http) { class_double HTTP, get: response }
   let(:response) { HTTP::Response.new uri:, verb: :get, body: "Test.", status: 200, version: 1.0 }
@@ -55,7 +56,7 @@ RSpec.describe Terminus::Downloader do
       allow(response).to receive(:then).and_return(Failure(:danger))
       downloader.call uri
 
-      expect(logger.reread).to match(%r(ERROR.+Unable to download: "https://test.io/test.txt"\.))
+      expect(logger.reread).to match(%r(ERROR.+Unable to download:.+https://test.io/test.txt))
     end
   end
 end
