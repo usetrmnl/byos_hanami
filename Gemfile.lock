@@ -243,6 +243,11 @@ GEM
       llhttp-ffi (~> 0.5.0)
     http-cookie (1.1.0)
       domain_name (~> 0.5)
+    http-fake (4.4.0)
+      http (~> 5.2)
+      mustermann (~> 3.0)
+      refinements (~> 13.5)
+      zeitwerk (~> 2.7)
     http-form_data (2.3.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -571,6 +576,7 @@ DEPENDENCIES
   hanami-webconsole (~> 2.2)
   htmx (~> 2.4)
   http (~> 5.2)
+  http-fake (~> 4.4)
   initable (~> 0.3)
   inspectable (~> 0.3)
   irb-kit (~> 1.1)
@@ -684,6 +690,7 @@ CHECKSUMS
   htmx (2.5.0) sha256=c58d6f3818133ad2cb96dd67f5d0b81e2ab2f2a7150c1593ceb7ef74f42d3471
   http (5.3.1) sha256=c50802d8e9be3926cb84ac3b36d1a31fbbac383bc4cbecdce9053cb604231d7d
   http-cookie (1.1.0) sha256=38a5e60d1527eebc396831b8c4b9455440509881219273a6c99943d29eadbb19
+  http-fake (4.4.0) sha256=6c18c4af9f60f61f9f4b195fb7468a716d675e6765f13de02348ba9c46f77c5f
   http-form_data (2.3.0) sha256=cc4eeb1361d9876821e31d7b1cf0b68f1cf874b201d27903480479d86448a5f3
   i18n (1.14.7) sha256=ceba573f8138ff2c0915427f1fc5bdf4aa3ab8ae88c8ce255eb3ecf0a11a5d0f
   ice_nine (0.11.2) sha256=5d506a7d2723d5592dc121b9928e4931742730131f22a1a37649df1c1e2e63db
