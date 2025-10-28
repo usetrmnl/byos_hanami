@@ -35,6 +35,7 @@ detectors:
   TooManyStatements:
     exclude:
       - Terminus::Action#handle_rodauth_redirect
+      - Terminus::Aspects::Extensions::Fetcher#parse
       - Terminus::Aspects::Extensions::Parser#from_json
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Aspects::Screens::ColorMapper#colorize
