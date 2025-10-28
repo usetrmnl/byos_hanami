@@ -38,6 +38,7 @@ detectors:
       - RackLoggerPatch#prepare_app_providers
       - Terminus::Action#handle_rodauth_redirect
       - Terminus::Aspects::Croner#call
+      - Terminus::Aspects::Extensions::Fetcher#parse
       - Terminus::Aspects::Extensions::Parser#from_json
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Aspects::Screens::ColorMapper#colorize
