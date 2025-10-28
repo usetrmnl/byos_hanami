@@ -1,10 +1,22 @@
 # frozen_string_literal: true
 
 Hanami.app.register_provider :http do
-  prepare { require "http" }
+  prepare do
+    require "connection_pool"
+    require "http"
+  end
 
   start do
-    HTTP.default_options = HTTP::Options.new features: {logging: {logger: slice[:logger]}}
-    register :http, HTTP
+    slice.start :logger
+
+    http = ConnectionPool::Wrapper.new size: ENV.fetch("HANAMI_MAX_THREADS", 5) do
+      HTTP.timeout(connect: 2, read: 10, write: 10)
+          .use(logging: {logger: slice[:logger]})
+          .headers("User-Agent" => "http.rb/#{HTTP::VERSION} (Terminus)")
+    end
+
+    register :http, http
   end
+
+  stop { slice[:http].close }
 end
