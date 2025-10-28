@@ -9,6 +9,9 @@ detectors:
   DataClump:
     exclude:
       - Terminus::Aspects::Screens::Shoter
+  DuplicateMethodCall:
+    exclude:
+      - Terminus::Aspects::Extensions::Parsers::CSV#call
   FeatureEnvy:
     exclude:
       - Terminus::Actions::API::Screens::Create#handle
