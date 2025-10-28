@@ -6,6 +6,7 @@ source "https://rubygems.org"
 
 gem "bcrypt", "~> 3.1"
 gem "cogger", "~> 1.4"
+gem "csv", "~> 3.3"
 gem "dry-monads", "~> 1.8"
 gem "dry-schema", "~> 1.13"
 gem "dry-types", "~> 1.7"

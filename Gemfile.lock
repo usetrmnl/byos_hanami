@@ -49,6 +49,7 @@ GEM
     content_disposition (1.0.0)
     core (2.4.0)
     crass (1.0.6)
+    csv (3.3.5)
     cuprite (0.17)
       capybara (~> 3.0)
       ferrum (~> 0.17.0)
@@ -549,6 +550,7 @@ DEPENDENCIES
   capybara (~> 3.40)
   capybara-validate_html5 (~> 2.1)
   cogger (~> 1.4)
+  csv (~> 3.3)
   cuprite (~> 0.15)
   database_cleaner-sequel (~> 2.0)
   debug (~> 1.10)
@@ -622,6 +624,7 @@ CHECKSUMS
   content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516
   core (2.4.0) sha256=cd95c4c858ff3cedaa6b1e7438f8aa73b89635f4e32f243c03e5bd6cd3baf5ab
   crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
+  csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
   database_cleaner-sequel (2.0.2) sha256=f1e6566a1a34d7425ff94b447e2c16181bc215555aff3dfe463b7977b621d4bf
