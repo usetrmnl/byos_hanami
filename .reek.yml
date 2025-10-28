@@ -23,6 +23,7 @@ detectors:
       - Terminus::Actions::Playlists::Create#error
       - Terminus::Actions::Playlists::Update#error
       - Terminus::Actions::Users::Update#error
+      - Terminus::Aspects::Extensions::Renderers::Image#render_multiple
       - Terminus::Aspects::Screens::Compressor#convert
       - Terminus::Aspects::Screens::Converter#convert
       - Terminus::Aspects::Screens::Converters::BMP#convert
