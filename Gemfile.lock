@@ -44,6 +44,7 @@ GEM
       tone (~> 2.0)
       zeitwerk (~> 2.7)
     concurrent-ruby (1.3.5)
+    connection_pool (2.5.4)
     containable (1.4.0)
       concurrent-ruby (~> 1.3)
     content_disposition (1.0.0)
@@ -557,6 +558,7 @@ DEPENDENCIES
   capybara (~> 3.40)
   capybara-validate_html5 (~> 2.1)
   cogger (~> 1.4)
+  connection_pool (~> 2.5)
   csv (~> 3.3)
   cuprite (~> 0.15)
   database_cleaner-sequel (~> 2.0)
@@ -629,6 +631,7 @@ CHECKSUMS
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
   cogger (1.6.0) sha256=2103275b5f6f50b17add74891d8c2517ed487881cadbf9d437dfe715189ad0e2
   concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
+  connection_pool (2.5.4) sha256=e9e1922327416091f3f6542f5f4446c2a20745276b9aa796dd0bb2fd0ea1e70a
   containable (1.4.0) sha256=d1d4cbe73d39dca378fdceb3c38672191f8b39c5de8fc5df900f96ca7e2ae141
   content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516
   core (2.4.0) sha256=cd95c4c858ff3cedaa6b1e7438f8aa73b89635f4e32f243c03e5bd6cd3baf5ab
