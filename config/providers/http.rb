@@ -11,6 +11,7 @@ Hanami.app.register_provider :http do
 
     http = ConnectionPool::Wrapper.new size: ENV.fetch("HANAMI_MAX_THREADS", 5) do
       HTTP.timeout(connect: 2, read: 10, write: 10)
+          .use(:auto_inflate)
           .use(logging: {logger: slice[:logger]})
           .headers("User-Agent" => "http.rb/#{HTTP::VERSION} (Terminus)")
     end
