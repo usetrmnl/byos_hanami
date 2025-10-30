@@ -69,6 +69,7 @@ module Terminus
     delete "/extensions/:id", to: "extensions.delete", as: :extension_delete
 
     get "/extensions/:id/preview", to: "extensions.preview.show", as: :extension_preview
+    get "/extensions/:id/poll", to: "extensions.poll.show", as: :extension_poll
 
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
