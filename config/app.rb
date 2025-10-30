@@ -22,7 +22,7 @@ module Terminus
       end
     end
 
-    config.inflections { it.acronym "BMP", "HTML", "IP", "PNG" }
+    config.inflections { it.acronym "BMP", "HTML", "IP", "PNG", "XML" }
 
     config.actions.content_security_policy.then do |csp|
       csp[:font_src] += " https://usetrmnl.com"
