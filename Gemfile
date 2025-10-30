@@ -27,6 +27,7 @@ gem "jwt", "~> 3.1"
 gem "liquid", "~> 5.9"
 gem "marcel", "~> 1.0"
 gem "mini_magick", "~> 5.2"
+gem "nori", "~> 2.7"
 gem "petail", "~> 0.3"
 gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 1.2"
