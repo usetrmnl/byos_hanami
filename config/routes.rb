@@ -32,9 +32,6 @@ module Terminus
 
     get "/api/setup", to: "api.setup.show", as: :api_setup
 
-    # TODO: Remove once Firmware drops trailing slash requirement.
-    get "/api/setup/", to: "api.setup.show", as: :api_setup
-
     delete "/bulk/devices/:device_id/logs",
            to: "bulk.devices.logs.delete",
            as: :bulk_device_logs_delete
