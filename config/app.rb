@@ -25,6 +25,7 @@ module Terminus
     config.inflections { it.acronym "BMP", "HTML", "IP", "PNG" }
 
     config.actions.content_security_policy.then do |csp|
+      csp[:connect_src] += " https://usetrmnl.com"
       csp[:font_src] += " https://usetrmnl.com"
       csp[:manifest_src] = "'self'"
       csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://usetrmnl.com"
