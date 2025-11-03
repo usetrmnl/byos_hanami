@@ -82,3 +82,5 @@ group :tools do
   gem "irb-kit", "~> 1.1"
   gem "repl_type_completor", "~> 0.1"
 end
+
+gem "functionable", "~> 0.0.0"

@@ -162,6 +162,7 @@ GEM
     ffi-compiler (1.3.2)
       ffi (>= 1.15.5)
       rake
+    functionable (0.0.0)
     git-lint (9.6.0)
       cogger (~> 1.0)
       containable (~> 1.1)
@@ -569,6 +570,7 @@ DEPENDENCIES
   dry-types (~> 1.7)
   dry-validation (~> 1.10)
   ferrum (~> 0.15)
+  functionable (~> 0.0.0)
   git-lint (~> 9.0)
   hanami (~> 2.2)
   hanami-assets (~> 2.2)
@@ -680,6 +682,7 @@ CHECKSUMS
   ffi (1.17.2-x86_64-linux-gnu) sha256=05d2026fc9dbb7cfd21a5934559f16293815b7ce0314846fee2ac8efbdb823ea
   ffi (1.17.2-x86_64-linux-musl) sha256=97c0eb3981414309285a64dc4d466bd149e981c279a56371ef811395d68cb95c
   ffi-compiler (1.3.2) sha256=a94f3d81d12caf5c5d4ecf13980a70d0aeaa72268f3b9cc13358bcc6509184a0
+  functionable (0.0.0) sha256=af129c09129af5220376a003f7f184b99319772302997d9c2718532c1d72e4ed
   git-lint (9.6.0) sha256=6cad3981a9ba5c3fbee82e313565a6c164fbc90a387938649778e656c5bf709d
   gitt (4.5.0) sha256=8d3cdf4425d34584c438c05a77310324aa4388b98b31220d9682a0484ecda357
   hanami (2.2.1) sha256=bef14f84916ad3a1244728df206bbd2ae6f307af945e3a2fd44cfe3a639c6cd5
