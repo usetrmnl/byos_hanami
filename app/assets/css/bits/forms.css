@@ -18,6 +18,7 @@
     gap: 1rem;
     grid-template-columns: 1fr;
     justify-content: center;
+    width: 100%;
 
     @media (min-width: 800px) {
       grid-template-columns: 1fr 1fr;
@@ -62,7 +63,7 @@
     width: 100%;
 
     &:focus {
-      border: 0.1rem solid oklch(from var(--site-orange) l c h / 0.5);
+      border: var(--input-border-width) solid oklch(from var(--site-orange) l c h / 0.5);
     }
   }
 
