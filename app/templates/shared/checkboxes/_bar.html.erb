@@ -1,0 +1,5 @@
+<div class="bit-toggle-bar">
+  <% items.each do |label, value| %>
+    <%= render "shared/checkboxes/item", collection:, label:, key:, value:, attributes:, record: %>
+  <% end %>
+</div>

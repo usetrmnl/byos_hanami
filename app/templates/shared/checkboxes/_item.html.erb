@@ -1,0 +1,9 @@
+<label class="bit-toggle-button">
+  <%= tag.input name: "#{collection}[#{key}][]",
+                type: :checkbox,
+                class: "bit-toggle-input",
+                value:,
+                checked: field_included?(key, value, attributes, record) %>
+
+  <span class="bit-toggle-text"><%= label %></span>
+</label>
