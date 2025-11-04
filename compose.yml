@@ -8,7 +8,8 @@ services:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
-      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:5432/${PG_DATABASE}
+      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:${PG_PORT}/${PG_DATABASE}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
     ports:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
@@ -17,11 +18,26 @@ services:
     depends_on:
       database:
         condition: service_healthy
+      cache:
+        condition: service_healthy
     deploy:
       resources:
         limits:
           memory: 1G
           cpus: "1.0"
+
+  worker:
+    image: ghcr.io/usetrmnl/terminus:latest
+    environment:
+      APP_SECRET: ${APP_SECRET}
+      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:${PG_PORT}/${PG_DATABASE}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
+    command: bundle exec sidekiq -r ./config/sidekiq.rb
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
 
   database:
     image: postgres:18.0
@@ -45,6 +61,21 @@ services:
           memory: 1G
           cpus: "1.0"
 
+  cache:
+    image: redis:8-alpine
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - cache-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--pass", "${REDIS_PASSWORD}", "ping"]
+      interval: 1s
+      timeout: 2s
+      retries: 5
+      start_period: 2s
+
 volumes:
   database-data:
+  cache-data:
   web-uploads:
