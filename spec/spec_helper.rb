@@ -15,6 +15,7 @@ else
     add_group "Config", "config"
     add_group "Contracts", "app/contracts"
     add_group "DB", "app/db"
+    add_group "Jobs", "app/jobs"
     add_group "Lib", "lib"
     add_group "Providers", "app/providers"
     add_group "Relations", "app/relations"
