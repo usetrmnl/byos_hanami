@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+
 require_relative "../app/aspects/screens/designer/middleware"
 
 module Terminus
   # The application base routes.
   class Routes < Hanami::Routes
     slice(:authentication, at: "/") { use Authentication::Middleware }
+
+    mount Sidekiq::Web, at: "/sidekiq"
 
     get "/", to: "dashboard.show", as: :root
 
