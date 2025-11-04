@@ -19,6 +19,12 @@ module Terminus
         tag.span value.to_s, class: css_class
       end
 
+      # rubocop:todo Metrics/ParameterLists
+      def field_included? key, value, attributes, record = nil
+        ((record && record.public_send(key)) || attributes[key]).include? value
+      end
+      # rubocop:enable Metrics/ParameterLists
+
       def field_for key, attributes, record = nil
         return attributes[key] unless record
 

@@ -45,6 +45,23 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
+  describe "#field_included?" do
+    let(:record) { Data.define(:days).new days: %w[monday wednesday friday] }
+    let(:attributes) { {days: ["wednesday"]} }
+
+    it "answers true when included for record" do
+      expect(helper.field_included?(:days, "monday", attributes, record)).to be(true)
+    end
+
+    it "answers true when record is missing but value is in attributes" do
+      expect(helper.field_included?(:days, "wednesday", attributes)).to be(true)
+    end
+
+    it "answers false when record and attributes don't have value" do
+      expect(helper.field_included?(:days, "sunday", attributes, record)).to be(false)
+    end
+  end
+
   describe "#git_sha_link" do
     let(:kernel) { class_double Kernel }
 
