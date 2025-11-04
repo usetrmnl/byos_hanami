@@ -31,6 +31,7 @@ module Terminus
     setting :browser, constructor: Terminus::Types::Browser, default: "{}"
     setting :firmware_poller, constructor: Types::Params::Bool, default: true
     setting :model_poller, constructor: Types::Params::Bool, default: true
+    setting :redis_url, constructor: Types::Params::String
     setting :screen_poller, constructor: Types::Params::Bool, default: true
   end
 end
