@@ -1,5 +1,6 @@
 web: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- bundle exec puma --config ./config/puma.rb
 assets: bundle exec hanami assets watch
+sidekiq: rerun --dir app,config,lib,slices --pattern="**/*.{erb,rb}" -- bundle exec sidekiq -r ./config/sidekiq.rb
 firmware_poller: bin/pollers/firmware
 screen_poller: bin/pollers/screen
 model_poller: bin/pollers/model

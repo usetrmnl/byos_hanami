@@ -41,6 +41,7 @@ gem "rom-sql", "~> 3.7"
 gem "sanitize", "~> 7.0"
 gem "sequel", "~> 5.97"
 gem "shrine", "~> 3.6"
+gem "sidekiq", "~> 7.3"
 gem "trmnl-api", "~> 0.6"
 gem "versionaire", "~> 14.1"
 
