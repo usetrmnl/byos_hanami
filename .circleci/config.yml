@@ -9,9 +9,13 @@ jobs:
           HANAMI_ENV: test
           HANAMI_PORT: 2300
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          REDIS_URL: redis://localhost:6379/0
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: postgres
+      - image: redis:latest
+        environment:
+          POSTGRES_PASSWORD: redis
     steps:
       - run:
           name: ImageMagick Install
