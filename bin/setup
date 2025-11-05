@@ -61,7 +61,10 @@ create_global_environment() {
   fi
 
   password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
-  sed -i.tmp "s|<password>|$password|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<postgres_password>|$password|g" "$output_path" && rm "$output_path.tmp"
+
+  password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
+  sed -i.tmp "s|<redis_password>|$password|g" "$output_path" && rm "$output_path.tmp"
 
   secret="$((RANDOM * RANDOM * RANDOM * RANDOM))"
   sed -i.tmp "s|<secret>|$secret|g" "$output_path" && rm "$output_path.tmp"
