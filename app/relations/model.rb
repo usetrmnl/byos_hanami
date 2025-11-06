@@ -5,8 +5,12 @@ module Terminus
     # The model relation.
     class Model < DB::Relation
       schema :model, infer: true do
-        associations { has_many :devices, relation: :device }
-        associations { has_many :screens, relation: :screen }
+        associations do
+          has_many :devices, relation: :device
+          has_many :screens, relation: :screen
+          has_many :extension_models, relation: :extension_model
+          has_many :extensions, through: :extension_model, relation: :extension
+        end
       end
     end
   end
