@@ -13,6 +13,7 @@ gem "dry-schema", "~> 1.13"
 gem "dry-types", "~> 1.7"
 gem "dry-validation", "~> 1.10"
 gem "ferrum", "~> 0.15"
+gem "functionable", "~> 0.1"
 gem "hanami", "~> 2.2"
 gem "hanami-assets", "~> 2.2"
 gem "hanami-controller", "~> 2.2"
@@ -83,5 +84,3 @@ group :tools do
   gem "irb-kit", "~> 1.1"
   gem "repl_type_completor", "~> 0.1"
 end
-
-gem "functionable", "~> 0.0.0"
