@@ -1,0 +1,78 @@
+#! /usr/bin/env bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+source bin/shell/settings.sh
+source bin/shell/functions.sh
+
+# Label: Upgrade With
+# Description: Upgrades with specific create function and file path.
+# Parameters: $1 (required): The function to delegate to, $2 (required): The file path.
+upgrade_with() {
+  local function="$1"
+  local original_path="$2"
+  local backup_path="$original_path.bak"
+
+  mv "$original_path" "$backup_path"
+  "$function" "Checking"
+
+  if diff "$original_path" "$backup_path" > /dev/null; then
+    rm -f "$backup_path"
+    printf "%s\n" "No changes."
+  else
+    printf "%s\n" \
+           "Please review changes between $backup_path and $original_path " \
+           "and update accordingly."
+  fi
+}
+
+# Label: Upgrade Global Environment
+# Description: Upgrades global environment.
+upgrade_global_environment() {
+  upgrade_with "create_global_environment" "$PROJECT_ROOT/.env"
+}
+
+# Label: Upgrade Development Environment
+# Description: Upgrades development environment.
+upgrade_development_environment() {
+  upgrade_with "create_development_environment" "$PROJECT_ROOT/.env.development"
+}
+
+# Label: Upgrade Test Environment
+# Description: Upgrades test environment.
+upgrade_test_environment() {
+  upgrade_with "create_test_environment" "$PROJECT_ROOT/.env.test"
+}
+
+# Label: Upgrade Development Procfile
+# Description: Upgrades develoment Procfile.
+upgrade_development_procfile() {
+  upgrade_with "create_development_procfile" "$PROJECT_ROOT/Procfile.dev"
+}
+
+# Label: Upgrade Docker Compose Development Configuration.
+# Description: Upgrades Docker Compose development configuration.
+upgrade_docker_compose_development_configuration() {
+  upgrade_with "create_docker_compose_development_configuration" "$PROJECT_ROOT/compose.dev.yml"
+}
+
+if [[ "${1:-}" == "docker" ]]; then
+  printf "%s\n" "Setting up Docker..."
+  upgrade_global_environment
+else
+  printf "%s\n\n" "Upgrading Terminus..."
+
+  upgrade_global_environment
+  upgrade_development_environment
+  upgrade_test_environment
+  upgrade_development_procfile
+  upgrade_docker_compose_development_configuration
+  install_gems
+  install_packages
+  prepare_database
+fi
+
+printf "\n%s\n" "Upgrade complete!"
