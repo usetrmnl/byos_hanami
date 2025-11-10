@@ -5,26 +5,21 @@ require "terminus/types"
 module Terminus
   # The application base settings.
   class Settings < Hanami::Settings
-    setting :api_uri, constructor: Types::Params::String
     setting :api_access_token_period, constructor: Types::Params::Integer, default: 1_800
-
+    setting :api_uri, constructor: Types::Params::String
     setting :app_secret,
             constructor: Types::Params::String.constrained(filled: true),
             default: SecureRandom.hex(40)
-
+    setting :browser, constructor: Terminus::Types::Browser, default: "{}"
     setting :color_maps_root,
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/assets/color_maps")
-
-    setting :git_tag,
-            constructor: Types::Params::String.constrained(filled: true),
-            default: `git tag --list --sort=taggerdate | tail -n 1`.strip
-
-    setting :git_sha,
-            constructor: Types::Params::String.constrained(filled: true),
+    setting :git_latest_sha,
+            constructor: Types::Params::String,
             default: `git rev-parse --short HEAD`.strip
-
-    setting :browser, constructor: Terminus::Types::Browser, default: "{}"
+    setting :git_tag,
+            constructor: Types::Params::String,
+            default: `git tag --list --sort=taggerdate | tail -n 1`.strip
     setting :firmware_poller, constructor: Types::Params::Bool, default: true
     setting :model_poller, constructor: Types::Params::Bool, default: true
     setting :redis_url, constructor: Types::Params::String
