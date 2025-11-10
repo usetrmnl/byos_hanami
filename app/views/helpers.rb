@@ -31,14 +31,27 @@ module Terminus
         end
       end
 
-      def git_sha_link
-        sha = Hanami.app[:settings].git_sha
-        link_to sha, "https://github.com/usetrmnl/byos_hanami/commit/#{sha}", class: :link
+      def git_link kernel: Kernel
+        settings = Hanami.app[:settings]
+        tag_sha = kernel.`("git rev-parse --short #{settings.git_tag}^{}").strip
+
+        tag_sha == settings.git_latest_sha ? git_version_link : git_latest_link
       end
 
-      def git_tag_link
+      def git_latest_link
+        settings = Hanami.app[:settings]
+
+        link_to "Latest (ahead of #{settings.git_tag})",
+                "https://github.com/usetrmnl/byos_hanami/commit/#{settings.git_latest_sha}",
+                class: :link
+      end
+
+      def git_version_link
         tag = Hanami.app[:settings].git_tag
-        link_to tag, "https://github.com/usetrmnl/byos_hanami/releases/tag/#{tag}", class: :link
+
+        link_to "Version #{tag}",
+                "https://github.com/usetrmnl/byos_hanami/releases/tag/#{tag}",
+                class: :link
       end
 
       def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
