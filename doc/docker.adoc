@@ -18,12 +18,24 @@ toc::[]
 
 To get setup, run:
 
-[source,]
+[source,bash]
 ----
 git clone https://github.com/usetrmnl/byos_hanami terminus
 cd terminus
 bin/setup docker
 ----
+
+== Upgrade
+
+To get upgrade, run:
+
+[source,bash]
+----
+cd terminus
+bin/upgrade docker
+----
+
+Watch for any changes that need to be addressed in the output. Otherwise, if no changes are detected, you are all set.
 
 == Configuration
 

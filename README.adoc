@@ -125,6 +125,18 @@ bin/setup
 
 💡 The setup script is idempotent so you can run it multiple times without harm. To rebuild a file managed by the setup script, delete the desired file and rerun setup to recreate.
 
+== Upgrade
+
+To upgrade this project for local development, run:
+
+[source,bash]
+----
+cd terminus
+bin/upgrade
+----
+
+Watch for any changes that need to be addressed in the output. Otherwise, if no changes are detected, you are all set.
+
 == Usage
 
 To launch the server, run:
