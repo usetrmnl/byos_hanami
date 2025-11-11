@@ -167,7 +167,7 @@ RSpec.describe Terminus::Repositories::Screen, :db do
 
     it "answers failure when screen isn't found" do
       result = repository.update_image "bogus", nil
-      expect(result).to be_failure(%(Unabled to find screen: "bogus".))
+      expect(result).to be_failure(%(Unable to find screen: "bogus".))
     end
   end
 

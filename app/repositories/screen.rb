@@ -54,7 +54,7 @@ module Terminus
             record.replace(io, **)
             Success update record.id, image_data: record.image_attributes
           else
-            Failure "Unabled to find screen: #{name.inspect}."
+            Failure "Unable to find screen: #{name.inspect}."
           end
         end
       end
