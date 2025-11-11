@@ -153,7 +153,11 @@
   width: 100%;
 }
 
-:where(textarea:not([rows])) {
+:where(select[multiple], textarea) {
+  overscroll-behavior: contain;
+}
+
+:where(select[multiple], textarea:not([rows])) {
   min-block-size: 10lh;
 }
 
