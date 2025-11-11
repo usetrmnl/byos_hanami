@@ -36,6 +36,9 @@ module Terminus
 
     get "/api/setup", to: "api.setup.show", as: :api_setup
 
+    # TODO: Firwmare 1.6.0 and higher fixes this but we need to get people off of 1.5.x first.
+    get "/api/setup/", to: "api.setup.show", as: :api_setup
+
     delete "/bulk/devices/:device_id/logs",
            to: "bulk.devices.logs.delete",
            as: :bulk_device_logs_delete
