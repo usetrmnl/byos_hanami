@@ -51,7 +51,8 @@ RSpec.describe Terminus::Views::Helpers do
     it "answers version link when latest and tag SHAs match" do
       latest_sha = Hanami.app[:settings].git_latest_sha
 
-      allow(kernel).to receive(:`).with("git rev-parse --short 1.2.3^{}").and_return(latest_sha)
+      allow(kernel).to receive(:`).with("git rev-parse --quiet --short 1.2.3^{}")
+                                  .and_return(latest_sha)
 
       expect(helper.git_link(kernel:)).to eq(
         %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/releases/tag/1.2.3">) \
@@ -60,7 +61,8 @@ RSpec.describe Terminus::Views::Helpers do
     end
 
     it "answers latest link when latest and tag SHAs don't match" do
-      allow(kernel).to receive(:`).with("git rev-parse --short 1.2.3^{}").and_return("different")
+      allow(kernel).to receive(:`).with("git rev-parse --quiet --short 1.2.3^{}")
+                                  .and_return("different")
 
       expect(helper.git_link(kernel:)).to eq(
         %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/commit/abcdefghijkl">) \

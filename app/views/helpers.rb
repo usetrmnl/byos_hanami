@@ -33,7 +33,7 @@ module Terminus
 
       def git_link kernel: Kernel
         settings = Hanami.app[:settings]
-        tag_sha = kernel.`("git rev-parse --short #{settings.git_tag}^{}").strip
+        tag_sha = kernel.`("git rev-parse --quiet --short #{settings.git_tag}^{}").strip
 
         tag_sha == settings.git_latest_sha ? git_version_link : git_latest_link
       end
