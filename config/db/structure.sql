@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict YMOuZzdXNX9KmsJiPy018G8JeZqM9woMUF8S7bMNuf66j7qCdhQum6EVxFlMutt
+\restrict oM9nVe0AzVVomPKkHed1Ignr5bluc9XzXq3L9i5rns8MMMjn88drDSv9fQMherC
 
 -- Dumped from database version 18.0
 -- Dumped by pg_dump version 18.0
@@ -741,22 +741,6 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: screen screen_label_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.screen
-    ADD CONSTRAINT screen_label_key UNIQUE (label);
-
-
---
--- Name: screen screen_name_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.screen
-    ADD CONSTRAINT screen_name_key UNIQUE (name);
-
-
---
 -- Name: screen screen_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -963,10 +947,10 @@ CREATE INDEX screen_image_data_index ON public.screen USING gin (image_data);
 
 
 --
--- Name: screen_name_index; Type: INDEX; Schema: public; Owner: -
+-- Name: screen_model_id_name_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX screen_name_index ON public.screen USING btree (name);
+CREATE UNIQUE INDEX screen_model_id_name_index ON public.screen USING btree (model_id, name);
 
 
 --
@@ -1122,7 +1106,7 @@ ALTER TABLE ONLY public."user"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict YMOuZzdXNX9KmsJiPy018G8JeZqM9woMUF8S7bMNuf66j7qCdhQum6EVxFlMutt
+\unrestrict oM9nVe0AzVVomPKkHed1Ignr5bluc9XzXq3L9i5rns8MMMjn88drDSv9fQMherC
 
 SET search_path TO "$user", public;
 
@@ -1157,4 +1141,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250916111947_create_account.rb'),
 ('20250916112018_create_rodauth_user.rb'),
 ('20250916112035_create_rodauth_user_password_hash.rb'),
-('20250916112116_create_membership.rb');
+('20250916112116_create_membership.rb'),
+('20251111140836_alter_screen_indexes.rb');
