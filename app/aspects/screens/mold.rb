@@ -21,14 +21,7 @@ module Terminus
         :label,
         :content,
         :kind,
-        :mime_type,
-        :bit_depth,
-        :colors,
-        :rotation,
-        :offset_x,
-        :offset_y,
-        :width,
-        :height,
+        *MOLD_MODEL_KEYS,
         :input_path,
         :output_path
       ) do
