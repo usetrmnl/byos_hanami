@@ -3,7 +3,10 @@
 
   <%= render "shared/screen", uri: screen.image_uri %>
 
-  <span class="type"><%= screen.type %></span>
+  <span class="type">
+    <%= link_to screen.model.label, routes.path(:model, id: screen.model_id) %>
+  </span>
+
   <span class="type"><%= screen.dimensions %></span>
 
   <div class="actions">

@@ -8,6 +8,8 @@ RSpec.describe Terminus::Actions::Screens::Index, :db do
   describe "#call" do
     let(:screen) { Factory[:screen, :with_image, label: "Test", name: "test"] }
 
+    before { screen }
+
     it "renders standard response with search results" do
       response = Rack::MockRequest.new(action).get "", params: {query: screen.label}
       expect(response.body).to include(%(<h2 class="label">Test</h2>))
@@ -35,7 +37,6 @@ RSpec.describe Terminus::Actions::Screens::Index, :db do
     end
 
     it "renders all screens with no query" do
-      screen
       response = Rack::MockRequest.new(action).get "", "HTTP_HX_TRIGGER" => "search"
 
       expect(response.body).to include(%(<h2 class="label">Test</h2>))

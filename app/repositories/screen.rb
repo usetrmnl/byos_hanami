@@ -43,9 +43,9 @@ module Terminus
       def find_by(**) = with_associations.where(**).one
 
       def search key, value
-        screen.where(Sequel.ilike(key, "%#{value}%"))
-              .order { created_at.asc }
-              .to_a
+        with_associations.where(Sequel.ilike(key, "%#{value}%"))
+                         .order { created_at.asc }
+                         .to_a
       end
 
       def update_with_image(id, io, **attributes)
