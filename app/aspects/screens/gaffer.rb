@@ -26,6 +26,8 @@ module Terminus
                     end
         end
 
+        private
+
         def create device, message
           creator.call content: String.new(view.call(message:)),
                        **device.system_screen_attributes("error")
@@ -33,12 +35,12 @@ module Terminus
 
         def update screen, device, message
           temp_path.call build_mold(device, message) do |path|
-            replace screen.name, path, {"filename" => "#{device.system_name :error}.png"}
+            replace screen.id, path, {"filename" => "#{device.system_name :error}.png"}
           end
         end
 
-        def replace name, path, metadata
-          path.open { |io| repository.update_image name, io, metadata: }
+        def replace id, path, metadata
+          path.open { |io| repository.update_with_image id, io, image: {metadata:} }
         end
 
         # :reek:FeatureEnvy

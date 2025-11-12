@@ -55,7 +55,7 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     context "when existing" do
       let(:struct) { instance_spy Terminus::Structs::Screen }
 
-      before { Factory[:screen, name: "test"] }
+      before { Factory[:screen, model_id: model.id, name: "test"] }
 
       it "destroys image attachment" do
         repository.create_with_image mold, struct
@@ -141,18 +141,21 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     end
   end
 
-  describe "#update_image" do
-    it "answers success for existing screen" do
-      screen = Factory[:screen]
+  describe "#update_with_image" do
+    let(:screen) { Factory[:screen] }
 
+    it "updates existing screen with screen and image attributes" do
       result = SPEC_ROOT.join("support/fixtures/test.png").open do |io|
-        repository.update_image screen.name, io, metadata: {filename: "update.png"}
+        repository.update_with_image screen.id,
+                                     io,
+                                     screen: {name: "update", label: "Update"},
+                                     image: {metadata: {filename: "update.png"}}
       end
 
       expect(result.success).to have_attributes(
         model_id: screen.model_id,
-        name: screen.name,
-        label: screen.label,
+        name: "update",
+        label: "Update",
         image_attributes: hash_including(
           metadata: hash_including(
             size: kind_of(Integer),
@@ -165,9 +168,17 @@ RSpec.describe Terminus::Repositories::Screen, :db do
       )
     end
 
+    it "answers success with no update issues" do
+      result = SPEC_ROOT.join("support/fixtures/test.png").open do |io|
+        repository.update_with_image screen.id, io, image: {metadata: {filename: "update.png"}}
+      end
+
+      expect(result).to be_success
+    end
+
     it "answers failure when screen isn't found" do
-      result = repository.update_image "bogus", nil
-      expect(result).to be_failure(%(Unable to find screen: "bogus".))
+      result = repository.update_with_image 13, nil
+      expect(result).to be_failure(%(Unable to find screen ID: 13.))
     end
   end
 
