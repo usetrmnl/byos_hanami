@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/monads"
+require "initable"
 
 module Terminus
   module Aspects

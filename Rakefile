@@ -12,6 +12,8 @@ Reek::Rake::Task.new
 RSpec::Core::RakeTask.new { |task| task.verbose = false }
 RuboCop::RakeTask.new
 
+Rake.add_rakelib "lib/tasks"
+
 desc "Run code quality checks"
 task quality: %i[git_lint reek rubocop]
 

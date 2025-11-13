@@ -7,7 +7,7 @@ module Terminus
     module API
       # The base action.
       class Base < Terminus::Action
-        format :json
+        config.formats.accept :json
 
         def initialize(problem: Petail, **)
           @problem = problem

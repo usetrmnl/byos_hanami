@@ -31,11 +31,7 @@ module Terminus
       csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://usetrmnl.com"
     end
 
-    config.actions
-          .formats
-          .add(:all, "application/octet-stream")
-          .add(:all, "*/*")
-          .add :problem_details, Petail::MEDIA_TYPE_JSON
+    config.actions.formats.register :problem_details, Petail::MEDIA_TYPE_JSON
 
     # rubocop:todo Layout/FirstArrayElementLineBreak
     config.actions.sessions = :cookie,

@@ -8,7 +8,7 @@ coverage
 db/*.sqlite
 node_modules
 Procfile.dev
-public/assets
-public/uploads
-public/assets.json
+public/*
+!public/404.html
+!public/500.html
 tmp

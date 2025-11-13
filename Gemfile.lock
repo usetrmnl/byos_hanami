@@ -183,55 +183,60 @@ GEM
       dry-monads (~> 1.9)
       refinements (~> 13.6)
       zeitwerk (~> 2.7)
-    hanami (2.2.1)
+    hanami (2.3.0)
       bundler (>= 1.16, < 3)
       dry-configurable (~> 1.0, >= 1.2.0, < 2)
       dry-core (~> 1.0, < 2)
       dry-inflector (~> 1.0, >= 1.1.0, < 2)
-      dry-logger (~> 1.0, < 2)
+      dry-logger (~> 1.2, < 2)
       dry-monitor (~> 1.0, >= 1.0.1, < 2)
       dry-system (~> 1.1)
-      hanami-cli (~> 2.2.1)
-      hanami-utils (~> 2.2)
+      hanami-cli (>= 2.3.0)
+      hanami-utils (>= 2.3.0)
       json (>= 2.7.2)
+      rack-session
       zeitwerk (~> 2.6)
-    hanami-assets (2.2.0)
+    hanami-assets (2.3.0)
       zeitwerk (~> 2.6)
-    hanami-cli (2.2.1)
+    hanami-cli (2.3.0)
       bundler (~> 2.1)
       dry-cli (~> 1.0, >= 1.1.0)
       dry-files (~> 1.0, >= 1.0.2, < 2)
       dry-inflector (~> 1.0, < 2)
+      irb
+      rackup
       rake (~> 13.0)
       zeitwerk (~> 2.6)
-    hanami-controller (2.2.0)
+    hanami-controller (2.3.0)
       dry-configurable (~> 1.0, < 2)
       dry-core (~> 1.0)
-      hanami-utils (~> 2.2)
-      rack (~> 2.0)
+      hanami-utils (~> 2.3.0)
+      rack (>= 2.1)
       zeitwerk (~> 2.6)
-    hanami-db (2.2.1)
+    hanami-db (2.3.0)
       rom (~> 5.4, >= 5.4.1)
       rom-sql (~> 3.7)
       zeitwerk (~> 2.6)
-    hanami-router (2.2.0)
+    hanami-router (2.3.0)
+      csv (~> 3.3)
       mustermann (~> 3.0)
       mustermann-contrib (~> 3.0)
-      rack (~> 2.0)
-    hanami-utils (2.2.0)
+      rack (>= 2.0)
+    hanami-utils (2.3.0)
+      bigdecimal (~> 3.1)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       dry-transformer (~> 1.0, < 2)
-    hanami-validations (2.2.0)
+    hanami-validations (2.3.0)
       dry-validation (>= 1.10, < 2)
-    hanami-view (2.2.1)
+    hanami-view (2.3.0)
       dry-configurable (~> 1.0)
       dry-core (~> 1.0)
       dry-inflector (~> 1.0, < 2)
       temple (~> 0.10.0, >= 0.10.2)
       tilt (~> 2.3)
       zeitwerk (~> 2.6)
-    hanami-webconsole (2.2.0)
+    hanami-webconsole (2.3.0)
       better_errors (~> 2.10, >= 2.10.1)
       binding_of_caller (~> 1.0)
     hansi (0.2.1)
@@ -349,8 +354,13 @@ GEM
     rack (2.2.21)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.2.0)
       rack (>= 1.3)
+    rackup (1.0.1)
+      rack (< 3)
+      webrick
     rainbow (3.1.1)
     rake (13.3.1)
     rb-fsevent (0.11.2)
@@ -580,14 +590,14 @@ DEPENDENCIES
   ferrum (~> 0.15)
   functionable (~> 0.1)
   git-lint (~> 9.0)
-  hanami (~> 2.2)
-  hanami-assets (~> 2.2)
-  hanami-controller (~> 2.2)
-  hanami-db (~> 2.2)
-  hanami-router (~> 2.2)
-  hanami-validations (~> 2.2)
-  hanami-view (~> 2.2)
-  hanami-webconsole (~> 2.2)
+  hanami (~> 2.3)
+  hanami-assets (~> 2.3)
+  hanami-controller (~> 2.3)
+  hanami-db (~> 2.3)
+  hanami-router (~> 2.3)
+  hanami-validations (~> 2.3)
+  hanami-view (~> 2.3)
+  hanami-webconsole (~> 2.3)
   htmx (~> 2.4)
   http (~> 5.2)
   http-fake (~> 4.4)
@@ -694,16 +704,16 @@ CHECKSUMS
   functionable (0.1.0) sha256=72cd5f43e4936c55883fb04f6edee263a930859b42abf6aa44d8a7ee051bc5e4
   git-lint (9.7.0) sha256=9074262104618f45a14f5fece20d7f5e6918c7a3b2b2ee0447630184ec07653e
   gitt (4.6.0) sha256=bb7c5f152f51b487b362aa2e6ea28952e05f5d903339bc3e890c9f2b0b353fa6
-  hanami (2.2.1) sha256=bef14f84916ad3a1244728df206bbd2ae6f307af945e3a2fd44cfe3a639c6cd5
-  hanami-assets (2.2.0) sha256=a58a03faacd35f675633a5b693783bee1db4bcfcd0506c4c894f4fb7afeea7c1
-  hanami-cli (2.2.1) sha256=028d1235d17516b3f5ea265a84578d6011391827c1cb1b647735596f666ba338
-  hanami-controller (2.2.0) sha256=2811692ab9a80051da7878e524f781d14166436a3bcb207366ab2f4b21a5d8ea
-  hanami-db (2.2.1) sha256=afe187dabd8be50267142c5710a275cb1f8a85e3021312b10f2e64e3f66c8bd9
-  hanami-router (2.2.0) sha256=88534072b6efb5976b30608b70065bcdbaa602282600e37cb0cb5e9d2077c042
-  hanami-utils (2.2.0) sha256=7884ed3ef637697487d7cb57045adec3325b9273c550a34b0d0f0332ccee5f5a
-  hanami-validations (2.2.0) sha256=87957a131ddd7350ba4387afd831e64c37669cdf56c9c2107eb0f748ec3c78e6
-  hanami-view (2.2.1) sha256=09179b2ce6f30e1b9e939d85f44cf11ca4803bad7a91788376586b0e31bb2560
-  hanami-webconsole (2.2.0) sha256=486fba76c2664a63fcd30729d9c97a763264944dc120ff6b3ad1e29ad06e0931
+  hanami (2.3.0) sha256=47297af951d35c709f8c144cc9438a1a627e5a82455ed2b795f4866e912102fd
+  hanami-assets (2.3.0) sha256=c396bb735833458d0ceda013f498154eccafcae50c36db7f27cdd50f0560223d
+  hanami-cli (2.3.0) sha256=74272bd596b00ea31a70929ecebc5720871f6c494901e4edbff30fba8082a46c
+  hanami-controller (2.3.0) sha256=0b1b5f4d770d0f496c790c0c90be0a5be248ec5b958969b3477ec856016b146d
+  hanami-db (2.3.0) sha256=d6baa6c16a9321e5132799b8b26c3e6a2e19b8c5515c8785fb1ab94720d94711
+  hanami-router (2.3.0) sha256=4051993145dc021655e42a68ae4b581dd3214fd8967ba1435607fe5010b7f327
+  hanami-utils (2.3.0) sha256=aa00f6c377ab4ad2cbe57d989781bace348c9f234201bc60715058dc6e220999
+  hanami-validations (2.3.0) sha256=ccc7cd9a829473934c01971024940ccef2b69aefd6abbf542740363acbda64aa
+  hanami-view (2.3.0) sha256=28c2143485ac3f94a80e2c552c071068e03798fe53b2fd71c6f5ee3503363700
+  hanami-webconsole (2.3.0) sha256=7c15b96eb1bd51a6b61f7176e61eb530c06b49d10350329680ab49c5bb62a756
   hansi (0.2.1) sha256=7e27dfd729f1692a3a7690fc0ef3af9d5e3cfc0285bb135cae7e56180e4805db
   htmx (2.6.0) sha256=464dd7ad7b371b4b1359cf3e0c1d9d33648a347a661db68dc9fe724cd4531772
   http (5.3.1) sha256=c50802d8e9be3926cb84ac3b36d1a31fbbac383bc4cbecdce9053cb604231d7d
@@ -761,7 +771,9 @@ CHECKSUMS
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (2.2.21) sha256=14e2f72f0765455fe424ff601588ac5ce84e95784f59e99251ffe1527152f739
   rack-attack (6.8.0) sha256=f2499fdebf85bcc05573a22dff57d24305ac14ec2e4156cd3c28d47cafeeecf2
+  rack-session (1.0.2) sha256=a02115e5420b4de036839b9811e3f7967d73446a554b42aa45106af335851d76
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
+  rackup (1.0.1) sha256=ba86604a28989fe1043bff20d819b360944ca08156406812dca6742b24b3c249
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
   rb-fsevent (0.11.2) sha256=43900b972e7301d6570f64b850a5aa67833ee7d87b458ee92805d56b7318aefe
