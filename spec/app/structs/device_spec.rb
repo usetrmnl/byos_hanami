@@ -50,21 +50,21 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
   end
 
-  describe "#system_label" do
-    it "answers system label with prefix" do
-      expect(device.system_label("Test")).to eq("Test ABC123")
+  describe "#screen_label" do
+    it "answers label with prefix" do
+      expect(device.screen_label("Test")).to eq("Test ABC123")
     end
   end
 
-  describe "#system_name" do
-    it "answers system name with kind" do
-      expect(device.system_name("test")).to eq("terminus_test_abc123")
+  describe "#screen_name" do
+    it "answers name with kind" do
+      expect(device.screen_name("test")).to eq("terminus_test_abc123")
     end
   end
 
-  describe "#system_screen_attributes" do
-    it "answers system screen attributes" do
-      expect(device.system_screen_attributes("test")).to eq(
+  describe "#screen_attributes" do
+    it "answers attributes" do
+      expect(device.screen_attributes("test")).to eq(
         model_id: device.model_id,
         label: "Test ABC123",
         name: "terminus_test_abc123"

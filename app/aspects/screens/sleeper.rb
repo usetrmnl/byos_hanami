@@ -15,15 +15,14 @@ module Terminus
         include Dry::Monads[:result]
 
         def call device
-          repository.find_by(name: device.system_name("sleep"))
+          repository.find_by(name: device.screen_name("sleep"))
                     .then { |screen| screen ? Success(screen) : create(device) }
         end
 
         private
 
         def create device
-          creator.call content: String.new(view.call(device:)),
-                       **device.system_screen_attributes("sleep")
+          creator.call content: String.new(view.call(device:)), **device.screen_attributes("sleep")
         end
       end
     end

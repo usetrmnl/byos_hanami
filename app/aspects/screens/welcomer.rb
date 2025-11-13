@@ -9,7 +9,7 @@ module Terminus
 
         def call device
           creator.call content: String.new(view.call(device:)),
-                       **device.system_screen_attributes("welcome")
+                       **device.screen_attributes("welcome")
         end
       end
     end

@@ -25,7 +25,7 @@ RSpec.describe Terminus::Aspects::Screens::Gaffer, :db do
     end
 
     it "updates screen" do
-      Factory[:screen, label: "Error ABC123", name: "terminus_error_abc123"]
+      Factory[:screen, model_id: device.id, label: "Error ABC123", name: "terminus_error_abc123"]
 
       expect(gaffer.call(device, message).success).to have_attributes(
         label: "Error ABC123",

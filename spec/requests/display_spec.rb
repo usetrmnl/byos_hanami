@@ -165,7 +165,7 @@ RSpec.describe "/api/display", :db do
 
     it "answers error image" do
       expect(json_payload).to include(
-        filename: "#{device.system_name :error}.png",
+        filename: "#{device.screen_name :error}.png",
         firmware_url: nil,
         image_url: %r(memory://\h{32}\.png),
         image_url_timeout: 0,

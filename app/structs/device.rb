@@ -22,15 +22,15 @@ module Terminus
         mac_address.tr ":", Dry::Core::EMPTY_STRING
       end
 
-      def system_label(prefix) = "#{prefix} #{friendly_id}"
+      def screen_label(prefix) = "#{prefix} #{friendly_id}"
 
-      def system_name(kind) = "terminus_#{kind}_#{friendly_id.downcase}"
+      def screen_name(kind) = "terminus_#{kind}_#{friendly_id.downcase}"
 
-      def system_screen_attributes kind
+      def screen_attributes kind
         {
           model_id:,
-          name: system_name(kind),
-          label: system_label(kind.capitalize)
+          name: screen_name(kind),
+          label: screen_label(kind.capitalize)
         }
       end
     end
