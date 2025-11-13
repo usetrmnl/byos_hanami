@@ -1,0 +1,4 @@
+:scheduler:
+  :dynamic: true
+  :rufus_scheduler_options:
+    :max_work_threads: <%= ENV.fetch "HANAMI_MAX_THREADS", 5 %>
