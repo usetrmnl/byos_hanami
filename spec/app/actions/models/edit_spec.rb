@@ -14,10 +14,13 @@ RSpec.describe Terminus::Actions::Models::Edit, :db do
     end
 
     it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: model.id}
+      response = action.call Rack::MockRequest.env_for(
+        model.id.to_s,
+        "HTTP_HX_REQUEST" => "true",
+        "router.params" => {id: model.id}
+      )
 
-      expect(response.body).to have_htmx_title("Edit #{model.label} Model")
+      expect(response.body.first).to have_htmx_title("Edit #{model.label} Model")
     end
 
     it "answers errors with invalid parameters" do

@@ -141,7 +141,7 @@ RSpec.describe "/api/models", :db do
 
     problem = Petail[
       type: "/problem_details#model_payload",
-      status: :unprocessable_entity,
+      status: :unprocessable_content,
       detail: "Validation failed.",
       instance: "/api/models",
       extensions: {
@@ -192,7 +192,7 @@ RSpec.describe "/api/models", :db do
 
     problem = Petail[
       type: "/problem_details#model_payload",
-      status: :unprocessable_entity,
+      status: :unprocessable_content,
       detail: "Validation failed.",
       instance: "/api/models",
       extensions: {

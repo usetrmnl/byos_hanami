@@ -11,15 +11,22 @@ RSpec.describe Terminus::Actions::Users::Show, :db do
     let(:user) { Factory[:user] }
 
     it "renders default response" do
-      response = Rack::MockRequest.new(action).get "", params: {id: user.id}
-      expect(response.body).to include("<!DOCTYPE html>")
+      response = action.call Rack::MockRequest.env_for(
+        user.id.to_s,
+        "router.params" => {id: user.id}
+      )
+
+      expect(response.body.first).to include("<!DOCTYPE html>")
     end
 
     it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: user.id}
+      response = action.call Rack::MockRequest.env_for(
+        user.id.to_s,
+        "HTTP_HX_REQUEST" => "true",
+        "router.params" => {id: user.id}
+      )
 
-      expect(response.body).to have_htmx_title(user.name)
+      expect(response.body.first).to have_htmx_title(user.name)
     end
 
     it "answers unprocessable entity with invalid parameters" do

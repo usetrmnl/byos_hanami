@@ -22,16 +22,16 @@ module Terminus
               device = repository.update(*parameters.to_h.values_at(:id, :device))
               response.body = {data: serializer.new(device).to_h}.to_json
             else
-              unprocessable_entity parameters, response
+              unprocessable_content parameters, response
             end
           end
 
           private
 
-          def unprocessable_entity parameters, response
+          def unprocessable_content parameters, response
             body = problem[
               type: "/problem_details#device_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/devices",
               extensions: {errors: parameters.errors.to_h}

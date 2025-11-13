@@ -112,7 +112,7 @@ RSpec.describe "/api/log", :db do
     it "answers problem details" do
       problem = Petail[
         type: "/problem_details#log_payload",
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
         detail: "Validation failed due to incorrect or invalid payload.",
         instance: "/api/log",
         extensions: {errors: {logs: ["must be filled"]}}

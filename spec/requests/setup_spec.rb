@@ -47,7 +47,7 @@ RSpec.describe "/api/setup", :db do
 
     problem = Petail[
       type: "/problem_details#device_setup",
-      status: :unprocessable_entity,
+      status: :unprocessable_content,
       detail: "Invalid request headers.",
       instance: "/api/setup",
       extensions: {
@@ -65,7 +65,7 @@ RSpec.describe "/api/setup", :db do
 
     problem = Petail[
       type: "/problem_details#device_setup",
-      status: :unprocessable_entity,
+      status: :unprocessable_content,
       detail: "Invalid request headers.",
       instance: "/api/setup",
       extensions: {
@@ -83,7 +83,7 @@ RSpec.describe "/api/setup", :db do
 
     problem = Petail[
       type: "/problem_details#device_setup",
-      status: :unprocessable_entity,
+      status: :unprocessable_content,
       detail: "Invalid request headers.",
       instance: "/api/setup",
       extensions: {

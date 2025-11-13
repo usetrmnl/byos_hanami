@@ -14,10 +14,13 @@ RSpec.describe Terminus::Actions::Playlists::Edit, :db do
     end
 
     it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: playlist.id}
+      response = action.call Rack::MockRequest.env_for(
+        playlist.id.to_s,
+        "HTTP_HX_REQUEST" => "true",
+        "router.params" => {id: playlist.id}
+      )
 
-      expect(response.body).to have_htmx_title(/Edit Playlist \d+ Playlist/)
+      expect(response.body.first).to have_htmx_title(/Edit Playlist \d+ Playlist/)
     end
 
     it "answers errors with invalid parameters" do

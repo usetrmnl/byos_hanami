@@ -16,7 +16,7 @@ module Terminus
           def handle request, response
             parameters = request.params
 
-            halt :unprocessable_entity unless parameters.valid?
+            halt :unprocessable_content unless parameters.valid?
 
             item = repository.find_by playlist_id: parameters[:playlist_id], id: parameters[:id]
 

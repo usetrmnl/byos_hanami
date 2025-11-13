@@ -16,37 +16,45 @@ RSpec.describe Terminus::Actions::Playlists::Index, :db do
       repository.find playlist.id
     end
 
-    it "renders standard response with search results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: playlist.label}
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+    it "renders default response with search results" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {query: playlist.label}
+      )
+
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
-    it "renders standard response with no results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: "bogus"}
-      expect(response.body).to include("No playlists found.")
+    it "renders default response with no results" do
+      response = action.call Rack::MockRequest.env_for("", "router.params" => {query: "bogus"})
+      expect(response.body.first).to include("No playlists found.")
     end
 
     it "renders htmx response with search results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: playlist.label}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: playlist.label}
+      )
 
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
     it "renders htmx response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: "bogus"}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "bogus"}
+      )
 
-      expect(response.body).to include("No playlists found.")
+      expect(response.body.first).to include("No playlists found.")
     end
 
     it "renders all playlists with no query" do
       playlist
-      response = Rack::MockRequest.new(action).get "", "HTTP_HX_TRIGGER" => "search"
+      response = action.call Rack::MockRequest.env_for("", "HTTP_HX_TRIGGER" => "search")
 
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
   end
 end

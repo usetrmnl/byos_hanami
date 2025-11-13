@@ -23,7 +23,7 @@ module Terminus
             if parameters.valid?
               process parameters, response
             else
-              unprocessable_entity parameters, response
+              unprocessable_content parameters, response
             end
           end
 
@@ -49,10 +49,10 @@ module Terminus
             response.with body: body.to_json, format: :problem_details, status: 404
           end
 
-          def unprocessable_entity parameters, response
+          def unprocessable_content parameters, response
             body = problem[
               type: "/problem_details#device_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/devices",
               extensions: {errors: parameters.errors.to_h}

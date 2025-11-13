@@ -18,7 +18,7 @@ module Terminus
           parameters = request.params
           device = repository.find parameters[:id]
 
-          halt :unprocessable_entity unless device
+          halt :unprocessable_content unless device
 
           if parameters.valid?
             save device, parameters, response

@@ -24,7 +24,7 @@ RSpec.describe Terminus::Actions::API::Log::Create, :db do
     end
 
     it "logs errors when parameters are invalid" do
-      Rack::MockRequest.new(action).post "", headers
+      action.call Rack::MockRequest.env_for("", headers)
       expect(logger).to have_received(:error).with(logs: ["is missing"])
     end
   end

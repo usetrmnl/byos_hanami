@@ -17,7 +17,7 @@ module Terminus
         def handle request, response
           parameters = request.params
 
-          halt :unprocessable_entity unless parameters.valid?
+          halt :unprocessable_content unless parameters.valid?
 
           response.render view, **view_settings(request, parameters)
         end

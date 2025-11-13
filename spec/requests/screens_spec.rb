@@ -181,7 +181,7 @@ RSpec.describe "/api/screens", :db do
       problem = Petail[
         type: "/problem_details#screen_payload",
         status: 422,
-        title: "Unprocessable Entity",
+        title: "Unprocessable Content",
         detail: "Unable to find model for ID: 666.",
         instance: "/api/screens"
       ]
@@ -210,7 +210,7 @@ RSpec.describe "/api/screens", :db do
     it "answers problem details" do
       problem = Petail[
         type: "/problem_details#screen_payload",
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
         detail: "Unsupported MIME Type: text/html.",
         instance: "/api/screens"
       ]
@@ -237,7 +237,7 @@ RSpec.describe "/api/screens", :db do
     it "answers problem details" do
       problem = Petail[
         type: "/problem_details#screen_payload",
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
         detail: "Validation failed.",
         instance: "/api/screens",
         extensions: {errors: {screen: ["is missing"]}}
@@ -313,7 +313,7 @@ RSpec.describe "/api/screens", :db do
     problem = Petail[
       type: "/problem_details#screen_payload",
       status: 422,
-      title: "Unprocessable Entity",
+      title: "Unprocessable Content",
       detail: "Unable to find model for ID: 666.",
       instance: "/api/screens"
     ]
@@ -332,7 +332,7 @@ RSpec.describe "/api/screens", :db do
     problem = Petail[
       type: "/problem_details#screen_payload",
       status: 422,
-      title: "Unprocessable Entity",
+      title: "Unprocessable Content",
       detail: "Unsupported MIME Type: image/webp.",
       instance: "/api/screens"
     ]
@@ -349,7 +349,7 @@ RSpec.describe "/api/screens", :db do
     problem = Petail[
       type: "/problem_details#screen_payload",
       status: 422,
-      title: "Unprocessable Entity",
+      title: "Unprocessable Content",
       detail: "Validation failed.",
       instance: "/api/screens",
       extensions: {

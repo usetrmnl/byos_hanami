@@ -9,15 +9,22 @@ RSpec.describe Terminus::Actions::Screens::Show, :db do
     let(:screen) { Factory[:screen, :with_image] }
 
     it "renders default response" do
-      response = Rack::MockRequest.new(action).get "", params: {id: screen.id}
-      expect(response.body).to include("<!DOCTYPE html>")
+      response = action.call Rack::MockRequest.env_for(
+        screen.id.to_s,
+        "router.params" => {id: screen.id}
+      )
+
+      expect(response.body.first).to include("<!DOCTYPE html>")
     end
 
     it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: screen.id}
+      response = action.call Rack::MockRequest.env_for(
+        screen.id.to_s,
+        "HTTP_HX_REQUEST" => "true",
+        "router.params" => {id: screen.id}
+      )
 
-      expect(response.body).to have_htmx_title(/Screen \d+ Screen/)
+      expect(response.body.first).to have_htmx_title(/Screen \d+ Screen/)
     end
 
     it "answers unprocessable entity with invalid parameters" do

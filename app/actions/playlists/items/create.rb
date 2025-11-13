@@ -21,7 +21,7 @@ module Terminus
             parameters = request.params
             playlist = playlist_repository.find parameters[:playlist_id]
 
-            halt :unprocessable_entity unless parameters.valid?
+            halt :unprocessable_content unless parameters.valid?
 
             response.render show_view, item: create(playlist, parameters), layout: false
           end

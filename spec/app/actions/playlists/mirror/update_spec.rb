@@ -23,15 +23,21 @@ RSpec.describe Terminus::Actions::Playlists::Mirror::Update, :db do
 
     context "with htmx request" do
       let :response do
-        Rack::MockRequest.new(action).get "", "HTTP_HX_REQUEST" => "true", params: {id: playlist.id}
+        action.call Rack::MockRequest.env_for(
+          playlist.id.to_s,
+          "HTTP_HX_REQUEST" => "true",
+          "router.params" => {id: playlist.id}
+        )
       end
 
       it "includes push URL header" do
-        expect(response.header).to include("HX-Push-Url" => routes.path(:playlist, id: playlist.id))
+        expect(response.headers).to include(
+          "HX-Push-Url" => routes.path(:playlist, id: playlist.id)
+        )
       end
 
       it "renders htmx response" do
-        expect(response.body).to have_htmx_title(/Playlist \d+ Playlist/)
+        expect(response.body.first).to have_htmx_title(/Playlist \d+ Playlist/)
       end
     end
   end

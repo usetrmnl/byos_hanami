@@ -8,37 +8,46 @@ RSpec.describe Terminus::Actions::Models::Index, :db do
   describe "#call" do
     let(:model) { Factory[:model, label: "Test", name: "test"] }
 
-    it "renders standard response with search results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: model.label}
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+    it "renders default response with search results" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {query: model.label}
+      )
+
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
-    it "renders standard response with no results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: "bogus"}
-      expect(response.body).to include("No models found.")
+    it "renders default response with no results" do
+      response = action.call Rack::MockRequest.env_for("", "router.params" => {query: "bogus"})
+
+      expect(response.body.first).to include("No models found.")
     end
 
     it "renders htmx response with search results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: model.label}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: model.label}
+      )
 
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
     it "renders htmx response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: "bogus"}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "bogus"}
+      )
 
-      expect(response.body).to include("No models found.")
+      expect(response.body.first).to include("No models found.")
     end
 
     it "renders all models with no query" do
       model
-      response = Rack::MockRequest.new(action).get "", "HTTP_HX_TRIGGER" => "search"
+      response = action.call Rack::MockRequest.env_for("", "HTTP_HX_TRIGGER" => "search")
 
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
   end
 end

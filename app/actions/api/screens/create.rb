@@ -33,7 +33,7 @@ module Terminus
             if parameters.valid?
               save parameters[:screen], response
             else
-              unprocessable_entity_for_parameters parameters.errors.to_h, response
+              unprocessable_content_for_parameters parameters.errors.to_h, response
             end
           end
 
@@ -45,14 +45,14 @@ module Terminus
             case result
               in Success(screen)
                 response.body = {data: serializer.new(screen).to_h}.to_json
-              else unprocessable_entity_for_creation result, response
+              else unprocessable_content_for_creation result, response
             end
           end
 
-          def unprocessable_entity_for_parameters errors, response
+          def unprocessable_content_for_parameters errors, response
             body = problem[
               type: "/problem_details#screen_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/screens",
               extensions: {errors:}
@@ -61,10 +61,10 @@ module Terminus
             response.with body: body.to_json, format: :problem_details, status: 422
           end
 
-          def unprocessable_entity_for_creation result, response
+          def unprocessable_content_for_creation result, response
             body = problem[
               type: "/problem_details#screen_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: result.failure,
               instance: "/api/screens"
             ]

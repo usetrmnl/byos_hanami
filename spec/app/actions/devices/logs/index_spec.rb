@@ -9,44 +9,46 @@ RSpec.describe Terminus::Actions::Devices::Logs::Index, :db do
     let(:device_log) { Factory[:device_log] }
 
     it "answers unprocessable entity status when required parameters are missing" do
-      response = Rack::MockRequest.new(action).get ""
-
+      response = action.call Rack::MockRequest.env_for("")
       expect(response.status).to eq(422)
     end
 
-    it "renders standard response with search results" do
-      response = Rack::MockRequest.new(action).get "", params: {device_id: device_log.device_id}
+    it "renders default response with search results" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {device_id: device_log.device_id}
+      )
 
-      expect(response.body).to include("Danger!")
+      expect(response.body.first).to include("Danger!")
     end
 
-    it "renders standard response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   params: {
-                                                     device_id: device_log.device_id,
-                                                     query: "bogus"
-                                                   }
+    it "renders default response with no results" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {device_id: device_log.device_id, query: "bogus"}
+      )
 
-      expect(response.body).to include("No logs found.")
+      expect(response.body.first).to include("No logs found.")
     end
 
     it "renders htmx response with search results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {device_id: device_log.device_id}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {device_id: device_log.device_id}
+      )
 
-      expect(response.body).to include("Danger!")
+      expect(response.body.first).to include("Danger!")
     end
 
     it "renders htmx response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {
-                                                     device_id: device_log.device_id,
-                                                     query: "bogus"
-                                                   }
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {device_id: device_log.device_id, query: "bogus"}
+      )
 
-      expect(response.body).to include("No logs found.")
+      expect(response.body.first).to include("No logs found.")
     end
   end
 end

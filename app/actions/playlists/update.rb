@@ -24,7 +24,7 @@ module Terminus
           parameters = request.params
           playlist = repository.find parameters[:id]
 
-          halt :unprocessable_entity unless playlist
+          halt :unprocessable_content unless playlist
 
           if parameters.valid?
             save playlist, parameters, response

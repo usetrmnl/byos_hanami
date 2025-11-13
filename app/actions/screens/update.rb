@@ -25,7 +25,7 @@ module Terminus
           parameters = request.params
           screen = repository.find parameters[:id]
 
-          halt :unprocessable_entity unless screen
+          halt :unprocessable_content unless screen
 
           if parameters.valid?
             save screen, parameters, response

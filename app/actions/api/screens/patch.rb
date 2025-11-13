@@ -38,7 +38,7 @@ module Terminus
             if parameters.valid? && screen
               render update(screen, parameters[:screen]), response
             else
-              unprocessable_entity parameters.errors.to_h, response
+              unprocessable_content parameters.errors.to_h, response
             end
           end
 
@@ -47,7 +47,7 @@ module Terminus
           def render result, response
             case result
               in Success(update) then response.body = {data: serializer.new(update).to_h}.to_json
-              else unprocessable_entity_on_failure result, response
+              else unprocessable_content_on_failure result, response
             end
           end
 
@@ -88,10 +88,10 @@ module Terminus
             Success repository.update(screen.id, image_data: screen.image_attributes, **)
           end
 
-          def unprocessable_entity errors, response
+          def unprocessable_content errors, response
             body = problem[
               type: "/problem_details#screen_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/screens",
               extensions: {errors:}
@@ -100,10 +100,10 @@ module Terminus
             response.with body: body.to_json, format: :problem_details, status: 422
           end
 
-          def unprocessable_entity_on_failure result, response
+          def unprocessable_content_on_failure result, response
             body = problem[
               type: "/problem_details#screen_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: result.failure,
               instance: "/api/screens"
             ]

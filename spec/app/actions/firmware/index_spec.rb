@@ -13,40 +13,54 @@ RSpec.describe Terminus::Actions::Firmware::Index, :db do
 
     before { firmware }
 
-    it "renders standard response with search results" do
+    it "renders default response with search results" do
+      action.call Rack::MockRequest.env_for(
+        "0.0",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "0.0"}
+      )
+
       response = Rack::MockRequest.new(action).get "", params: {query: "0.0"}
       expect(response.body).to match(proof)
     end
 
-    it "renders standard response with no results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: "bogus"}
-      expect(response.body).to include("No firmware found.")
+    it "renders default response with no results" do
+      response = action.call Rack::MockRequest.env_for(
+        "bogus",
+        "router.params" => {query: "bogus"}
+      )
+
+      expect(response.body.first).to include("No firmware found.")
     end
 
     it "renders htmx response with search results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: "0.0"}
+      response = action.call Rack::MockRequest.env_for(
+        "0.0",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "0.0"}
+      )
 
-      expect(response.body).to match(proof)
+      expect(response.body.first).to match(proof)
     end
 
     it "renders htmx response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: "bogus"}
+      response = action.call Rack::MockRequest.env_for(
+        "bogus",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "bogus"}
+      )
 
-      expect(response.body).to include("No firmware found.")
+      expect(response.body.first).to include("No firmware found.")
     end
 
     it "renders all devices with empty query" do
-      response = Rack::MockRequest.new(action).get "", params: {query: ""}
-      expect(response.body).to match(proof)
+      response = action.call Rack::MockRequest.env_for("", "router.params" => {query: ""})
+      expect(response.body.first).to match(proof)
     end
 
     it "renders all devices with no query" do
-      response = Rack::MockRequest.new(action).get ""
-      expect(response.body).to match(proof)
+      response = action.call Rack::MockRequest.env_for("")
+      expect(response.body.first).to match(proof)
     end
   end
 end

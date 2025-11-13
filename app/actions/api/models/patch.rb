@@ -39,16 +39,16 @@ module Terminus
               model = repository.update(*parameters.to_h.values_at(:id, :model))
               response.body = {data: serializer.new(model).to_h}.to_json
             else
-              unprocessable_entity parameters, response
+              unprocessable_content parameters, response
             end
           end
 
           private
 
-          def unprocessable_entity parameters, response
+          def unprocessable_content parameters, response
             body = problem[
               type: "/problem_details#model_payload",
-              status: :unprocessable_entity,
+              status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/models",
               extensions: {errors: parameters.errors.to_h}

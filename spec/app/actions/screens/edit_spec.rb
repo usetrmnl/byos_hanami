@@ -14,10 +14,13 @@ RSpec.describe Terminus::Actions::Screens::Edit, :db do
     end
 
     it "renders htmx response" do
-      response = Rack::MockRequest.new(action)
-                                  .get "", "HTTP_HX_REQUEST" => "true", params: {id: screen.id}
+      response = action.call Rack::MockRequest.env_for(
+        screen.id.to_s,
+        "HTTP_HX_REQUEST" => "true",
+        "router.params" => {id: screen.id}
+      )
 
-      expect(response.body).to have_htmx_title(/Edit Screen \d+ Screen/)
+      expect(response.body.first).to have_htmx_title(/Edit Screen \d+ Screen/)
     end
 
     it "answers errors with invalid parameters" do

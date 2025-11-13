@@ -30,7 +30,7 @@ module Terminus
           parameters = request.params
           model = repository.find parameters[:id]
 
-          halt :unprocessable_entity unless model
+          halt :unprocessable_content unless model
 
           if parameters.valid?
             save model, parameters, response

@@ -16,7 +16,7 @@ module Terminus
           def handle request, response
             parameters = request.params
 
-            halt :unprocessable_entity unless parameters.valid?
+            halt :unprocessable_content unless parameters.valid?
 
             repository.delete_by_device(*parameters.to_h.values_at(:device_id, :id))
             response.body = ""

@@ -26,7 +26,7 @@ module Terminus
 
             case contract.call(environment).to_monad
               in Success then create environment, response
-              in Failure(result) then unprocessable_entity result.errors.to_h, response
+              in Failure(result) then unprocessable_content result.errors.to_h, response
               # :nocov:
               # :nocov:
             end
@@ -64,7 +64,7 @@ module Terminus
             response.with body: body.to_json, format: :problem_details, status: 422
           end
 
-          def unprocessable_entity errors, response
+          def unprocessable_content errors, response
             body = problem[
               type: "/problem_details#device_setup",
               status: __method__,

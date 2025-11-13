@@ -10,36 +10,43 @@ RSpec.describe Terminus::Actions::Screens::Index, :db do
 
     before { screen }
 
-    it "renders standard response with search results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: screen.label}
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+    it "renders default response with search results" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {query: screen.label}
+      )
+
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
-    it "renders standard response with no results" do
-      response = Rack::MockRequest.new(action).get "", params: {query: "bogus"}
-      expect(response.body).to include("No screens found.")
+    it "renders default response with no results" do
+      response = action.call Rack::MockRequest.env_for("", "router.params" => {query: "bogus"})
+      expect(response.body.first).to include("No screens found.")
     end
 
     it "renders htmx response with search results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: screen.label}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: screen.label}
+      )
 
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
 
     it "renders htmx response with no results" do
-      response = Rack::MockRequest.new(action).get "",
-                                                   "HTTP_HX_TRIGGER" => "search",
-                                                   params: {query: "bogus"}
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "HTTP_HX_TRIGGER" => "search",
+        "router.params" => {query: "bogus"}
+      )
 
-      expect(response.body).to include("No screens found.")
+      expect(response.body.first).to include("No screens found.")
     end
 
     it "renders all screens with no query" do
-      response = Rack::MockRequest.new(action).get "", "HTTP_HX_TRIGGER" => "search"
-
-      expect(response.body).to include(%(<h2 class="label">Test</h2>))
+      response = action.call Rack::MockRequest.env_for("", "HTTP_HX_TRIGGER" => "search")
+      expect(response.body.first).to include(%(<h2 class="label">Test</h2>))
     end
   end
 end

@@ -41,7 +41,7 @@ module Terminus
             device = device_repository.find_by mac_address: request.get_header("HTTP_ID")
 
             return not_found response unless device
-            return unprocessable_entity parameters, response unless parameters.valid?
+            return unprocessable_content parameters, response unless parameters.valid?
 
             save device, parameters, response
           end
@@ -72,7 +72,7 @@ module Terminus
             response.with body: body.to_json, format: :problem_details, status: 404
           end
 
-          def unprocessable_entity parameters, response
+          def unprocessable_content parameters, response
             errors = parameters.errors.to_h
 
             body = problem[
