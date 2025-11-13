@@ -37,8 +37,6 @@ require "warning"
 SPEC_ROOT = Pathname(__dir__).realpath.freeze
 
 POORLY_MAINTAINED_GEMS = /
-  hanami.slice.routing.resolver  # Hoping this can be removed in Hanami 2.3.1.
-  |                              # Or.
   shrine                         # No longer maintained. We are working on a new solution.
 /x
 

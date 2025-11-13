@@ -133,7 +133,7 @@ GEM
       dry-initializer (~> 3.2)
       dry-schema (~> 1.14)
       zeitwerk (~> 2.6)
-    erb (5.1.3)
+    erb (6.0.0)
     erubi (1.13.1)
     etcher (3.5.0)
       cogger (~> 1.0)
@@ -183,7 +183,7 @@ GEM
       dry-monads (~> 1.9)
       refinements (~> 13.6)
       zeitwerk (~> 2.7)
-    hanami (2.3.0)
+    hanami (2.3.1)
       bundler (>= 1.16, < 3)
       dry-configurable (~> 1.0, >= 1.2.0, < 2)
       dry-core (~> 1.0, < 2)
@@ -191,14 +191,14 @@ GEM
       dry-logger (~> 1.2, < 2)
       dry-monitor (~> 1.0, >= 1.0.1, < 2)
       dry-system (~> 1.1)
-      hanami-cli (>= 2.3.0)
+      hanami-cli (>= 2.3.1)
       hanami-utils (>= 2.3.0)
       json (>= 2.7.2)
       rack-session
       zeitwerk (~> 2.6)
     hanami-assets (2.3.0)
       zeitwerk (~> 2.6)
-    hanami-cli (2.3.0)
+    hanami-cli (2.3.1)
       bundler (~> 2.1)
       dry-cli (~> 1.0, >= 1.1.0)
       dry-files (~> 1.0, >= 1.0.2, < 2)
@@ -521,7 +521,7 @@ GEM
       refinements (~> 13.6)
       versionaire (~> 14.0)
       zeitwerk (~> 2.7)
-    stringio (3.1.7)
+    stringio (3.1.8)
     strscan (3.1.5)
     temple (0.10.4)
     tilt (2.6.1)
@@ -687,7 +687,7 @@ CHECKSUMS
   dry-transformer (1.0.1) sha256=6a2a6184ece8e347ebb1315fe3224ac19f42ca157db0f59cd5a69aeb76f73d76
   dry-types (1.8.3) sha256=b5d97a45e0ed273131c0c3d5bc9f5633c2d1242e092ee47401ce7d5eab65c1bc
   dry-validation (1.11.1) sha256=70900bb5a2d911c8aab566d3e360c6bff389b8bf92ea8e04885ce51c41ff8085
-  erb (5.1.3) sha256=566e53057b6ba48699f824b578473b391fa8aef100aa14afad1c46725fae0e67
+  erb (6.0.0) sha256=2730893f9d8c9733f16cab315a4e4b71c1afa9cabc1a1e7ad1403feba8f52579
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   etcher (3.5.0) sha256=20359b9092470809b65d12a50e756effae7f82cac98d312dd7097ec93f33d5c5
   faker (3.5.2) sha256=f9a80291b2e3f259801d1dd552f0732fe04dce5d1f74e798365bc0413789c473
@@ -704,9 +704,9 @@ CHECKSUMS
   functionable (0.1.0) sha256=72cd5f43e4936c55883fb04f6edee263a930859b42abf6aa44d8a7ee051bc5e4
   git-lint (9.7.0) sha256=9074262104618f45a14f5fece20d7f5e6918c7a3b2b2ee0447630184ec07653e
   gitt (4.6.0) sha256=bb7c5f152f51b487b362aa2e6ea28952e05f5d903339bc3e890c9f2b0b353fa6
-  hanami (2.3.0) sha256=47297af951d35c709f8c144cc9438a1a627e5a82455ed2b795f4866e912102fd
+  hanami (2.3.1) sha256=8fc3560515ceac4d22c17881993448527c0ffad5c60bd21b2de17c12d5ac2e02
   hanami-assets (2.3.0) sha256=c396bb735833458d0ceda013f498154eccafcae50c36db7f27cdd50f0560223d
-  hanami-cli (2.3.0) sha256=74272bd596b00ea31a70929ecebc5720871f6c494901e4edbff30fba8082a46c
+  hanami-cli (2.3.1) sha256=d60579fd83c07315e3e21a12aa2c87090a3b25fa9aff250fde8e10dba3425553
   hanami-controller (2.3.0) sha256=0b1b5f4d770d0f496c790c0c90be0a5be248ec5b958969b3477ec856016b146d
   hanami-db (2.3.0) sha256=d6baa6c16a9321e5132799b8b26c3e6a2e19b8c5515c8785fb1ab94720d94711
   hanami-router (2.3.0) sha256=4051993145dc021655e42a68ae4b581dd3214fd8967ba1435607fe5010b7f327
@@ -824,7 +824,7 @@ CHECKSUMS
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   sod (1.5.0) sha256=92e2b804012b6a307b6e089c441cd5816a590b9ca00be0a991d566335fd319c7
   spek (4.6.0) sha256=8c77ecb780937c3111a0c3bb8b7cb07cef9cb00afd89c801eb162c3e7ef5e6cb
-  stringio (3.1.7) sha256=5b78b7cb242a315fb4fca61a8255d62ec438f58da2b90be66048546ade4507fa
+  stringio (3.1.8) sha256=99c43c3a9302843cca223fd985bfc503dd50a4b1723d3e4a9eb1d9c37d99e4ec
   strscan (3.1.5) sha256=f8413b90ea9395a69609a4414a8c88551bcda64337e234272c24fcd4c83e5947
   temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
   tilt (2.6.1) sha256=35a99bba2adf7c1e362f5b48f9b581cce4edfba98117e34696dde6d308d84770
