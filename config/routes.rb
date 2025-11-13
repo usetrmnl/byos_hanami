@@ -2,6 +2,8 @@
 
 require "sidekiq/web"
 
+require "sidekiq-scheduler/web"
+
 require_relative "../app/aspects/screens/designer/middleware"
 
 module Terminus

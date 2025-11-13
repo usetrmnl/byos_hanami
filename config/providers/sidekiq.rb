@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Hanami.app.register_provider :sidekiq do
-  prepare { require "sidekiq" }
+  prepare do
+    require "sidekiq"
+    require "sidekiq-scheduler"
+  end
 
   start do
     Sidekiq.configure_server do |configuration|
