@@ -8,6 +8,7 @@ detectors:
       - Terminus::Views::Parts::User#password
   DataClump:
     exclude:
+      - Terminus::Aspects::Croner
       - Terminus::Aspects::Screens::Shoter
   FeatureEnvy:
     exclude:
@@ -35,6 +36,7 @@ detectors:
     exclude:
       - RackLoggerPatch#prepare_app_providers
       - Terminus::Action#handle_rodauth_redirect
+      - Terminus::Aspects::Croner#call
       - Terminus::Aspects::Firmware::Downloader#get
       - Terminus::Aspects::Screens::ColorMapper#colorize
       - Terminus::Aspects::Screens::ColorMapper#run
@@ -49,3 +51,8 @@ detectors:
   UtilityFunction:
     exclude:
       - SQLLoggerPatch#log_query
+      - Terminus::Aspects::Croner#for_day
+      - Terminus::Aspects::Croner#for_hour
+      - Terminus::Aspects::Croner#for_minute
+      - Terminus::Aspects::Croner#for_month
+      - Terminus::Aspects::Croner#for_week
