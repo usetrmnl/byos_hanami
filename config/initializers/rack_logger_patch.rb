@@ -4,7 +4,6 @@
 require "dry/system"
 
 # Patches Hanami's default providers.
-# :reek:TooManyStatements
 module RackLoggerPatch
   def prepare_app_providers
     require "hanami/providers/inflector"

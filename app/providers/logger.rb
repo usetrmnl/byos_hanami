@@ -25,13 +25,13 @@ module Terminus
       attr_reader :environment, :resolver, :id
 
       def add_filters
-        core.add_filters :api_key,
-                         :csrf,
-                         :HTTP_ACCESS_TOKEN,
-                         :HTTP_ID,
-                         :mac_address,
-                         :password,
-                         :password_confirmation
+        cogger.add_filters :api_key,
+                           :csrf,
+                           :HTTP_ACCESS_TOKEN,
+                           :HTTP_ID,
+                           :mac_address,
+                           :password,
+                           :password_confirmation
       end
 
       def build_instance
@@ -39,14 +39,14 @@ module Terminus
 
         case environment
           when :test
-            core.new(id:, io: StringIO.new, formatter: :json, level: :debug).add_stream io:
-          when :development then core.new(id:).add_stream(io:, formatter: :json)
-          else core.new id:, formatter: :json
+            cogger.new(id:, io: StringIO.new, formatter: :json, level: :debug).add_stream io:
+          when :development then cogger.new(id:).add_stream(io:, formatter: :json)
+          else cogger.new id:, formatter: :json
         end
       end
 
-      def core
-        @core ||= resolver.call
+      def cogger
+        @cogger ||= resolver.call
       end
     end
   end
