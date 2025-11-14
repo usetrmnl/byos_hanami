@@ -15,6 +15,7 @@ RSpec.describe Terminus::Aspects::Screens::Designer::Middleware do
         array_including(
           200,
           {
+            "Content-Encoding" => "identity",
             "Content-Type" => "text/event-stream",
             "Cache-Control" => "no-cache",
             "X-Accel-Buffering" => "no"

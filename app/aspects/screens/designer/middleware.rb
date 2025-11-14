@@ -15,6 +15,7 @@ module Terminus
             %i[req application],
             %i[keyreq pattern],
             headers: {
+              "Content-Encoding" => "identity",
               "Content-Type" => "text/event-stream",
               "Cache-Control" => "no-cache",
               "X-Accel-Buffering" => "no"
