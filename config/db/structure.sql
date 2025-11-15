@@ -2,10 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict YMOuZzdXNX9KmsJiPy018G8JeZqM9woMUF8S7bMNuf66j7qCdhQum6EVxFlMutt
 
--- Dumped from database version 18.0
--- Dumped by pg_dump version 18.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1122,7 +1119,6 @@ ALTER TABLE ONLY public."user"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict YMOuZzdXNX9KmsJiPy018G8JeZqM9woMUF8S7bMNuf66j7qCdhQum6EVxFlMutt
 
 SET search_path TO "$user", public;
 
