@@ -2,7 +2,7 @@ databases:
   - name: terminus
     plan: free
     databaseName: terminus
-    postgresMajorVersion: 17
+    postgresMajorVersion: 18
     user: terminus
 
 services:
