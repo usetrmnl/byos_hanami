@@ -82,6 +82,9 @@ RUN <<STEPS
 STEPS
 
 FROM base
+
+ENV HANAMI_PORT=2300
+
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /app /app
 
