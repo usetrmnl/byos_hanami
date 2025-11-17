@@ -24,6 +24,12 @@ services:
         condition: service_healthy
     networks:
       - terminus-network
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:2300/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
 
   worker:
     build:
@@ -43,6 +49,12 @@ services:
         condition: service_healthy
     networks:
       - terminus-network
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "sidekiq"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
 
   database:
     image: postgres:18.1
@@ -58,7 +70,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
       interval: 1s
       timeout: 2s
-      retries: 5
+      retries: 3
       start_period: 2s
     networks:
       - terminus-network
@@ -71,10 +83,10 @@ services:
     volumes:
       - cache-data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "--pass", "${REDIS_PASSWORD}", "ping"]
-      interval: 1s
-      timeout: 2s
-      retries: 5
+      test: ["CMD-SHELL", "redis-cli ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
       start_period: 2s
     networks:
       - terminus-network

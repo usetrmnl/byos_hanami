@@ -20,6 +20,12 @@ services:
         condition: service_healthy
       cache:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:2300/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
     deploy:
       resources:
         limits:
@@ -38,6 +44,12 @@ services:
         condition: service_healthy
       cache:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "sidekiq"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
 
   database:
     image: postgres:18.1
@@ -54,7 +66,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 3
     deploy:
       resources:
         limits:
@@ -69,10 +81,10 @@ services:
     volumes:
       - cache-data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "--pass", "${REDIS_PASSWORD}", "ping"]
-      interval: 1s
-      timeout: 2s
-      retries: 5
+      test: ["CMD-SHELL", "redis-cli ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
       start_period: 2s
 
 volumes:
