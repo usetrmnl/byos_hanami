@@ -79,13 +79,11 @@ The following is a high level overview you can use to compare/contrast when deci
 | JSON Data API                     | 🟢       | 🟢
 | Image Previews                    | 🟢       | 🟢
 | Playlists                         | 🟢       | 🟢
-| Plugins^*^                        | 🟢       | 🟢
-| Recipes^*^                        | 🟢       | 🟢
+| Plugins                           | 🟢       | 🟢
+| Recipes                           | 🟢       | 🟢
 | Account Management                | 🟢       | 🟢
 | Docker                            | 🟢       | 🔴
 |===
-
-ℹ️ Plugins and Recipes are supported by pulling screen data from our link:https://usetrmnl.com[Core] server. This means Terminus accesses data outside your private network to acquire this data. This is done by _proxying_, per device, to our Core server (disabled by default), downloading screens from your playlist, and then rendering on your device. See {background_pollers_link} for more details.
 
 == Requirements
 
