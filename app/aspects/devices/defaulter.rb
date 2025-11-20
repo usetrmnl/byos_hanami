@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "initable"
 require "securerandom"
 
 module Terminus
