@@ -24,7 +24,7 @@ module Terminus
           parameters = request.params
 
           case provision parameters
-            in Success then response.render index_view, **view_settings(request, parameters)
+            in Success then response.render(index_view, **view_settings(request))
             else error response, parameters
           end
         end
@@ -35,7 +35,7 @@ module Terminus
           parameters.valid? ? provisioner.call(**parameters[:device]) : Failure
         end
 
-        def view_settings request, _parameters
+        def view_settings request
           settings = {devices: repository.all}
           settings[:layout] = false if htmx.request? request.env, :request, "true"
           settings

@@ -25,7 +25,7 @@ module Terminus
 
           if parameters.valid?
             repository.create parameters[:screen]
-            response.render index_view, **view_settings(request, parameters)
+            response.render index_view, **view_settings(request)
           else
             error response, parameters
           end
@@ -33,7 +33,7 @@ module Terminus
 
         private
 
-        def view_settings request, _parameters
+        def view_settings request
           settings = {screens: repository.all}
           settings[:layout] = false if htmx.request? request.env, :request, "true"
           settings
