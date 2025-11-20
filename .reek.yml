@@ -10,6 +10,9 @@ detectors:
     exclude:
       - Terminus::Aspects::Croner
       - Terminus::Aspects::Screens::Shoter
+  ControlParameter:
+    exclude:
+      - Terminus::Aspects::PasswordEncryptor#call
   FeatureEnvy:
     exclude:
       - Terminus::Action#authorize
