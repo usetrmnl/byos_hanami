@@ -10,7 +10,6 @@ module Terminus
 
     protected
 
-    # :reek:FeatureEnvy
     def authorize request, response
       rodauth = request.env["rodauth"]
 

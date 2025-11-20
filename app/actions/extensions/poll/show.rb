@@ -42,7 +42,6 @@ module Terminus
             end
           end
 
-          # :reek:TooManyStatements
           def fetch extension
             fetcher.call(extension)
                    .fmap { |collection| self.class.reduce collection }

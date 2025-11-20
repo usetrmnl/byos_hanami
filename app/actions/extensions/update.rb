@@ -42,7 +42,6 @@ module Terminus
           schedule.upsert(*extension.to_schedule, old_name:)
         end
 
-        # :reek:FeatureEnvy
         def error extension, parameters, response
           fields = parameters[:extension].transform_with!(
             start_at: -> value { value.strftime("%Y-%m-%dT%H:%M:%S") }

@@ -61,7 +61,6 @@ module Terminus
             ]
           end
 
-          # :reek:FeatureEnvy
           def fetch_firmware_uri device
             firmware_repository.latest.then do |firmware|
               break unless firmware

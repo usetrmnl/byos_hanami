@@ -24,7 +24,6 @@ module Terminus
 
           private
 
-          # :reek:FeatureEnvy
           def screen_options prompt: "Select..."
             screens = screen_repository.all
             initial = prompt && screens.any? ? [[prompt, nil]] : []

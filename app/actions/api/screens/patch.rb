@@ -82,7 +82,6 @@ module Terminus
             temp_path.call(mold) { |path| replace path, screen, **parameters }
           end
 
-          # :reek:FeatureEnvy
           def replace(path, screen, **)
             path.open { |io| screen.replace io, metadata: {"filename" => path.basename} }
             Success repository.update(screen.id, image_data: screen.image_attributes, **)
