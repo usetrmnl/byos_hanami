@@ -10,10 +10,16 @@ module Terminus
         {image_url_timeout: image_timeout, refresh_rate:, update_firmware: firmware_update}
       end
 
-      def asleep? now = Time.now
+      def asleep? at = Time.now, type: Sequel::SQLTime
         return false unless sleep_start_at && sleep_stop_at
 
-        (sleep_start_at.to_s..sleep_stop_at.to_s).cover? now.strftime("%H:%M:%S")
+        now = type.create at.hour, at.min, at.sec
+
+        if sleep_stop_at < sleep_start_at
+          now >= sleep_start_at || now <= sleep_stop_at
+        else
+          (sleep_start_at..sleep_stop_at).cover? now
+        end
       end
 
       def slug

@@ -26,12 +26,30 @@ RSpec.describe Terminus::Structs::Device, :db do
       ]
     end
 
-    it "answers true when current time is within period" do
+    it "answers true when current time is within same day" do
       expect(device.asleep?(Time.utc(2025, 1, 1, 1, 5, 0))).to be(true)
     end
 
-    it "answers false when current time is outside period" do
+    it "answers false when current time is outside same day" do
       expect(device.asleep?(Time.utc(2025, 1, 1, 1, 20, 0))).to be(false)
+    end
+
+    context "when crossing midnight" do
+      subject :device do
+        Factory[
+          :device,
+          sleep_start_at: Time.utc(2025, 1, 1, 22, 0, 0),
+          sleep_stop_at: Time.utc(2025, 1, 1, 5, 0, 0)
+        ]
+      end
+
+      it "answers true when current time is within range" do
+        expect(device.asleep?(Time.utc(2025, 1, 1, 1, 0, 0))).to be(true)
+      end
+
+      it "answers false when current time is outside range" do
+        expect(device.asleep?(Time.utc(2025, 1, 1, 6, 0, 0))).to be(false)
+      end
     end
 
     it "answers false when start and end are nil" do
