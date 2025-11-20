@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "bcrypt"
-require "initable"
 require "refinements/string"
 
 module Terminus
@@ -10,11 +8,11 @@ module Terminus
       # Validates and updates an existing user.
       class Updater
         include Deps[
+          "aspects.password_encryptor",
           contract: "contracts.users.update",
           repository: "repositories.user",
           password_relation: "relations.user_password_hash"
         ]
-        include Initable[encryptor: BCrypt::Password]
         include Dry::Monads[:result]
 
         using Refinements::String
@@ -42,7 +40,7 @@ module Terminus
           id = user.id
 
           password_relation.by_pk(id).delete
-          password_relation.upsert id: id, password_hash: encryptor.create(value)
+          password_relation.upsert id: id, password_hash: password_encryptor.call(value)
           user
         end
       end

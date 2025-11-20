@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require "bcrypt"
-
 module Terminus
   module Aspects
     module Users
       # Validates and creates a new user complete with account and membership.
       class Creator
         include Deps[
+          "aspects.password_encryptor",
           contract: "contracts.users.create",
           repository: "repositories.user",
           password_relation: "relations.user_password_hash",
@@ -18,8 +17,7 @@ module Terminus
 
         DEFAULTS = {name: "default", label: "Default"}.freeze
 
-        def initialize(encryptor: BCrypt::Password, defaults: DEFAULTS, **)
-          @encryptor = encryptor
+        def initialize(defaults: DEFAULTS, **)
           @defaults = defaults
           super(**)
         end
@@ -34,14 +32,14 @@ module Terminus
 
         private
 
-        attr_reader :encryptor, :defaults
+        attr_reader :defaults
 
         def create_user user_attributes, account_attributes
           account_attributes = defaults.merge account_attributes
           password = user_attributes.delete :password
 
           repository.create(**user_attributes).tap do |user|
-            password_relation.insert id: user.id, password_hash: encryptor.create(password)
+            password_relation.insert id: user.id, password_hash: password_encryptor.call(password)
             create_membership user, account_attributes
           end
         end
