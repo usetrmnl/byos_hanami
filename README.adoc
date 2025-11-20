@@ -198,6 +198,10 @@ Connecting your device to this server is as simple as using the captive WiFi por
 * link:https://help.usetrmnl.com/en/articles/12263392-connect-your-device-to-terminus-byos[How to connect your device to Terminus].
 * link:https://help.usetrmnl.com/en/articles/11663377-setting-up-a-trmnl-on-tricky-wi-fi-situations[Dealing with tricky Wi-Fi situations].
 
+=== Extensions
+
+See link:doc/extensions.adoc[Extensions] documentation for details.
+
 === Background Pollers
 
 See link:doc/background_pollers.adoc[Background Pollers] documentation for details.

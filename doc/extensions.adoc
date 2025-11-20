@@ -1,0 +1,64 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:core_link: link:https://usetrmnl.com[Core]
+:framework_link: link:https://usetrmnl.com/framework[Framework]
+
+= Extensions
+
+Extensions are the equivalent of _private_, _public_ and _recipe_ plugins as you might be familiar with in our {core_link} application. The reason for this is that the Core plugin ecosystem also includes native, private, and third party plugins too. With extensions, the goal is to encompass all of these variations under a single umbrella. This also fits better with the architecture of this application and allows this application to expand upon what is possible with extensions.
+
+== Features
+
+At a high level, extensions support the same features you are used to with {core_link} public plugins and recipes. Native and third party extensions are not supported, as of yet, but are planned. Everything else is what you'd expect using a different UI and slightly different terminology. The _Walkthrough_, below, will help you through this.
+
+== Walkthrough
+
+To help you get used to how Terminus extensions work versus Core plugins, let's walk through a scenario building a Core plugin and Terminus extension side-by-side so you can see the differences. To get started, create a new link:https://usetrmnl.com/plugin_settings/new?keyname=private_plugin[private plugin] in Core and then do the same in Terminus but create a new Extension instead. Here's the steps:
+
+. In both Core and Terminus first start by naming your plugin/extension. In Terminus you can also give yourself a nice label too.
+. In Core, select the _Polling_ strategy. In Terminus, select the _Poll_ kind.
+. In Core, add `https://ghibliapi.vercel.app/films` as your Polling URL. In Terminus, do the same but use the _URIs_ text area.
+. In Core, click _Save_, then click _Edit Markup_, select _TRMNL_ as your model, and then copy and paste the Liquid Template below in your editor. You can also click _Save_ at this point.
+. In Terminus, scroll down to the Template editor, copy and paste the same Liquid Template but place it inside the `+<div class="view view--full">+` element, select _TRMNL OG (2-bit)_ as your model, and then click _Save_.
+
+.Liquid Template
+[%collapsible]
+====
+[source,html]
+----
+{% for item in data limit:5 %}
+  <div class="item">
+    <div class="meta">
+      <span class="index">{{ forloop.index }}</span>
+    </div>
+
+    <img src="{{item.image}}" width="50" height="50">
+
+    <div class="content">
+      <span class="title title--small">{{ item.title }}</span>
+      <span class="description">{{ item.description | truncate: 100}}</span>
+    </div>
+  </div>
+{% endfor %}
+----
+====
+
+In both cases, you'll see the same screen being rendered which is a list of Studio Ghibli films. Congratulations! In Core, you can add this plugin to your device playlist. In Terminus, the screen generated from this extension can be added to your device playlist.
+
+Additionally, in Terminus, ensure you set a schedule for updating your screen. You can set the schedule as fast as every minute or as slow as every month.
+
+== Schedules
+
+By default, extensions have no schedule. This allows you to experiment building out your extension before you are ready to schedule when it should automatically render new screens. Once set, look for the screen(s) that are generated from your extension and then add them to your device playlist(s).
+
+Each time you extension wakes up to render your screen, as scheduled, that screen will then be displayed on your device as dictated by your device's playlist.
+
+== Build Matrix
+
+The build matrix is a powerful extension feature which allows you to apply your responsive {framework_link} design for rendering on multiple models. Simply select all models you want your extension to build screens for and they will show up in the _Screens_ UI in which you can add to your device playlists as desired. This is also why the Liquid template scaffold is provided for you and why you see `{{model.bit_depth}}` and other attributes available to you. This is because model information is dynamically supplied to your Liquid template when rendering a screen which allows you to build for multiple models all at once.
+
+== Import/Export
+
+The ability to import and export extensions is not available at the moment but is planned. The goal is to allow you to import and export Terminus extensions along with the import and export of {core_link} plugins. The translation of Core plugins will be handled for you automatically. In the meantime, you can use the above _Walkthrough_ to do this manually.
