@@ -8,7 +8,7 @@ module Terminus
     setting :api_access_token_period, constructor: Types::Params::Integer, default: 1_800
     setting :api_uri, constructor: Types::Params::String
     setting :app_secret,
-            constructor: Types::Params::String.constrained(filled: true),
+            constructor: Types::Params::String.constrained(filled: true, min_size: 64),
             default: SecureRandom.hex(40)
     setting :browser, constructor: Terminus::Types::Browser, default: "{}"
     setting :color_maps_root,
