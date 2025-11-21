@@ -401,10 +401,10 @@ GEM
     rodauth (2.41.0)
       roda (>= 2.6.0)
       sequel (>= 4)
-    rom (5.4.2)
+    rom (5.4.3)
       rom-changeset (~> 5.4)
       rom-core (~> 5.4)
-      rom-repository (~> 5.4, >= 5.4.2)
+      rom-repository (~> 5.4, >= 5.4.3)
     rom-changeset (5.4.0)
       dry-core (~> 1.0)
       rom-core (~> 5.4)
@@ -424,7 +424,7 @@ GEM
       dry-struct (~> 1.7)
       faker (>= 2.0, < 4)
       rom-core (~> 5.4)
-    rom-repository (5.4.2)
+    rom-repository (5.4.3)
       dry-core (~> 1.0)
       dry-initializer (~> 3.2)
       rom-core (~> 5.4)
@@ -807,11 +807,11 @@ CHECKSUMS
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   roda (3.98.0) sha256=c1147d42322305168df91f9a13b7dcadf4b1fe7171fb9598ca444e7618362428
   rodauth (2.41.0) sha256=235ee0e72d9506e484c80e2ef1db4e667a3314dac444fc8311e368f5e4bf5119
-  rom (5.4.2) sha256=a8085e9018104f00b0af6ece68160a2241b60bdb45968bc7b104c79b80cdfd9d
+  rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
   rom-core (5.4.0) sha256=a08264e40892cf86a57e32f6c09803b30e4fb3b1da86a64d41e71d92575df08f
   rom-factory (0.13.0) sha256=b6a3d45f79a2c48117ae1550a0790d1cd6b26b27fdff6307e7368ddb7a65ef85
-  rom-repository (5.4.2) sha256=005433d29bd6f792b44099fa6b8844270202cb4d63b6a91cb136a86bc681b6d9
+  rom-repository (5.4.3) sha256=a45477c6e01241ed9361c6d5e457c398882f97e376f7a0ac1276e0aa8c013557
   rom-sql (3.7.0) sha256=56ba0714603d72d7ab5ad3247b6526d04ae83b6fcc807f4a1fa953cd7a65a639
   rouge (4.6.1) sha256=5075346d5797d6864be93f7adc75a16047a7dbfa572c63c502419ffa582c77de
   rspec (3.13.2) sha256=206284a08ad798e61f86d7ca3e376718d52c0bc944626b2349266f239f820587
