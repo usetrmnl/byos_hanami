@@ -31,6 +31,20 @@ find_ip_address() {
 }
 export -f find_ip_address
 
+# Label: Randomize
+# Description: Creates an insecure but long random number.
+randomize() {
+  value=$RANDOM
+
+  for ((i = 0; i < 15; i++)); do
+    value="${value}${RANDOM}"
+  done
+
+  echo "$value"
+}
+
+export -f randomize
+
 # Label: Create Global Environment
 # Description: Create global environment.
 create_global_environment() {
@@ -54,14 +68,9 @@ create_global_environment() {
     sed -i.tmp "s|localhost|$response|g" "$output_path" && rm "$output_path.tmp"
   fi
 
-  password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
-  sed -i.tmp "s|<postgres_password>|$password|g" "$output_path" && rm "$output_path.tmp"
-
-  password="$((RANDOM * RANDOM * RANDOM * RANDOM))"
-  sed -i.tmp "s|<redis_password>|$password|g" "$output_path" && rm "$output_path.tmp"
-
-  secret="$((RANDOM * RANDOM * RANDOM * RANDOM))"
-  sed -i.tmp "s|<secret>|$secret|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<postgres_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<redis_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<secret>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
 }
 export -f create_global_environment
 
