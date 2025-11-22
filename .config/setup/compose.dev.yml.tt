@@ -14,6 +14,7 @@ services:
       REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
     ports:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
+    restart: unless-stopped
     volumes:
       - ".:/app"
     command: bin/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
@@ -30,6 +31,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 45s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
 
   worker:
     build:
@@ -42,6 +48,7 @@ services:
       DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:${PG_PORT}/${PG_DATABASE}
       REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
     command: bundle exec sidekiq -r ./config/sidekiq.rb
+    restart: unless-stopped
     volumes:
       - ".:/app"
     depends_on:
@@ -57,6 +64,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 45s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
 
   database:
     image: postgres:18.1
@@ -66,6 +78,7 @@ services:
       POSTGRES_DB: ${PG_DATABASE}
     ports:
       - "${PG_PORT}:${PG_PORT}"
+    restart: unless-stopped
     volumes:
       - database-data:/var/lib/postgresql
     healthcheck:
@@ -76,12 +89,22 @@ services:
       start_period: 2s
     networks:
       - terminus-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.0"
 
   cache:
     image: redis:8-alpine
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
-    command: redis-server --requirepass ${REDIS_PASSWORD}
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD}
+      --maxmemory 512mb
+      --maxmemory-policy noeviction
+    restart: unless-stopped
     volumes:
       - cache-data:/data
     healthcheck:
@@ -92,6 +115,11 @@ services:
       start_period: 2s
     networks:
       - terminus-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
 
 networks:
   terminus-network:
