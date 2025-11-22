@@ -68,7 +68,7 @@ create_global_environment() {
     sed -i.tmp "s|localhost|$response|g" "$output_path" && rm "$output_path.tmp"
   fi
 
-  sed -i.tmp "s|<postgres_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<database_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
   sed -i.tmp "s|<keyvalue_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
   sed -i.tmp "s|<secret>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
 }

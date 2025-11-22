@@ -133,6 +133,6 @@ That's it!
 When using the _Quick Start_ or _Setup_ scripts, they will create a `.env` file which is picked up by Docker Compose. The two critical environment variables to pay attention to are:
 
 * `API_URI`: This needs to be updated if your server IP address has changed or when the setup script failed to automatically detect your IP address. Your device also needs this URI in order to connect to your server. So both your server and device must be using the same URI.
-* `PG_PASSWORD` or `KEYVALUE_PASSWORD`: These are automatically generated for you during setup but if you regenerate the `.env` file or change these values, you'll lose access to your database. When access is lost, there are two ways to fix:
+* `DATABASE_PASSWORD` or `KEYVALUE_PASSWORD`: These are automatically generated for you during setup but if you regenerate the `.env` file or change these values, you'll lose access to your database. When access is lost, there are two ways to fix:
 ** Use PostgreSQL admin access or Redis to update to the password used in your `.env` file.
 ** Delete the associated service volume and then launch `docker-compose up` again. The volume can be identified as: `+terminus-<environment>_<service>-data+`. You'll lose all of your data but will be able to setup your device again.

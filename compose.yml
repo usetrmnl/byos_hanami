@@ -62,18 +62,18 @@ services:
           cpus: "1.0"
 
   database:
-    image: postgres:18.1
+    image: postgres:18.1-alpine
     environment:
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_DB: ${PG_DATABASE}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
-      - "${PG_PORT}:${PG_PORT}"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - database-data:/var/lib/postgresql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 3

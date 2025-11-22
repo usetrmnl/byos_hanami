@@ -168,10 +168,10 @@ There are several environment variables you can use to customize behavior by upd
 * `HANAMI_PORT`: The default port when running the app locally or via {docker_doc_link}. When using Docker, this is used for the internal and external port mapping.
 * `MODEL_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
 * `RACK_ATTACK_ALLOWED_SUBNETS`: Defines the {rack_attack_link} subnets that are allowed to connect to this server which helps when adding DNS, a reverse proxy, or a VPN, etc. between your device and this application so you can use this environment variable to add more subnets as desired. This takes a single subnet/IP or an array -- with no spaces -- of subnets/IPs as values. Example: "111.111.111.111,150.120.0.0/16". Alternatively, you can disable Rack Attack altogether by removing the `config.middleware.use Rack::Attack` line from `config/app.rb` or customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server. By default, the following subnets are allowed: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.1`, and `::1`.
-* `PG_DATABASE`: Defines your database name. Used by {docker_doc_link} only. Default: `terminus`.
-* `PG_PASSWORD`: Defines your database password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
-* `PG_PORT`: Defines your database port. Used by {docker_doc_link} only. Default: `5432`.
-* `PG_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
+* `DATABASE_NAME`: Defines your database name. Used by {docker_doc_link} only. Default: `terminus`.
+* `DATABASE_PASSWORD`: Defines your database password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
+* `DATABASE_PORT`: Defines your database port. Used by {docker_doc_link} only. Default: `5432`.
+* `DATABASE_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
 * `KEYVALUE_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
 * `KEYVALUE_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
 * `KEYVALUE_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
