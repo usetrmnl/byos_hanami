@@ -10,8 +10,8 @@ services:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
-      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:${PG_PORT}/${PG_DATABASE}
-      REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
+      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
+      KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     ports:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      cache:
+      keyvalue:
         condition: service_healthy
     networks:
       - terminus-network
@@ -45,8 +45,8 @@ services:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
-      DATABASE_URL: postgres://${PG_USER}:${PG_PASSWORD}@database:${PG_PORT}/${PG_DATABASE}
-      REDIS_URL: redis://:${REDIS_PASSWORD}@cache:${REDIS_PORT}/${REDIS_DATABASE}
+      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
+      KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:
@@ -54,7 +54,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      cache:
+      keyvalue:
         condition: service_healthy
     networks:
       - terminus-network
@@ -95,18 +95,18 @@ services:
           memory: 2G
           cpus: "1.0"
 
-  cache:
-    image: redis:8-alpine
+  keyvalue:
+    image: valkey/valkey:9-alpine
     ports:
-      - "${REDIS_PORT}:${REDIS_PORT}"
+      - "${KEYVALUE_PORT}:${KEYVALUE_PORT}"
     command: >
-      redis-server
-      --requirepass ${REDIS_PASSWORD}
+      valkey-server
+      --requirepass ${KEYVALUE_PASSWORD}
       --maxmemory 512mb
       --maxmemory-policy noeviction
     restart: unless-stopped
     volumes:
-      - cache-data:/data
+      - keyvalue-data:/data
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping || exit 1"]
       interval: 10s
@@ -126,4 +126,4 @@ networks:
 
 volumes:
   database-data:
-  cache-data:
+  keyvalue-data:

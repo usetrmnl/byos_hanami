@@ -9,12 +9,12 @@ Hanami.app.register_provider :sidekiq do
   start do
     # :nocov:
     Sidekiq.configure_server do |configuration|
-      configuration.redis = {url: slice[:settings].redis_url}
+      configuration.redis = {url: slice[:settings].keyvalue_url}
       configuration.logger = slice[:logger]
     end
     # :nocov:
 
-    Sidekiq.configure_client { it.redis = {url: slice[:settings].redis_url} }
+    Sidekiq.configure_client { it.redis = {url: slice[:settings].keyvalue_url} }
 
     register :sidekiq, Sidekiq
   end

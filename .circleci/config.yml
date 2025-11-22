@@ -5,18 +5,16 @@ jobs:
     docker:
       - image: bkuhlmann/alpine-ruby:latest
         environment:
-          APP_SECRET: "89637534f5ef577003a625c4f415b374c0164c8ecaf8f6299c84e83f6e54523e"
+          APP_SECRET: 89637534f5ef577003a625c4f415b374c0164c8ecaf8f6299c84e83f6e54523e
           HANAMI_ENV: test
           HANAMI_PORT: 2300
           API_URI: http://localhost:2300
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-          REDIS_URL: redis://localhost:6379/0
+          KEYVALUE_URL: valkey://localhost:6379/0
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: postgres
-      - image: redis:latest
-        environment:
-          POSTGRES_PASSWORD: redis
+      - image: valkey/valkey:latest
     steps:
       - run:
           name: ImageMagick Install

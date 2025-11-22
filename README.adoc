@@ -16,12 +16,12 @@
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
-:redis_link: link:https://redis.io[Redis]
 :render_link: link:https://render.com[Render]
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sidekiq_link: link:https://github.com/sidekiq/sidekiq[Sidekiq]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
+:valkey_link: link:https://valkey.io[Redis]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
 
 = Terminus
@@ -52,9 +52,9 @@ toc::[]
 * Uses {overmind_link} for running multiple processes.
 * Uses {postgres_link} for the database.
 * Uses {puma_link} for the server.
-* Uses {redis_link} for the key/value cache.
 * Uses {rodauth_link} for authentication.
 * Uses {sidekiq_link} for background jobs.
+* Uses {valkey_link} for the key/value cache.
 * Supports {yjit_link}.
 * Supports {docker_link}.
 * Supports {trmnl_link} devices.
@@ -90,9 +90,9 @@ The following is a high level overview you can use to compare/contrast when deci
 . {git_link}.
 . {docker_link}.
 . {hanami_link} (optional, for development).
-. {redis_link} (optional, for development).
 . {ruby_link} (optional, for development).
 . {postgres_link} (optional, for development).
+. {valkey_link} (optional, for development).
 . {chrome_link} (optional, for development): For screen generation via the headless browser.
 . {overmind_link} (optional, for development): Uses your `Procfile` to launch processes.
 . {trmnl_link} device (can use a virtual device too).
@@ -172,9 +172,9 @@ There are several environment variables you can use to customize behavior by upd
 * `PG_PASSWORD`: Defines your database password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
 * `PG_PORT`: Defines your database port. Used by {docker_doc_link} only. Default: `5432`.
 * `PG_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
-* `REDIS_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
-* `REDIS_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
-* `REDIS_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
+* `KEYVALUE_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
+* `KEYVALUE_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
+* `KEYVALUE_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
 * `SCREEN_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
 
 === Users

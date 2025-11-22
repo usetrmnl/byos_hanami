@@ -6,7 +6,7 @@ module Terminus
   # The application base settings.
   class Settings < Hanami::Settings
     setting :api_access_token_period, constructor: Types::Params::Integer, default: 1_800
-    setting :api_uri, constructor: Types::Params::String
+    setting :api_uri, constructor: Types::Params::String.constrained(filled: true)
     setting :app_secret,
             constructor: Types::Params::String.constrained(filled: true, min_size: 64),
             default: SecureRandom.hex(40)
@@ -21,8 +21,8 @@ module Terminus
             constructor: Types::Params::String,
             default: `git tag --list --sort=taggerdate | tail -n 1`.strip
     setting :firmware_poller, constructor: Types::Params::Bool, default: true
+    setting :keyvalue_url, constructor: Types::Params::String.constrained(filled: true)
     setting :model_poller, constructor: Types::Params::Bool, default: true
-    setting :redis_url, constructor: Types::Params::String
     setting :screen_poller, constructor: Types::Params::Bool, default: true
   end
 end

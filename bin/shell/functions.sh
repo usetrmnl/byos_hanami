@@ -69,7 +69,7 @@ create_global_environment() {
   fi
 
   sed -i.tmp "s|<postgres_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
-  sed -i.tmp "s|<redis_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
+  sed -i.tmp "s|<keyvalue_password>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
   sed -i.tmp "s|<secret>|$(randomize)|g" "$output_path" && rm "$output_path.tmp"
 }
 export -f create_global_environment

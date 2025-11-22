@@ -21,7 +21,7 @@ services:
         fromDatabase:
           name: terminus
           property: connectionString
-      - key: REDIS_URL
+      - key: KEYVALUE_URL
         fromService:
           type: keyvalue
           name: terminus-cache
@@ -37,7 +37,7 @@ services:
         fromDatabase:
           name: terminus
           property: connectionString
-      - key: REDIS_URL
+      - key: KEYVALUE_URL
         fromService:
           type: keyvalue
           name: terminus-cache
