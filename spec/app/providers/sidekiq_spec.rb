@@ -10,8 +10,8 @@ RSpec.describe Terminus::Providers::Sidekiq do
   let(:slice) { Hanami.app }
 
   describe "#prepare" do
-    it "answers true" do
-      expect(provider.prepare).to be(true)
+    it "answers false due to already being loaded" do
+      expect(provider.prepare).to be(false)
     end
   end
 
