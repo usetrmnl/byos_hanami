@@ -7,6 +7,8 @@ module Terminus
     class ExtensionScreen < Base
       include Deps["aspects.extensions.screen_upserter", repository: "repositories.extension"]
 
+      sidekiq_options queue: "within_1_minute"
+
       def perform id, model_id
         extension = repository.find id
 

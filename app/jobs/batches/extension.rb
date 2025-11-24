@@ -11,6 +11,8 @@ module Terminus
         include Deps[repository: "repositories.extension"]
         include Initable[job: Jobs::ExtensionScreen]
 
+        sidekiq_options queue: "within_1_minute"
+
         def perform id
           extension = repository.find id
 

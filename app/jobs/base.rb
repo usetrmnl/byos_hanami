@@ -10,6 +10,8 @@ module Terminus
     class Base
       include Dry::Monads[:result]
       include Sidekiq::Job
+
+      sidekiq_options queue: "within_1_hour"
     end
   end
 end
