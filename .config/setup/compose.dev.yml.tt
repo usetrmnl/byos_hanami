@@ -38,6 +38,7 @@ services:
           cpus: "1.0"
 
   worker:
+    init: true
     build:
       context: .
       target: development

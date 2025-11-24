@@ -33,6 +33,7 @@ services:
           cpus: "1.0"
 
   worker:
+    init: true
     image: ghcr.io/usetrmnl/terminus:latest
     environment:
       HANAMI_PORT: ${HANAMI_PORT}
