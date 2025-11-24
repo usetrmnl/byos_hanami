@@ -78,19 +78,6 @@ CREATE TYPE public.firmware_kind_enum AS ENUM (
 
 
 --
--- Name: model_kind_enum; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE public.model_kind_enum AS ENUM (
-    'terminus',
-    'core',
-    'byod',
-    'kindle',
-    'trmnl'
-);
-
-
---
 -- Name: playlist_item_repeat_type_enum; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -455,7 +442,7 @@ CREATE TABLE public.model (
     offset_y integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    kind public.model_kind_enum DEFAULT 'terminus'::public.model_kind_enum NOT NULL
+    kind text DEFAULT 'terminus'::text NOT NULL
 );
 
 
@@ -1316,4 +1303,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20250916112116_create_membership.rb'),
 ('20251111140836_alter_screen_indexes.rb'),
 ('20251111145213_create_extension.rb'),
-('20251111145306_create_extension_model.rb');
+('20251111145306_create_extension_model.rb'),
+('20251124163836_alter_model_kind_column.rb');
