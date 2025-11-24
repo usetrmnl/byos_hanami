@@ -16,7 +16,22 @@ services:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
     volumes:
-      - ".:/app"
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: web-assets
+        target: /app/public/assets
+      - type: volume
+        source: web-node
+        target: /app/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: web-uploads
+        target: /app/public/uploads
+        volume:
+          nocopy: true
     command: bin/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
     depends_on:
       database:
@@ -50,7 +65,22 @@ services:
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:
-      - ".:/app"
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: web-assets
+        target: /app/public/assets
+      - type: volume
+        source: web-node
+        target: /app/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: web-uploads
+        target: /app/public/uploads
+        volume:
+          nocopy: true
     depends_on:
       database:
         condition: service_healthy
@@ -127,3 +157,6 @@ networks:
 volumes:
   database-data:
   keyvalue-data:
+  web-assets:
+  web-node:
+  web-uploads:
