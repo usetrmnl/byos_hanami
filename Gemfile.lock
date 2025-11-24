@@ -234,7 +234,7 @@ GEM
       dry-transformer (~> 1.0, < 2)
     hanami-validations (2.3.0)
       dry-validation (>= 1.10, < 2)
-    hanami-view (2.3.0)
+    hanami-view (2.3.1)
       dry-configurable (~> 1.0)
       dry-core (~> 1.0)
       dry-inflector (~> 1.0, < 2)
@@ -728,7 +728,7 @@ CHECKSUMS
   hanami-router (2.3.0) sha256=4051993145dc021655e42a68ae4b581dd3214fd8967ba1435607fe5010b7f327
   hanami-utils (2.3.0) sha256=aa00f6c377ab4ad2cbe57d989781bace348c9f234201bc60715058dc6e220999
   hanami-validations (2.3.0) sha256=ccc7cd9a829473934c01971024940ccef2b69aefd6abbf542740363acbda64aa
-  hanami-view (2.3.0) sha256=28c2143485ac3f94a80e2c552c071068e03798fe53b2fd71c6f5ee3503363700
+  hanami-view (2.3.1) sha256=7047571e44218bdb255ba50549f105cb4eb35ace39a7aff2765370840f494603
   hanami-webconsole (2.3.0) sha256=7c15b96eb1bd51a6b61f7176e61eb530c06b49d10350329680ab49c5bb62a756
   hansi (0.2.1) sha256=7e27dfd729f1692a3a7690fc0ef3af9d5e3cfc0285bb135cae7e56180e4805db
   htmx (2.6.0) sha256=464dd7ad7b371b4b1359cf3e0c1d9d33648a347a661db68dc9fe724cd4531772
