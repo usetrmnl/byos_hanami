@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Install custom SSL certificates from URLs
+# Usage: Set CERTIFICATE_URLS environment variable with comma-separated URLs
+# Example: CERTIFICATE_URLS="http://example.com/ca1.crt,http://example.org/ca2.pem"
+
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+if [ -z "${CERTIFICATE_URLS:-}" ]; then
+  printf "%s: CERTIFICATE_URLS empty, doing nothing\n" "${0}"
+  exit 0
+fi
+
+printf "%s\n" "Installing custom SSL certificates..."
+
+# Certificate directory
+CERT_DIR="/usr/local/share/ca-certificates"
+
+IFS=',' read -ra URLS <<< "${CERTIFICATE_URLS}"
+
+for url in "${URLS[@]}"; do
+  # Trim whitespace
+  url=$(printf "%s" "${url}" | xargs)
+
+  if [ -z "${url}" ]; then
+    continue
+  fi
+
+  printf "  Downloading certificate from: %s\n" "${url}"
+
+  filename=$(basename "${url}")
+
+  # Change extension to .crt (required by update-ca-certificates)
+  cert_name="${filename%.*}.crt"
+
+  if curl --fail --silent --show-error --location "${url}" -o "${CERT_DIR}/${cert_name}"; then
+    printf "    ✓ Downloaded %s\n" "${url}"
+    printf "              as %s/%s\n" "${CERT_DIR}" "${cert_name}"
+  else
+    printf "    %s: %s\n" "✗ Failed to download from" "${url}"
+  fi
+done
+
+# Update certificate store
+printf "  %s\n" "Updating CA certificates..."
+update-ca-certificates
+printf "%s\n" "✓ Custom SSL certificates installed successfully"
