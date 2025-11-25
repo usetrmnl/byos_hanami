@@ -121,6 +121,20 @@
                   autocomplete: :name %>
   <% end %>
 
+  <%= scope(:form_field, key: :scale_factor, errors:).render do %>
+    <label class="key" for="model_scale_factor">
+      Scale Factor
+      <%= render "shared/popovers/trigger", name: :scale_factor %>
+    </label>
+
+    <%= tag.input id: :model_scale_factor,
+                  name: "model[scale_factor]",
+                  type: :number,
+                  value: field_for(:scale_factor, fields, model),
+                  class: :value,
+                  autocomplete: :name %>
+  <% end %>
+
   <%= scope(:form_field, key: :width, errors:).render do %>
     <label class="key" for="model_width">
       Width

@@ -20,6 +20,7 @@ module Terminus
             required(:rotation).filled :integer
             required(:offset_x).filled :integer
             required(:offset_y).filled :integer
+            required(:scale_factor).filled :float
             required(:width).filled :integer
             required(:height).filled :integer
             required(:published_at).maybe :date_time

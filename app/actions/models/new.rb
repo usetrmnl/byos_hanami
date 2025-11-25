@@ -17,6 +17,7 @@ module Terminus
           rotation: 0,
           offset_x: 0,
           offset_y: 0,
+          scale_factor: 1,
           width: 800,
           height: 480,
           published_at: nil

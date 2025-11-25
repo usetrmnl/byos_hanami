@@ -10,5 +10,6 @@ Factory.define :model, relation: :model do |factory|
   factory.offset_y 0
   factory.width 800
   factory.height 480
+  factory.scale_factor 1
   factory.published_at { Time.now }
 end
