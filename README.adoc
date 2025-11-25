@@ -79,8 +79,7 @@ The following is a high level overview you can use to compare/contrast when deci
 | JSON Data API                     | 🟢       | 🟢
 | Image Previews                    | 🟢       | 🟢
 | Playlists                         | 🟢       | 🟢
-| Plugins                           | 🟢       | 🟢
-| Recipes                           | 🟢       | 🟢
+| Plugins                           | 🟡       | 🟢
 | Account Management                | 🟢       | 🟢
 | Docker                            | 🟢       | 🔴
 |===
