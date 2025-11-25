@@ -442,7 +442,8 @@ CREATE TABLE public.model (
     offset_y integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    kind text DEFAULT 'terminus'::text NOT NULL
+    kind text DEFAULT 'terminus'::text NOT NULL,
+    scale_factor double precision DEFAULT 1 NOT NULL
 );
 
 
@@ -1304,4 +1305,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251111140836_alter_screen_indexes.rb'),
 ('20251111145213_create_extension.rb'),
 ('20251111145306_create_extension_model.rb'),
-('20251124163836_alter_model_kind_column.rb');
+('20251124163836_alter_model_kind_column.rb'),
+('20251125115051_add_model_scale_factor_column.rb');
