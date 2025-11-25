@@ -1,6 +1,17 @@
 name: "terminus"
 
 services:
+  init-certificates:
+    image: ghcr.io/usetrmnl/terminus:latest
+    user: root
+    environment:
+      CERTIFICATE_URLS: ${CERTIFICATE_URLS}
+    volumes:
+      - certificates:/etc/ssl/certs
+    entrypoint: ["/bin/bash", "-c"]
+    command: /app/bin/docker/install-certificates
+    restart: no
+
   web:
     init: true
     image: ghcr.io/usetrmnl/terminus:latest
@@ -14,8 +25,11 @@ services:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
     volumes:
+      - certificates:/etc/ssl/certs
       - web-uploads:/app/public/uploads
     depends_on:
+      init-certificates:
+        condition: service_completed_successfully
       database:
         condition: service_healthy
       keyvalue:
@@ -44,8 +58,11 @@ services:
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:
+      - certificates:/etc/ssl/certs
       - web-uploads:/app/public/uploads
     depends_on:
+      init-certificates:
+        condition: service_completed_successfully
       database:
         condition: service_healthy
       keyvalue:
@@ -112,3 +129,4 @@ volumes:
   database-data:
   keyvalue-data:
   web-uploads:
+  certificates:
