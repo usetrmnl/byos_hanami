@@ -9,7 +9,7 @@ services:
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
-      KEYVALUE_URL: valkey://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
+      KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     ports:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
@@ -40,7 +40,7 @@ services:
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
-      KEYVALUE_URL: valkey://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
+      KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:
