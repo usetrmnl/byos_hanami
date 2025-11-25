@@ -8,6 +8,7 @@
 :core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
 :docker_doc_link: link:doc/docker.adoc[Docker]
 :docker_link: link:https://www.docker.com[Docker]
+:dragonfly_link: link:https://www.dragonflydb.io[Dragonfly]
 :git_link: link:https://git-scm.com[Git]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
@@ -16,12 +17,13 @@
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
 :rack_attack_link: link:https://github.com/rack/rack-attack[Rack Attack]
+:redis_link: link:https://redis.io[Redis]
 :render_link: link:https://render.com[Render]
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sidekiq_link: link:https://github.com/sidekiq/sidekiq[Sidekiq]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
-:valkey_link: link:https://valkey.io[Redis]
+:valkey_link: link:https://valkey.io[Valkey]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
 
 = Terminus
@@ -91,10 +93,10 @@ The following is a high level overview you can use to compare/contrast when deci
 . {hanami_link} (optional, for development).
 . {ruby_link} (optional, for development).
 . {postgres_link} (optional, for development).
-. {valkey_link} (optional, for development).
+. {valkey_link} (optional, for development): Can be swapped out for {redis_link} or {dragonfly_link} if desired.
 . {chrome_link} (optional, for development): For screen generation via the headless browser.
 . {overmind_link} (optional, for development): Uses your `Procfile` to launch processes.
-. {trmnl_link} device (can use a virtual device too).
+. {trmnl_link} device (or use a virtual device within the application).
 
 == Quick Start
 
@@ -171,9 +173,11 @@ There are several environment variables you can use to customize behavior by upd
 * `DATABASE_PASSWORD`: Defines your database password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
 * `DATABASE_PORT`: Defines your database port. Used by {docker_doc_link} only. Default: `5432`.
 * `DATABASE_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
+* `DATABASE_URL`: Defines the full URL based on the above `+DATABASE_*+` settings. This is automatically configured for you during setup. See your `+.env*+` files for details.
 * `KEYVALUE_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
 * `KEYVALUE_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
 * `KEYVALUE_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
+* `KEYVALUE_URL`: Defines the full URL based on the above `+KEYVALUE_*+` settings. This is automatically configured for you during setup. See your `+.env*+` files for details.
 * `SCREEN_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
 
 === Users
