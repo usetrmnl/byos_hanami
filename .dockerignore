@@ -3,6 +3,7 @@
 !/bin/console
 !/bin/pollers
 !/bin/docker/entrypoint
+!/bin/docker/install-certificates
 
 # Bundler
 /.bundle
