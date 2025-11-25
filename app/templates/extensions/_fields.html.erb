@@ -188,7 +188,7 @@
       <% end %>
     </fieldset>
 
-    <fieldset class="column">
+    <%= tag.fieldset class: :column, "x-data" => "{unit: '#{field_for :unit, fields, extension}'}" do %>
       <legend class="legend">Schedule</legend>
 
       <%= scope(:form_field, key: :schedule_start, errors:).render do %>
@@ -224,10 +224,8 @@
           <%= render "shared/popovers/trigger", name: :schedule_unit %>
         </label>
 
-        <%= tag.select id: :extension_unit, name: "extension[unit]", class: :value do %>
-          <%= tag.option "Select...", value: :none %>
-
-          <% %w[none minute hour day week month year].each do |unit| %>
+        <%= tag.select id: :extension_unit, name: "extension[unit]", class: :value, "x-model" => "unit" do %>
+          <% %w[none minute hour day week month].each do |unit| %>
             <%= tag.option unit.capitalize,
                            value: unit,
                            selected: unit == field_for(:unit, fields, extension) %>
@@ -235,7 +233,7 @@
         <% end %>
       <% end %>
 
-      <div class="bit-toggle-field">
+      <div class="bit-toggle-field" x-show="unit === 'week'">
         <h2 class="bit-toggle-label">
           Days
           <%= render "shared/popovers/trigger", name: :schedule_days %>
@@ -257,7 +255,7 @@
                    record: extension %>
       </div>
 
-      <%= scope(:form_field, key: :last_day_of_month, errors:).render do %>
+      <%= scope(:form_field, key: :last_day_of_month, errors:, alpine: {show: "unit === 'month'"}).render do %>
         <label class="key" for="extension_last_day_of_month">
           Last Day Of Month
           <%= render "shared/popovers/trigger", name: :last_day_of_month %>
@@ -270,7 +268,7 @@
                       switch: true,
                       class: :checkbox %>
       <% end %>
-    </fieldset>
+    <% end %>
 
     <fieldset class="column">
       <legend class="legend">Miscellaneous</legend>
@@ -305,8 +303,8 @@
   <% end %>
 
   <% if extension %>
-    <%= scope(:form_field, key: :data, errors:).render do %>
-      <label class="key" for="extension_response">
+    <%= scope(:form_field, key: :response, errors:).render do %>
+      <label class="key">
         Response
         <%= render "shared/popovers/trigger", name: :response %>
       </label>
