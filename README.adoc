@@ -179,6 +179,7 @@ There are several environment variables you can use to customize behavior by upd
 * `KEYVALUE_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
 * `KEYVALUE_URL`: Defines the full URL based on the above `+KEYVALUE_*+` settings. This is automatically configured for you during setup. See your `+.env*+` files for details.
 * `SCREEN_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
+* `CERTIFICATE_URLS`: Define as a comma-separated list of CA certificate URLs, and the Docker Compose setup with install those certificates as trusted in the containers. Used by {docker_doc_link} only.
 
 === Users
 
