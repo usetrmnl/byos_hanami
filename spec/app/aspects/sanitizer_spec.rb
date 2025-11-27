@@ -67,5 +67,16 @@ RSpec.describe Terminus::Aspects::Sanitizer do
 
       expect(sanitizer.call(source)).to eq(source)
     end
+
+    it "allows canvas element with id, width, and height" do
+      source = <<~HTML.squeeze(" ").delete("\n").strip
+        <html><head></head>
+          <body>
+            <canvas id="test-canvas" width="300" height="150"></canvas>
+        </body></html>
+      HTML
+
+      expect(sanitizer.call(source)).to eq(source)
+    end
   end
 end
