@@ -9,6 +9,67 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
     let(:uri) { "https://ghibliapi.vercel.app/films" }
     let(:extension) { Factory.structs[:extension, uris: [uri]] }
 
+    describe ".mime_type_for" do
+      let :response do
+        HTTP::Response.new headers: {"Content-Type" => "text/plain"},
+                           verb: :get,
+                           uri: "http://test.io",
+                           body: "{}",
+                           status: 200,
+                           version: 1.0
+      end
+
+      it "answer MIME type for header" do
+        headers = {"Content-Type" => "application/json"}
+        expect(described_class.mime_type_and_body_for(headers, response)).to eq(
+          ["application/json", "{}"]
+        )
+      end
+
+      it "answer MIME type for response without headers" do
+        expect(described_class.mime_type_and_body_for(nil, response)).to eq(["text/plain", "{}"])
+      end
+
+      it "answer MIME type for response with empty headers" do
+        expect(described_class.mime_type_and_body_for({}, response)).to eq(["text/plain", "{}"])
+      end
+    end
+
+    context "with specific content type header" do
+      let :extension do
+        Factory.structs[:extension, headers: {"Content-Type" => "application/json"}, uris: [uri]]
+      end
+
+      let :http do
+        HTTP::Fake::Client.new do
+          get "/films" do
+            headers["Content-Type"] = "text/plain"
+            status 200
+
+            <<~BODY
+              [
+                {
+                  "title": "Castle in the Sky",
+                  "director": "Hayao Miyazaki"
+                }
+              ]
+            BODY
+          end
+        end
+      end
+
+      it "answers success due to header overriding response content type" do
+        expect(fetcher.call(uri, extension)).to be_success(
+          "data" => [
+            {
+              "title" => "Castle in the Sky",
+              "director" => "Hayao Miyazaki"
+            }
+          ]
+        )
+      end
+    end
+
     context "with JSON" do
       let :http do
         HTTP::Fake::Client.new do

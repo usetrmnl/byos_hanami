@@ -12,7 +12,16 @@ module Terminus
         include Initable[parser: Terminus::Aspects::Extensions::Parser]
         include Dry::Monads[:result]
 
-        def call(uri, extension) = request(uri, extension).bind { parse it.mime_type, it.body }
+        def self.mime_type_and_body_for headers, response
+          type = headers && headers["Content-Type"]
+
+          [type || response.mime_type, response.body]
+        end
+
+        def call uri, extension
+          request(uri, extension).fmap { self.class.mime_type_and_body_for extension.headers, it }
+                                 .bind { |mime_type, body| parse mime_type, body }
+        end
 
         private
 
