@@ -111,31 +111,31 @@
   <% end %>
 
   <%= scope(:form_field, key: :firmware_update, errors:).render do %>
-    <label class="key" for="device_firmware_update">
-      Firmware Update
-      <%= render "shared/popovers/trigger", name: :firmware_update %>
-    </label>
-
     <%= tag.input id: :device_firmware_update,
                   name: "device[firmware_update]",
                   type: :checkbox,
                   checked: field_for(:firmware_update, fields, device),
                   switch: true,
                   class: :checkbox %>
+
+    <label class="key" for="device_firmware_update">
+      Firmware Update
+      <%= render "shared/popovers/trigger", name: :firmware_update %>
+    </label>
   <% end %>
 
   <%= scope(:form_field, key: :proxy, errors:).render do %>
-    <label class="key" for="device_proxy">
-      Proxy
-      <%= render "shared/popovers/trigger", name: :proxy %>
-    </label>
-
     <%= tag.input id: :device_proxy,
                   name: "device[proxy]",
                   type: :checkbox,
                   checked: field_for(:proxy, fields, device),
                   switch: true,
                   class: :checkbox %>
+
+    <label class="key" for="device_proxy">
+      Proxy
+      <%= render "shared/popovers/trigger", name: :proxy %>
+    </label>
   <% end %>
 
   <%= scope(:form_field, key: :sleep_start_at, errors:).render do %>

@@ -1,11 +1,13 @@
 <p class="form-field">
-  <%= tag.label name: "mirror[device_ids]", for: device.id, class: :key do %>
-    <%= link_to device.label, routes.path(:device, id: device.id) %>
-  <% end %>
-
   <%= tag.input id: device.id,
                 type: :checkbox,
                 name: "mirror[device_ids][]",
                 value: device.id,
-                checked: (device.playlist_id == playlist_id) %>
+                checked: (device.playlist_id == playlist_id),
+                switch: true,
+                class: :checkbox %>
+
+  <%= tag.label name: "mirror[device_ids]", for: device.id, class: :key do %>
+    <%= link_to device.label, routes.path(:device, id: device.id) %>
+  <% end %>
 </p>

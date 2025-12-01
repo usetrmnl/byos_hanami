@@ -256,17 +256,17 @@
       </div>
 
       <%= scope(:form_field, key: :last_day_of_month, errors:, alpine: {show: "unit === 'month'"}).render do %>
-        <label class="key" for="extension_last_day_of_month">
-          Last Day Of Month
-          <%= render "shared/popovers/trigger", name: :last_day_of_month %>
-        </label>
-
         <%= tag.input id: :extension_last_day_of_month,
                       name: "extension[last_day_of_month]",
                       type: :checkbox,
                       checked: field_for(:last_day_of_month, fields, extension),
                       switch: true,
                       class: :checkbox %>
+
+        <label class="key" for="extension_last_day_of_month">
+          Last Day Of Month
+          <%= render "shared/popovers/trigger", name: :last_day_of_month %>
+        </label>
       <% end %>
     <% end %>
 
