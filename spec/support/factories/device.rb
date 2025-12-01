@@ -10,6 +10,6 @@ Factory.define :device, relation: :device do |factory|
   factory.battery 3.0
   factory.wifi(-44)
   factory.firmware_version "1.2.3"
-  factory.firmware_update false
+  factory.firmware_update true
   factory.proxy false
 end

@@ -28,7 +28,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 900,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -45,7 +45,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 20,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 900,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -81,7 +81,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 900,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -98,7 +98,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 900,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -114,7 +114,7 @@ RSpec.describe "/api/display", :db do
       refresh_rate: 900,
       reset_firmware: false,
       special_function: "sleep",
-      update_firmware: false
+      update_firmware: true
     )
   end
 
@@ -172,7 +172,7 @@ RSpec.describe "/api/display", :db do
         refresh_rate: 900,
         reset_firmware: false,
         special_function: "sleep",
-        update_firmware: false
+        update_firmware: true
       )
     end
 

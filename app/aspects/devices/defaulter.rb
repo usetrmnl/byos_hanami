@@ -12,11 +12,12 @@ module Terminus
 
         def call
           {
-            label: "TRMNL",
-            friendly_id: randomizer.hex(3).upcase,
             api_key: randomizer.alphanumeric(20),
-            refresh_rate: 900,
-            image_timeout: 0
+            firmware_update: true,
+            friendly_id: randomizer.hex(3).upcase,
+            image_timeout: 0,
+            label: "TRMNL",
+            refresh_rate: 900
           }
         end
       end

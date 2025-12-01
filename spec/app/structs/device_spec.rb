@@ -12,7 +12,7 @@ RSpec.describe Terminus::Structs::Device, :db do
       expect(device.as_api_display).to eq(
         image_url_timeout: 10,
         refresh_rate: 20,
-        update_firmware: false
+        update_firmware: true
       )
     end
   end

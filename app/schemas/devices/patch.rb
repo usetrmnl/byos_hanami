@@ -15,7 +15,6 @@ module Terminus
         optional(:refresh_rate).filled { int? > gteq?(10) }
         optional(:image_timeout).filled { int? > gteq?(0) }
         optional(:proxy).filled :bool
-        optional(:firmware_beta).filled :bool
         optional(:firmware_update).filled :bool
         optional(:sleep_start_at).maybe :string
         optional(:sleep_stop_at).maybe :string

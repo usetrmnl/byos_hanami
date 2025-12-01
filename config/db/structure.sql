@@ -224,7 +224,6 @@ CREATE TABLE public.device (
     mac_address text,
     api_key text,
     firmware_version text,
-    firmware_beta boolean DEFAULT false CONSTRAINT devices_firmware_beta_not_null NOT NULL,
     wifi integer DEFAULT 0 CONSTRAINT devices_wifi_not_null NOT NULL,
     battery double precision DEFAULT 0 CONSTRAINT devices_battery_not_null NOT NULL,
     refresh_rate integer DEFAULT 900 CONSTRAINT devices_refresh_rate_not_null NOT NULL,
@@ -234,7 +233,7 @@ CREATE TABLE public.device (
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT devices_created_at_not_null NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT devices_updated_at_not_null NOT NULL,
     proxy boolean DEFAULT false CONSTRAINT devices_proxy_not_null NOT NULL,
-    firmware_update boolean DEFAULT false CONSTRAINT devices_firmware_update_not_null NOT NULL,
+    firmware_update boolean DEFAULT true CONSTRAINT devices_firmware_update_not_null NOT NULL,
     sleep_start_at time without time zone,
     sleep_stop_at time without time zone,
     model_id integer,
@@ -1306,4 +1305,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251111145213_create_extension.rb'),
 ('20251111145306_create_extension_model.rb'),
 ('20251124163836_alter_model_kind_column.rb'),
-('20251125115051_add_model_scale_factor_column.rb');
+('20251125115051_add_model_scale_factor_column.rb'),
+('20251201105349_alter_model_firmware_columns.rb');

@@ -16,12 +16,10 @@ module Terminus
         optional(:image_timeout).filled { int? > gteq?(0) }
         optional(:proxy).filled :bool
         optional(:firmware_update).filled :bool
-        optional(:firmware_beta).filled :bool
         optional(:sleep_start_at).maybe :string
         optional(:sleep_stop_at).maybe :string
 
         after(:value_coercer, &Coercers::Boolean.curry[:proxy])
-        after(:value_coercer, &Coercers::Boolean.curry[:firmware_beta])
         after(:value_coercer, &Coercers::Boolean.curry[:firmware_update])
       end
     end

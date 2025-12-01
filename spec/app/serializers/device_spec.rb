@@ -21,7 +21,6 @@ RSpec.describe Terminus::Serializers::Device do
       mac_address: "A1:B2:C3:D4:E5:F6",
       api_key: "abc123",
       firmware_version: "1.2.3",
-      firmware_beta: false,
       wifi: -40,
       battery: 3.0,
       refresh_rate: 500,

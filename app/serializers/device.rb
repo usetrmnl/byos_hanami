@@ -14,7 +14,6 @@ module Terminus
         mac_address
         api_key
         firmware_version
-        firmware_beta
         wifi
         battery
         refresh_rate

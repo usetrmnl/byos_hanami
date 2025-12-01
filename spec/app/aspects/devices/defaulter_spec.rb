@@ -12,11 +12,12 @@ RSpec.describe Terminus::Aspects::Devices::Defaulter do
   describe "#call" do
     it "answers defaults" do
       expect(builder.call).to eq(
-        label: "TRMNL",
-        friendly_id: "ABC123",
         api_key: "Ov2tWq4XoYCH2xPfiZqc",
-        refresh_rate: 900,
-        image_timeout: 0
+        firmware_update: true,
+        friendly_id: "ABC123",
+        image_timeout: 0,
+        label: "TRMNL",
+        refresh_rate: 900
       )
     end
   end
