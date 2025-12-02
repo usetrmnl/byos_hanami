@@ -22,6 +22,7 @@ detectors:
       - Terminus::Actions::Devices::Create#provision
       - Terminus::Actions::Devices::Create#render_new
       - Terminus::Actions::Devices::Update#edit
+      - Terminus::Actions::Extensions::Clone::Create#error
       - Terminus::Actions::Extensions::Create#error
       - Terminus::Actions::Extensions::Update#error
       - Terminus::Actions::Firmware::Delete#render

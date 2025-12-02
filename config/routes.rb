@@ -69,6 +69,7 @@ module Terminus
     delete "/extensions/:id", to: "extensions.delete", as: :extension_delete
 
     get "/extensions/:id/clone/new", to: "extensions.clone.new", as: :extension_clone_new
+    post "/extensions/:id/clone", to: "extensions.clone.create", as: :extension_clone_create
 
     get "/extensions/:id/preview", to: "extensions.preview.show", as: :extension_preview
     get "/extensions/:id/poll", to: "extensions.poll.show", as: :extension_poll

@@ -1,0 +1,55 @@
+# frozen_string_literal: true
+
+require "refinements/hash"
+
+module Terminus
+  module Actions
+    module Extensions
+      module Clone
+        # The create action.
+        class Create < Hanami::Action
+          include Deps["aspects.jobs.schedule", repository: "repositories.extension"]
+
+          using Refinements::Hash
+
+          params do
+            required(:id).filled :integer
+            required(:extension).filled Schemas::Extensions::Upsert
+            optional(:model_ids).filled :array
+          end
+
+          def handle request, response
+            parameters = request.params
+
+            if parameters.valid?
+              save parameters, response
+            else
+              error response, parameters
+            end
+          end
+
+          private
+
+          def save parameters, response
+            attributes, model_ids = parameters.to_h.values_at :extension, :model_ids
+            extension = repository.create_with_models attributes, Array(model_ids)
+
+            schedule.upsert(*extension.to_schedule)
+            response.redirect_to routes.path(:extensions)
+          end
+
+          def error response, parameters
+            fields = parameters[:extension].transform_with!(
+              start_at: -> value { value.strftime("%Y-%m-%dT%H:%M:%S") }
+            )
+
+            response.render view,
+                            extension: repository.find(parameters[:id]),
+                            fields:,
+                            errors: parameters.errors[:extension]
+          end
+        end
+      end
+    end
+  end
+end
