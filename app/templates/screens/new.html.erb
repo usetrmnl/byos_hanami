@@ -15,7 +15,7 @@
 
         <h1 class="label">New Screen</h1>
 
-        <%= render :fields, models:, screen:, fields: fields.value, errors: %>
+        <%= render "screens/shared/fields", models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",

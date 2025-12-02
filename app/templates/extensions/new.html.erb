@@ -16,7 +16,12 @@
 
         <h1 class="label">New Extension</h1>
 
-        <%= render :fields, form:, models:, extension:, fields: fields.value, errors: %>
+        <%= render "extensions/shared/fields",
+                   form:,
+                   models:,
+                   extension:,
+                   fields: fields.value,
+                   errors: %>
 
         <div class="form-actions">
          <%= render "shared/save_button",

@@ -25,7 +25,7 @@
 
         <h1 class="label">Edit Playlist</h1>
 
-        <%= render :fields, playlist:, fields: fields.value, errors: %>
+        <%= render "playlists/shared/fields", playlist:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",

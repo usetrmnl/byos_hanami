@@ -51,7 +51,12 @@
                          class: "bit-frame" %>
         </dialog>
 
-        <%= render :fields, form:, models:, extension:, fields: fields.value, errors: %>
+        <%= render "extensions/shared/fields",
+                   form:,
+                   models:,
+                   extension:,
+                   fields: fields.value,
+                   errors: %>
 
         <div class="form-actions">
           <%= tag.input type: :submit, value: "Save", class: "bit-button-accept" %>

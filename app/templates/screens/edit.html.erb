@@ -24,7 +24,7 @@
         <h1 class="label">Edit Screen</h1>
 
         <%= render "shared/screen", uri: screen.image_uri %>
-        <%= render :fields, models:, screen:, fields: fields.value, errors: %>
+        <%= render "screens/shared/fields", models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",

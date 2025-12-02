@@ -15,7 +15,7 @@
 
         <h1 class="label">New Model</h1>
 
-        <%= render :fields, model:, fields: fields.value, errors: %>
+        <%= render "models/shared/fields", model:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",

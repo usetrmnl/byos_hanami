@@ -23,7 +23,7 @@
 
         <h1 class="label">Edit User</h1>
 
-        <%= render :fields, user:, statuses:, fields: fields.value, errors: %>
+        <%= render "users/shared/fields", user:, statuses:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
