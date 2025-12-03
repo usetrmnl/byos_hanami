@@ -94,6 +94,7 @@ module Terminus
     delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
 
     get "/playlists/:playlist_id/clone/new", to: "playlists.clone.new", as: :playlist_clone_new
+    post "/playlists/:playlist_id/clone", to: "playlists.clone.create", as: :playlist_clone_create
 
     get "/playlists/:playlist_id/items", to: "playlists.items.index", as: :playlist_items
     get "/playlists/:playlist_id/items/:id", to: "playlists.items.show", as: :playlist_item
