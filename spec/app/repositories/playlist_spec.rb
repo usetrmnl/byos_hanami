@@ -109,4 +109,23 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
       expect(repository.where(label: nil)).to eq([])
     end
   end
+
+  describe "#with_items" do
+    it "answers associated screens" do
+      item = Factory[:playlist_item]
+      playlist = repository.with_items.by_pk(item.playlist_id).one
+
+      expect(playlist.playlist_items.map(&:playlist_id)).to contain_exactly(playlist.id)
+    end
+  end
+
+  describe "#with_screens" do
+    it "answers associated screens" do
+      screen = Factory[:screen, label: "Association Test"]
+      item = Factory[:playlist_item, screen:]
+      playlist = repository.with_screens.by_pk(item.playlist_id).one
+
+      expect(playlist.screens.map(&:label)).to contain_exactly("Association Test")
+    end
+  end
 end
