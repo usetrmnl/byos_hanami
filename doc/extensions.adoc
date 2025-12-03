@@ -4,6 +4,8 @@
 
 :core_link: link:https://usetrmnl.com[Core]
 :framework_link: link:https://usetrmnl.com/framework[Framework]
+:liquid_link: link:https://shopify.github.io/liquid/[Liquid]
+:trmnl_liquid_gem_link: link:https://github.com/usetrmnl/trmnl-liquid[TRMNL Liquid]
 
 = Extensions
 
@@ -67,6 +69,21 @@ To help you get used to how Terminus extensions work versus Core plugins, let's 
 In both cases, you'll see the same screen being rendered which is a list of Studio Ghibli films. Congratulations! In Core, you can add this plugin to your device playlist. In Terminus, you add the generated screen to your playlist instead.
 
 Additionally, in Terminus, ensure you set a schedule for updating your screen. You can set the schedule as fast as a minute or as slow as a month.
+
+== Liquid Templates
+
+All extensions use {liquid_link} templates which allows you to format and style raw data into HTML for rendering as a screen. We also support a JSON filter (i.e. `json`) which allows you to use JSON data in your script tags. Example:
+
+[source,html]
+----
+<script>
+  const js_object = {{ data | json }};
+</script>
+----
+
+The above allows you to keep the `data` as JSON for use in your JavaScript code.
+
+We plan to support additional filters and capabilities as found in the {trmnl_liquid_gem_link} gem but additional work needs to be completed before Terminus can fully support that gem. Once the work is complete, you will gain even more functionality beyond what {liquid_link} provides for you by default.
 
 == Schedules
 
