@@ -14,6 +14,9 @@
                path: routes.path(:playlist_edit, id: playlist.id),
                target: "closest .page-playlists" %>
 
+    <%= render "shared/actions/clone",
+               path: routes.path(:playlist_clone_new, playlist_id: playlist.id) %>
+
     <%= render "shared/actions/mirror",
                path: routes.path(:playlist_mirror_edit, id: playlist.id),
                target: "closest .page-playlists" %>
