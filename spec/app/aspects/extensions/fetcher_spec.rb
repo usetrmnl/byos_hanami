@@ -20,7 +20,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answer MIME type for header" do
-        headers = {"Content-Type" => "application/json"}
+        headers = {"Accept" => "application/json"}
         expect(described_class.mime_type_and_body_for(headers, response)).to eq(
           ["application/json", "{}"]
         )
@@ -37,7 +37,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
 
     context "with specific content type header" do
       let :extension do
-        Factory.structs[:extension, headers: {"Content-Type" => "application/json"}, uris: [uri]]
+        Factory.structs[:extension, headers: {"Accept" => "application/json"}, uris: [uri]]
       end
 
       let :http do

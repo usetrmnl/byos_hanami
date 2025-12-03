@@ -13,7 +13,7 @@ module Terminus
         include Dry::Monads[:result]
 
         def self.mime_type_and_body_for headers, response
-          type = headers && headers["Content-Type"]
+          type = headers && headers["Accept"]
 
           [type || response.mime_type, response.body]
         end
