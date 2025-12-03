@@ -189,8 +189,8 @@ GEM
       dry-monads (~> 1.9)
       refinements (~> 13.6)
       zeitwerk (~> 2.7)
-    hanami (2.3.1)
-      bundler (>= 1.16, < 3)
+    hanami (2.3.2)
+      bundler (>= 2.0)
       dry-configurable (~> 1.0, >= 1.2.0, < 2)
       dry-core (~> 1.0, < 2)
       dry-inflector (~> 1.0, >= 1.1.0, < 2)
@@ -204,8 +204,8 @@ GEM
       zeitwerk (~> 2.6)
     hanami-assets (2.3.0)
       zeitwerk (~> 2.6)
-    hanami-cli (2.3.2)
-      bundler (~> 2.1)
+    hanami-cli (2.3.3)
+      bundler (>= 2.1)
       dry-cli (~> 1.0, >= 1.1.0)
       dry-files (~> 1.0, >= 1.0.2, < 2)
       dry-inflector (~> 1.0, < 2)
@@ -721,9 +721,9 @@ CHECKSUMS
   functionable (0.1.0) sha256=72cd5f43e4936c55883fb04f6edee263a930859b42abf6aa44d8a7ee051bc5e4
   git-lint (9.7.0) sha256=9074262104618f45a14f5fece20d7f5e6918c7a3b2b2ee0447630184ec07653e
   gitt (4.6.0) sha256=bb7c5f152f51b487b362aa2e6ea28952e05f5d903339bc3e890c9f2b0b353fa6
-  hanami (2.3.1) sha256=8fc3560515ceac4d22c17881993448527c0ffad5c60bd21b2de17c12d5ac2e02
+  hanami (2.3.2) sha256=2f1e7e10d760bd0c3929bcb55a42f38281bd5da507e40b98e62282f52f452e3b
   hanami-assets (2.3.0) sha256=c396bb735833458d0ceda013f498154eccafcae50c36db7f27cdd50f0560223d
-  hanami-cli (2.3.2) sha256=24148b31ffd0109ec404e52b8587e3f30f8b3095297bc3b77ac41e64dc073054
+  hanami-cli (2.3.3) sha256=998d8bcd801c0ad761add5a9e7f5b607fda8b38a5ba9424c73d29fccd2a4cfc5
   hanami-controller (2.3.0) sha256=0b1b5f4d770d0f496c790c0c90be0a5be248ec5b958969b3477ec856016b146d
   hanami-db (2.3.0) sha256=d6baa6c16a9321e5132799b8b26c3e6a2e19b8c5515c8785fb1ab94720d94711
   hanami-router (2.3.0) sha256=4051993145dc021655e42a68ae4b581dd3214fd8967ba1435607fe5010b7f327
@@ -865,7 +865,7 @@ CHECKSUMS
   zeitwerk (2.7.3) sha256=b2e86b4a9b57d26ba68a15230dcc7fe6f040f06831ce64417b0621ad96ba3e85
 
 RUBY VERSION
-   ruby 3.4.7p58
+  ruby 3.4.7p58
 
 BUNDLED WITH
-   2.7.2
+  4.0.0
