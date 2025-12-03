@@ -93,6 +93,8 @@ module Terminus
     put "/playlists/:id", to: "playlists.update", as: :playlist_update
     delete "/playlists/:id", to: "playlists.delete", as: :playlist_delete
 
+    get "/playlists/:playlist_id/clone/new", to: "playlists.clone.new", as: :playlist_clone_new
+
     get "/playlists/:playlist_id/items", to: "playlists.items.index", as: :playlist_items
     get "/playlists/:playlist_id/items/:id", to: "playlists.items.show", as: :playlist_item
     get "/playlists/:playlist_id/items/new", to: "playlists.items.new", as: :playlist_item_new
