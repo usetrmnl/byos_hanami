@@ -617,6 +617,7 @@ DEPENDENCIES
   initable (~> 0.3)
   inspectable (~> 0.3)
   irb-kit (~> 1.1)
+  json (~> 2.16.0)
   jwt (~> 3.1)
   launchy (~> 3.1)
   liquid (~> 5.9)

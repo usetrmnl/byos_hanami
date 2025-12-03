@@ -25,6 +25,7 @@ gem "htmx", "~> 2.4"
 gem "http", "~> 5.2"
 gem "initable", "~> 0.3"
 gem "inspectable", "~> 0.3"
+gem "json", "~> 2.16.0" # TODO: Remove once we understand why this breaks Capybara specs.
 gem "jwt", "~> 3.1"
 gem "liquid", "~> 5.9"
 gem "marcel", "~> 1.0"
