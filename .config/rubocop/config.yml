@@ -19,6 +19,7 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   AllowedMethods:
     - battery_percentage
+    - cloneable_attributes
     - wifi_percentage
   Exclude:
     - app/aspects/screens/color_mapper.rb
