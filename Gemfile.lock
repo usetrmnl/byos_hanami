@@ -278,7 +278,7 @@ GEM
     irb-kit (1.5.0)
       irb (~> 1.15)
       zeitwerk (~> 2.7)
-    json (2.16.0)
+    json (2.17.1)
     jwt (3.1.2)
       base64
     language_server-protocol (3.17.0.5)
@@ -618,7 +618,6 @@ DEPENDENCIES
   initable (~> 0.3)
   inspectable (~> 0.3)
   irb-kit (~> 1.1)
-  json (~> 2.16.0)
   jwt (~> 3.1)
   launchy (~> 3.1)
   liquid (~> 5.9)
@@ -746,7 +745,7 @@ CHECKSUMS
   io-console (0.8.1) sha256=1e15440a6b2f67b6ea496df7c474ed62c860ad11237f29b3bd187f054b925fcb
   irb (1.15.3) sha256=4349edff1efa7ff7bfd34cb9df74a133a588ba88c2718098b3b4468b81184aaa
   irb-kit (1.5.0) sha256=c518ee49bc444bf80b1f8e14cdf04a66acfb8dba573b6a6137b4e3ca0359ad87
-  json (2.16.0) sha256=ca5630320bb5ca23ebfd0bac84532fab56eb357575653b815b9df42c051e1525
+  json (2.17.1) sha256=e0e4824541336a44915436f53e7ea74c687314fb8f88080fa1456f6a34ead92e
   jwt (3.1.2) sha256=af6991f19a6bb4060d618d9add7a66f0eeb005ac0bc017cd01f63b42e122d535
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   launchy (3.1.1) sha256=72b847b5cc961589dde2c395af0108c86ff0119f42d4648d25b5440ebb10059e
