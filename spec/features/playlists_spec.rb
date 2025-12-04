@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe "Playlists", :db do
-  it "creates and edits playlist", :aggregate_failures, :js do
+  it "creates, edits, saves, and clones playlist", :aggregate_failures, :js do
     visit routes.path(:playlists)
     click_link "New"
     fill_in "playlist[label]", with: "Test"
@@ -27,6 +27,23 @@ RSpec.describe "Playlists", :db do
     click_button "Save"
 
     expect(page).to have_content("Test II")
+
+    visit routes.path(:playlists)
+    click_link "Clone"
+    fill_in "playlist[name]", with: nil
+    click_button "Save"
+
+    expect(page).to have_content("must be filled")
+
+    fill_in "Name", with: "test"
+    click_button "Save"
+
+    expect(page).to have_content("must be unique")
+
+    fill_in "playlist[name]", with: "test_clone"
+    click_button "Save"
+
+    expect(page).to have_content("Test II Clone")
   end
 
   it "deletes playlist", :js do
