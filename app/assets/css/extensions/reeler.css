@@ -1,0 +1,118 @@
+@keyframes reelerSlideOutToLeft {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes reelerSlideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes reelerSlideOutToRight {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes reelerSlideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(reeler-slide-left),
+  ::view-transition-group(reeler-slide-right) {
+    animation-duration: 0.8s;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  ::view-transition-new(reeler-slide-left) {
+    animation-name: reelerSlideInFromRight;
+  }
+
+  ::view-transition-old(reeler-slide-left) {
+    animation-name: reelerSlideOutToLeft;
+  }
+
+  ::view-transition-new(reeler-slide-right) {
+    animation-name: reelerSlideInFromLeft;
+  }
+
+  ::view-transition-old(reeler-slide-right) {
+    animation-name: reelerSlideOutToRight;
+  }
+}
+
+.reeler {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .container, .viewport {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .container {
+    gap: 1rem;
+    width: fit-content;
+  }
+
+  .slide {
+    border-radius: 0.5rem;
+    box-shadow:
+      0.7px 0.7px 0.7px rgba(0, 0, 0, 0.022),
+      1.7px 1.7px 1.7px rgba(0, 0, 0, 0.031),
+      3.5px 3.5px 3.5px rgba(0, 0, 0, 0.039),
+      7.3px 7.3px 7.3px rgba(0, 0, 0, 0.048),
+      20px 20px 20px rgba(0, 0, 0, 0.07)
+    ;
+  }
+
+  .progress {
+    width: 100%;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .fullscreen {
+      background: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.reeler-slide-left {
+  view-transition-name: reeler-slide-left;
+}
+
+.reeler-slide-right {
+  view-transition-name: reeler-slide-right;
+}

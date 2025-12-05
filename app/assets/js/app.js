@@ -22,6 +22,7 @@ import "../css/bits/popovers.css";
 import "../css/bits/secrets.css";
 import "../css/bits/text.css";
 import "../css/bits/toggles.css";
+import "../css/extensions/reeler.css";
 import "../css/pages/dashboard.css";
 import "../css/pages/designer.css";
 import "../css/pages/devices.css";
@@ -95,6 +96,20 @@ function initializeCodeMirror() {
   });
 }
 
-document.body.addEventListener("htmx:load", function(event) {
+document.addEventListener("htmx:beforeTransition", function(event) {
+  const slide = htmx.find("#slide");
+  const data = event.detail.elt.dataset;
+
+  htmx.removeClass(slide, "reeler-slide-left");
+  htmx.removeClass(slide, "reeler-slide-right");
+
+  if (data.direction === "forward") {
+    htmx.addClass(slide, "reeler-slide-left");
+  } else if (data.direction === "backward") {
+    htmx.addClass(slide, "reeler-slide-right");
+  };
+});
+
+document.addEventListener("htmx:load", function(event) {
   initializeCodeMirror();
 });
