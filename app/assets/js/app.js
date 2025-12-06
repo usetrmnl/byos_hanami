@@ -40,6 +40,7 @@ Alpine.start();
 import "htmx-ext-sse";
 import "htmx-remove";
 
+import { Terminus } from "./terminus.js";
 import { basicSetup } from "codemirror";
 import { EditorView, keymap } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
@@ -95,20 +96,6 @@ function initializeCodeMirror() {
     element.dataset.initialized = "true";
   });
 }
-
-document.addEventListener("htmx:beforeTransition", function(event) {
-  const slide = htmx.find("#slide");
-  const data = event.detail.elt.dataset;
-
-  htmx.removeClass(slide, "reeler-slide-left");
-  htmx.removeClass(slide, "reeler-slide-right");
-
-  if (data.direction === "forward") {
-    htmx.addClass(slide, "reeler-slide-left");
-  } else if (data.direction === "backward") {
-    htmx.addClass(slide, "reeler-slide-right");
-  };
-});
 
 document.addEventListener("htmx:load", function(event) {
   initializeCodeMirror();
