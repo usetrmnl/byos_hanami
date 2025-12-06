@@ -1,0 +1,21 @@
+<%= render "shared/title", text: "#{playlist.label} Screens" %>
+
+<section class="bit-page page-playlists">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb">
+        <%= link_to "Playlists", routes.path(:playlists), class: :link %>
+      </li>
+
+      <%= tag.li "#{playlist.label} Screens", class: "bit-breadcrumb" %>
+    </ul>
+  </header>
+
+  <% if playlist.screens.any? %>
+    <%= render :screen, playlist:, before:, current:, after: %>
+  <% else %>
+    <div class="playlists">
+      <%= render "shared/empty", message: "No screens found." %>
+    </div>
+  <% end %>
+</section>
