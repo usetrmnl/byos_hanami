@@ -111,6 +111,8 @@ module Terminus
     get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
     put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
 
+    get "/playlists/:playlist_id/screens", to: "playlists.screens.index", as: :playlist_screens
+
     get "/problem_details", to: "problem_details.index", as: :problem_details
 
     get "/screens", to: "screens.index", as: :screens
