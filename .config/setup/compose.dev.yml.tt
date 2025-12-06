@@ -1,19 +1,6 @@
 name: "terminus-development"
 
 services:
-  init-certificates:
-    build:
-      context: .
-      target: development
-    user: root
-    environment:
-      CERTIFICATE_URLS: ${CERTIFICATE_URLS}
-    volumes:
-      - certificates:/etc/ssl/certs
-    entrypoint: ["/bin/bash", "-c"]
-    command: /app/bin/docker/install-certificates
-    restart: no
-
   web:
     init: true
     build:
@@ -29,12 +16,24 @@ services:
       - "${HANAMI_PORT}:${HANAMI_PORT}"
     restart: unless-stopped
     volumes:
-      - ".:/app"
-      - certificates:/etc/ssl/certs
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: web-assets
+        target: /app/public/assets
+      - type: volume
+        source: web-node
+        target: /app/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: web-uploads
+        target: /app/public/uploads
+        volume:
+          nocopy: true
     command: bin/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
     depends_on:
-      init-certificates:
-        condition: service_completed_successfully
       database:
         condition: service_healthy
       keyvalue:
@@ -67,11 +66,23 @@ services:
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:
-      - ".:/app"
-      - certificates:/etc/ssl/certs
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: web-assets
+        target: /app/public/assets
+      - type: volume
+        source: web-node
+        target: /app/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: web-uploads
+        target: /app/public/uploads
+        volume:
+          nocopy: true
     depends_on:
-      init-certificates:
-        condition: service_completed_successfully
       database:
         condition: service_healthy
       keyvalue:
@@ -145,6 +156,8 @@ networks:
   terminus-network:
 
 volumes:
-  certificates:
   database-data:
   keyvalue-data:
+  web-assets:
+  web-node:
+  web-uploads:
