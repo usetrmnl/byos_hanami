@@ -1,0 +1,54 @@
+<%= tag.section class: "reeler",
+                **HTMX[
+                  select_oob: "#slide, #progress, #actions",
+                  swap: "transition:true"
+                ] do %>
+
+  <div class="container">
+    <div class="viewport">
+      <%= tag.img id: :slide,
+                  src: current.image_uri,
+                  alt: current.label,
+                  class: :slide,
+                  width: current.width,
+                  height: current.height %>
+    </div>
+
+    <%= tag.progress id: :progress,
+                     "aria-label" => status,
+                     class: :progress,
+                     value: index,
+                     max: total %>
+
+    <%= tag.div id: :actions, class: :actions do %>
+      <%= link_to "Previous",
+                  routes.path(:playlist_screen, playlist_id: playlist.id, id: before.id),
+                  class: :action,
+                  data: {direction: :backward},
+                  **HTMX[
+                    get: routes.path(:playlist_screen, playlist_id: playlist.id, id: before.id),
+                    trigger: "click, keyup[key=='ArrowLeft'] from:body",
+                    push_url: true
+                  ] %>
+
+      <button class="fullscreen" onclick="Terminus.toggleFullscreen()">
+        <%= image_tag "icons/fullscreen.svg",
+                      alt: "Fullscreen",
+                      class: :fullscreen,
+                      width: 25,
+                      height: 25,
+                      loading: :lazy %>
+      </button>
+
+      <%= link_to "Next",
+                  routes.path(:playlist_screen, playlist_id: playlist.id, id: after.id),
+                  class: :action,
+                  data: {direction: :forward},
+                  **HTMX[
+                    get: routes.path(:playlist_screen, playlist_id: playlist.id, id: after.id),
+                    trigger: "click, keyup[key=='ArrowRight'] from:body",
+                    push_url: true
+                  ] %>
+    <% end %>
+  </div>
+<% end %>
