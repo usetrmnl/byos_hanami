@@ -46,8 +46,12 @@ RSpec.describe "Playlists", :db do
     expect(page).to have_content("Test II Clone")
   end
 
-  it "plays slides", :aggregate_failures, :js do
-    playlist =  Factory[:playlist]
+  it "plays screens", :aggregate_failures, :js do
+    playlist = Factory[:playlist]
+
+    visit routes.path(:playlist_screens, playlist_id: playlist.id)
+
+    expect(page).to have_content("No screens found.")
 
     (1..3).each do |position|
       Factory[
@@ -58,10 +62,10 @@ RSpec.describe "Playlists", :db do
       ]
     end
 
-    visit routes.path(:playlist_screens, playlist_id: playlist.id)
+    visit routes.path(:playlists)
+    click_link "Play"
 
     expect(page).to have_content(playlist.label)
-
     expect(page).to have_css(%(#progress[aria-label="Slide 1 of 3"]))
     expect(page).to have_css(%(#progress[value="0"]))
     expect(page).to have_css(%(#progress[max="2"]))
@@ -80,6 +84,23 @@ RSpec.describe "Playlists", :db do
 
     expect(page).to have_css(%(#progress[aria-label="Slide 2 of 3"]))
     expect(page).to have_css(%(#progress[value="1"]))
+  end
+
+  it "mirrors playlist to device", :aggregate_failures, :js do
+    device = Factory[:device]
+    Factory[:playlist, label: "Test"]
+
+    visit routes.path(:playlists)
+    click_link "Mirro"
+    check device.label
+    click_button "Save"
+
+    expect(page).to have_content("Test")
+
+    click_link "Mirror"
+    click_link "Cancel"
+
+    expect(page).to have_content("Test")
   end
 
   it "deletes playlist", :js do
