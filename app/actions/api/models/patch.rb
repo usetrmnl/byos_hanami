@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "initable"
-
 module Terminus
   module Actions
     module API

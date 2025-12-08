@@ -11,7 +11,6 @@ module Terminus
           status_repository: "repositories.user_status",
           show_view: "views.users.show"
         ]
-        include Dry::Monads[:result]
 
         def handle request, response
           case updater.call(**request.params.to_h)

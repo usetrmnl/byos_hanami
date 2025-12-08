@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "initable"
-require "petail"
-
 module Terminus
   module Actions
     module API
@@ -10,7 +7,7 @@ module Terminus
         # The show action.
         class Show < Base
           include Deps[repository: "repositories.model"]
-          include Initable[serializer: Serializers::Model, problem: Petail]
+          include Initable[serializer: Serializers::Model]
 
           def handle request, response
             model = repository.find request.params[:id]

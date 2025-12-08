@@ -12,7 +12,6 @@ module Terminus
           creator: "aspects.users.creator",
           index_view: "views.users.index"
         ]
-        include Dry::Monads[:result]
 
         def handle request, response
           case creator.call(**request.params.to_h.slice(:user))

@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
-
 module Terminus
   module Actions
     module Extensions
@@ -14,7 +11,6 @@ module Terminus
             repository: "repositories.extension",
             view: "views.extensions.dynamic"
           ]
-          include Dry::Monads[:result]
 
           def handle request, response
             id, model_id = request.params.to_h.values_at :id, :model_id

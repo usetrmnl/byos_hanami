@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
 require "versionaire"
 
 module Terminus
@@ -12,7 +10,6 @@ module Terminus
         class Show < Base
           include Deps["aspects.devices.provisioner", model_repository: "repositories.model"]
           include Initable[payload: Terminus::Models::Firmware::Setup]
-          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 

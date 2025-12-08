@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
-
 module Terminus
   module Actions
     module API
@@ -11,7 +8,6 @@ module Terminus
         class Create < Base
           include Deps["aspects.devices.provisioner"]
           include Initable[serializer: Serializers::Device]
-          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 

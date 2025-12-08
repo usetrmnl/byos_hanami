@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
-
 module Terminus
   module Actions
     module Extensions
@@ -14,7 +11,6 @@ module Terminus
             fetcher: "aspects.extensions.multi_fetcher"
           ]
           include Initable[json_formatter: Aspects::JSONFormatter]
-          include Dry::Monads[:result]
 
           # TODO: This is a duplicate of what is found in the Poll renderer.
           def self.reduce collection

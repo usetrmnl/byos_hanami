@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-
 module Terminus
   module Actions
     module Devices
@@ -15,8 +13,6 @@ module Terminus
           playlist_repository: "repositories.playlist",
           index_view: "views.devices.index"
         ]
-
-        include Dry::Monads[:result]
 
         contract Contracts::Devices::Create
 

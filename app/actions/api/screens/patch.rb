@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
-
 module Terminus
   module Actions
     module API
@@ -16,7 +13,6 @@ module Terminus
             model_repository: "repositories.model"
           ]
           include Initable[mold: Aspects::Screens::Mold, serializer: Serializers::Screen]
-          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 

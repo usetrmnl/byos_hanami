@@ -1,11 +1,15 @@
 # auto_register: false
 # frozen_string_literal: true
 
+require "dry/monads"
 require "hanami/action"
+require "initable"
 
 module Terminus
   # The application base action.
   class Action < Hanami::Action
+    include Dry::Monads[:result]
+
     before :authorize
 
     protected

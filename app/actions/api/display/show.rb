@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-require "initable"
 require "trmnl/api"
 
 module Terminus
@@ -21,7 +19,6 @@ module Terminus
           ]
 
           include Initable[model: TRMNL::API::Models::Display]
-          include Dry::Monads[:result]
 
           using Refines::Actions::Response
 

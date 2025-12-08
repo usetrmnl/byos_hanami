@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/monads"
-
 module Terminus
   module Actions
     module Playlists
@@ -9,7 +7,6 @@ module Terminus
         # The create action.
         class Create < Terminus::Action
           include Deps["aspects.playlists.cloner", repository: "repositories.playlist"]
-          include Dry::Monads[:result]
 
           params do
             required(:playlist_id).filled :integer
