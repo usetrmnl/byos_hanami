@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe "Extensions", :db do
-  it "creates, edits, saves, and clones extension", :aggregate_failures, :js do
+  it "creates, edits, saves, builds, and clones extension", :aggregate_failures, :js do
     visit routes.path(:extensions)
     click_link "New"
     fill_in "extension[label]", with: "Test"
@@ -33,6 +33,10 @@ RSpec.describe "Extensions", :db do
 
     expect(page).to have_content("Changes saved.")
     expect(page).to have_field(with: "Test")
+
+    click_button "Build"
+
+    expect(page).to have_content("Enqueuing...")
 
     click_link "Cancel"
     click_link "Clone"
