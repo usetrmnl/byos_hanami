@@ -16,14 +16,10 @@
   </header>
 
   <div class="bit-body">
-    <div class="extensions">
-      <%= form_for :extension,
-                   routes.path(:extension_update, id: extension.id),
-                   method: :put,
-                   class: "bit-card bit-form extension" do |form| %>
+    <div class="extensions bit-card">
+      <h1 class="label">Edit Extension</h1>
 
-        <h1 class="label">Edit Extension</h1>
-
+      <div class="bit-actions">
         <button type="button"
                 class="bit-button-accept"
                 popovertarget="popover-preview">
@@ -36,6 +32,15 @@
                         loading: :lazy %>
           Preview
         </button>
+
+        <%= render "extensions/build/button",
+                   path: routes.path(:extension_build_create, id: extension.id) %>
+      </div>
+
+      <%= form_for :extension,
+                   routes.path(:extension_update, id: extension.id),
+                   method: :put,
+                   class: "bit-form extension" do |form| %>
 
         <dialog id="popover-preview" class="bit-popover-content" popover="auto">
           <button type="button"
