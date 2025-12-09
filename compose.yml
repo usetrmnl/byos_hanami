@@ -5,7 +5,7 @@ services:
     image: ghcr.io/usetrmnl/terminus:latest
     user: root
     environment:
-      CERTIFICATE_URLS: ${CERTIFICATE_URLS}
+      CERTIFICATE_URLS: ${CERTIFICATE_URLS:-}
     volumes:
       - certificates:/etc/ssl/certs
     entrypoint: ["/bin/bash", "-c"]
