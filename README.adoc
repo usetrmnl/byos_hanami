@@ -9,6 +9,7 @@
 :docker_doc_link: link:doc/docker.adoc[Docker]
 :docker_link: link:https://www.docker.com[Docker]
 :dragonfly_link: link:https://www.dragonflydb.io[Dragonfly]
+:firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :git_link: link:https://git-scm.com[Git]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
@@ -24,6 +25,7 @@
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sidekiq_link: link:https://github.com/sidekiq/sidekiq[Sidekiq]
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
+:unbrickable_pledge_link: link:https://usetrmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
 :valkey_link: link:https://valkey.io[Valkey]
 :yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
 
@@ -202,6 +204,8 @@ Connecting your device to this server is as simple as using the captive WiFi por
 
 * link:https://help.usetrmnl.com/en/articles/12263392-connect-your-device-to-terminus-byos[How to connect your device to Terminus].
 * link:https://help.usetrmnl.com/en/articles/11663377-setting-up-a-trmnl-on-tricky-wi-fi-situations[Dealing with tricky Wi-Fi situations].
+
+In accordance with the {unbrickable_pledge_link}, the latest version of Terminus always supports the latest version of our {firmware_link}. If you are running on older firmware, you'll need to use an older version of Terminus that is compatible with that firmware since all code is open sourced (including access to older link:https://github.com/usetrmnl/byos_hanami/tags[versions]).
 
 === Extensions
 
