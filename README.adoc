@@ -13,6 +13,7 @@
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
+:milestoner_link: link:https://alchemists.io/projects/milestoner[Milestoner]
 :overmind_link: link:https://github.com/DarthSim/overmind[Overmind]
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
@@ -309,6 +310,25 @@ To view up-to-date details, follow these steps:
 . Click on the `coverage/index.html` file.
 
 At this point you can click through the tabs at the top of the page to inspect the various namespaces that make up this application.
+
+== Versions
+
+To view all versions and the complete release history to this project -- including detailed notes of all changes -- run the following:
+
+[source,bash]
+----
+# Terminus
+git clone https://github.com/usetrmnl/byos_hanami terminus
+cd terminus
+
+# Milestoner
+gem install milestoner
+milestoner build --max 1000 --format web
+ruby -run -e httpd tmp/milestones --port 3030
+open http://127.0.0.1:3030
+----
+
+We are working to automate this across multiple projects, not only Terminus, because {milestoner_link} also generates a complete syndicated feed of release notes as well. This means, in the future, you'll be able to subscribe to all updates via your feed reader. 🎉
 
 == License
 
