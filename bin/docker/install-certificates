@@ -1,49 +1,45 @@
 #!/usr/bin/env bash
-# Install custom SSL certificates from URLs
-# Usage: Set CERTIFICATE_URLS environment variable with comma-separated URLs
-# Example: CERTIFICATE_URLS="http://example.com/ca1.crt,http://example.org/ca2.pem"
+
+# Conditionally installs custom SSL certificates from CERTIFICATE_URLS environment variable.
 
 set -o nounset
 set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
+CERT_DIR="/usr/local/share/ca-certificates"
+
 if [ -z "${CERTIFICATE_URLS:-}" ]; then
-  printf "%s: CERTIFICATE_URLS empty, doing nothing\n" "${0}"
+  printf "%s: Skipped, CERTIFICATE_URLS is empty.\n" "${0}"
   exit 0
 fi
 
 printf "%s\n" "Installing custom SSL certificates..."
 
-# Certificate directory
-CERT_DIR="/usr/local/share/ca-certificates"
+IFS=',' read -ra urls <<< "${CERTIFICATE_URLS}"
 
-IFS=',' read -ra URLS <<< "${CERTIFICATE_URLS}"
-
-for url in "${URLS[@]}"; do
-  # Trim whitespace
+for url in "${urls[@]}"; do
+  # Trim whitespace.
   url=$(printf "%s" "${url}" | xargs)
 
   if [ -z "${url}" ]; then
     continue
   fi
 
-  printf "  Downloading certificate from: %s\n" "${url}"
+  printf "%s\n" "Downloading certificate: ${url}."
 
   filename=$(basename "${url}")
 
-  # Change extension to .crt (required by update-ca-certificates)
+  # Change extension to .crt (required by update-ca-certificates).
   cert_name="${filename%.*}.crt"
 
-  if curl --fail --silent --show-error --location "${url}" -o "${CERT_DIR}/${cert_name}"; then
-    printf "    ✓ Downloaded %s\n" "${url}"
-    printf "              as %s/%s\n" "${CERT_DIR}" "${cert_name}"
+  if curl --fail --silent --show-error --location "${url}" --output "${CERT_DIR}/${cert_name}"; then
+    printf "%s\n" "Downloaded ${url} to ${CERT_DIR}/${cert_name}."
   else
-    printf "    %s: %s\n" "✗ Failed to download from" "${url}"
+    printf "%s\n" "ERROR: Failed to download from ${url}."
   fi
 done
 
-# Update certificate store
-printf "  %s\n" "Updating CA certificates..."
+printf "%s\n" "Updating CA certificates..."
 update-ca-certificates
-printf "%s\n" "✓ Custom SSL certificates installed successfully"
+printf "%s\n" "Custom SSL certificates installed successfully."
