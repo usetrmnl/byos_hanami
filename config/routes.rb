@@ -8,6 +8,7 @@ require_relative "../app/aspects/screens/designer/middleware"
 
 module Terminus
   # The application base routes.
+  # rubocop:todo Metrics/ClassLength
   class Routes < Hanami::Routes
     slice(:authentication, at: "/") { use Authentication::Middleware }
 
@@ -65,13 +66,17 @@ module Terminus
     put "/extensions/:id", to: "extensions.update", as: :extension_update
     delete "/extensions/:id", to: "extensions.delete", as: :extension_delete
 
-    post "/extensions/:id/build", to: "extensions.build.create", as: :extension_build_create
+    post "/extensions/:extension_id/build",
+         to: "extensions.build.create",
+         as: :extension_build_create
 
-    get "/extensions/:id/clone/new", to: "extensions.clone.new", as: :extension_clone_new
-    post "/extensions/:id/clone", to: "extensions.clone.create", as: :extension_clone_create
+    get "/extensions/:extension_id/clone/new", to: "extensions.clone.new", as: :extension_clone_new
+    post "/extensions/:extension_id/clone",
+         to: "extensions.clone.create",
+         as: :extension_clone_create
 
-    get "/extensions/:id/preview", to: "extensions.preview.show", as: :extension_preview
-    get "/extensions/:id/poll", to: "extensions.poll.show", as: :extension_poll
+    get "/extensions/:extension_id/preview", to: "extensions.preview.show", as: :extension_preview
+    get "/extensions/:extension_id/poll", to: "extensions.poll.show", as: :extension_poll
 
     get "/firmware", to: "firmware.index", as: :firmware
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
@@ -107,8 +112,10 @@ module Terminus
            to: "playlists.items.delete",
            as: :playlist_item_delete
 
-    get "/playlists/:id/mirror/edit", to: "playlists.mirror.edit", as: :playlist_mirror_edit
-    put "/playlists/:id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
+    get "/playlists/:playlist_id/mirror/edit",
+        to: "playlists.mirror.edit",
+        as: :playlist_mirror_edit
+    put "/playlists/:playlist_id/mirror", to: "playlists.mirror.update", as: :playlist_mirror_update
 
     get "/playlists/:playlist_id/screens", to: "playlists.screens.index", as: :playlist_screens
     get "/playlists/:playlist_id/screens/:id", to: "playlists.screens.show", as: :playlist_screen
@@ -135,4 +142,5 @@ module Terminus
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/uploads"]
     use Aspects::Screens::Designer::Middleware, pattern: %r(/preview/(?<name>.+))
   end
+  # rubocop:enable Metrics/ClassLength
 end

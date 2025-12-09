@@ -13,7 +13,7 @@ module Terminus
           using Refinements::Hash
 
           params do
-            required(:id).filled :integer
+            required(:extension_id).filled :integer
             required(:extension).filled Schemas::Extensions::Upsert
             optional(:model_ids).filled :array
           end
@@ -44,7 +44,7 @@ module Terminus
             )
 
             response.render view,
-                            extension: repository.find(parameters[:id]),
+                            extension: repository.find(parameters[:extension_id]),
                             fields:,
                             errors: parameters.errors[:extension]
           end

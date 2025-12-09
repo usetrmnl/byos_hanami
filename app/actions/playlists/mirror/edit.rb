@@ -12,7 +12,7 @@ module Terminus
             device_repository: "repositories.device"
           ]
 
-          params { required(:id).filled :integer }
+          params { required(:playlist_id).filled :integer }
 
           def handle request, response
             parameters = request.params
@@ -25,7 +25,11 @@ module Terminus
           private
 
           def view_settings request, parameters
-            settings = {playlist: repository.find(parameters[:id]), devices: device_repository.all}
+            settings = {
+              playlist: repository.find(parameters[:playlist_id]),
+              devices: device_repository.all
+            }
+
             settings[:layout] = false if htmx.request? request.env, :request, "true"
             settings
           end

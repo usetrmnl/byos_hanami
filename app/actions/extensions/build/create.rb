@@ -9,10 +9,10 @@ module Terminus
           include Deps[:htmx, repository: "repositories.extension"]
           include Initable[job: Terminus::Jobs::Batches::Extension]
 
-          params { required(:id).filled :integer }
+          params { required(:extension_id).filled :integer }
 
           def handle request, response
-            extension = repository.find request.params[:id]
+            extension = repository.find request.params[:extension_id]
             enqueue extension, response
           end
 

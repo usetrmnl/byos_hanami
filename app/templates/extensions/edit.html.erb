@@ -34,7 +34,7 @@
         </button>
 
         <%= render "extensions/build/button",
-                   path: routes.path(:extension_build_create, id: extension.id) %>
+                   path: routes.path(:extension_build_create, extension_id: extension.id) %>
       </div>
 
       <%= form_for :extension,
@@ -52,7 +52,7 @@
           </button>
 
           <% model_id = extension.models.any? ? extension.models.first.id : nil %>
-          <%= tag.iframe src: routes.path(:extension_preview, id: extension.id, model_id:),
+          <%= tag.iframe src: routes.path(:extension_preview, extension_id: extension.id, model_id:),
                          class: "bit-frame" %>
         </dialog>
 

@@ -15,13 +15,13 @@ module Terminus
           ]
 
           params do
-            required(:id).filled :integer
+            required(:playlist_id).filled :integer
             optional(:mirror).filled(:hash) { required(:device_ids).array :integer }
           end
 
           def handle request, response
             parameters = request.params
-            playlist = repository.find parameters[:id]
+            playlist = repository.find parameters[:playlist_id]
 
             halt :not_found unless playlist
 

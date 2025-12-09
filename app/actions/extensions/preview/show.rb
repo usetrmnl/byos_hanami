@@ -12,8 +12,13 @@ module Terminus
             view: "views.extensions.dynamic"
           ]
 
+          params do
+            required(:extension_id).filled :integer
+            required(:model_id).filled :integer
+          end
+
           def handle request, response
-            id, model_id = request.params.to_h.values_at :id, :model_id
+            id, model_id = request.params.to_h.values_at :extension_id, :model_id
             extension = repository.find id
 
             halt :not_found unless extension

@@ -12,6 +12,8 @@ module Terminus
           ]
           include Initable[json_formatter: Aspects::JSONFormatter]
 
+          params { required(:extension_id).filled :integer }
+
           # TODO: This is a duplicate of what is found in the Poll renderer.
           def self.reduce collection
             collection.each do |key, value|
@@ -20,7 +22,7 @@ module Terminus
           end
 
           def handle request, response
-            extension = repository.find request.params[:id]
+            extension = repository.find request.params[:extension_id]
 
             halt :not_found unless extension
 

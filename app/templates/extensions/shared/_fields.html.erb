@@ -311,7 +311,7 @@
 
       <%= tag.pre id: :extension_response,
                   **HTMX[
-                    get: routes.path(:extension_poll, id: extension.id),
+                    get: routes.path(:extension_poll, extension_id: extension.id),
                     trigger: :load,
                     swap: "outerHTML"
                   ] do %>Loading...<% end %>
