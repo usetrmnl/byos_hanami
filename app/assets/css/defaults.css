@@ -196,12 +196,6 @@
       }
     }
   }
-
-  .actions {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
 }
 
 :where(td) {
