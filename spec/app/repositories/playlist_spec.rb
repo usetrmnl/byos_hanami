@@ -111,11 +111,12 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
   end
 
   describe "#with_items" do
-    it "answers associated screens" do
-      item = Factory[:playlist_item]
-      playlist = repository.with_items.by_pk(item.playlist_id).one
+    it "answers items ordered by position" do
+      one = Factory[:playlist_item, playlist_id: playlist.id, position: 2]
+      two = Factory[:playlist_item, playlist_id: playlist.id, position: 1]
+      update = repository.with_items.by_pk(playlist.id).one
 
-      expect(playlist.playlist_items.map(&:playlist_id)).to contain_exactly(playlist.id)
+      expect(update.playlist_items.map(&:id)).to eq([two.id, one.id])
     end
   end
 

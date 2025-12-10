@@ -11,6 +11,8 @@ module Terminus
         end
       end
 
+      def ordered = select_append(:position).order :position
+
       def next_item playlist_id:, after:
         scope = combine(:screen).where(playlist_id:).order :position
 

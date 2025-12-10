@@ -36,7 +36,7 @@ module Terminus
                 .to_a
       end
 
-      def with_items = playlist.combine :playlist_items, current_item: :screen
+      def with_items = playlist.combine(:playlist_items, current_item: :screen)
 
       def with_screens = playlist.combine :screens
 
