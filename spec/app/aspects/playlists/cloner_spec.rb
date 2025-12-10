@@ -8,8 +8,8 @@ RSpec.describe Terminus::Aspects::Playlists::Cloner, :db do
   describe "#call" do
     let(:repository) { Terminus::Repositories::Playlist.new }
     let(:playlist) { Factory[:playlist, label: "Test", name: "test"] }
-    let(:item_one) { Factory[:playlist_item, playlist_id: playlist.id] }
-    let(:item_two) { Factory[:playlist_item, playlist_id: playlist.id] }
+    let(:item_one) { Factory[:playlist_item, playlist_id: playlist.id, position: 2] }
+    let(:item_two) { Factory[:playlist_item, playlist_id: playlist.id, position: 8] }
 
     before do
       item_one
@@ -23,7 +23,14 @@ RSpec.describe Terminus::Aspects::Playlists::Cloner, :db do
 
     it "clones items" do
       clone = cloner.call(playlist.id).bind { repository.with_items.by_pk(it.id).one }
-      expect(clone.playlist_items.map(&:screen_id)).to eq([item_one.screen_id, item_two.screen_id])
+      attributes = clone.playlist_items.map { {screen_id: it.screen_id, position: it.position} }
+
+      expect(attributes).to eq(
+        [
+          {screen_id: item_one.screen_id, position: 1},
+          {screen_id: item_two.screen_id, position: 2}
+        ]
+      )
     end
 
     it "clones current item" do

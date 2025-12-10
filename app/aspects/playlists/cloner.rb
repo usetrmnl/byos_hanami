@@ -40,8 +40,8 @@ module Terminus
         end
 
         def add_items clone, original
-          original.playlist_items.each do |item|
-            item_repository.create playlist_id: clone.id, **item.cloneable_attributes
+          original.playlist_items.each.with_index 1 do |item, position|
+            item_repository.create playlist_id: clone.id, **item.cloneable_attributes, position:
           end
         end
 
