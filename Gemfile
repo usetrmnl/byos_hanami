@@ -6,7 +6,7 @@ source "https://rubygems.org"
 
 gem "bcrypt", "~> 3.1"
 gem "cogger", "~> 1.4"
-gem "connection_pool", "~> 2.5"
+gem "connection_pool", "~> 3.0"
 gem "csv", "~> 3.3"
 gem "dry-monads", "~> 1.8"
 gem "dry-schema", "~> 1.13"
