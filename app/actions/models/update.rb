@@ -23,7 +23,6 @@ module Terminus
             required(:scale_factor).filled :float
             required(:width).filled :integer
             required(:height).filled :integer
-            required(:published_at).maybe :date_time
           end
         end
 

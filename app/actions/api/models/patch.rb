@@ -26,7 +26,6 @@ module Terminus
               optional(:offset_y).filled :integer
               optional(:width).filled :integer
               optional(:height).filled :integer
-              optional(:published_at).filled :date_time
             end
           end
 

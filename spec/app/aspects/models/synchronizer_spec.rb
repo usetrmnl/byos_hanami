@@ -22,8 +22,7 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
                           width: 800,
                           height: 480,
                           offset_x: 10,
-                          offset_y: 15,
-                          published_at: "2025-01-01 00:00:00 UTC"
+                          offset_y: 15
                         ]
                       ]
                     )
@@ -60,8 +59,7 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
         width: 800,
         height: 480,
         offset_x: 10,
-        offset_y: 15,
-        published_at: Time.parse("2025-01-01 00:00:00 UTC")
+        offset_y: 15
       )
     end
 
@@ -82,8 +80,7 @@ RSpec.describe Terminus::Aspects::Models::Synchronizer, :db do
         width: 800,
         height: 480,
         offset_x: 10,
-        offset_y: 15,
-        published_at: Time.parse("2025-01-01 00:00:00 UTC")
+        offset_y: 15
       )
     end
 

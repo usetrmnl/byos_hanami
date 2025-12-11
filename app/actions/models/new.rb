@@ -17,8 +17,7 @@ module Terminus
           offset_y: 0,
           scale_factor: 1,
           width: 800,
-          height: 480,
-          published_at: nil
+          height: 480
         }.freeze
 
         def initialize(defaults: DEFAULTS, **)

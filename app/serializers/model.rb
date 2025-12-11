@@ -19,7 +19,6 @@ module Terminus
         offset_y
         width
         height
-        published_at
         created_at
         updated_at
       ].freeze

@@ -432,7 +432,6 @@ CREATE TABLE public.model (
     description text,
     width integer NOT NULL,
     height integer NOT NULL,
-    published_at timestamp without time zone,
     mime_type text DEFAULT 'image/png'::text NOT NULL,
     colors integer DEFAULT 2 NOT NULL,
     bit_depth integer DEFAULT 1 NOT NULL,
@@ -1306,4 +1305,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251111145306_create_extension_model.rb'),
 ('20251124163836_alter_model_kind_column.rb'),
 ('20251125115051_add_model_scale_factor_column.rb'),
-('20251201105349_alter_model_firmware_columns.rb');
+('20251201105349_alter_model_firmware_columns.rb'),
+('20251211152911_drop_model_published_at_column.rb');

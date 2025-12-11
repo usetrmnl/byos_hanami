@@ -162,20 +162,6 @@
                   class: :value,
                   autocomplete: :name %>
   <% end %>
-
-  <%= scope(:form_field, key: :published_at, errors:).render do %>
-    <label class="key" for="model_published_at">
-      Published
-      <%= render "shared/popovers/trigger", name: :published %>
-    </label>
-
-    <%= tag.input id: :model_published_at,
-                  name: "model[published_at]",
-                  type: "datetime-local",
-                  value: field_for(:published_at, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
-  <% end %>
 </fieldset>
 
 <%= render "models/shared/popovers/all" %>

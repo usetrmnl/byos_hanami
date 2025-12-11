@@ -506,8 +506,9 @@ You'll get an empty hash when there is nothing to delete.
 
 Provides model information which is the core specification for devices and screens. Models are also differentiated by `kind` which can be:
 
-* `core`: Originates from our {core_link} server and is part of the synchronization process provided by the model link:/doc/background_pollers.adoc[Background Pollers].
+* `trmnl`: Originates from our {core_link} server and is part of the synchronization process provided by the model link:/doc/background_pollers.adoc[Background Pollers].
 * `terminus`: Originates from Terminus only.
+* `+*+`: Additional types exist for custom devices such as Kindle, BYOD, and so forth.
 
 The following provides details on all requests and responses.
 
@@ -550,7 +551,6 @@ curl "https://localhost:2443/api/models/1" \
       "offset_y": 0,
       "width": 800,
       "height": 480,
-      "published_at": "2024-01-01T00:00:00+0000",
       "created_at": "2025-08-13T19:34:08+0000",
       "updated_at": "2025-08-13T19:34:08+0000"
     }
@@ -573,7 +573,6 @@ curl "https://localhost:2443/api/models/1" \
     "offset_y": 0,
     "width": 800,
     "height": 480,
-    "published_at": "2024-01-01T00:00:00+0000",
     "created_at": "2025-08-13T19:34:08+0000",
     "updated_at": "2025-08-13T19:34:08+0000"
   }
@@ -605,7 +604,6 @@ curl -X "POST" "https://localhost:2443/api/models" \
     "offset_x": 50,
     "height": "500",
     "offset_y": 100,
-    "published_at": "2025-01-01T00:00:00+00:00",
     "created_at": "2025-08-13T19:34:08+0000",
     "updated_at": "2025-08-13T19:34:08+0000"
   }
@@ -633,7 +631,6 @@ curl -X "POST" "https://localhost:2443/api/models" \
     "offset_y": 100,
     "width": 1000,
     "height": 500,
-    "published_at": "2025-01-01T00:00:00+0000",
     "created_at": "2025-08-13T19:42:06+0000",
     "updated_at": "2025-08-13T19:42:06+0000"
   }
@@ -679,7 +676,6 @@ You you change a single attribute or multiple attributes at once.
     "offset_y": 100,
     "width": 1000,
     "height": 500,
-    "published_at": "2025-01-01T00:00:00+0000",
     "created_at": "2025-08-13T19:42:06+0000",
     "updated_at": "2025-08-13T19:42:31+0000"
   }
@@ -713,7 +709,6 @@ curl -X "DELETE" "https://localhost:2443/api/models/2" \
     "kind": "terminus",
     "width": 1000,
     "height": 500,
-    "published_at": "2025-01-01 00:00:00 UTC",
     "mime_type": "image/png",
     "colors": 4,
     "bit_depth": 2,

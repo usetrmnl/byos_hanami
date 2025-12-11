@@ -20,8 +20,7 @@ RSpec.describe "/api/models", :db do
       offset_x: 10,
       offset_y: 15,
       width: 800,
-      height: 480,
-      published_at: Time.utc(2025, 1, 1, 1, 1, 1)
+      height: 480
     }
   end
 
@@ -49,7 +48,6 @@ RSpec.describe "/api/models", :db do
           offset_y: 0,
           width: 800,
           height: 480,
-          published_at: match_rfc_3339,
           created_at: match_rfc_3339,
           updated_at: match_rfc_3339
         }
@@ -87,7 +85,6 @@ RSpec.describe "/api/models", :db do
         offset_y: 0,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
@@ -124,7 +121,6 @@ RSpec.describe "/api/models", :db do
         offset_y: 15,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
@@ -177,7 +173,6 @@ RSpec.describe "/api/models", :db do
         offset_y: 15,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
@@ -226,7 +221,6 @@ RSpec.describe "/api/models", :db do
         offset_y: 0,
         width: 800,
         height: 480,
-        published_at: match_rfc_3339,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
