@@ -4,6 +4,7 @@ databases:
     databaseName: terminus
     postgresMajorVersion: 18
     user: terminus
+    ipAllowList: []
 
 services:
   - type: web
@@ -47,3 +48,4 @@ services:
   - type: keyvalue
     name: terminus-cache
     plan: free
+    ipAllowList: []
