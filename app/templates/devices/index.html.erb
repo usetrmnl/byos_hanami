@@ -4,34 +4,8 @@
   <header class="bit-header">
     <h1 class="label">
       Devices
-
-      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
-        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
-      </button>
+      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
     </h1>
-
-    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Overview</h3>
-
-      <p>These are you devices, both physical and virtual, managed by this server.</p>
-
-      <h3 class="label">Search</h3>
-
-      <p>You can fuzzy search by device label using partial or full label.</p>
-
-      <h3 class="label">Keyboard Shortcuts</h3>
-
-      <ul>
-        <li><kbd>CONTROL + n</kbd>: New device.</li>
-        <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
-      </ul>
-
-    </dialog>
 
     <div class="bit-actions">
       <%= render "shared/search",
@@ -50,6 +24,21 @@
       </a>
     </div>
   </header>
+
+  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+    <p>These are you devices, both physical and virtual, managed by this server.</p>
+
+    <h3 class="label">Search</h3>
+
+    <p>You can fuzzy search by device label using partial or full label.</p>
+
+    <h3 class="label">Keyboard Shortcuts</h3>
+
+    <ul>
+      <li><kbd>CONTROL + n</kbd>: New device.</li>
+      <li><kbd>CONTROL + s</kbd>: Save device (when within form).</li>
+    </ul>
+  <% end %>
 
   <% if devices.any? %>
     <ul class="bit-gallery devices">

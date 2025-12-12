@@ -9,9 +9,7 @@
     <fieldset class="box">
       <legend class="label">
         Devices
-        <button id="devices-help" class="bit-popover-trigger" popovertarget="popover-devices">
-          <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
-        </button>
+        <%= render "shared/popovers/trigger", name: :devices %>
       </legend>
 
       <ul class="devices">
@@ -24,23 +22,10 @@
       </ul>
     </fieldset>
 
-    <dialog id="popover-devices" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-devices" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Devices</h3>
-
-      <p>These are your currently registered devices.</p>
-    </dialog>
-
     <fieldset class="box">
       <legend class="label">
         IP Addresses
-        <button class="bit-popover-trigger" popovertarget="popover-ip-addresses">
-          <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
-        </button>
+        <%= render "shared/popovers/trigger", name: :ip_addresses %>
       </legend>
 
       <ul class="list">
@@ -52,25 +37,10 @@
       </ul>
     </fieldset>
 
-    <dialog id="popover-ip-addresses" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-ip-addresses" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">IP Addresses</h3>
-
-      <p>These are the Internet Protocol (IP) addresses of this server which are provided for convenience and debugging purposes. Use the API address to connect all devices to this server since this is the value defined by your <code>API_URI</code> environment variable.</p>
-
-      <p>💡 Prefer wired over wireless since the former is likely not to change as much.</p>
-    </dialog>
-
     <fieldset class="box">
       <legend class="label">
         Firmware
-        <button class="bit-popover-trigger" popovertarget="popover-firmware">
-          <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
-        </button>
+        <%= render "shared/popovers/trigger", name: :firmware %>
       </legend>
 
       <ul class="list">
@@ -81,16 +51,7 @@
         <% end %>
       </ul>
     </fieldset>
-
-    <dialog id="popover-firmware" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-firmware" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Firmware</h3>
-
-      <p>Displays recently downloaded firmware versions in descending order with the latest version listed first. New versions will appear once the firmware poller (background process) detects them.</p>
-    </dialog>
   </div>
 </section>
+
+<%= render "popovers" %>

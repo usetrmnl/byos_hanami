@@ -1,9 +1,10 @@
-<dialog id="popover-<%= name %>" class="bit-popover-content" popover="auto">
+<dialog id="<%= id %>" class="bit-popover-content" popover="auto">
   <button type="button"
           class="close"
-          popovertarget="popover-<%= name %>"
-          popovertargetaction="hide">
-    <span aria-hidden=true>❌</span>
+          popovertarget="<%= id %>"
+          popovertargetaction="hide"
+          aria-label="Close dialog">
+    <span aria-hidden=true>&times;</span>
     <span class="screen_reader">Close</span>
   </button>
 

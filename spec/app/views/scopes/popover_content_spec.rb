@@ -14,6 +14,12 @@ RSpec.describe Terminus::Views::Scopes::PopoverContent do
     end
   end
 
+  describe "#id" do
+    it "answers ID" do
+      expect(scope.id).to eq("popover-test")
+    end
+  end
+
   describe "#render" do
     it "renders content" do
       content = scope.render { "<p>A body.</p>" }
@@ -23,8 +29,9 @@ RSpec.describe Terminus::Views::Scopes::PopoverContent do
           <button type="button"
                   class="close"
                   popovertarget="popover-test"
-                  popovertargetaction="hide">
-            <span aria-hidden=true>❌</span>
+                  popovertargetaction="hide"
+                  aria-label="Close dialog">
+            <span aria-hidden=true>&times;</span>
             <span class="screen_reader">Close</span>
           </button>
 

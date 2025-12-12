@@ -4,37 +4,8 @@
   <header class="bit-header">
     <h1 class="label">
       Screens
-
-      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
-        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
-      </button>
+      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
     </h1>
-
-    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Overview</h3>
-
-      <p>Screens are the final artifacts produced when proxying, creating images via API requests, and so forth. Use these screens to add to your playlists for display on your device(s). Once created, you can modify these screens to alter what is displayed on your device(s).</p>
-
-      <p>All screens must use unique labels and names so you can distinguish between them. When proxying, your screen name ensures the screen of the same name is updated locally to prevent duplication.</p>
-
-      <p>Finally, some screens have names that start with the <code>terminus_</code> prefix. These are special system screens provided for you automatically when a device sleeps, wakes, errors, etc. You can customize these screens and also delete them but be aware they might reappear.</p>
-
-      <h3 class="label">Search</h3>
-
-      <p>You can fuzzy search by screen label using partial or full label.</p>
-
-      <h3 class="label">Keyboard Shortcuts</h3>
-
-      <ul>
-        <li><kbd>CONTROL + n</kbd>: New screen.</li>
-        <li><kbd>CONTROL + s</kbd>: Save screen (when within form).</li>
-      </ul>
-    </dialog>
 
     <div class="bit-actions">
       <%= render "shared/search",
@@ -53,6 +24,25 @@
       </a>
     </div>
   </header>
+
+  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+    <p>Screens are the final artifacts produced when proxying, creating images via API requests, and so forth. Use these screens to add to your playlists for display on your device(s). Once created, you can modify these screens to alter what is displayed on your device(s).</p>
+
+    <p>All screens must use unique labels and names so you can distinguish between them. When proxying, your screen name ensures the screen of the same name is updated locally to prevent duplication.</p>
+
+    <p>Finally, some screens have names that start with the <code>terminus_</code> prefix. These are special system screens provided for you automatically when a device sleeps, wakes, errors, etc. You can customize these screens and also delete them but be aware they might reappear.</p>
+
+    <h3 class="label">Search</h3>
+
+    <p>You can fuzzy search by screen label using partial or full label.</p>
+
+    <h3 class="label">Keyboard Shortcuts</h3>
+
+    <ul>
+      <li><kbd>CONTROL + n</kbd>: New screen.</li>
+      <li><kbd>CONTROL + s</kbd>: Save screen (when within form).</li>
+    </ul>
+  <% end %>
 
   <% if screens.any? %>
     <ul class="bit-gallery screens">

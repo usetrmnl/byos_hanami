@@ -1,3 +1,6 @@
 <%= tag.button type: :button, class: "bit-popover-trigger", popovertarget: "popover-#{name}" do %>
-  <%= image_tag "icons/info.svg", width: 15, height: 15, loading: :lazy %>
+  <%= image_tag "icons/info.svg",
+                width: locals.fetch(:width, 15),
+                height: locals.fetch(:height, 15),
+                loading: :lazy %>
 <% end %>

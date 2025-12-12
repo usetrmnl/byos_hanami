@@ -4,33 +4,8 @@
   <header class="bit-header">
     <h1 class="label">
       Playlists
-
-      <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
-        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
-      </button>
+      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
     </h1>
-
-    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Overview</h3>
-
-      <p>Playlists allow you to control what is displayed on your device by adding items (screens) to your playlist in the order you wish to view them. Every device must have a playlist -- with items -- in order to display images on your device(s). All playlists must use unique labels and names so you can distinguish between them.</p>
-
-      <h3 class="label">Search</h3>
-
-      <p>You can fuzzy search by playlist label using partial or full label.</p>
-
-      <h3 class="label">Keyboard Shortcuts</h3>
-
-      <ul>
-        <li><kbd>CONTROL + n</kbd>: New playlist.</li>
-        <li><kbd>CONTROL + s</kbd>: Save playlist (when within form).</li>
-      </ul>
-    </dialog>
 
     <div class="bit-actions">
       <%= render "shared/search",
@@ -49,6 +24,21 @@
       </a>
     </div>
   </header>
+
+  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+    <p>Playlists allow you to control what is displayed on your device by adding items (screens) to your playlist in the order you wish to view them. Every device must have a playlist -- with items -- in order to display images on your device(s). All playlists must use unique labels and names so you can distinguish between them.</p>
+
+    <h3 class="label">Search</h3>
+
+    <p>You can fuzzy search by playlist label using partial or full label.</p>
+
+    <h3 class="label">Keyboard Shortcuts</h3>
+
+    <ul>
+      <li><kbd>CONTROL + n</kbd>: New playlist.</li>
+      <li><kbd>CONTROL + s</kbd>: Save playlist (when within form).</li>
+    </ul>
+  <% end %>
 
   <% if playlists.any? %>
     <ul class="bit-gallery playlists">

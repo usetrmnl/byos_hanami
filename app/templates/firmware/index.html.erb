@@ -1,31 +1,11 @@
 <%= render "shared/title", text: "Firmware" %>
 
-<section class="page-firmware">
+<section class="bit-page">
   <header class="bit-header">
     <h1 class="label">
       Firmware
-
-      <button class="bit-popover-trigger" popovertarget="popover-help">
-        <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
-      </button>
+      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
     </h1>
-
-    <dialog id="popover-help" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-help" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h3 class="label">Overview</h3>
-
-      <p>This is where you can manage the firmware updates for your device(s). New versions will automatically appear via the Firmware Poller (see Terminus project documentation for details).</p>
-
-      <p>To revert to a previous version, temporarily disable the Firmware Poller and your devices will downgrade when the next waking. Alternatively, you can disable the Firmware Poller and short press the button on the back of your devices to force a revert.</p>
-
-      <h3 class="label">Search</h3>
-
-      <p>You can fuzzy search by version using partial or full version information.</p>
-    </dialog>
 
     <div class="bit-actions">
       <%= render "shared/search",
@@ -42,6 +22,16 @@
                  target: ".bit-container" %>
     </div>
   </header>
+
+  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+    <p>This is where you can manage the firmware updates for your device(s). New versions will automatically appear via the Firmware Poller (see Terminus project documentation for details).</p>
+
+    <p>To revert to a previous version, temporarily disable the Firmware Poller and your devices will downgrade when the next waking. Alternatively, you can disable the Firmware Poller and short press the button on the back of your devices to force a revert.</p>
+
+    <h3 class="label">Search</h3>
+
+    <p>You can fuzzy search by version using partial or full version information.</p>
+  <% end %>
 
   <div class="bit-container">
     <% if firmware.any? %>
