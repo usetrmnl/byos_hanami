@@ -31,6 +31,10 @@
     background-color: var(--site-orange);
     color: var(--site-white);
   }
+
+  &:has(:popover-open) {
+    overflow: hidden;
+  }
 }
 
 :where(audio, iframe, img, svg, video) {
@@ -85,6 +89,23 @@
 
 :where(dd) {
   margin-inline-start: 0px;
+}
+
+:where(dialog) {
+  --speed: 0.2s;
+
+  opacity: 1;
+  scale: 1;
+  transition: opacity var(--speed) ease-out, scale var(--speed) ease-out;
+
+  @starting-style {
+    opacity: 0;
+    scale: 0.25;
+  }
+
+  &::backdrop {
+    backdrop-filter: brightness(50%);
+  }
 }
 
 :where(dl) {
@@ -149,16 +170,21 @@
   justify-content: center;
 }
 
+:where(select[multiple], textarea) {
+  field-sizing: content;
+  overscroll-behavior: contain;
+}
+
+:where(select[multiple]:not([size]), textarea:not([rows])) {
+  min-block-size: 5lh;
+}
+
 :where(table) {
   width: 100%;
 }
 
-:where(select[multiple], textarea) {
-  overscroll-behavior: contain;
-}
-
-:where(select[multiple], textarea:not([rows])) {
-  min-block-size: 10lh;
+:where(textarea[rows]) {
+  min-block-size: attr(rows rlh);
 }
 
 :where(thead) {

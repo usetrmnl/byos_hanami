@@ -9,10 +9,6 @@
   padding: 2rem;
   max-width: calc(100vw - 20%);
 
-  &::backdrop {
-    backdrop-filter: brightness(60%);
-  }
-
   .label {
     text-align: center;
     margin: 1rem 0;
@@ -21,11 +17,13 @@
   .close {
     background: none;
     border: none;
+    color: var(--site-black);
+    font-weight: 600;
+    font-size: 1.5rem;
     cursor: pointer;
-    filter: grayscale(100);
     position: absolute;
-    right: 0.25rem;
-    top: 0.5rem;
+    right: 0.3rem;
+    top: 0.2rem;
   }
 
   .screen_reader:not(:focus):not(:active) {
