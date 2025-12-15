@@ -93,6 +93,16 @@ CREATE TYPE public.playlist_item_repeat_type_enum AS ENUM (
 
 
 --
+-- Name: playlist_mode_enum; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.playlist_mode_enum AS ENUM (
+    'automatic',
+    'manual'
+);
+
+
+--
 -- Name: special_function_enum; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -469,7 +479,8 @@ CREATE TABLE public.playlist (
     label text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    current_item_id integer
+    current_item_id integer,
+    mode public.playlist_mode_enum DEFAULT 'automatic'::public.playlist_mode_enum NOT NULL
 );
 
 
@@ -1083,6 +1094,13 @@ CREATE INDEX playlist_item_stop_at_index ON public.playlist_item USING btree (st
 
 
 --
+-- Name: playlist_mode_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX playlist_mode_index ON public.playlist USING btree (mode);
+
+
+--
 -- Name: screen_image_data_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1306,4 +1324,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251124163836_alter_model_kind_column.rb'),
 ('20251125115051_add_model_scale_factor_column.rb'),
 ('20251201105349_alter_model_firmware_columns.rb'),
-('20251211152911_drop_model_published_at_column.rb');
+('20251211152911_drop_model_published_at_column.rb'),
+('20251215154654_add_playlist_mode_enum.rb');
