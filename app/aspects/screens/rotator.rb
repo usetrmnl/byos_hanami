@@ -18,8 +18,8 @@ module Terminus
           if device.asleep?
             sleeper.call device
           else
-            find_playlist(device.playlist_id).fmap { |playlist| update_current_item playlist }
-                                             .bind { |item| extract_screen item }
+            find_playlist(device.playlist_id).fmap { |playlist| auto_update_current_item playlist }
+                                             .bind { |item| obtain_screen item }
           end
         end
 
@@ -33,15 +33,14 @@ module Terminus
           Failure "Unable to obtain next screen. Can't find playlist with ID: #{id.inspect}."
         end
 
-        def update_current_item playlist
-          playlist_id = playlist.id
-          next_item = item_repository.next_item(after: playlist.current_item_position, playlist_id:)
-
-          playlist_repository.update_current_item playlist_id, next_item
-          next_item
+        def auto_update_current_item playlist
+          item_repository.next_item(after: playlist.current_item_position, playlist_id: playlist.id)
+                         .tap do |item|
+                           playlist_repository.auto_update_current_item playlist, item.id if item
+                         end
         end
 
-        def extract_screen item
+        def obtain_screen item
           return Success item.screen if item
 
           Failure "Unable to obtain next screen. Playlist has no items."

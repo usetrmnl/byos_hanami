@@ -23,6 +23,23 @@ RSpec.describe Terminus::Aspects::Screens::Rotator, :db do
       expect(rotator.call(device).success).to have_attributes(label: /Welcome/)
     end
 
+    it "doesn't advance current item when playlist is manual" do
+      playlist = playlist_repository.update device.playlist_id, mode: "manual"
+
+      Factory[
+        :playlist_item,
+        playlist_id: device.playlist_id,
+        screen_id: Factory[:screen, label: "Test"].id,
+        position: 2
+      ]
+
+      rotator.call device
+
+      expect(playlist_repository.find(device.playlist_id)).to have_attributes(
+        current_item_id: playlist.current_item_id
+      )
+    end
+
     it "answers next screen when current screen isn't last" do
       Factory[
         :playlist_item,
