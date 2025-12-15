@@ -43,7 +43,7 @@ GEM
       refinements (~> 13.5)
       tone (~> 2.0)
       zeitwerk (~> 2.7)
-    concurrent-ruby (1.3.5)
+    concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
     containable (1.5.0)
       concurrent-ruby (~> 1.3)
@@ -270,7 +270,7 @@ GEM
     initable (0.7.0)
       marameters (~> 4.1)
     inspectable (0.6.0)
-    io-console (0.8.1)
+    io-console (0.8.2)
     irb (1.15.3)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
@@ -397,7 +397,7 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     rexml (3.4.4)
-    roda (3.98.0)
+    roda (3.99.0)
       rack
     rodauth (2.41.0)
       roda (>= 2.6.0)
@@ -667,7 +667,7 @@ CHECKSUMS
   capybara-validate_html5 (2.1.0) sha256=9c5bcac8058f05c8468c0856ccfbf91478e24c7ff07c79b8ac7c64ba9291cf5a
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
   cogger (1.7.0) sha256=cd29f8b3527fcfc896936bff1a1fa93bc2811ea68c587661bc3d1662ba606ebc
-  concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
+  concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   containable (1.5.0) sha256=cd7a308f636c2f479d65105cb7ceffc7a5a426ecb23a97a66a5f84e6d683229e
   content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516
@@ -743,7 +743,7 @@ CHECKSUMS
   infusible (4.6.0) sha256=db7399aadf47ce0e355c395339fadf0c53def246787ee70adb6a5a5ee4cdf878
   initable (0.7.0) sha256=4780cef7f1291c47dba369f2fbb3b4e53d1be5628e0ec7eeafe9a02a63673259
   inspectable (0.6.0) sha256=8b52f1441a14799fcf03072009df857faff39b91498e9f157167d5c68636ee14
-  io-console (0.8.1) sha256=1e15440a6b2f67b6ea496df7c474ed62c860ad11237f29b3bd187f054b925fcb
+  io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
   irb (1.15.3) sha256=4349edff1efa7ff7bfd34cb9df74a133a588ba88c2718098b3b4468b81184aaa
   irb-kit (1.5.0) sha256=c518ee49bc444bf80b1f8e14cdf04a66acfb8dba573b6a6137b4e3ca0359ad87
   json (2.18.0) sha256=b10506aee4183f5cf49e0efc48073d7b75843ce3782c68dbeb763351c08fd505
@@ -807,7 +807,7 @@ CHECKSUMS
   repl_type_completor (0.1.12) sha256=f60671508b0a7fff341b2ced85618e4a89d27fc5829807a3b0c5a44f98585b84
   rerun (0.14.0) sha256=996a5af2b2b34dcb30146c6c728addab9113e07c119003370daa9bf27feb88fd
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  roda (3.98.0) sha256=c1147d42322305168df91f9a13b7dcadf4b1fe7171fb9598ca444e7618362428
+  roda (3.99.0) sha256=05d0f44bd3431bd429f8dd799d8eb5136f04abf469776ce722d6f8c94950d42f
   rodauth (2.41.0) sha256=235ee0e72d9506e484c80e2ef1db4e667a3314dac444fc8311e368f5e4bf5119
   rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
