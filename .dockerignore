@@ -2,8 +2,6 @@
 /bin
 !/bin/console
 !/bin/pollers
-!/bin/docker/entrypoint
-!/bin/docker/install-certificates
 
 # Bundler
 /.bundle
@@ -55,6 +53,10 @@ Procfile.dev
 
 # RSpec
 /spec
+
+# Scripts
+/scripts/docker/entrypoint-dev
+/scripts/docker/quick.sh
 
 # SimpleCov
 /coverage

@@ -107,7 +107,7 @@ To immediately spin up Terminus on your local machine, run:
 
 [source,bash]
 ----
-curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scripts/quick.sh | bash
+curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scripts/docker/quick.sh | bash
 ----
 
 Once launched, open `http://localhost:2300` in your browser then click on the _Register_ link to register and log into the system.

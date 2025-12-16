@@ -100,7 +100,7 @@ RUN groupadd --system --gid 1000 app && \
 
 USER 1000:1000
 
-ENTRYPOINT ["/app/bin/docker/entrypoint"]
+ENTRYPOINT ["scripts/docker/entrypoint"]
 
 EXPOSE 2300
 

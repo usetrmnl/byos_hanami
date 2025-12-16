@@ -11,7 +11,7 @@ services:
     volumes:
       - certificates:/etc/ssl/certs
     entrypoint: ["/bin/bash", "-c"]
-    command: /app/bin/docker/install-certificates
+    command: scripts/docker/install-certificates
     restart: no
 
   web:
@@ -31,7 +31,7 @@ services:
     volumes:
       - ".:/app"
       - certificates:/etc/ssl/certs
-    command: bin/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
+    command: scripts/docker/entrypoint-dev bundle exec puma --config ./config/puma.rb
     depends_on:
       init-certificates:
         condition: service_completed_successfully
