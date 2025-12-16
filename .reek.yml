@@ -41,6 +41,7 @@ detectors:
       - Terminus::Aspects::Screens::Designer::EventStream#render_preview
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::IPFinder#all
+      - Terminus::Repositories::Playlist#auto_update_current_item
   LongParameterList:
     enabled: false
   TooManyStatements:

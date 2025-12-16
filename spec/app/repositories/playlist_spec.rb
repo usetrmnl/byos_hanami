@@ -55,6 +55,43 @@ RSpec.describe Terminus::Repositories::Playlist, :db do
     end
   end
 
+  describe "#auto_update_current_item" do
+    context "when automatic" do
+      let(:playlist) { Factory[:playlist, mode: "automatic"] }
+
+      it "updates current item when item exists" do
+        item = Factory[:playlist_item]
+        update = repository.auto_update_current_item playlist, item.id
+
+        expect(update).to have_attributes(current_item_id: item.id)
+      end
+
+      it "doesn't update when current item is nil" do
+        update = repository.auto_update_current_item playlist, nil
+        expect(update.current_item_id).to be(nil)
+      end
+
+      it "answers record" do
+        update = repository.auto_update_current_item playlist, nil
+        expect(update).to be_a(Terminus::Structs::Playlist)
+      end
+    end
+
+    context "when manual" do
+      let(:playlist) { Factory[:playlist, mode: "manual"] }
+
+      it "doesn't update current item" do
+        update = repository.auto_update_current_item playlist, Factory[:playlist_item].id
+        expect(update.current_item_id).to be(nil)
+      end
+
+      it "answers record" do
+        update = repository.auto_update_current_item playlist, Factory[:playlist_item].id
+        expect(update).to be_a(Terminus::Structs::Playlist)
+      end
+    end
+  end
+
   describe "#search" do
     let(:playlist) { Factory[:playlist, label: "Test"] }
 

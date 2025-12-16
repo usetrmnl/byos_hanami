@@ -19,6 +19,12 @@ module Terminus
 
       def find_by(**) = with_current_item.where(**).one
 
+      def auto_update_current_item record, item_id
+        return record unless record.automatic?
+
+        update record.id, current_item_id: item_id
+      end
+
       def search key, value
         playlist.where(Sequel.ilike(key, "%#{value}%"))
                 .order { created_at.asc }
@@ -36,9 +42,9 @@ module Terminus
                 .to_a
       end
 
-      def with_items = playlist.combine(:playlist_items, current_item: :screen)
+      def with_items = with_current_item.combine :playlist_items
 
-      def with_screens = playlist.combine :screens
+      def with_screens = with_current_item.combine :screens
 
       private
 
