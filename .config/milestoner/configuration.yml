@@ -1,20 +1,29 @@
 organization:
   label: "TRMNL"
   uri: "https://usetrmnl.com"
+profile:
+  uri: "https://github.com/%<id>s"
 project:
-  name: "byos_hanami"
+  name: "terminus"
   owner: "usetrmnl"
   uri:
     icon: "%<organization_uri>s/favicon.ico"
-    logo: "%<organization_uri>s/images/brand/icon--brand.png"
+    logo: "http://trmnl-oss.s3-website.us-east-2.amazonaws.com/byos/terminus/logo.png"
 syndication:
+  categories:
+    - label: "Milestones"
+      name: "milestones"
+  entry:
+    label: "%<id>s"
+    uri: "%<project_uri_version>s"
   id: "%<project_uri_version>s/%<id>s"
+  label: "%<organization_label>s: %<project_label>s"
   links:
     - label: "%<organization_label>s: %<project_label>s (web)"
       mime: "text/html"
       relation: "alternate"
-      uri: "%<project_uri_home>s/tags"
+      uri: "%<project_uri_home>s/versions"
     - label: "%<organization_label>s: %<project_label>s (feed)"
       mime: "application/atom+xml"
       relation: "self"
-      uri: "%<organization_uri>s/feeds/projects/%<project_name>s.xml"
+      uri: "%<project_uri_home>s/versions.xml"
