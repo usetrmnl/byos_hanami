@@ -6,10 +6,37 @@ RSpec.describe Terminus::Actions::Playlists::Screens::Show, :db do
   subject(:action) { described_class.new }
 
   describe "#call" do
-    let(:playlist) { Factory[:playlist] }
+    let(:playlist) { Factory[:playlist, mode: "manual"] }
     let(:screen) { Factory[:screen, :with_image] }
+    let(:item) { Factory[:playlist_item, playlist_id: playlist.id, screen_id: screen.id] }
 
-    before { Factory[:playlist_item, playlist_id: playlist.id, screen_id: screen.id] }
+    before { item }
+
+    it "advances current item when in manual mode" do
+      action.call Rack::MockRequest.env_for(
+        playlist.id.to_s,
+        "router.params" => {playlist_id: playlist.id, id: screen.id}
+      )
+
+      expectation = Terminus::Repositories::Playlist.new.find playlist.id
+
+      expect(expectation.current_item_id).to eq(item.id)
+    end
+
+    context "when in automatic mode" do
+      let(:playlist) { Factory[:playlist, mode: "automatic"] }
+
+      it "doesn't advance current item when in automatic mode" do
+        action.call Rack::MockRequest.env_for(
+          playlist.id.to_s,
+          "router.params" => {playlist_id: playlist.id, id: screen.id}
+        )
+
+        expectation = Terminus::Repositories::Playlist.new.find playlist.id
+
+        expect(expectation.current_item_id).to be(nil)
+      end
+    end
 
     it "renders default response" do
       response = action.call Rack::MockRequest.env_for(
