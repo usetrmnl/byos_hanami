@@ -18,4 +18,21 @@
                   class: :value,
                   autocomplete: :name %>
   <% end %>
+
+  <div class="bit-toggle-field" x-data="{mode: '<%= field_for :mode, fields, playlist %>'}">
+    <h2 class="bit-toggle-label">Mode</h2>
+
+    <%= render "shared/radios/bar",
+               items: [%w[Automatic automatic], %w[Manual manual]],
+               name: "playlist[mode]",
+               model: "mode" %>
+
+    <p class="help" x-show="mode === 'automatic'">
+      Automatically advance screen via device and/or API.
+    </p>
+
+    <p class="help" x-show="mode === 'manual'">
+      Manually advance screen when viewing screens.
+    </p>
+  </div>
 </fieldset>

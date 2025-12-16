@@ -10,7 +10,8 @@ RSpec.describe Terminus::Actions::Playlists::Create, :db do
       {
         playlist: {
           label: "Test",
-          name: "test"
+          name: "test",
+          mode: "automatic"
         }
       }
     end

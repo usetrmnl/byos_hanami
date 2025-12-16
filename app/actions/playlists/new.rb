@@ -8,7 +8,7 @@ module Terminus
         include Deps[:htmx]
 
         def handle request, response
-          view_settings = {}
+          view_settings = {fields: {mode: :automatic}}
           view_settings[:layout] = false if htmx.request? request.env, :request, "true"
 
           response.render view, **view_settings
