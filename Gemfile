@@ -63,7 +63,6 @@ group :development do
   gem "hanami-webconsole", "~> 2.3"
   gem "localhost", "~> 1.3"
   gem "rake", "~> 13.2"
-  gem "rerun", "~> 0.14"
 end
 
 group :test do
