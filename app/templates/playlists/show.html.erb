@@ -16,9 +16,7 @@
       <h2 class="label"><%= playlist.label %></h2>
 
       <div class="actions">
-        <%= render "shared/actions/edit",
-                   path: routes.path(:playlist_edit, id: playlist.id),
-                   target: "closest .page-playlists" %>
+        <%= render "shared/actions/edit", path: routes.path(:playlist_edit, id: playlist.id) %>
 
         <%= render "shared/actions/play",
                    path: routes.path(:playlist_screens, playlist_id: playlist.id) %>
@@ -28,7 +26,7 @@
 
         <%= render "shared/actions/mirror",
                    path: routes.path(:playlist_mirror_edit, playlist_id: playlist.id),
-                   target: "closest .page-playlists" %>
+                   target: "closest .bit-page" %>
       </div>
 
       <dl class="bit-definition-list">

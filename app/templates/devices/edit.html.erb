@@ -37,13 +37,13 @@
           <%= render "shared/save_button",
                      verb: :put,
                      path: routes.path(:device_update, id: device.id),
-                     target: ".page-devices" %>
+                     target: ".bit-page" %>
 
           <a href="<%= routes.path :device, id: device.id %>"
              class="bit-button-decline"
              hx-get="<%= routes.path :device, id: device.id %>"
              hx-trigger="click"
-             hx-target="closest .page-devices"
+             hx-target="closest .bit-page"
              hx-push-url="true">
              Cancel
           </a>

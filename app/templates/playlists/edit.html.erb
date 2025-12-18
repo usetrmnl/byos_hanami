@@ -31,13 +31,13 @@
           <%= render "shared/save_button",
                      verb: :put,
                      path: routes.path(:playlist_update, id: playlist.id),
-                     target: ".page-playlists" %>
+                     target: ".bit-page" %>
 
           <a href="<%= routes.path :playlist, id: playlist.id %>"
              class="bit-button-decline"
              hx-get="<%= routes.path :playlist, id: playlist.id %>"
              hx-trigger="click"
-             hx-target="closest .page-playlists"
+             hx-target="closest .bit-page"
              hx-push-url="true">
              Cancel
           </a>

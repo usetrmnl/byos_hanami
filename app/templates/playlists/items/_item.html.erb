@@ -8,7 +8,7 @@
 
     <%= render "shared/actions/delete",
                path: routes.path(:playlist_item_delete, playlist_id: item.playlist_id, id: item.id),
-               confirm: "Are you sure you want to delete this item?",
+               subject: :item,
                target: "closest .item" %>
   </div>
 </div>

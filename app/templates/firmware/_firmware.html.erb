@@ -8,7 +8,7 @@
   <td class="bit-actions">
     <%= render "shared/actions/delete",
                path: routes.path(:firmware_delete, id: firmware.id),
-               confirm: "Are you sure you want to delete this firmware?",
+               subject: :firmware,
                target: "closest .firmware" %>
   </td>
 </tr>

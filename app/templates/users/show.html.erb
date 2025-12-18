@@ -1,6 +1,6 @@
 <%= render "shared/title", text: user.name %>
 
-<section class="page-users">
+<section class="bit-page page-users">
   <header class="bit-header">
     <ul class="bit-breadcrumbs">
       <li class="bit-breadcrumb"><%= link_to "Users", routes.path(:users), class: :link %></li>
@@ -13,9 +13,7 @@
       <h2 class="label"><%= user.name %></h2>
 
       <div class="actions">
-        <%= render "shared/actions/edit",
-                   path: routes.path(:user_edit, id: user.id),
-                   target: "closest .page-users" %>
+        <%= render "shared/actions/edit", path: routes.path(:user_edit, id: user.id) %>
       </div>
 
       <dl class="bit-definition-list">

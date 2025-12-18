@@ -1,6 +1,6 @@
 <%= render "shared/title", text: "Edit #{user.name}" %>
 
-<section class="page-users">
+<section class="bit-page page-users">
   <header class="bit-header">
     <ul class="bit-breadcrumbs">
       <li class="bit-breadcrumb"><%= link_to "Users", routes.path(:users), class: :link %></li>
@@ -29,13 +29,13 @@
           <%= render "shared/save_button",
                      verb: :put,
                      path: routes.path(:user_update, id: user.id),
-                     target: ".page-users" %>
+                     target: ".bit-page" %>
 
           <a href="<%= routes.path :user, id: user.id %>"
              class="bit-button-decline"
              hx-get="<%= routes.path :user, id: user.id %>"
              hx-trigger="click"
-             hx-target="closest .page-users"
+             hx-target="closest .bit-page"
              hx-push-url="true">
              Cancel
           </a>

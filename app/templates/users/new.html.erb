@@ -1,6 +1,6 @@
 <%= render "shared/title", text: "New User" %>
 
-<section class="page-users">
+<section class="bit-page page-users">
   <header class="bit-header">
     <ul class="bit-breadcrumbs">
       <li class="bit-breadcrumb"><%= link_to "Users", routes.path(:users), class: :link %></li>
@@ -21,7 +21,7 @@
           <%= render "shared/save_button",
                      verb: :post,
                      path: routes.path(:user_create),
-                     target: ".page-users" %>
+                     target: ".bit-page" %>
 
           <%= link_to "Cancel", routes.path(:users), class: "bit-button-decline" %>
         </div>

@@ -1,3 +1,9 @@
-<%= link_to path, class: :action, **HTMX[get: path, target:, push_url: true] do %>
+<%= link_to path,
+            class: :action,
+            **HTMX[
+              get: path,
+              target: locals.fetch(:target, "closest .bit-page"),
+              push_url: true
+            ] do %>
   <%= image_tag "icons/edit.svg", alt: "Edit", width: 25, height: 25 %>
 <% end %>

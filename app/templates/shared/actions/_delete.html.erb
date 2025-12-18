@@ -1,5 +1,10 @@
-<%= form_for path, **HTMX[delete: path, confirm:, target:, swap: "swap:0.3s"] do |form| %>
-  <%= form.hidden_field :_csrf_token, value: csrf_token %>
+<%= form_for path,
+             **HTMX[
+               delete: path,
+               confirm: locals.fetch(:confirm, "Are you sure you want to delete this #{locals[:subject]}?"),
+               target: locals.fetch(:target, "closest .bit-card"),
+               swap: "swap:0.3s"
+             ] do |form| %>
   <%= form.submit class: locals.fetch(:class, "action bit-button-delete") do %>
     <%= image_tag "icons/trash.svg",
         alt: locals.fetch(:label, "Delete"),

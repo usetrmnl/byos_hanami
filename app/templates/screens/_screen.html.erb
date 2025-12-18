@@ -10,19 +10,12 @@
   <span class="type"><%= screen.dimensions %></span>
 
   <div class="actions">
-    <%= render "shared/actions/show",
-               path: routes.path(:screen, id: screen.id),
-               target: "closest .page-screens" %>
-
-    <%= render "shared/actions/edit",
-               path: routes.path(:screen_edit, id: screen.id),
-               target: "closest .page-screens" %>
-
+    <%= render "shared/actions/show", path: routes.path(:screen, id: screen.id) %>
+    <%= render "shared/actions/edit", path: routes.path(:screen_edit, id: screen.id) %>
     <%= render "shared/actions/download", path: screen.image_uri, name: screen.image_name %>
 
     <%= render "shared/actions/delete",
                path: routes.path(:screen_delete, id: screen.id),
-               confirm: "Are you sure you want to delete this screen?",
-               target: "closest .screen" %>
+               subject: :screen %>
   </div>
 </li>

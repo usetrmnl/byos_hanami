@@ -19,10 +19,7 @@
       <%= render "measurements", device: %>
 
       <div class="actions">
-        <%= render "shared/actions/edit",
-                   path: routes.path(:device_edit, id: device.id),
-                   target: "closest .page-devices" %>
-
+        <%= render "shared/actions/edit", path: routes.path(:device_edit, id: device.id) %>
         <%= render "shared/actions/logs", path: routes.path(:device_logs, device_id: device.id) %>
       </div>
 

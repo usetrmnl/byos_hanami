@@ -8,7 +8,7 @@
   <td class="bit-actions">
     <%= render "shared/actions/delete",
                path: routes.path(:device_log, device_id: device.id, id: log.id),
-               confirm: "Are you sure you want to delete this device log?",
+               subject: "device log",
                target: "closest .log" %>
   </td>
 </tr>

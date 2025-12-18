@@ -15,10 +15,7 @@
       <%= render "shared/screen", uri: screen.image_uri %>
 
       <div class="actions">
-        <%= render "shared/actions/edit",
-                   path: routes.path(:screen_edit, id: screen.id),
-                   target: "closest .page-screens" %>
-
+        <%= render "shared/actions/edit", path: routes.path(:screen_edit, id: screen.id) %>
         <%= render "shared/actions/download", path: screen.image_uri, name: screen.image_name %>
       </div>
 

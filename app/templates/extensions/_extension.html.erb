@@ -13,7 +13,6 @@
 
     <%= render "shared/actions/delete",
                path: routes.path(:extension_delete, id: extension.id),
-               confirm: "Are you sure you want to delete this extension?",
-               target: "closest .extension" %>
+               subject: :extension %>
   </div>
 </li>

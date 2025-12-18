@@ -30,13 +30,13 @@
           <%= render "shared/save_button",
                      verb: :put,
                      path: routes.path(:screen_update, id: screen.id),
-                     target: ".page-screens" %>
+                     target: ".bit-page" %>
 
           <a href="<%= routes.path :screen, id: screen.id %>"
              class="bit-button-decline"
              hx-get="<%= routes.path :screen, id: screen.id %>"
              hx-trigger="click"
-             hx-target="closest .page-screens"
+             hx-target="closest .bit-page"
              hx-push-url="true">
              Cancel
           </a>
