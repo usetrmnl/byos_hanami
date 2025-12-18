@@ -14,25 +14,16 @@
       <%= tag.li "Screens", class: "bit-breadcrumb" %>
     </ul>
 
-    <button class="bit-popover-trigger" popovertarget="popover-shortcuts">
-      <%= image_tag "icons/info.svg", width: 20, height: 20, loading: :lazy %>
-    </button>
+    <%= render "shared/popovers/trigger", name: :shortcuts, width: 20, height: 20 %>
 
-    <dialog id="popover-shortcuts" class="bit-popover-content" popover="auto">
-      <button class="close" popovertarget="popover-shortcuts" popovertargetaction="hide">
-        <span aria-hidden=true>❌</span>
-        <span class="screen_reader">Close</span>
-      </button>
-
-      <h2>Keyboard Shortcuts</h2>
-
+    <%= scope(:popover_content, name: :shortcuts, label: "Keyboard Shortcuts").render do %>
       <ul>
         <li><kbd>←</kbd>: Go to previous slide</li>
         <li><kbd>→</kbd>: Go to next slide</li>
         <li><kbd>f</kbd>: Toggle fullscreen</li>
         <li><kbd>ESC</kbd>: Exit fullscreen</li>
       </ul>
-    </dialog>
+    <% end %>
   </header>
 
   <% if playlist.screens.any? %>

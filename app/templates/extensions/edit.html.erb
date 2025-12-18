@@ -20,41 +20,28 @@
       <h1 class="label">Edit Extension</h1>
 
       <div class="bit-actions">
-        <button type="button"
-                class="bit-button-accept"
-                popovertarget="popover-preview">
-
-          <%= image_tag "icons/eye.svg",
-                        alt: "Preview",
-                        class: :icon,
-                        width: 25,
-                        height: 25,
-                        loading: :lazy %>
-          Preview
-        </button>
+        <%= render "shared/popovers/trigger",
+                   name: :preview,
+                   label: "Preview",
+                   icon: :eye,
+                   class: "bit-button-accept",
+                   width: 25,
+                   height: 25 %>
 
         <%= render "extensions/build/button",
                    path: routes.path(:extension_build_create, extension_id: extension.id) %>
       </div>
 
+      <%= scope(:popover_content, name: :preview, label: nil).render do %>
+        <% model_id = extension.models.any? ? extension.models.first.id : nil %>
+        <%= tag.iframe src: routes.path(:extension_preview, extension_id: extension.id, model_id:),
+                       class: "bit-frame" %>
+      <% end %>
+
       <%= form_for :extension,
                    routes.path(:extension_update, id: extension.id),
                    method: :put,
                    class: "bit-form extension" do |form| %>
-
-        <dialog id="popover-preview" class="bit-popover-content" popover="auto">
-          <button type="button"
-                  class="close"
-                  popovertarget="popover-preview"
-                  popovertargetaction="hide">
-            <span aria-hidden="true">❌</span>
-            <span class="screen_reader">Close</span>
-          </button>
-
-          <% model_id = extension.models.any? ? extension.models.first.id : nil %>
-          <%= tag.iframe src: routes.path(:extension_preview, extension_id: extension.id, model_id:),
-                         class: "bit-frame" %>
-        </dialog>
 
         <%= render "extensions/shared/fields",
                    form:,
