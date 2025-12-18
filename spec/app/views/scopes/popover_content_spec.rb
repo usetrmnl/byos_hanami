@@ -35,7 +35,7 @@ RSpec.describe Terminus::Views::Scopes::PopoverContent do
             <span class="screen_reader">Close</span>
           </button>
 
-          <h3 class="label">Test</h3>
+          <h1 class="label">Test</h1>
 
           &lt;p&gt;A body.&lt;/p&gt;
         </dialog>
