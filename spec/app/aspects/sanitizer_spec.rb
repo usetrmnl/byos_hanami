@@ -6,6 +6,22 @@ RSpec.describe Terminus::Aspects::Sanitizer do
   subject(:sanitizer) { described_class.new }
 
   describe "#call" do
+    fit "allows CSS custom variables" do
+      source = <<~HTML.squeeze(" ").delete("\n").strip
+        <html>
+          <head>
+            <style>
+              .test {
+                --font: Verdana;
+              }
+            </style>
+          </head>
+        </html>
+      HTML
+
+      expect(sanitizer.call(source)).to eq(source)
+    end
+
     it "allows div element with data attributes" do
       source = <<~HTML.squeeze(" ").delete("\n").strip
         <html><head></head>

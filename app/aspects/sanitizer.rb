@@ -20,7 +20,11 @@ module Terminus
 
       attr_reader :defaults, :client
 
-      def configuration = client::Config.merge(defaults, elements:, attributes:)
+      def configuration = client::Config.merge(defaults, css:, elements:, attributes:)
+
+      def css
+        defaults[:css].dup.tap { it[:properties] = it[:properties].including(/^--/) }
+      end
 
       def elements
         defaults[:elements].including "canvas", "html", "link", "script", "source", "style"
