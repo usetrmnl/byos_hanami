@@ -1,0 +1,18 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:render_link: link:https://render.com[Render]
+
+= Render
+
+Click the following button to immediately to deploy to {render_link} as a self-hosted solution:
+
+image:https://render.com/images/deploy-to-render-button.svg[Deploy to Render,link=https://render.com/deploy]
+
+Once deployed, _please take note of the following_:
+
+* All services are set up to use the _free_ plan. Unfortunately, Render doesn't support the _free_ plan for workers so uses the _starter_ plan instead. If you choose to not pay for this service by manually removing it, you won't be able to use data synchronization, extensions, and image processing.
+* Once deployed, please ensure you update the `API_URI` environment variable to the full URL. Example: `https://terminus-web-1mk6.onrender.com`. This is because the `render.yml` doesn't supply the full `host` URL at runtime so you'll have to manually update the URL via the `terminus-web` environment variables and restart your web service before connecting any devices.
+
+

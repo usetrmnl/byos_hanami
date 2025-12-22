@@ -15,7 +15,10 @@ services:
     runtime: docker
     envVars:
       - key: API_URI
-        value: $RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: terminus-web
+          property: host
       - key: HANAMI_PORT
         value: 10000
       - key: DATABASE_URL
@@ -25,12 +28,12 @@ services:
       - key: KEYVALUE_URL
         fromService:
           type: keyvalue
-          name: terminus-cache
+          name: terminus-keyvalue
           property: connectionString
 
   - type: worker
     name: terminus-worker
-    plan: free
+    plan: starter
     autoDeployTrigger: commit
     runtime: docker
     envVars:
@@ -41,11 +44,11 @@ services:
       - key: KEYVALUE_URL
         fromService:
           type: keyvalue
-          name: terminus-cache
+          name: terminus-keyvalue
           property: connectionString
     dockerCommand: bundle exec sidekiq -r ./config/sidekiq.rb
 
   - type: keyvalue
-    name: terminus-cache
+    name: terminus-keyvalue
     plan: free
     ipAllowList: []

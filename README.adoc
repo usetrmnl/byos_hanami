@@ -42,8 +42,6 @@ link:https://www.youtube.com/watch?v=BxMRP_ASa-s[image:https://img.youtube.com/v
 
 image:https://render.com/images/deploy-to-render-button.svg[Deploy to Render,link=https://render.com/deploy]
 
-Click the above button to immediately to deploy to {render_link}, using the _Free Plan_, as a self-hosted solution.
-
 ⚠️ This is a Beta software as we haven't reached 1.0.0 status as of yet. This means -- while we strive to reduce the number of changes that require effort on your part to a minimum -- there will be times when changes can't be avoided.
 
 toc::[]
@@ -218,6 +216,10 @@ See link:doc/background_pollers.adoc[Background Pollers] documentation for detai
 === API
 
 See link:doc/api.adoc[API] documentation for details.
+
+=== Render
+
+See link:doc/render.adoc[Render] documentation for details.
 
 == Development
 
