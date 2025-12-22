@@ -10,22 +10,21 @@
 
   <div class="bit-body">
     <div class="screens">
-      <form action="/screens" method="post" class="bit-card bit-form screen">
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :screen, routes.path(:screens), class: "bit-card bit-form screen" do |form| %>
         <h1 class="label">New Screen</h1>
 
-        <%= render "screens/shared/fields", models:, screen:, fields: fields.value, errors: %>
+        <%= render "screens/shared/fields", form:, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :post,
                      path: routes.path(:screen_create),
                      target: ".bit-page" %>
 
           <%= link_to "Cancel", routes.path(:screens), class: "bit-button-decline" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

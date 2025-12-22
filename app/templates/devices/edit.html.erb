@@ -23,10 +23,9 @@
 
       <%= render "measurements", device: %>
 
-      <form action="/devices" method="put" class="bit-form">
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :device, routes.path(:devices), method: :put, class: "bit-form" do |form| %>
         <%= render "devices/shared/fields",
+                   form:,
                    models:,
                    playlists:,
                    device:,
@@ -35,6 +34,7 @@
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :put,
                      path: routes.path(:device_update, id: device.id),
                      target: ".bit-page" %>
@@ -48,7 +48,7 @@
              Cancel
           </a>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

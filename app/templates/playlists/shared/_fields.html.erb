@@ -2,21 +2,21 @@
   <%= scope(:form_field, key: :label, errors:).render do %>
     <label class="key" for="playlist_label">Label</label>
 
-    <%= tag.input id: :playlist_label,
-                  name: "playlist[label]",
-                  value: field_for(:label, fields, playlist),
-                  class: :value,
-                  autocomplete: :label %>
+    <%= form.text_field :label,
+                        id: :playlist_label,
+                        value: field_for(:label, fields, playlist),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :name, errors:).render do %>
     <label class="key" for="playlist_name">Name</label>
 
-    <%= tag.input id: :playlist_name,
-                  name: "playlist[name]",
-                  value: field_for(:name, fields, playlist),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.text_field :name,
+                        id: :playlist_name,
+                        value: field_for(:name, fields, playlist),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <div class="bit-toggle-field" x-data="{mode: '<%= field_for :mode, fields, playlist %>'}">

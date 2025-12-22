@@ -17,10 +17,10 @@
 
   <div class="bit-body">
     <div class="playlists">
-      <form action="<%= routes.path :playlist_mirror_update, playlist_id: playlist.id %>"
-            method="put"
-            class="bit-card bit-form playlist">
-
+      <%= form_for :mirror,
+                   routes.path(:playlist_mirror_update, playlist_id: playlist.id),
+                   method: :put,
+                   class: "bit-card bit-form playlist" do |form| %>
         <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
 
         <h1 class="label">Mirror <%= playlist.label %></h1>
@@ -31,19 +31,22 @@
 
         <fieldset class="column">
           <% devices.each do |device| %>
-            <%= render :device, device:, playlist_id: playlist.id %>
+            <%= render :fields, form:, playlist_id: playlist.id, device: %>
           <% end %>
         </fieldset>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :put,
                      path: routes.path(:playlist_mirror_update, playlist_id: playlist.id),
                      target: ".bit-page" %>
 
-          <%= link_to "Cancel", routes.path(:playlist, id: playlist.id), class: "bit-button-decline" %>
+          <%= link_to "Cancel",
+                      routes.path(:playlist, id: playlist.id),
+                      class: "bit-button-decline" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

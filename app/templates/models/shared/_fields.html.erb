@@ -5,11 +5,11 @@
       <%= render "shared/popovers/trigger", name: :label %>
     </label>
 
-    <%= tag.input id: :model_label,
-                  name: "model[label]",
-                  value: field_for(:label, fields, model),
-                  class: :value,
-                  autocomplete: :label %>
+    <%= form.text_field :label,
+                        id: :model_label,
+                        value: field_for(:label, fields, model),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :name, errors:).render do %>
@@ -18,11 +18,11 @@
       <%= render "shared/popovers/trigger", name: :name %>
     </label>
 
-    <%= tag.input id: :model_name,
-                  name: "model[name]",
-                  value: field_for(:name, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.text_field :name,
+                        id: :model_name,
+                        value: field_for(:name, fields, model),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :description, errors:).render do %>
@@ -31,11 +31,11 @@
       <%= render "shared/popovers/trigger", name: :description %>
     </label>
 
-    <%= tag.input id: :model_description,
-                  name: "model[description]",
-                  value: field_for(:description, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.text_field :description,
+                        id: :model_description,
+                        value: field_for(:description, fields, model),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :mime_type, errors:).render do %>
@@ -44,11 +44,11 @@
       <%= render "shared/popovers/trigger", name: :mime_type %>
     </label>
 
-    <%= tag.input id: :model_mime_type,
-                  name: "model[mime_type]",
-                  value: field_for(:mime_type, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.text_field :mime_type,
+                        id: :model_mime_type,
+                        value: field_for(:mime_type, fields, model),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :colors, errors:).render do %>
@@ -57,12 +57,10 @@
       <%= render "shared/popovers/trigger", name: :colors %>
     </label>
 
-    <%= tag.input id: :model_colors,
-                  name: "model[colors]",
-                  type: :number,
-                  value: field_for(:colors, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :colors,
+                          id: :model_colors,
+                          value: field_for(:colors, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :bit_depth, errors:).render do %>
@@ -71,12 +69,10 @@
       <%= render "shared/popovers/trigger", name: :bit_depth %>
     </label>
 
-    <%= tag.input id: :model_bit_depth,
-                  name: "model[bit_depth]",
-                  type: :number,
-                  value: field_for(:bit_depth, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :bit_depth,
+                          id: :model_bit_depth,
+                          value: field_for(:bit_depth, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :rotation, errors:).render do %>
@@ -85,12 +81,10 @@
       <%= render "shared/popovers/trigger", name: :rotation %>
     </label>
 
-    <%= tag.input id: :model_rotation,
-                  name: "model[rotation]",
-                  type: :number,
-                  value: field_for(:rotation, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :rotation,
+                          id: :model_rotation,
+                          value: field_for(:rotation, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :offset_x, errors:).render do %>
@@ -99,12 +93,10 @@
       <%= render "shared/popovers/trigger", name: :offset_x %>
     </label>
 
-    <%= tag.input id: :model_offset_x,
-                  name: "model[offset_x]",
-                  type: :number,
-                  value: field_for(:offset_x, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :offset_x,
+                          id: :model_offset_x,
+                          value: field_for(:offset_x, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :offset_y, errors:).render do %>
@@ -113,12 +105,10 @@
       <%= render "shared/popovers/trigger", name: :offset_y %>
     </label>
 
-    <%= tag.input id: :model_offset_y,
-                  name: "model[offset_y]",
-                  type: :number,
-                  value: field_for(:offset_y, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :offset_y,
+                          id: :model_offset_y,
+                          value: field_for(:offset_y, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :scale_factor, errors:).render do %>
@@ -127,12 +117,10 @@
       <%= render "shared/popovers/trigger", name: :scale_factor %>
     </label>
 
-    <%= tag.input id: :model_scale_factor,
-                  name: "model[scale_factor]",
-                  type: :number,
-                  value: field_for(:scale_factor, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :scale_factor,
+                          id: :model_scale_factor,
+                          value: field_for(:scale_factor, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :width, errors:).render do %>
@@ -141,12 +129,10 @@
       <%= render "shared/popovers/trigger", name: :width %>
     </label>
 
-    <%= tag.input id: :model_width,
-                  name: "model[width]",
-                  type: :number,
-                  value: field_for(:width, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :width,
+                          id: :model_width,
+                          value: field_for(:width, fields, model),
+                          class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :height, errors:).render do %>
@@ -155,12 +141,10 @@
       <%= render "shared/popovers/trigger", name: :height %>
     </label>
 
-    <%= tag.input id: :model_height,
-                  name: "model[height]",
-                  type: :number,
-                  value: field_for(:height, fields, model),
-                  class: :value,
-                  autocomplete: :name %>
+    <%= form.number_field :height,
+                          id: :model_height,
+                          value: field_for(:height, fields, model),
+                          class: :value %>
   <% end %>
 </fieldset>
 

@@ -1,20 +1,18 @@
-<% new_uri = routes.path :playlist_item_new, playlist_id: playlist.id %>
-
-<form action="<%= new_uri %>" method="post" class="bit-form" hx-ext="remove">
-  <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
-  <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
+<%= form_for :playlist_item,
+             routes.path(:playlist_item_new, playlist_id: playlist.id),
+             class: "bit-form",
+             **HTMX[ext: :remove] do |form| %>
+  <%= render :fields, form:, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">
-    <%= tag.input type: :submit,
-                  value: "Save",
-                  class: "bit-button-accept",
-                  **HTMX[
-                    post: routes.path(:playlist_item_create, playlist_id: playlist.id),
-                    target: "closest .bit-form",
-                    disabled_elt: "this"
-                  ] %>
+    <%= form.submit "Save",
+                    class: "bit-button-accept",
+                    **HTMX[
+                      post: routes.path(:playlist_item_create, playlist_id: playlist.id),
+                      target: "closest .bit-form",
+                      disabled_elt: "this"
+                    ] %>
 
     <%= tag.button "Cancel", class: "bit-button-decline", data: {remove: true} %>
   </div>
-</form>
+<% end %>

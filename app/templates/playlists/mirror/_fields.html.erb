@@ -1,0 +1,12 @@
+<p class="form-field">
+  <%= form.check_box :device_ids,
+                     id: "mirror-device-#{device.id}",
+                     value: device.id,
+                     checked: (device.playlist_id == playlist_id),
+                     switch: true,
+                     class: :checkbox %>
+
+  <%= form.label :device_ids, for: "device-#{device.id}", class: :key do %>
+    <%= link_to device.label, routes.path(:device, id: device.id) %>
+  <% end %>
+</p>

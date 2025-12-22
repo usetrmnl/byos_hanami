@@ -13,11 +13,11 @@
         <%= render "shared/popovers/trigger", name: :label %>
       </label>
 
-      <%= tag.input id: :extension_label,
-                    name: "extension[label]",
-                    value: field_for(:label, fields, extension),
-                    class: :value,
-                    autocomplete: :label %>
+      <%= form.text_field :label,
+                          id: :extension_label,
+                          value: field_for(:label, fields, extension),
+                          class: :value,
+                          autocomplete: :off %>
     <% end %>
 
     <%= scope(:form_field, key: :name, errors:).render do %>
@@ -26,11 +26,11 @@
         <%= render "shared/popovers/trigger", name: :name %>
       </label>
 
-      <%= tag.input id: :extension_name,
-                    name: "extension[name]",
-                    value: field_for(:name, fields, extension),
-                    class: :value,
-                    autocomplete: :name %>
+      <%= form.text_field :name,
+                          id: :extension_name,
+                          value: field_for(:name, fields, extension),
+                          class: :value,
+                          autocomplete: :off %>
     <% end %>
 
     <%= scope(:form_field, key: :description, errors:).render do %>
@@ -39,11 +39,11 @@
         <%= render "shared/popovers/trigger", name: :description %>
       </label>
 
-      <%= tag.input id: :extension_description,
-                    name: "extension[description]",
-                    value: field_for(:description, fields, extension),
-                    class: :value,
-                    autocomplete: :name %>
+      <%= form.text_field :description,
+                          id: :extension_description,
+                          value: field_for(:description, fields, extension),
+                          class: :value,
+                          autocomplete: :off %>
     <% end %>
 
     <%= scope(
@@ -53,10 +53,7 @@
           alpine: {data: "{tags: #{extension ? extension.alpine_tags : []}, nascence: '', index: 0}"}
         ).render do %>
 
-      <%= tag.input id: :extension_tags,
-                    name: "extension[tags]",
-                    type: :hidden,
-                    "x-bind:value" => "tags.join(',')" %>
+      <%= form.hidden_field :tags, id: :extension_tags, "x-bind:value" => "tags.join(',')" %>
 
       <label class="key" for="tag">
         Tags
@@ -80,6 +77,7 @@
         </template>
       </div>
     <% end %>
+
 
     <div class="bit-toggle-field">
       <h2 class="bit-toggle-label">Kind</h2>
@@ -112,10 +110,12 @@
         <%= render "shared/popovers/trigger", name: :headers %>
       </label>
 
-      <textarea id="extension_headers"
-                name="extension[headers]"
-                class="bit-editor"
-                data-language="json"><%= field_for :formatted_headers, fields, extension %></textarea>
+      <%= form.text_area :headers,
+                         field_for(:formatted_headers, fields, extension),
+                         id: :extension_headers,
+                         class: "bit-editor",
+                         autocomplete: :off,
+                         data: {language: :json} %>
     <% end %>
 
     <div class="bit-toggle-field" x-show="kind === 'poll'">
@@ -143,10 +143,11 @@
         <%= render "shared/popovers/trigger", name: :uris %>
       </label>
 
-      <textarea id="extension_uris"
-                name="extension[uris]"
-                class="value"
-                autocomplete="name"><%= field_for :formatted_uris, fields, extension %></textarea>
+      <%= form.text_area :uris,
+                         field_for(:formatted_uris, fields, extension),
+                         id: :extension_uris,
+                         class: :value,
+                         autocomplete: :off %>
     <% end %>
 
     <%= scope(
@@ -161,11 +162,12 @@
         <%= render "shared/popovers/trigger", name: :body %>
       </label>
 
-      <textarea id="extension_body"
-                name="extension[body]"
-                class="bit-editor"
-                autocomplete="name"
-                data-language="json"><%= field_for :formatted_body, fields, extension %></textarea>
+      <%= form.text_area :body,
+                         field_for(:formatted_body, fields, extension),
+                         id: :extension_body,
+                         class: "bit-editor",
+                         autocomplete: :off,
+                         data: {language: :json} %>
     <% end %>
   </fieldset>
 
@@ -197,11 +199,10 @@
           <%= render "shared/popovers/trigger", name: :schedule_start %>
         </label>
 
-        <%= tag.input id: :extension_start_at,
-                      name: "extension[start_at]",
-                      type: "datetime-local",
-                      value: field_for(:start_at, fields, extension),
-                      class: :value %>
+        <%= form.datetime_local_field :start_at,
+                                      id: :extension_start_at,
+                                      value: field_for(:start_at, fields, extension),
+                                      class: :value %>
       <% end %>
 
       <%= scope(:form_field, key: :schedule_interval, errors:).render do %>
@@ -210,12 +211,11 @@
           <%= render "shared/popovers/trigger", name: :schedule_interval %>
         </label>
 
-        <%= tag.input id: :extension_interval,
-                      name: "extension[interval]",
-                      type: :number,
-                      value: field_for(:interval, fields, extension),
-                      min: 1,
-                      class: :value %>
+        <%= form.number_field :interval,
+                              id: :extension_interval,
+                              value: field_for(:interval, fields, extension),
+                              min: 1,
+                              class: :value %>
       <% end %>
 
       <%= scope(:form_field, key: :schedule_unit, errors:).render do %>
@@ -224,13 +224,9 @@
           <%= render "shared/popovers/trigger", name: :schedule_unit %>
         </label>
 
-        <%= tag.select id: :extension_unit, name: "extension[unit]", class: :value, "x-model" => "unit" do %>
-          <% %w[none minute hour day week month].each do |unit| %>
-            <%= tag.option unit.capitalize,
-                           value: unit,
-                           selected: unit == field_for(:unit, fields, extension) %>
-          <% end %>
-        <% end %>
+        <% units = %w[none minute hour day week month] %>
+        <% values = units.each.with_object({}) { |item, all| all[item.capitalize] = item } %>
+        <%= form.select :unit, values, id: :extension_unit, class: :value, "x-model" => "unit" %>
       <% end %>
 
       <div class="bit-toggle-field" x-show="unit === 'week'">
@@ -256,12 +252,11 @@
       </div>
 
       <%= scope(:form_field, key: :last_day_of_month, errors:, alpine: {show: "unit === 'month'"}).render do %>
-        <%= tag.input id: :extension_last_day_of_month,
-                      name: "extension[last_day_of_month]",
-                      type: :checkbox,
-                      checked: field_for(:last_day_of_month, fields, extension),
-                      switch: true,
-                      class: :checkbox %>
+        <%= form.check_box :last_day_of_month,
+                           id: :extension_last_day_of_month,
+                           checked: field_for(:last_day_of_month, fields, extension),
+                           switch: true,
+                           class: :checkbox %>
 
         <label class="key" for="extension_last_day_of_month">
           Last Day Of Month
@@ -279,10 +274,12 @@
           <%= render "shared/popovers/trigger", name: :data %>
         </label>
 
-        <textarea id="extension_data"
-                  name="extension[data]"
-                  class="bit-editor"
-                  data-language="json"><%= field_for :formatted_data, fields, extension %></textarea>
+        <%= form.text_area :data,
+                           field_for(:formatted_data, fields, extension),
+                           id: :extension_data,
+                           class: "bit-editor",
+                           autocomplete: :off,
+                           data: {language: :json} %>
       <% end %>
     </fieldset>
   </fieldset>
@@ -295,11 +292,12 @@
       <%= render "shared/popovers/trigger", name: :template %>
     </label>
 
-    <textarea id="extension_template"
-              name="extension[template]"
-              class="bit-editor"
-              autocomplete="name"
-              data-language="liquid"><%= field_for :template, fields, extension %></textarea>
+    <%= form.text_area :template,
+                       field_for(:template, fields, extension),
+                       id: :extension_template,
+                       class: "bit-editor",
+                       autocomplete: :off,
+                       data: {language: :liquid} %>
   <% end %>
 
   <% if extension %>

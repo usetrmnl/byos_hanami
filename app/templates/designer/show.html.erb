@@ -22,16 +22,19 @@
       <%= image_tag "loader.svg", alt: "Loader", width: 800, height: 480 %>
     </figure>
 
-    <form action="/designer" method="post" class="form">
-      <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-      <%= tag.input name: "template[name]", type: :hidden, value: name %>
-      <%= tag.input name: "template[label]", type: :hidden, value: label %>
+    <%= form_for :template, routes.path(:designer), class: :form do |form| %>
+      <%= form.hidden_field :name, value: name %>
+      <%= form.hidden_field :label, value: label %>
 
-      <textarea name="template[content]"
-                class="source"
-                hx-post="/designer"
-                hx-trigger="load, keyup delay:200ms"
-                hx-swap="textContent"><%= render :welcome %></textarea>
-    </form>
+      <%= form.text_area :content,
+                         render(:welcome),
+                         class: :source,
+                         autocomplete: :off,
+                         **HTMX[
+                           post: routes.path(:designer),
+                           trigger: "load, keyup delay:200ms",
+                           swap: "textContent"
+                         ] %>
+    <% end %>
   </div>
 </section>

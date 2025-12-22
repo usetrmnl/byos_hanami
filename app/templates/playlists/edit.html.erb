@@ -17,18 +17,17 @@
 
   <div class="bit-body">
     <div class="bit-card playlist">
-      <form action="<%= routes.path :playlist_update, id: playlist.id %>"
-            method="put"
-            class="bit-form">
-
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :playlist,
+                   routes.path(:playlist_update, id: playlist.id),
+                   method: :put,
+                   class: "bit-form" do |form| %>
         <h1 class="label">Edit Playlist</h1>
 
-        <%= render "playlists/shared/fields", playlist:, fields: fields.value, errors: %>
+        <%= render "playlists/shared/fields", form:, playlist:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :put,
                      path: routes.path(:playlist_update, id: playlist.id),
                      target: ".bit-page" %>
@@ -42,10 +41,12 @@
              Cancel
           </a>
         </div>
-      </form>
+      <% end %>
 
-      <div hx-get="<%= routes.path :playlist_items, playlist_id: playlist.id %>" hx-trigger="load">
-      </div>
+      <%= tag.div **HTMX[
+                    get: routes.path(:playlist_items, playlist_id: playlist.id),
+                    trigger: :load
+                  ] %>
     </div>
   </div>
 </section>

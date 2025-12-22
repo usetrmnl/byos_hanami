@@ -13,25 +13,24 @@
 
   <div class="bit-body">
     <div class="playlists">
-      <form action="<%= routes.path :playlist_create %>"
-            method="post"
-            class="bit-card bit-form playlist">
 
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :playlist,
+                   routes.path(:playlists),
+                   class: "bit-card bit-form playlist" do |form| %>
         <h1 class="label">New Playlist</h1>
 
-        <%= render "playlists/shared/fields", playlist:, fields: fields.value, errors: %>
+        <%= render "playlists/shared/fields", form:, playlist:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :post,
                      path: routes.path(:playlist_create),
                      target: ".bit-page" %>
 
           <%= link_to "Cancel", routes.path(:playlists), class: "bit-button-decline" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

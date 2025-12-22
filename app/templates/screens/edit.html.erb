@@ -15,33 +15,33 @@
 
   <div class="bit-body">
     <div class="screens">
-      <form action="<%= routes.path :screen_update, id: screen.id %>"
-            method="put"
-            class="bit-card bit-form screen">
-
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :screen,
+                   routes.path(:screen_update, id: screen.id),
+                   method: :put,
+                   class: "bit-card bit-form screen" do |form| %>
         <h1 class="label">Edit Screen</h1>
 
         <%= render "shared/screen", uri: screen.image_uri %>
-        <%= render "screens/shared/fields", models:, screen:, fields: fields.value, errors: %>
+        <%= render "screens/shared/fields", form:, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :put,
                      path: routes.path(:screen_update, id: screen.id),
                      target: ".bit-page" %>
 
-          <a href="<%= routes.path :screen, id: screen.id %>"
-             class="bit-button-decline"
-             hx-get="<%= routes.path :screen, id: screen.id %>"
-             hx-trigger="click"
-             hx-target="closest .bit-page"
-             hx-push-url="true">
-             Cancel
-          </a>
+          <%= link_to "Cancel",
+                      routes.path(:screen, id: screen.id),
+                      class: "bit-button-decline",
+                      **HTMX[
+                        get: routes.path(:screen, id: screen.id),
+                        trigger: :click,
+                        target: "closest .bit-page",
+                        push_url: true
+                      ] %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

@@ -1,10 +1,9 @@
-<%= tag.input type: :submit,
-              value: "Save",
-              class: "bit-button-accept",
-              **HTMX[
-                verb => path,
-                trigger: "click, keyup[ctrlKey&&key=='s'] from:body",
-                target: "closest #{target}",
-                disabled_elt: "this",
-                push_url: "true"
-              ] %>
+<%= form.submit "Save",
+                class: "bit-button-accept",
+                **HTMX[
+                  verb => path,
+                  trigger: "click, keyup[ctrlKey&&key=='s'] from:body",
+                  target: "closest #{target}",
+                  disabled_elt: "this",
+                  push_url: "true"
+                ] %>

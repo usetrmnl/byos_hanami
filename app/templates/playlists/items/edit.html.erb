@@ -1,27 +1,21 @@
 <% show_uri = routes.path(:playlist_item, playlist_id: item.playlist_id, id: item.id) %>
-<% edit_uri = routes.path :playlist_item_edit, playlist_id: item.playlist_id, id: item.id %>
 <% update_uri = routes.path(:playlist_item_update, playlist_id: item.playlist_id, id: item.id) %>
 
-<form action="<%= edit_uri %>" method="put" class="bit-form">
-  <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
-  <%= render :fields, screen_options:, item:, fields: fields.value, errors: %>
+<%= form_for :playlist_item, update_uri, method: :put, class: "bit-form" do |form| %>
+  <%= render :fields, form:, screen_options:, item:, fields: fields.value, errors: %>
 
   <div class="form-actions">
-    <%= tag.input type: :submit,
-                  value: "Save",
-                  class: "bit-button-accept",
-                  **HTMX[
-                    put: update_uri,
-                    target: "closest .bit-form",
-                    disabled_elt: "this"
-                  ] %>
+    <%= form.submit "Save",
+                    class: "bit-button-accept",
+                    **HTMX[
+                      put: update_uri,
+                      target: "closest .bit-form",
+                      disabled_elt: "this"
+                    ] %>
 
-    <a href="<%= show_uri %>"
-       class="bit-link-cancel"
-       hx-get="<%= show_uri %>"
-       hx-target="closest .bit-form">
-      Cancel
-    </a>
+    <%= link_to "Cancel",
+                show_uri,
+                class: "bit-link-cancel",
+                  **HTMX[get: show_uri, target: "closest .bit-form"] %>
   </div>
-</form>
+<% end %>

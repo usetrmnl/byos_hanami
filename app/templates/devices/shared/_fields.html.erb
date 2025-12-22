@@ -5,11 +5,7 @@
       <%= render "shared/popovers/trigger", name: :model %>
     </label>
 
-    <%= tag.select id: :device_model_id, name: "device[model_id]", class: :value do %>
-      <% select_options_for(models).each do |label, id| %>
-        <%= tag.option label, value: id, selected: id == field_for(:model_id, fields, device) %>
-      <% end %>
-    <% end %>
+    <%= form.select :model_id, select_options_for(models), id: :device_model_id, class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :playlist_id, errors:).render do %>
@@ -18,21 +14,20 @@
       <%= render "shared/popovers/trigger", name: :playlist %>
     </label>
 
-    <%= tag.select id: :device_playlist_id, name: "device[playlist_id]", class: :value do %>
-      <% select_options_for(playlists).each do |label, id| %>
-        <%= tag.option label, value: id, selected: id == field_for(:playlist_id, fields, device) %>
-      <% end %>
-    <% end %>
+    <%= form.select :playlist_id,
+                    select_options_for(playlists),
+                    id: :device_playlist_id,
+                    class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :label, errors:).render do %>
     <label class="key" for="device_label">Label</label>
 
-    <%= tag.input id: :device_label,
-                  name: "device[label]",
-                  value: field_for(:label, fields, device),
-                  class: :value,
-                  autocomplete: :label %>
+    <%= form.text_field :label,
+                        id: :device_label,
+                        value: field_for(:label, fields, device),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :friendly_id, errors:).render do %>
@@ -41,11 +36,11 @@
       <%= render "shared/popovers/trigger", name: :friendly_id %>
     </label>
 
-    <%= tag.input id: :device_friendly_id,
-                  name: "device[friendly_id]",
-                  value: field_for(:friendly_id, fields, device),
-                  class: :value,
-                  autocomplete: :friendly_id %>
+    <%= form.text_field :friendly_id,
+                        id: :device_friendly_id,
+                        value: field_for(:friendly_id, fields, device),
+                        class: :value,
+                        autocomplete: :off %>
   <% end %>
 
   <%= scope(:form_field, key: :mac_address, errors:).render do %>
@@ -55,11 +50,12 @@
     </label>
 
     <div class="input-group" x-data="{ show: false }">
-      <%= tag.input id: :device_mac_address,
-                    name: "device[mac_address]",
-                    value: field_for(:mac_address, fields, device),
-                    class: "value value-cap",
-                    "x-bind:type" => "show ? 'text' : 'password'"%>
+      <%= form.text_field :mac_address,
+                          id: :device_mac_address,
+                          value: field_for(:mac_address, fields, device),
+                          class: "value value-cap",
+                          autocomplete: :off,
+                          "x-bind:type" => "show ? 'text' : 'password'"%>
 
       <%= render "shared/visibility_button" %>
     </div>
@@ -72,11 +68,12 @@
     </label>
 
     <div class="input-group" x-data="{ show: false }">
-      <%= tag.input id: :device_api_key,
-                    name: "device[api_key]",
-                    value: field_for(:api_key, fields, device),
-                    class: "value value-cap",
-                    "x-bind:type" => "show ? 'text' : 'password'"%>
+      <%= form.text_field :api_key,
+                          id: :device_api_key,
+                          value: field_for(:api_key, fields, device),
+                          class: "value value-cap",
+                          autocomplete: :off,
+                          "x-bind:type" => "show ? 'text' : 'password'"%>
 
       <%= render "shared/visibility_button" %>
     </div>
@@ -88,12 +85,11 @@
       <%= render "shared/popovers/trigger", name: :refresh_rate %>
     </label>
 
-    <%= tag.input id: :device_refresh_rate,
-                  name: "device[refresh_rate]",
-                  type: :number,
-                  value: field_for(:refresh_rate, fields, device),
-                  class: :value,
-                  min: 20 %>
+    <%= form.number_field :refresh_rate,
+                          id: :device_refresh_rate,
+                          value: field_for(:refresh_rate, fields, device),
+                          class: :value,
+                          min: 20 %>
   <% end %>
 
   <%= scope(:form_field, key: :image_timeout, errors:).render do %>
@@ -102,21 +98,19 @@
       <%= render "shared/popovers/trigger", name: :image_timeout %>
     </label>
 
-    <%= tag.input id: :device_image_timeout,
-                  name: "device[image_timeout]",
-                  type: :number,
-                  value: field_for(:image_timeout, fields, device),
-                  class: :value,
-                  min: 0 %>
+    <%= form.number_field :image_timeout,
+                          id: :device_image_timeout,
+                          value: field_for(:image_timeout, fields, device),
+                          class: :value,
+                          min: 0 %>
   <% end %>
 
   <%= scope(:form_field, key: :firmware_update, errors:).render do %>
-    <%= tag.input id: :device_firmware_update,
-                  name: "device[firmware_update]",
-                  type: :checkbox,
-                  checked: field_for(:firmware_update, fields, device),
-                  switch: true,
-                  class: :checkbox %>
+    <%= form.check_box :firmware_update,
+                       id: :device_firmware_update,
+                       checked: field_for(:firmware_update, fields, device),
+                       switch: true,
+                       class: :checkbox %>
 
     <label class="key" for="device_firmware_update">
       Firmware Update
@@ -125,12 +119,11 @@
   <% end %>
 
   <%= scope(:form_field, key: :proxy, errors:).render do %>
-    <%= tag.input id: :device_proxy,
-                  name: "device[proxy]",
-                  type: :checkbox,
-                  checked: field_for(:proxy, fields, device),
-                  switch: true,
-                  class: :checkbox %>
+    <%= form.check_box :proxy,
+                       id: :device_proxy,
+                       checked: field_for(:proxy, fields, device),
+                       switch: true,
+                       class: :checkbox %>
 
     <label class="key" for="device_proxy">
       Proxy
@@ -144,11 +137,10 @@
       <%= render "shared/popovers/trigger", name: :sleep_start %>
     </label>
 
-    <%= tag.input id: :device_sleep_start_at,
-                  name: "device[sleep_start_at]",
-                  type: :time,
-                  value: field_for(:sleep_start_at, fields, device),
-                  class: :value %>
+    <%= form.time_field :sleep_start_at,
+                        id: :device_sleep_start_at,
+                        value: field_for(:sleep_start_at, fields, device),
+                        class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :sleep_stop_at, errors:).render do %>
@@ -157,11 +149,10 @@
       <%= render "shared/popovers/trigger", name: :sleep_end %>
     </label>
 
-    <%= tag.input id: :device_sleep_stop_at,
-                  name: "device[sleep_stop_at]",
-                  type: :time,
-                  value: field_for(:sleep_stop_at, fields, device),
-                  class: :value %>
+    <%= form.time_field :sleep_stop_at,
+                        id: :device_sleep_stop_at,
+                        value: field_for(:sleep_stop_at, fields, device),
+                        class: :value %>
   <% end %>
 </fieldset>
 

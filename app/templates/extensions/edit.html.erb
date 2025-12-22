@@ -51,8 +51,7 @@
                    errors: %>
 
         <div class="form-actions">
-          <%= tag.input type: :submit, value: "Save", class: "bit-button-accept" %>
-
+          <%= form.submit "Save", class: "bit-button-accept" %>
           <%= link_to "Cancel", routes.path(:extensions), class: "bit-button-decline" %>
         </div>
       <% end %>

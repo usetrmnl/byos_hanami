@@ -15,18 +15,17 @@
 
   <div class="bit-body">
     <div class="models">
-      <form action="<%= routes.path :model_update, id: model.id %>"
-            method="put"
-            class="bit-card bit-form model">
-
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :model,
+                   routes.path(:model_update, id: model.id),
+                   method: :put,
+                   class: "bit-card bit-form model" do |form| %>
         <h1 class="label">Edit Model</h1>
 
-        <%= render "models/shared/fields", model:, fields: fields.value, errors: %>
+        <%= render "models/shared/fields", form:, model:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :put,
                      path: routes.path(:model_update, id: model.id),
                      target: ".bit-page" %>
@@ -40,7 +39,7 @@
              Cancel
           </a>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>

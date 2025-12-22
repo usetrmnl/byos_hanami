@@ -10,22 +10,21 @@
 
   <div class="bit-body">
     <div class="users">
-      <form action="/users" method="post" class="bit-card bit-form user">
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :user, routes.path(:users), class: "bit-card bit-form user" do |form| %>
         <h1 class="label">New User</h1>
 
-        <%= render "users/shared/fields", user:, statuses:, fields: fields.value, errors: %>
+        <%= render "users/shared/fields", form:, user:, statuses:, fields: fields.value, errors: %>
 
         <div class="form-actions">
           <%= render "shared/save_button",
+                     form:,
                      verb: :post,
                      path: routes.path(:user_create),
                      target: ".bit-page" %>
 
           <%= link_to "Cancel", routes.path(:users), class: "bit-button-decline" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>
