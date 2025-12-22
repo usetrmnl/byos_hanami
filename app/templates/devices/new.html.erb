@@ -12,10 +12,9 @@
     <div class="bit-card device">
       <h1 class="label">New Device</h1>
 
-      <form action="/devices" method="post" class="bit-form">
-        <%= tag.input name: :_csrf_token, type: :hidden, value: csrf_token %>
-
+      <%= form_for :device, routes.path(:devices), class: "bit-form" do |form| %>
         <%= render "devices/shared/fields",
+                   form:,
                    models:,
                    playlists:,
                    device:,
@@ -30,7 +29,7 @@
 
           <%= link_to "Cancel", routes.path(:devices), class: "bit-button-decline" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </section>
