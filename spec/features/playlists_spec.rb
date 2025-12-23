@@ -91,7 +91,7 @@ RSpec.describe "Playlists", :db do
     Factory[:playlist, label: "Test"]
 
     visit routes.path(:playlists)
-    click_link "Mirro"
+    click_link "Mirror"
     check device.label
     click_button "Save"
 
