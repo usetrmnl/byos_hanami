@@ -14,6 +14,7 @@ module Terminus
             required(:playlist).hash do
               required(:label).filled :string
               required(:name).filled :string
+              required(:mode).filled :string
             end
           end
 
