@@ -1,8 +1,6 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require "pathname"
-
 $VERBOSE = true
 
 jemalloc_path = Dir["/usr/lib/*/libjemalloc.so.2"]

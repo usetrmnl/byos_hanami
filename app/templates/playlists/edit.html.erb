@@ -43,10 +43,12 @@
         </div>
       <% end %>
 
-      <%= tag.div **HTMX[
-                    get: routes.path(:playlist_items, playlist_id: playlist.id),
-                    trigger: :load
-                  ] %>
+      <%= tag.div(
+        **HTMX[
+          get: routes.path(:playlist_items, playlist_id: playlist.id),
+          trigger: :load
+        ]
+      ) %>
     </div>
   </div>
 </section>

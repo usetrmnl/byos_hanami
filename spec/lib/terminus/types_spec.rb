@@ -52,7 +52,7 @@ RSpec.describe Terminus::Types do
 
     it "fails when object can't be coerced" do
       expectation = proc { type.call nil }
-      expect(&expectation).to raise_error(Dry::Types::CoercionError, /no implicit conversion/)
+      expect(&expectation).to raise_error(Dry::Types::CoercionError, /requires a String/)
     end
   end
 

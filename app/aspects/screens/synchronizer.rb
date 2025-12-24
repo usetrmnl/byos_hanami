@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "cgi"
 require "dry/core"
 require "dry/monads"
 require "initable"
+require "rack"
 require "refinements/pathname"
 require "refinements/string"
 
@@ -22,7 +22,7 @@ module Terminus
           screen_repository: "repositories.screen"
         ]
 
-        include Initable[struct: proc { Terminus::Structs::Screen.new }, cgi: CGI]
+        include Initable[struct: proc { Terminus::Structs::Screen.new }, rack: Rack::Utils]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
@@ -46,18 +46,16 @@ module Terminus
 
         private
 
-        attr_reader :struct, :pattern, :cgi
+        attr_reader :struct, :pattern, :rack
 
         def pathname_from file_name, url
           Pathname "#{file_name.gsub pattern, Dry::Core::EMPTY_STRING}.#{type_for url}"
         end
 
         def type_for uri
-          cgi.parse(uri)
-             .fetch("response-content-type", Dry::Core::EMPTY_ARRAY)
-             .first
-             .to_s
-             .sub("image/", Dry::Core::EMPTY_STRING)
+          rack.parse_query(uri)
+              .fetch("response-content-type", Dry::Core::EMPTY_STRING)
+              .sub("image/", Dry::Core::EMPTY_STRING)
         end
 
         def find_screen pathname
