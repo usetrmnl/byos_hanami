@@ -9,7 +9,7 @@ module Terminus
       # Fetches remote data.
       class Fetcher
         include Deps[:http]
-        include Initable[parser: Terminus::Aspects::Extensions::Parser]
+        include Initable[parser: Extensions::Parser]
         include Dry::Monads[:result]
 
         def self.mime_type_and_body_for headers, response

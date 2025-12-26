@@ -7,7 +7,7 @@ module Terminus
         # The create action.
         class Create < Terminus::Action
           include Deps[:htmx, repository: "repositories.extension"]
-          include Initable[job: Terminus::Jobs::Batches::Extension]
+          include Initable[job: Jobs::Batches::Extension]
 
           params { required(:extension_id).filled :integer }
 
