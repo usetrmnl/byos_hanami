@@ -16,7 +16,10 @@ module Terminus
             uris = extension.uris
 
             if uris.one?
-              Success renderer.call(extension.template, {**context, "url" => uris.first})
+              Success renderer.call(
+                extension.template,
+                {**context, "data" => {"url" => uris.first}}
+              )
             else
               render_multiple extension, context
             end

@@ -11,7 +11,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Image do
         :extension,
         kind: "image",
         uris: ["https://test.io/test.png"],
-        template: %(<img src="{{url}}" alt="{{extension.alt}}">)
+        template: %(<img src="{{data.url}}" alt="{{extension.alt}}">)
       ]
     end
 
