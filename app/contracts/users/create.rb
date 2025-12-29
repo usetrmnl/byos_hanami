@@ -4,7 +4,7 @@ module Terminus
   module Contracts
     module Users
       # Defines user create contract.
-      class Create < Dry::Validation::Contract
+      class Create < Contract
         params do
           required(:user).filled(:hash) do
             required(:name).filled :string

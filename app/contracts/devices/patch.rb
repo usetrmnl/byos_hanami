@@ -4,7 +4,7 @@ module Terminus
   module Contracts
     module Devices
       # The contract for device patches.
-      class Patch < Dry::Validation::Contract
+      class Patch < Contract
         params do
           required(:id).filled :integer
           required(:device).filled Schemas::Devices::Patch

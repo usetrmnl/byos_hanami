@@ -4,7 +4,7 @@ module Terminus
   module Contracts
     module Users
       # Defines user update contract.
-      class Update < Dry::Validation::Contract
+      class Update < Contract
         params do
           required(:id).filled :integer
 

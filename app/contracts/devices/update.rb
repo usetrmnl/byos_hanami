@@ -4,7 +4,7 @@ module Terminus
   module Contracts
     module Devices
       # The contract for device updates.
-      class Update < Dry::Validation::Contract
+      class Update < Contract
         params do
           required(:id).filled :integer
           required(:device).filled Schemas::Devices::Upsert

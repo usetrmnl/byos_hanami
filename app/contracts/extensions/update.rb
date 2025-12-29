@@ -4,7 +4,9 @@ module Terminus
   module Contracts
     module Extensions
       # The contract for extension updates.
-      class Update < Dry::Validation::Contract
+      class Update < Contract
+        config.messages.namespace = :extension
+
         params do
           required(:id).filled :integer
           required(:extension).filled Schemas::Extensions::Upsert
