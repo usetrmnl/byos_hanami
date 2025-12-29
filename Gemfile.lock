@@ -610,6 +610,7 @@ DEPENDENCIES
   htmx (~> 2.4)
   http (~> 5.2)
   http-fake (~> 4.4)
+  i18n (~> 1.14)
   initable (~> 0.3)
   inspectable (~> 0.3)
   irb-kit (~> 1.1)
