@@ -1,0 +1,9 @@
+<%= scope(:popover_content, name: :urls, label: "URLs").render do %>
+  <p>Allows you to specify single or multiple URLs when making HTTP requests. Delimit each URL with a new line so they will be available to your <a href="https://shopify.github.io/liquid">Liquid</a> template based on the <em>kind</em> of extension you use. The following illustrates the object available to your templates for each kind of extension:</p>
+
+  <ul>
+    <li><strong>Image</strong>: Use <code>{{data.url}}</code> for a single URL. Use <code>{{source_1.url}}</code>, <code>{{source_2.url}}</code>, and so forth for multiple URLs.</li>
+    <li><strong>Poll</strong>: Use <code>{{data}}</code> for a single URL. Use <code>{{source_1.data}}</code>, <code>{{source_2.data}}</code>, and so forth for multiple URLs. Use dot notation to reference nested attributes within your <code>data</code> object for use in your template.</li>
+    <li><strong>Static</strong>: Use the top level key of your JSON object supplied in the <em>Body</em> field. For example, if your top level key is <code>person</code> with <code>name</code> and <code>email</code> attributes, then use <code>{{person.name}}</code> and <code>{{person.email}}</code> respectively in your template.</li>
+  </ul>
+<% end %>
