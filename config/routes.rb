@@ -80,6 +80,7 @@ module Terminus
 
     get "/firmware", to: "firmware.index", as: :firmware
     get "/firmware/:id", to: "firmware.show", as: :firmware_show
+    get "/firmware/new", to: "firmware.new", as: :firmware_new
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/models", to: "models.index", as: :models
