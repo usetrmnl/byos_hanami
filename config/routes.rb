@@ -79,6 +79,7 @@ module Terminus
     get "/extensions/:extension_id/poll", to: "extensions.poll.show", as: :extension_poll
 
     get "/firmware", to: "firmware.index", as: :firmware
+    get "/firmware/:id", to: "firmware.show", as: :firmware_show
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/models", to: "models.index", as: :models
