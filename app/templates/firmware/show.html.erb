@@ -1,0 +1,49 @@
+<%= render "shared/title", text: "Firmware #{firmware.version}" %>
+
+<section class="bit-page">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/firmware" class="link">Firmware</a></li>
+      <li class="bit-breadcrumb"><%= firmware.version %></li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="bit-card firmware">
+      <h2 class="label"><%= firmware.version %></h2>
+
+      <div class="actions">
+        <%= render "shared/actions/edit", path: routes.path(:firmware_edit, id: firmware.id) %>
+
+        <%= render "shared/actions/download",
+                   path: firmware.attachment_uri,
+                   name: firmware.attachment_name %>
+      </div>
+
+      <dl class="bit-definition-list">
+        <dt class="key">
+          Version
+          <%= render "shared/popovers/trigger", name: :version %>
+        </dt>
+        <dd class="value"><%= firmware.version %></dd>
+
+        <dt class="key">
+          Kind
+          <%= render "shared/popovers/trigger", name: :kind %>
+        </dt>
+        <dd class="value"><%= firmware.kind %></dd>
+
+        <dt class="key">Size</dt>
+        <dd class="value"><%= size firmware.attachment_size %></dd>
+
+        <dt class="key">Created</dt>
+        <dd class="value"><%= human_at firmware.created_at %></dd>
+
+        <dt class="key">Updated</dt>
+        <dd class="value"><%= human_at firmware.updated_at %></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<%#= render "firmwares/shared/popovers/all" %>
