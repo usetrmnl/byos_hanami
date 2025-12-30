@@ -1,0 +1,10 @@
+<%= link_to path,
+            class: locals.fetch(:class, "bit-button-new"),
+            **HTMX[
+              get: path,
+              trigger: "click, keyup[ctrlKey&&key=='n'] from:body",
+              target: locals.fetch(:target, "closest .bit-page"),
+              push_url: true
+            ] do %>
+  <%= image_tag "icons/plus.svg", alt: "New", class: :icon, width: 25, height: 25 %>
+<% end %>
