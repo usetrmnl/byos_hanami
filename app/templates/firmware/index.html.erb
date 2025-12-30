@@ -8,18 +8,15 @@
     </h1>
 
     <div class="bit-actions">
-      <%= render "shared/actions/search",
-                 path: routes.path(:firmware),
-                 query:,
-                 pick: ".bit-container",
-                 target: "next .bit-container" %>
+      <%= render "shared/actions/search", path: routes.path(:firmware), query: %>
+      <%= render "shared/actions/new", path: routes.path(:firmware_new) %>
 
       <%= render "shared/actions/delete",
                  path: routes.path(:bulk_firmware_delete),
                  label: "Delete All",
                  class: "bit-button-delete",
                  confirm: "Are you sure you want to delete all firmware?",
-                 target: ".bit-container" %>
+                 target: ".bit-gallery" %>
     </div>
   </header>
 
@@ -33,26 +30,15 @@
     <p>You can fuzzy search by version using partial or full version information.</p>
   <% end %>
 
-  <div class="bit-container">
-    <% if firmware.any? %>
-      <table>
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Size</th>
-            <th>Downloaded At</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% firmware.each do |record| %>
-            <%= record.render :firmware, firmware: record %>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
+  <% if firmware.any? %>
+    <ul class="bit-gallery">
+      <% firmware.each do |record| %>
+        <%= record.render :firmware, firmware: record %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="bit-gallery">
       <%= render "shared/empty", message: "No firmware found." %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </section>
