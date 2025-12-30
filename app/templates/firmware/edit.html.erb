@@ -1,0 +1,38 @@
+<%= render "shared/title", text: "Edit Firmware #{firmware.version}" %>
+
+<section class="bit-page">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Firmware", routes.path(:firmware), class: :link %></li>
+
+      <li class="bit-breadcrumb">
+        <%= link_to firmware.version, routes.path(:firmware_show, id: firmware.id), class: :link %>
+      </li>
+
+      <li class="bit-breadcrumb">Edit</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="firmwares">
+      <%= form_for :firmware,
+                   routes.path(:firmware_update, id: firmware.id),
+                   method: :put,
+                   class: "bit-card bit-form firmware" do |form| %>
+        <h1 class="label">Edit Firmware</h1>
+
+        <%= render "firmware/shared/fields", form:, firmware:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "shared/save_button",
+                     form:,
+                     verb: :put,
+                     path: routes.path(:firmware_update, id: firmware.id),
+                     target: ".bit-page" %>
+
+          <%= link_to "Cancel", routes.path(:firmware), class: "bit-button-decline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
