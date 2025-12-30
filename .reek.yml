@@ -25,6 +25,7 @@ detectors:
       - Terminus::Actions::Extensions::Clone::Create#error
       - Terminus::Actions::Extensions::Create#error
       - Terminus::Actions::Extensions::Update#error
+      - Terminus::Actions::Firmware::Create#error
       - Terminus::Actions::Firmware::Delete#render
       - Terminus::Actions::Models::Update#error
       - Terminus::Actions::Playlists::Create#error
