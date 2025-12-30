@@ -8,20 +8,8 @@
     </h1>
 
     <div class="bit-actions">
-      <%= render "shared/search",
-                 path: routes.path(:extensions),
-                 query:,
-                 pick: ".extensions",
-                 target: "next .extensions" %>
-
-      <a href="/extensions/new"
-         class="bit-button-accept"
-         hx-get="/extensions/new"
-         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
-         hx-target="closest .bit-page"
-         hx-push-url="true">
-        New
-      </a>
+      <%= render "shared/actions/search", path: routes.path(:extensions), query: %>
+      <%= render "shared/actions/new", path: routes.path(:extension_new) %>
     </div>
   </header>
 
@@ -41,13 +29,13 @@
   <% end %>
 
   <% if extensions.any? %>
-    <ul class="bit-gallery extensions">
+    <ul class="bit-gallery">
       <% extensions.each do |extension| %>
         <%= extension.render :extension %>
       <% end %>
     </ul>
   <% else %>
-    <div class="extensions">
+    <div class="bit-gallery">
       <%= render "shared/empty", message: "No extensions found." %>
     </div>
   <% end %>

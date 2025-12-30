@@ -3,13 +3,13 @@
     <div class="input-group">
       <%= tag.input id: :search,
                     name: :query,
-                    class: "value value-cap",
+                    class: locals.fetch(:class, "value value-cap"),
                     tabindex: 1,
                     **HTMX[
                       get: path,
                       trigger: "search, keyup delay:200ms changed",
-                      select: pick,
-                      target:,
+                      select: locals.fetch(:pick, ".bit-gallery"),
+                      target: locals.fetch(:target, "next .bit-gallery"),
                       push_url: true,
                       indicator: ".bit-loader"
                     ] %>

@@ -13,12 +13,11 @@
     </ul>
 
     <div class="bit-actions">
-      <%= render "shared/search",
+      <%= render "shared/actions/search",
                  path: routes.path(:device_logs, device_id: device.id),
                  query:,
                  pick: ".bit-container",
                  target: "next .bit-container" %>
-
 
       <%= render "shared/actions/delete",
                  path: routes.path(:bulk_device_logs_delete, device_id: device.id),

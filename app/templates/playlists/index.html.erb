@@ -8,20 +8,8 @@
     </h1>
 
     <div class="bit-actions">
-      <%= render "shared/search",
-                 path: routes.path(:playlists),
-                 query:,
-                 pick: ".playlists",
-                 target: "next .playlists" %>
-
-      <a href="/playlists/new"
-         class="bit-button-accept"
-         hx-get="/playlists/new"
-         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
-         hx-target="closest .bit-page"
-         hx-push-url="true">
-        New
-      </a>
+      <%= render "shared/actions/search", path: routes.path(:playlists), query: %>
+      <%= render "shared/actions/new", path: routes.path(:playlist_new) %>
     </div>
   </header>
 
@@ -41,13 +29,13 @@
   <% end %>
 
   <% if playlists.any? %>
-    <ul class="bit-gallery playlists">
+    <ul class="bit-gallery">
       <% playlists.each do |playlist| %>
         <%= playlist.render :playlist %>
       <% end %>
     </ul>
   <% else %>
-    <div class="playlists">
+    <div class="bit-gallery">
       <%= render "shared/empty", message: "No playlists found." %>
     </div>
   <% end %>

@@ -8,20 +8,8 @@
     </h1>
 
     <div class="bit-actions">
-      <%= render "shared/search",
-                 path: routes.path(:screens),
-                 query:,
-                 pick: ".screens",
-                 target: "next .screens" %>
-
-      <a href="/screens/new"
-         class="bit-button-accept"
-         hx-get="/screens/new"
-         hx-trigger="click, keyup[ctrlKey&&key=='n'] from:body"
-         hx-target="closest .bit-page"
-         hx-push-url="true">
-        New
-      </a>
+      <%= render "shared/actions/search", path: routes.path(:screens), query: %>
+      <%= render "shared/actions/new", path: routes.path(:screen_new) %>
     </div>
   </header>
 
@@ -45,13 +33,13 @@
   <% end %>
 
   <% if screens.any? %>
-    <ul class="bit-gallery screens">
+    <ul class="bit-gallery">
       <% screens.each do |screen| %>
         <%= screen.render :screen %>
       <% end %>
     </ul>
   <% else %>
-    <div class="screens">
+    <div class="bit-gallery">
       <%= render "shared/empty", message: "No screens found." %>
     </div>
   <% end %>
