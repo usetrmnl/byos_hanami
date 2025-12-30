@@ -1,0 +1,30 @@
+<%= render "shared/title", text: "New Firmware" %>
+
+<section class="bit-page">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><a href="/firmware" class="link">Firmware</a></li>
+      <li class="bit-breadcrumb">New</li>
+    </ul>
+  </header>
+
+  <div class="bit-body">
+    <div class="firmware">
+      <%= form_for :firmware, routes.path(:firmware), class: "bit-card bit-form" do |form| %>
+        <h1 class="label">New Firmware</h1>
+
+        <%= render "firmware/shared/fields", form:, firmware:, fields: fields.value, errors: %>
+
+        <div class="form-actions">
+          <%= render "shared/save_button",
+                     form:,
+                     verb: :post,
+                     path: routes.path(:firmware_create),
+                     target: ".bit-page" %>
+
+          <%= link_to "Cancel", routes.path(:firmware), class: "bit-button-decline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
