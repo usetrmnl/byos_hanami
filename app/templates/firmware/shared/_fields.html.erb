@@ -1,0 +1,23 @@
+<fieldset class="column">
+  <%= scope(:form_field, key: :version, errors:).render do %>
+    <label class="key" for="firmware_version">Version</label>
+
+    <%= form.text_field :version,
+                        id: :firmware_version,
+                        value: field_for(:version, fields, firmware),
+                        class: :value,
+                        autocomplete: :off %>
+  <% end %>
+
+  <%= scope(:form_field, key: :kind, errors:).render do %>
+    <label class="key" for="firmware_version">Kind</label>
+
+    <%= form.text_field :kind,
+                        id: :firmware_kind,
+                        value: field_for(:kind, fields, firmware),
+                        class: :value,
+                        autocomplete: :off %>
+  <% end %>
+</fieldset>
+
+<%#= render "screens/shared/popovers/all" %>
