@@ -83,6 +83,7 @@ module Terminus
     get "/firmware/new", to: "firmware.new", as: :firmware_new
     post "/firmware", to: "firmware.create", as: :firmware_create
     get "/firmware/:id/edit", to: "firmware.edit", as: :firmware_edit
+    put "/firmware/:id", to: "firmware.update", as: :firmware_update
     delete "/firmware/:id", to: "firmware.delete", as: :firmware_delete
 
     get "/models", to: "models.index", as: :models
