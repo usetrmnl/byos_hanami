@@ -1,14 +1,19 @@
-<tr class="firmware">
-  <td>
-    <%= link_to firmware.version, firmware.attachment_uri, download: firmware.attachment_name %>
-  </td>
-  <%= tag.td size(firmware.attachment_size) %>
-  <%= tag.td human_at(firmware.created_at) %>
+<li id="<%= firmware.id %>" class="bit-card">
+  <h2 class="label"><%= firmware.version %></h2>
 
-  <td class="bit-actions">
+  <span><%= firmware.kind %></span>
+  <span><%= size firmware.attachment_size %></span>
+
+  <div class="actions">
+    <%= render "shared/actions/show", path: routes.path(:firmware_show, id: firmware.id) %>
+    <%= render "shared/actions/edit", path: routes.path(:firmware_edit, id: firmware.id) %>
+
+    <%= render "shared/actions/download",
+               path: firmware.attachment_uri,
+               name: firmware.attachment_name %>
+
     <%= render "shared/actions/delete",
                path: routes.path(:firmware_delete, id: firmware.id),
-               subject: :firmware,
-               target: "closest .firmware" %>
-  </td>
-</tr>
+               subject: :firmware %>
+  </div>
+</li>
