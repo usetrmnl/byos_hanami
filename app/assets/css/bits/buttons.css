@@ -12,6 +12,12 @@
   }
 }
 
+.bit-button-new {
+  &:active, &:hover {
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(120deg) brightness(104%) contrast(103%);
+  }
+}
+
 .bit-button-accept {
   background-color: var(--site-orange);
   border-radius: 1.5rem;
@@ -39,7 +45,11 @@
 }
 
 .bit-button-delete {
+  padding: 0;
+
   &:active, &:hover {
-    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(103%);
+    .icon {
+      filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(103%);
+    }
   }
 }
