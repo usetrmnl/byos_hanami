@@ -18,6 +18,16 @@
                         class: :value,
                         autocomplete: :off %>
   <% end %>
+
+  <%= scope(:form_field, key: :attachment, errors:).render do %>
+    <label class="key" for="firmware_version">Attachment</label>
+
+    <%= form.file_field :attachment,
+                        id: :firmware_attachment,
+                        value: field_for(:attachment, fields, firmware),
+                        class: :value,
+                        accept: "application/octet-stream" %>
+  <% end %>
 </fieldset>
 
 <%#= render "screens/shared/popovers/all" %>

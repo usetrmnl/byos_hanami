@@ -15,6 +15,7 @@ module Terminus
           required(:firmware).filled(:hash) do
             required(:version).filled :string
             required(:kind).filled :string
+            optional(:attachment).maybe :string
           end
         end
 

@@ -13,6 +13,7 @@ module Terminus
           required(:firmware).filled(:hash) do
             required(:version).filled :string
             required(:kind).filled :string
+            optional(:attachment).maybe :string
           end
         end
 
@@ -33,6 +34,7 @@ module Terminus
 
         def save firmware, parameters, response
           id = firmware.id
+          # attachment = parameters[:firmware].delete :attachment
           repository.update id, **parameters[:firmware]
 
           response.render show_view, firmware: repository.find(id), layout: false
