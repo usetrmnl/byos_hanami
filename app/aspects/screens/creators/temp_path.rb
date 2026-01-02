@@ -11,7 +11,7 @@ module Terminus
         class TempPath
           include Deps["aspects.sanitizer", "aspects.screens.shoter", "aspects.screens.converter"]
           include Dry::Monads[:result]
-          include Inspectable[sanitizer: :class]
+          include Inspectable[sanitizer: :type]
 
           def call(mold, &) = Pathname.mktmpdir { process mold, it, & }
 
