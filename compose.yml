@@ -81,6 +81,7 @@ services:
 
   database:
     image: postgres:18.1-alpine
+    command: -p ${DATABASE_PORT}
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_DB: ${DATABASE_NAME}
@@ -91,7 +92,7 @@ services:
       - database-data:/var/lib/postgresql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -p ${DATABASE_PORT} -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -110,11 +111,12 @@ services:
       --requirepass ${KEYVALUE_PASSWORD}
       --maxmemory 512mb
       --maxmemory-policy noeviction
+      --port ${KEYVALUE_PORT}
     restart: unless-stopped
     volumes:
       - keyvalue-data:/data
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping || exit 1"]
+      test: ["CMD-SHELL", "redis-cli -p ${KEYVALUE_PORT} ping || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
