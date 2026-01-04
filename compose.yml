@@ -55,6 +55,7 @@ services:
       APP_SECRET: ${APP_SECRET}
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
       KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
+      SKIP_MIGRATIONS: "true"
     command: bundle exec sidekiq -r ./config/sidekiq.rb
     restart: unless-stopped
     volumes:

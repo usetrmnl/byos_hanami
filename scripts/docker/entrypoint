@@ -7,7 +7,7 @@ jemalloc_path = Dir["/usr/lib/*/libjemalloc.so.2"]
 ENV["LD_PRELOAD"] = jemalloc_path.first unless ENV.key?("LD_PRELOAD") || jemalloc_path.empty?
 
 system "bundle exec hanami assets compile"
-system "bundle exec hanami db migrate"
+system "bundle exec hanami db migrate" unless ENV["SKIP_MIGRATIONS"] == "true"
 
 %w[firmware screen model].each do |poller|
   pid = spawn "bin/pollers/#{poller}"
