@@ -62,6 +62,7 @@ detectors:
       - Terminus::Aspects::Screens::Converters::PNG#call
       - Terminus::Aspects::Screens::Converters::PNG#convert
       - Terminus::Aspects::Screens::Shoter#save
+      - Terminus::Providers::Sidekiq#load_schedule
       - Terminus::Views::Parts::Device#battery_percentage
       - Terminus::Views::Parts::Device#wifi_percentage
   UtilityFunction:
