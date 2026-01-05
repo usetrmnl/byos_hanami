@@ -1,0 +1,12 @@
+firmware_poller:
+  class: Terminus::Jobs::Pollers::Firmware
+  cron: "0 */6 * * *"
+  description: "Polls TRMNL API for firmware changes."
+model_poller:
+  class: Terminus::Jobs::Pollers::Model
+  cron: "0 0 */1 * *"
+  description: "Polls TRMNL API for model changes."
+screen_poller:
+  class: Terminus::Jobs::Pollers::Screen
+  cron: "0/5 * * * *"
+  description: "Polls TRMNL API for device screen updates."
