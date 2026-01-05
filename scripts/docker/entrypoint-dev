@@ -8,8 +8,4 @@ IFS=$'\n\t'
 cd /app
 ./bin/setup
 
-for poller in firmware screen model; do
-  ./bin/pollers/"$poller" &
-done
-
 exec "$@"

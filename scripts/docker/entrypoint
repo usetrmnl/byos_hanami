@@ -9,9 +9,4 @@ ENV["LD_PRELOAD"] = jemalloc_path.first unless ENV.key?("LD_PRELOAD") || jemallo
 system "bundle exec hanami assets compile"
 system "bundle exec hanami db migrate"
 
-%w[firmware screen model].each do |poller|
-  pid = spawn "bin/pollers/#{poller}"
-  Process.detach pid
-end
-
 exec(*ARGV)

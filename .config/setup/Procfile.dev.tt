@@ -1,6 +1,3 @@
 web: bundle exec puma --config ./config/puma.rb
 assets: bundle exec hanami assets watch
 worker: bundle exec sidekiq -r ./config/sidekiq.rb
-firmware_poller: bin/pollers/firmware
-screen_poller: bin/pollers/screen
-model_poller: bin/pollers/model
