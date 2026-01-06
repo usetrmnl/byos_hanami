@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Preview
         # The show action.
-        class Show < Terminus::Action
+        class Show < Action
           include Deps[
             "aspects.extensions.renderer",
             repository: "repositories.extension",

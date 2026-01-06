@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The edit action.
-        class Edit < Terminus::Action
+        class Edit < Action
           include Deps[
             repository: "repositories.playlist_item",
             screen_repository: "repositories.screen"

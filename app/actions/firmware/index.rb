@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Firmware
       # The index action.
-      class Index < Terminus::Action
+      class Index < Action
         include Deps[:htmx, repository: "repositories.firmware"]
 
         def handle request, response

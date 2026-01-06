@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Extensions
       # The edit action.
-      class Edit < Terminus::Action
+      class Edit < Action
         include Deps[repository: "repositories.extension"]
 
         params { required(:id).filled :integer }

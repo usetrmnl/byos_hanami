@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Clone
         # The new action.
-        class New < Terminus::Action
+        class New < Action
           include Deps[repository: "repositories.playlist"]
 
           def handle request, response

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Screens
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps[
           repository: "repositories.screen",
           model_repository: "repositories.model",

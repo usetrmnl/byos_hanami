@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Devices
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps[
           repository: "repositories.device",
           model_repository: "repositories.model",

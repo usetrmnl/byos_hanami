@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Models
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps[repository: "repositories.model", show_view: "views.models.show"]
 
         params do

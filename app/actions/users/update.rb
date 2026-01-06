@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Users
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps[
           updater: "aspects.users.updater",
           repository: "repositories.user",

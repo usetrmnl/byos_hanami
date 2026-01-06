@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Users
       # The new action.
-      class New < Terminus::Action
+      class New < Action
         include Deps[:htmx, status_repository: "repositories.user_status"]
 
         def handle request, response

@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The show action.
-        class Show < Terminus::Action
+        class Show < Action
           include Deps[repository: "repositories.playlist_item"]
 
           params do

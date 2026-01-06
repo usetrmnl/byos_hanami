@@ -6,7 +6,7 @@ module Terminus
   module Actions
     module Extensions
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps["aspects.jobs.schedule", repository: "repositories.extension"]
 
         using Refinements::Hash

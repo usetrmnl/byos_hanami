@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Users
       # The create action.
-      class Create < Terminus::Action
+      class Create < Action
         include Deps[
           :htmx,
           repository: "repositories.user",

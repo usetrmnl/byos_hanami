@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Clone
         # The create action.
-        class Create < Terminus::Action
+        class Create < Action
           include Deps["aspects.playlists.cloner", repository: "repositories.playlist"]
 
           params do

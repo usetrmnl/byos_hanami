@@ -5,7 +5,7 @@ module Terminus
     module Bulk
       module Firmware
         # The delete action.
-        class Delete < Terminus::Action
+        class Delete < Action
           include Deps[repository: "repositories.firmware"]
 
           def handle _request, response

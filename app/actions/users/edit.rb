@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Users
       # The edit action.
-      class Edit < Terminus::Action
+      class Edit < Action
         include Deps[
           :htmx,
           repository: "repositories.user",

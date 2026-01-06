@@ -6,7 +6,7 @@ module Terminus
       module Devices
         module Logs
           # The delete action.
-          class Delete < Terminus::Action
+          class Delete < Action
             include Deps[repository: "repositories.device_log"]
 
             params { required(:device_id).filled :integer }

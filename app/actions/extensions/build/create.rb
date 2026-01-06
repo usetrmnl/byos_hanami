@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Build
         # The create action.
-        class Create < Terminus::Action
+        class Create < Action
           include Deps[:htmx, repository: "repositories.extension"]
           include Initable[job: Jobs::Batches::Extension]
 

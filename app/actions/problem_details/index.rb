@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module ProblemDetails
       # The index action.
-      class Index < Terminus::Action
+      class Index < Action
         def handle(_request, response) = response.render view
       end
     end

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Screens
       # The show action.
-      class Show < Terminus::Action
+      class Show < Action
         include Deps[:htmx, repository: "repositories.screen"]
 
         params { required(:id).filled :integer }

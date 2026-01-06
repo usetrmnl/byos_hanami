@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Extensions
       # The new action.
-      class New < Terminus::Action
+      class New < Action
         include Deps[:htmx]
 
         DEFAULTS = {

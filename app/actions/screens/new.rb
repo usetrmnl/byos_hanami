@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Screens
       # The new action.
-      class New < Terminus::Action
+      class New < Action
         include Deps[:htmx, model_repository: "repositories.model"]
 
         def handle request, response

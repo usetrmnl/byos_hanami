@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The update action.
-        class Update < Terminus::Action
+        class Update < Action
           include Deps[
             repository: "repositories.playlist_item",
             show_view: "views.playlists.items.show"

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Designer
       # The create action.
-      class Create < Terminus::Action
+      class Create < Action
         include Deps[
           :htmx,
           "aspects.screens.creator",

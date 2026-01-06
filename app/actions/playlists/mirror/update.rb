@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Mirror
         # The update action.
-        class Update < Terminus::Action
+        class Update < Action
           include Deps[
             :htmx,
             repository: "repositories.playlist",

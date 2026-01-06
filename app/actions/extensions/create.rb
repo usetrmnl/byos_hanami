@@ -6,7 +6,7 @@ module Terminus
   module Actions
     module Extensions
       # The create action.
-      class Create < Terminus::Action
+      class Create < Action
         include Deps[
           :htmx,
           "aspects.jobs.schedule",

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Extensions
       # The delete action.
-      class Delete < Terminus::Action
+      class Delete < Action
         include Deps["aspects.jobs.schedule", repository: "repositories.extension"]
 
         def handle request, response

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Devices
       # The show action.
-      class Show < Terminus::Action
+      class Show < Action
         include Deps[:htmx, repository: "repositories.device"]
 
         params { required(:id).filled :integer }

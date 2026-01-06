@@ -6,7 +6,7 @@ module Terminus
       module Logs
         # The index action.
         # :reek:DataClump
-        class Index < Terminus::Action
+        class Index < Action
           include Deps[
             :htmx,
             device_repository: "repositories.device",

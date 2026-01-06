@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Models
       # The delete action.
-      class Delete < Terminus::Action
+      class Delete < Action
         include Deps[repository: "repositories.model"]
 
         params { required(:id).filled :integer }

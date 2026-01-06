@@ -5,7 +5,7 @@ module Terminus
     module Devices
       module Logs
         # The show action.
-        class Show < Terminus::Action
+        class Show < Action
           include Deps[
             device_repository: "repositories.device",
             repository: "repositories.device_log"

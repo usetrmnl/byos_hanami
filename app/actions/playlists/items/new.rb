@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The new action.
-        class New < Terminus::Action
+        class New < Action
           include Deps[
             playlist_repository: "repositories.playlist",
             screen_repository: "repositories.screen"

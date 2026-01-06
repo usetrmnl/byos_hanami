@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The delete action.
-        class Delete < Terminus::Action
+        class Delete < Action
           include Deps[repository: "repositories.playlist_item"]
 
           params do

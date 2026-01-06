@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The create action.
-        class Create < Terminus::Action
+        class Create < Action
           include Deps[
             repository: "repositories.playlist_item",
             playlist_repository: "repositories.playlist",

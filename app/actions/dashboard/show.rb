@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Dashboard
       # The show action.
-      class Show < Terminus::Action
+      class Show < Action
         include Deps[
           :settings,
           device_repository: "repositories.device",

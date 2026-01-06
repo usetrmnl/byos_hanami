@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Poll
         # The show action.
-        class Show < Terminus::Action
+        class Show < Action
           include Deps[
             repository: "repositories.extension",
             fetcher: "aspects.extensions.multi_fetcher"

@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Playlists
       # The delete action.
-      class Delete < Terminus::Action
+      class Delete < Action
         include Deps[repository: "repositories.playlist"]
 
         params { required(:id).filled :integer }

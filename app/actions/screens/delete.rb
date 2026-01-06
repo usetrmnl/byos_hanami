@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Screens
       # The delete action.
-      class Delete < Terminus::Action
+      class Delete < Action
         include Deps[repository: "repositories.screen"]
 
         params { required(:id).filled :integer }

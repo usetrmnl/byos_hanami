@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Extensions
       # The index action.
-      class Index < Terminus::Action
+      class Index < Action
         include Deps[:htmx, repository: "repositories.extension"]
 
         def handle request, response

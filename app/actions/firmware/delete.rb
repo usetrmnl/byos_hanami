@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Firmware
       # The delete action.
-      class Delete < Terminus::Action
+      class Delete < Action
         include Deps[repository: "repositories.firmware"]
 
         params { required(:id).filled :integer }
