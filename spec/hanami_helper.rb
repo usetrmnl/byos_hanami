@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
+ENV["HANAMI_ENV"] = "test"
+
 require "capybara/cuprite"
 require "capybara/rspec"
 require "capybara/validate_html5"
 require "database_cleaner/sequel"
-require "dry/monads"
+require "hanami/cli"
+require "hanami/prepare"
 require "rack/test"
 require "rom-factory"
 require "shrine/storage/memory"
 require "sidekiq/testing"
 require "spec_helper"
-
-ENV["HANAMI_ENV"] = "test"
-
-require "bcrypt"
-require "hanami/cli"
-require "hanami/prepare"
 
 using Refinements::Pathname
 
@@ -58,6 +55,8 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
+    Hanami.app.start :sidekiq
+
     databases.call.each do |db|
       DatabaseCleaner[:sequel, db:].clean_with :truncation, except: %w[schema_migrations]
     end
