@@ -62,6 +62,7 @@ services:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
+      APP_SETUP: true
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
       KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     command: bundle exec sidekiq -r ./config/sidekiq.rb
@@ -102,7 +103,7 @@ services:
     volumes:
       - database-data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready --username ${DATABASE_USER} --dbname ${DATABASE_NAME}" --port ${DATABASE_PORT}]
+      test: ["CMD-SHELL", "pg_isready --username ${DATABASE_USER} --dbname ${DATABASE_NAME} --port ${DATABASE_PORT}"]
       interval: 1s
       timeout: 2s
       retries: 3

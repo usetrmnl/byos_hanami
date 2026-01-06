@@ -6,7 +6,11 @@ $VERBOSE = true
 jemalloc_path = Dir["/usr/lib/*/libjemalloc.so.2"]
 ENV["LD_PRELOAD"] = jemalloc_path.first unless ENV.key?("LD_PRELOAD") || jemalloc_path.empty?
 
-system "bundle exec hanami assets compile"
-system "bundle exec hanami db migrate"
+if ENV["APP_SETUP"] == "true"
+  system "bundle exec hanami assets compile"
+  system "bundle exec hanami db migrate"
+else
+  puts "Application is setup. Skipped."
+end
 
 exec(*ARGV)

@@ -19,6 +19,7 @@ services:
       HANAMI_PORT: ${HANAMI_PORT}
       API_URI: ${API_URI}
       APP_SECRET: ${APP_SECRET}
+      APP_SETUP: true
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
       KEYVALUE_URL: redis://:${KEYVALUE_PASSWORD}@keyvalue:${KEYVALUE_PORT}/${KEYVALUE_DATABASE}
     ports:

@@ -2,7 +2,7 @@
 :toclevels: 5
 :figure-caption!:
 
-:background_pollers_link: link:doc/background_pollers.adoc[Background Pollers]
+:jobs_link: link:doc/jobs.adoc[Jobs]
 :chrome_link: link:https://www.google.com/chrome[Google Chrome]
 :cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
 :core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
@@ -56,7 +56,7 @@ toc::[]
 * Uses {postgres_link} for the database.
 * Uses {puma_link} for the server.
 * Uses {rodauth_link} for authentication.
-* Uses {sidekiq_link} for background jobs.
+* Uses {sidekiq_link} for worker jobs.
 * Uses {valkey_link} for the key/value cache.
 * Supports {yjit_link}.
 * Supports {docker_link}.
@@ -163,6 +163,7 @@ There are several environment variables you can use to customize behavior by upd
 
 * `API_ACCESS_TOKEN_PERIOD`: Used to set the amount of time, in seconds, the JWT access token remains valid before needing to refresh your token. This is only necessary when using the link:doc/api.adoc[Server APIs]. Default: 1,800 seconds (30 minutes).
 * `APP_SECRET`: Used for session, cookie, and Cross-Site Request Forgery (CSRF) protection. This is automatically created for you during setup but is recommended that you update this with your own secure value.
+* `APP_SETUP`: Runs setup/update steps (i.e. asset compliation, database migrations, etc). Used by Docker only via the `entrypoint` script. Default: `nil` but `true` for the web service.
 * `API_URI`: Used for connecting your device to this server or via link:doc/docker.adoc[Docker]. Defaults to your host machine's IP address and port. This assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to use `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
 * `BROWSER`: Used for configuring headless browser behavior when creating screens for your device. Must be a JSON object. Default: `'{"js_errors": true, "process_timeout": 10, "timeout": 10}'`. Additional keys are ignored. For more details, see the link:https://github.com/rubycdp/ferrum#customization[Ferrum Customization Documentation].
 * `CERTIFICATE_URLS`: Defines a comma-separated list of CA certificate URLs which will be automatically installed as trusted certificates. Example: `"https://example.io/ca1.crt,https://example.org/ca2.pem"` Used by {docker_doc_link} only.
@@ -172,15 +173,15 @@ There are several environment variables you can use to customize behavior by upd
 * `DATABASE_URL`: Defines the full URL based on the `+DATABASE_*+` settings. This is automatically configured for you during setup. See your `+.env*+` files for details.
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `DATABASE_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
-* `FIRMWARE_POLLER`: Enables/disables firmware polling. See {background_pollers_link} for details. Defaults to enabled.
+* `FIRMWARE_POLLER`: Enables/disables firmware polling. See {jobs_link} for details. Defaults to enabled.
 * `HANAMI_PORT`: The default port when running the app locally or via {docker_doc_link}. When using Docker, this is used for the internal and external port mapping.
 * `KEYVALUE_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
 * `KEYVALUE_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
 * `KEYVALUE_PORT`: Defines your port. Used by {docker_doc_link} only. Default: `6379`.
 * `KEYVALUE_URL`: Defines the full URL based on the above `+KEYVALUE_*+` settings. This is automatically configured for you during setup. See your `+.env*+` files for details.
-* `MODEL_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
+* `MODEL_POLLER`: Enables/disables model polling. See {jobs_link} for details. Defaults to enabled.
 * `RACK_ATTACK_ALLOWED_SUBNETS`: Defines the {rack_attack_link} subnets that are allowed to connect to this server which helps when adding DNS, a reverse proxy, or a VPN, etc. between your device and this application so you can use this environment variable to add more subnets as desired. This takes a single subnet/IP or an array -- with no spaces -- of subnets/IPs as values. Example: "111.111.111.111,150.120.0.0/16". Alternatively, you can disable Rack Attack altogether by removing the `config.middleware.use Rack::Attack` line from `config/app.rb` or customize Rack Attack via the `config/initializers/rack_attack.rb` file. Any of these approaches will allow you to get your service layer properly configured so your device can talk to this server. By default, the following subnets are allowed: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.1`, and `::1`.
-* `SCREEN_POLLER`: Enables/disables model polling. See {background_pollers_link} for details. Defaults to enabled.
+* `SCREEN_POLLER`: Enables/disables model polling. See {jobs_link} for details. Defaults to enabled.
 
 === Users
 
@@ -191,10 +192,6 @@ Also, once logged in, you can manage your settings as follows:
 * Visit `/me/login` to update your email address.
 * Visit `/me/password` to update your password.
 * Visit `/me/remember` to enable, disable, or forget if you should be remembered.
-
-=== Docker
-
-See link:doc/docker.adoc[Docker] documentation for details.
 
 === Devices
 
@@ -209,13 +206,17 @@ In accordance with the {unbrickable_pledge_link}, the latest version of Terminus
 
 See link:doc/extensions.adoc[Extensions] documentation for details.
 
-=== Background Pollers
+=== Jobs
 
-See link:doc/background_pollers.adoc[Background Pollers] documentation for details.
+See {jobs_link} documentation for details on {sidekiq_link} worker jobs.
 
 === API
 
 See link:doc/api.adoc[API] documentation for details.
+
+=== Docker
+
+See link:doc/docker.adoc[Docker] documentation for details.
 
 === Render
 
