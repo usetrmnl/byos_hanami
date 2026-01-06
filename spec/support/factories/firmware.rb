@@ -2,6 +2,7 @@
 
 Factory.define :firmware, relation: :firmware do |factory|
   factory.version "0.0.0"
+  factory.kind "terminus"
 
   factory.trait :with_attachment do |trait|
     trait.attachment_data do
