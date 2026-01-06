@@ -10,7 +10,7 @@ jobs:
           HANAMI_PORT: 2300
           API_URI: http://localhost:2300
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-          KEYVALUE_URL: valkey://localhost:6379/0
+          KEYVALUE_URL: redis://localhost:6379/1
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: postgres
