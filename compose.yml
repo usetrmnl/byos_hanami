@@ -88,7 +88,7 @@ services:
       - database-data:/var/lib/postgresql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready --username ${DATABASE_USER} --dbname ${DATABASE_NAME}" --port ${DATABASE_PORT}]
+      test: ["CMD-SHELL", "pg_isready --username ${DATABASE_USER} --dbname ${DATABASE_NAME} --port ${DATABASE_PORT}"]
       interval: 10s
       timeout: 5s
       retries: 3
