@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Devices
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         expose :models
         expose :playlists
         expose :device

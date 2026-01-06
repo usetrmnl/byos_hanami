@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Extensions
       # The dynamic view.
-      class Dynamic < Terminus::View
+      class Dynamic < View
         config.layout = "extension"
 
         expose :body

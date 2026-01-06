@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Screens
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         expose :models
         expose :screen
         expose :fields, default: Dry::Core::EMPTY_HASH

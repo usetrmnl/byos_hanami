@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Dashboard
       # The show view.
-      class Show < Terminus::View
+      class Show < View
         expose :api_uri
         expose :devices
         expose :ip_addresses

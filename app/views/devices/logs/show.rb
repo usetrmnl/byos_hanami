@@ -5,7 +5,7 @@ module Terminus
     module Devices
       module Logs
         # The show view.
-        class Show < Terminus::View
+        class Show < View
           expose :device
           expose :log
         end

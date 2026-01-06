@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Clone
         # The new view.
-        class New < Terminus::Views::Extensions::New
+        class New < Views::Extensions::New
         end
       end
     end

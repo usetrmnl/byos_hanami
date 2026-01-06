@@ -6,7 +6,7 @@ module Terminus
       module Devices
         module Logs
           # The delete view.
-          class Delete < Terminus::View
+          class Delete < View
           end
         end
       end

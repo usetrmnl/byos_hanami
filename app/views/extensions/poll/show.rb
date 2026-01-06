@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Poll
         # The show view.
-        class Show < Terminus::View
+        class Show < View
           expose :body
         end
       end

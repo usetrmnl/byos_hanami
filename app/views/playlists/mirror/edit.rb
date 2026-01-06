@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Mirror
         # The edit view.
-        class Edit < Terminus::View
+        class Edit < View
           expose :playlist
           expose :devices
         end

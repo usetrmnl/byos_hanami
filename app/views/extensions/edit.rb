@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Extensions
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         include Deps[model_repository: "repositories.model"]
 
         expose(:models) { model_repository.all.map { [it.label, it.id] } }

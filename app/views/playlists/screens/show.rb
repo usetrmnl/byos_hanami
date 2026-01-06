@@ -7,7 +7,7 @@ module Terminus
     module Playlists
       module Screens
         # The show view.
-        class Show < Terminus::View
+        class Show < View
           expose :playlist
           expose :before
           expose :current

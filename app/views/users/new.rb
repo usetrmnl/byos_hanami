@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Users
       # The new view.
-      class New < Terminus::View
+      class New < View
         expose :user
         expose :statuses
         expose :fields, default: Dry::Core::EMPTY_HASH

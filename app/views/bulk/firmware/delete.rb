@@ -5,7 +5,7 @@ module Terminus
     module Bulk
       module Firmware
         # The delete view.
-        class Delete < Terminus::View
+        class Delete < View
         end
       end
     end

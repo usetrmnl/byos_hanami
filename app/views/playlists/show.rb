@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Playlists
       # The show view.
-      class Show < Terminus::View
+      class Show < View
         expose :playlist
         expose :items
       end

@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Extensions
       # The new view.
-      class New < Terminus::View
+      class New < View
         include Deps[model_repository: "repositories.model"]
 
         expose(:models) { model_repository.all.map { [it.label, it.id] } }

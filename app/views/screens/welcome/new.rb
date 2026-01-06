@@ -5,7 +5,7 @@ module Terminus
     module Screens
       module Welcome
         # The new view.
-        class New < Terminus::View
+        class New < View
           config.layout = "welcome"
 
           expose :device

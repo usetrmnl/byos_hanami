@@ -5,7 +5,7 @@ module Terminus
     module Devices
       module Logs
         # The index view.
-        class Index < Terminus::View
+        class Index < View
           expose :device
           expose :logs
           expose :query

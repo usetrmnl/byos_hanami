@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       module Build
         # The new view.
-        class New < Terminus::View
+        class New < View
           expose :extension
         end
       end

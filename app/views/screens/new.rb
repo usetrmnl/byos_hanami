@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Screens
       # The new view.
-      class New < Terminus::View
+      class New < View
         expose :models
         expose :screen
         expose :fields, default: Dry::Core::EMPTY_HASH

@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Firmware
       # The index view.
-      class Index < Terminus::View
+      class Index < View
         expose :firmware
         expose :query
       end

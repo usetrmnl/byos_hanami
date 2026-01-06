@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Devices
       # The new view.
-      class New < Terminus::View
+      class New < View
         expose :models
         expose :playlists
         expose :device

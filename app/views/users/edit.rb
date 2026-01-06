@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Users
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         expose :user
         expose :statuses
         expose :fields, default: Dry::Core::EMPTY_HASH

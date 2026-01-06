@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Users
       # The show view.
-      class Show < Terminus::View
+      class Show < View
         expose :user
       end
     end

@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Clone
         # The new view.
-        class New < Terminus::Views::Playlists::New
+        class New < Views::Playlists::New
         end
       end
     end

@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The new view.
-        class New < Terminus::View
+        class New < View
           expose :playlist
           expose :screen_options, decorate: false
           expose :item

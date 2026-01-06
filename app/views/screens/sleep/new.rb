@@ -5,7 +5,7 @@ module Terminus
     module Screens
       module Sleep
         # The new view.
-        class New < Terminus::View
+        class New < View
           config.layout = "sleep"
         end
       end

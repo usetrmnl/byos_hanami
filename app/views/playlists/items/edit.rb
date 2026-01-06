@@ -5,7 +5,7 @@ module Terminus
     module Playlists
       module Items
         # The edit view.
-        class Edit < Terminus::View
+        class Edit < View
           expose :screen_options, decorate: false
           expose :item
           expose :fields, default: Dry::Core::EMPTY_HASH

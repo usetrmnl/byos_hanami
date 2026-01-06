@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Devices
       # The show view.
-      class Show < Terminus::View
+      class Show < View
         expose :device
       end
     end

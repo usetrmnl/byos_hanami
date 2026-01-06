@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Playlists
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         expose :playlist
         expose :items, default: Dry::Core::EMPTY_ARRAY
         expose :fields, default: Dry::Core::EMPTY_HASH

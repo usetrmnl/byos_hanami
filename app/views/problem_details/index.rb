@@ -4,7 +4,7 @@ module Terminus
   module Views
     module ProblemDetails
       # The index view.
-      class Index < Terminus::View
+      class Index < View
       end
     end
   end
