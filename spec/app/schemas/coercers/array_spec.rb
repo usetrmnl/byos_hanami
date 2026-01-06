@@ -5,29 +5,29 @@ require "hanami_helper"
 RSpec.describe Terminus::Schemas::Coercers::Array do
   subject(:coercer) { described_class }
 
-  let(:attributes) { {days: "monday,tuesday,wednesday"} }
+  let(:attributes) { {days: "monday\ntuesday\nwednesday"} }
 
   let :result do
     Dry::Schema::Result.new(attributes, message_compiler: proc { Hash.new }, result_ast: [])
   end
 
   describe "#call" do
-    it "answers multiple item array when split by commas" do
-      expect(coercer.call(:days, result)).to eq(days: %w[monday tuesday wednesday])
-    end
-
     it "answers multiple item array when split by new line" do
-      attributes[:days] = "monday\ntuesday\nwednesday"
       expect(coercer.call(:days, result)).to eq(days: %w[monday tuesday wednesday])
     end
 
-    it "answers multiple item array when split by carriage return" do
+    it "answers multiple item array when split by carriage return and new lines" do
+      attributes[:days] = "monday\r\ntuesday\r\nwednesday"
+      expect(coercer.call(:days, result)).to eq(days: %w[monday tuesday wednesday])
+    end
+
+    it "answers multiple item array when split by carriage returns" do
       attributes[:days] = "monday\rtuesday\rwednesday"
       expect(coercer.call(:days, result)).to eq(days: %w[monday tuesday wednesday])
     end
 
-    it "answers multiple item array when split by carriage return and new line" do
-      attributes[:days] = "monday\r\ntuesday\r\nwednesday"
+    it "answers multiple item array when split by spaces" do
+      attributes[:days] = "monday tuesday wednesday"
       expect(coercer.call(:days, result)).to eq(days: %w[monday tuesday wednesday])
     end
 

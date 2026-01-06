@@ -12,10 +12,10 @@ RSpec.describe Terminus::Schemas::Extensions::Upsert do
         label: "Test",
         description: "A test.",
         kind: "pull",
-        tags: "one,two,three",
+        tags: "one two three",
         headers: %({"Accept": "application/json"}),
         verb: "get",
-        uris: "https://one.io,https://two.io",
+        uris: "https://one.io\nhttps://two.io\r\nhttps://three.io",
         body: %({"test": "example"}),
         template: "A full test.",
         data: %({"label": "Test"}),
@@ -40,7 +40,9 @@ RSpec.describe Terminus::Schemas::Extensions::Upsert do
     end
 
     it "answers uris array" do
-      expect(contract.call(attributes).to_h).to include(uris: %w[https://one.io https://two.io])
+      expect(contract.call(attributes).to_h).to include(
+        uris: %w[https://one.io https://two.io https://three.io]
+      )
     end
 
     it "answers body hash" do

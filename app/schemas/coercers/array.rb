@@ -10,7 +10,7 @@ module Terminus
       using Refinements::Hash
 
       Array = lambda do |key, result|
-        Hash(result.to_h).transform_value!(key) { String(it).split(/,|\n|\r\n?/) }
+        Hash(result.to_h).transform_value!(key) { String(it).split(/\r\n|\n|\r|\s/) }
       end
     end
   end

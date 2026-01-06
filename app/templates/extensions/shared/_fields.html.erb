@@ -53,7 +53,7 @@
           alpine: {data: "{tags: #{extension ? extension.alpine_tags : []}, nascence: '', index: 0}"}
         ).render do %>
 
-      <%= form.hidden_field :tags, id: :extension_tags, "x-bind:value" => "tags.join(',')" %>
+      <%= form.hidden_field :tags, id: :extension_tags, "x-bind:value" => "tags.join(' ')" %>
 
       <label class="key" for="tag">
         Tags
