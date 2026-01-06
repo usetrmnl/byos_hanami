@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Firmware
       # The edit view.
-      class Edit < Terminus::View
+      class Edit < View
         expose :firmware
         expose :fields, default: Dry::Core::EMPTY_HASH
         expose :errors, default: Dry::Core::EMPTY_HASH

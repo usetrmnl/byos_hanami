@@ -4,19 +4,14 @@ module Terminus
   module Actions
     module Firmware
       # The create action.
-      class Create < Terminus::Action
+      class Create < Action
         include Deps[
           :htmx,
           repository: "repositories.firmware",
           index_view: "views.firmware.index"
         ]
 
-        params do
-          required(:firmware).filled(:hash) do
-            required(:version).filled :string
-            required(:kind).filled :string
-          end
-        end
+        params { required(:firmware).filled(:hash, Schemas::Firmware::Upsert) }
 
         def handle request, response
           parameters = request.params

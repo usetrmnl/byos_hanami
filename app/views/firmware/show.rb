@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Firmware
       # The show view.
-      class Show < Terminus::View
+      class Show < View
         expose :firmware
       end
     end

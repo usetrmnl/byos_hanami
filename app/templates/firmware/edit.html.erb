@@ -24,11 +24,10 @@
         <%= render "firmware/shared/fields", form:, firmware:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "shared/save_button",
+          <%= render "shared/actions/save",
                      form:,
                      verb: :put,
-                     path: routes.path(:firmware_update, id: firmware.id),
-                     target: ".bit-page" %>
+                     path: routes.path(:firmware_update, id: firmware.id) %>
 
           <%= link_to "Cancel", routes.path(:firmware), class: "bit-button-decline" %>
         </div>

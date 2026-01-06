@@ -4,16 +4,12 @@ module Terminus
   module Actions
     module Firmware
       # The update action.
-      class Update < Terminus::Action
+      class Update < Action
         include Deps[repository: "repositories.firmware", show_view: "views.firmware.show"]
 
         params do
           required(:id).filled :integer
-
-          required(:firmware).filled(:hash) do
-            required(:version).filled :string
-            required(:kind).filled :string
-          end
+          required(:firmware).filled(:hash, Schemas::Firmware::Upsert)
         end
 
         def handle request, response

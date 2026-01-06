@@ -4,7 +4,7 @@ module Terminus
   module Views
     module Firmware
       # The new view.
-      class New < Terminus::View
+      class New < View
         expose :firmware
         expose :fields, default: Dry::Core::EMPTY_HASH
         expose :errors, default: Dry::Core::EMPTY_HASH

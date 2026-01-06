@@ -4,7 +4,7 @@ module Terminus
   module Actions
     module Firmware
       # The edit action.
-      class Edit < Terminus::Action
+      class Edit < Action
         include Deps[:htmx, repository: "repositories.firmware"]
 
         params { required(:id).filled :integer }
