@@ -25,11 +25,10 @@
         <%= render "screens/shared/fields", form:, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "shared/save_button",
+          <%= render "shared/actions/save",
                      form:,
                      verb: :put,
-                     path: routes.path(:screen_update, id: screen.id),
-                     target: ".bit-page" %>
+                     path: routes.path(:screen_update, id: screen.id) %>
 
           <%= link_to "Cancel",
                       routes.path(:screen, id: screen.id),

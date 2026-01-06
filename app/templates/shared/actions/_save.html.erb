@@ -1,9 +1,9 @@
 <%= form.submit "Save",
                 class: "bit-button-accept",
                 **HTMX[
-                  verb => path,
+                  locals.fetch(:verb, :post) => path,
                   trigger: "click, keyup[ctrlKey&&key=='s'] from:body",
-                  target: "closest #{target}",
+                  target: locals.fetch(:target, "closest .bit-page"),
                   disabled_elt: "this",
                   push_url: "true"
                 ] %>

@@ -36,11 +36,10 @@
         </fieldset>
 
         <div class="form-actions">
-          <%= render "shared/save_button",
+          <%= render "shared/actions/save",
                      form:,
                      verb: :put,
-                     path: routes.path(:playlist_mirror_update, playlist_id: playlist.id),
-                     target: ".bit-page" %>
+                     path: routes.path(:playlist_mirror_update, playlist_id: playlist.id) %>
 
           <%= link_to "Cancel",
                       routes.path(:playlist, id: playlist.id),

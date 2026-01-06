@@ -24,12 +24,7 @@
                    errors: %>
 
         <div class="form-actions">
-         <%= render "shared/save_button",
-                    form:,
-                    verb: :post,
-                    path: routes.path(:extension_create),
-                    target: ".bit-page" %>
-
+         <%= render "shared/actions/save", form:, path: routes.path(:extension_create) %>
          <%= link_to "Cancel", routes.path(:extensions), class: "bit-button-decline" %>
         </div>
       <% end %>

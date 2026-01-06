@@ -33,11 +33,10 @@
                    errors: %>
 
         <div class="form-actions">
-          <%= render "shared/save_button",
+          <%= render "shared/actions/save",
                      form:,
                      verb: :put,
-                     path: routes.path(:device_update, id: device.id),
-                     target: ".bit-page" %>
+                     path: routes.path(:device_update, id: device.id) %>
 
           <a href="<%= routes.path :device, id: device.id %>"
              class="bit-button-decline"
