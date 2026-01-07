@@ -4,13 +4,12 @@ require "hanami_helper"
 
 RSpec.describe Terminus::Structs::Firmware, :db do
   subject :firmware do
-    path = temp_dir.join "test.bin"
-    path.binwrite [123].pack("N")
     repository.create version: "1.2.3",
                       attachment_data: Hanami.app[:shrine].upload(path.open, :store).data
   end
 
   let(:repository) { Terminus::Repositories::Firmware.new }
+  let(:path) { temp_dir.join("test.bin").tap { it.binwrite [123].pack("N") } }
 
   include_context "with temporary directory"
 
@@ -121,6 +120,30 @@ RSpec.describe Terminus::Structs::Firmware, :db do
           height: nil
         }
       )
+    end
+  end
+
+  describe "#replace" do
+    it "replaces file" do
+      instance = path.open { |io| firmware.replace io }
+
+      expect(instance.attachment_attributes).to match(
+        id: /\h{32}\.bin/,
+        metadata: {
+          filename: "test.bin",
+          size: 4,
+          mime_type: "application/octet-stream",
+          width: nil,
+          height: nil
+        },
+        storage: "store"
+      )
+    end
+
+    it "updates storage ID" do
+      id = firmware.attachment_id
+      instance = path.open { |io| firmware.replace io }
+      expect(id).not_to eq(instance.attachment_id)
     end
   end
 

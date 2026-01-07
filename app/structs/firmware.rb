@@ -46,6 +46,12 @@ module Terminus
         attacher.assign(io, **).tap { |file| attributes[:attachment_data] = file.data }
       end
 
+      def replace(io, **)
+        attachment_destroy
+        upload(io, **)
+        self
+      end
+
       def upload(io, **)
         attacher.upload(io, **).tap { |file| attributes[:attachment_data] = file.data }
       end
