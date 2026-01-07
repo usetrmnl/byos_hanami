@@ -3,7 +3,7 @@
 
   <ul>
     <li><strong>Image</strong>: Use <code>{{data.url}}</code> for a single URL. Use <code>{{source_1.url}}</code>, <code>{{source_2.url}}</code>, and so forth for multiple URLs.</li>
-    <li><strong>Poll</strong>: Use <code>{{data}}</code> for a single URL. Use <code>{{source_1.data}}</code>, <code>{{source_2.data}}</code>, and so forth for multiple URLs. Use dot notation to reference nested attributes within your <code>data</code> object for use in your template.</li>
-    <li><strong>Static</strong>: Use the top level key of your JSON object supplied in the <em>Body</em> field. For example, if your top level key is <code>person</code> with <code>name</code> and <code>email</code> attributes, then use <code>{{person.name}}</code> and <code>{{person.email}}</code> respectively in your template.</li>
+    <li><strong>Poll</strong>: Use the keys of the JSON response for a single URL. Use <code>{{source_1.data}}</code>, <code>{{source_2.data}}</code>, and so forth for multiple URLs. You can then use dot notation to reference nested attributes within your <code>data</code> object for use in your template.</li>
+    <li><strong>Static</strong>: Use the keys of your JSON object supplied in the <em>Body</em> field. For example, if your top level key is <code>person</code> with <code>name</code> and <code>email</code> attributes, then use <code>{{person.name}}</code> and <code>{{person.email}}</code> respectively in your template.</li>
   </ul>
 <% end %>
