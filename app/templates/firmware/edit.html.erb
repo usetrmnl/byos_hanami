@@ -3,7 +3,9 @@
 <section class="bit-page">
   <header class="bit-header">
     <ul class="bit-breadcrumbs">
-      <li class="bit-breadcrumb"><%= link_to "Firmware", routes.path(:firmware), class: :link %></li>
+      <li class="bit-breadcrumb">
+        <%= link_to "Firmware", routes.path(:firmware), class: :link %>
+      </li>
 
       <li class="bit-breadcrumb">
         <%= link_to firmware.version, routes.path(:firmware_show, id: firmware.id), class: :link %>
@@ -18,17 +20,15 @@
       <%= form_for :firmware,
                    routes.path(:firmware_update, id: firmware.id),
                    method: :put,
-                   class: "bit-card bit-form firmware" do |form| %>
+                   enctype: "multipart/form-data",
+                   accept: "application/octet-stream",
+                   class: "bit-card bit-form" do |form| %>
         <h1 class="label">Edit Firmware</h1>
 
         <%= render "firmware/shared/fields", form:, firmware:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "shared/actions/save",
-                     form:,
-                     verb: :put,
-                     path: routes.path(:firmware_update, id: firmware.id) %>
-
+          <%= form.submit "Save", class: "bit-button-accept" %>
           <%= link_to "Cancel", routes.path(:firmware), class: "bit-button-decline" %>
         </div>
       <% end %>

@@ -1,6 +1,9 @@
 <fieldset class="column">
   <%= scope(:form_field, key: :version, errors:).render do %>
-    <label class="key" for="firmware_version">Version</label>
+    <label class="key" for="firmware_version">
+      Version
+      <%= render "shared/popovers/trigger", name: :version %>
+    </label>
 
     <%= form.text_field :version,
                         id: :firmware_version,
@@ -10,7 +13,10 @@
   <% end %>
 
   <%= scope(:form_field, key: :kind, errors:).render do %>
-    <label class="key" for="firmware_version">Kind</label>
+    <label class="key" for="firmware_kind">
+      Kind
+      <%= render "shared/popovers/trigger", name: :kind %>
+    </label>
 
     <%= form.text_field :kind,
                         id: :firmware_kind,
@@ -18,6 +24,20 @@
                         class: :value,
                         autocomplete: :off %>
   <% end %>
+
+  <%= scope(:form_field, key: :attachment, errors:).render do %>
+    <label class="key" for="firmware_attachment">
+      Attachment
+      <%= render "shared/popovers/trigger", name: :attachment %>
+    </label>
+
+    <%= form.file_field :attachment,
+                        id: :firmware_attachment,
+                        value: field_for(:attachment_data, fields, firmware),
+                        class: :value %>
+
+    <%= tag.span firmware.attachment_name, class: "bit-pill bit-pill-active" if firmware && firmware.attachment_attributes %>
+  <% end %>
 </fieldset>
 
-<%#= render "screens/shared/popovers/all" %>
+<%= render "firmware/shared/popovers/all" %>

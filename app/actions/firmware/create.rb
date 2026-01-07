@@ -11,14 +11,20 @@ module Terminus
           index_view: "views.firmware.index"
         ]
 
-        params { required(:firmware).filled(:hash, Schemas::Firmware::Upsert) }
+        params do
+          required(:firmware).filled :hash do
+            required(:version).filled Types::String.constrained(format: /\A[0-9]\.[0-9]\.[0-9]\Z/)
+            required(:kind).filled :string
+            required(:attachment).filled :hash
+          end
+        end
 
         def handle request, response
           parameters = request.params
 
           if parameters.valid?
-            repository.create parameters[:firmware]
-            response.render index_view, **view_settings(request)
+            save parameters[:firmware]
+            response.render index_view, firmware: repository.all
           else
             error response, parameters
           end
@@ -26,18 +32,20 @@ module Terminus
 
         private
 
-        def view_settings request
-          settings = {firmware: repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
+        # :reek:FeatureEnvy
+        def save attributes
+          attachment = attributes.delete :attachment
+          record = repository.create attributes
+
+          record.upload attachment[:tempfile], metadata: {"filename" => "#{record.version}.bin"}
+          repository.update record.id, attachment_data: record.attachment_attributes
         end
 
         def error response, parameters
           response.render view,
                           firmware: nil,
                           fields: parameters[:firmware],
-                          errors: parameters.errors[:firmware],
-                          layout: false
+                          errors: parameters.errors[:firmware]
         end
       end
     end

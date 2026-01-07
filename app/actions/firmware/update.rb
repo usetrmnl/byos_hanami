@@ -5,41 +5,57 @@ module Terminus
     module Firmware
       # The update action.
       class Update < Action
-        include Deps[repository: "repositories.firmware", show_view: "views.firmware.show"]
+        include Deps[repository: "repositories.firmware"]
 
         params do
           required(:id).filled :integer
-          required(:firmware).filled(:hash, Schemas::Firmware::Upsert)
+
+          required(:firmware).filled :hash do
+            required(:version).filled Types::String.constrained(format: /\A[0-9]\.[0-9]\.[0-9]\Z/)
+            required(:kind).filled :string
+            optional(:attachment).filled :hash
+          end
         end
 
         def handle request, response
           parameters = request.params
-          firmware = repository.find parameters[:id]
+          record = repository.find parameters[:id]
 
-          halt :unprocessable_content unless firmware
+          halt :unprocessable_content unless record
 
           if parameters.valid?
-            save firmware, parameters, response
+            save record, parameters, response
           else
-            error firmware, parameters, response
+            error record, parameters, response
           end
         end
 
         private
 
-        def save firmware, parameters, response
-          id = firmware.id
-          repository.update id, **parameters[:firmware]
+        # :reek:TooManyStatements
+        def save record, parameters, response
+          id = record.id
+          attributes = parameters[:firmware]
+          attachment = attributes.delete :attachment
 
-          response.render show_view, firmware: repository.find(id), layout: false
+          repository.update id, **attributes
+          attach record, attachment
+          response.redirect_to routes.path(:firmware_show, id:)
         end
 
-        def error firmware, parameters, response
+        # :reek:FeatureEnvy
+        def attach record, attachment
+          return unless attachment
+
+          record.replace attachment[:tempfile], metadata: {"filename" => "#{record.version}.bin"}
+          repository.update record.id, attachment_data: record.attachment_attributes
+        end
+
+        def error record, parameters, response
           response.render view,
-                          firmware:,
+                          firmware: record,
                           fields: parameters[:firmware],
-                          errors: parameters.errors[:firmware],
-                          layout: false
+                          errors: parameters.errors[:firmware]
         end
       end
     end
