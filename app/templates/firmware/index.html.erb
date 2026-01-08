@@ -21,9 +21,9 @@
   </header>
 
   <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
-    <p>This is where you can manage the firmware updates for your device(s). New versions will automatically appear via the Firmware Poller (see Terminus project documentation for details).</p>
+    <p>This is where you can manage firmware updates for your device(s). New versions will automatically appear via the Firmware Poller (see Terminus project documentation for details). You can also add your own custom firmware and your devices will automatically update when the new version is higher than the previous version.</p>
 
-    <p>To revert to a previous version, temporarily disable the Firmware Poller and your devices will downgrade when the next waking. Alternatively, you can disable the Firmware Poller and short press the button on the back of your devices to force a revert.</p>
+    <p>To revert to a previous version, temporarily disable the Firmware Poller and your devices will downgrade when next waking. Alternatively, you can disable the Firmware Poller and short press the button on the back of your devices to force a revert.</p>
 
     <h2 class="label">Search</h2>
 
