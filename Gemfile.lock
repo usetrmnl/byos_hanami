@@ -84,7 +84,7 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.1)
     dry-files (1.1.0)
-    dry-inflector (1.2.0)
+    dry-inflector (1.3.0)
     dry-initializer (3.2.0)
     dry-logger (1.2.1)
       logger
@@ -101,12 +101,12 @@ GEM
       dry-configurable (~> 1.0, < 2)
       dry-core (~> 1.0, < 2)
       dry-events (~> 1.0, < 2)
-    dry-schema (1.14.1)
+    dry-schema (1.15.0)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 1.0, >= 1.0.1)
       dry-core (~> 1.1)
       dry-initializer (~> 3.2)
-      dry-logic (~> 1.5)
+      dry-logic (~> 1.6)
       dry-types (~> 1.8)
       zeitwerk (~> 2.6)
     dry-struct (1.8.0)
@@ -122,8 +122,8 @@ GEM
     dry-transformer (1.1.0)
       bigdecimal
       zeitwerk (~> 2.6)
-    dry-types (1.8.3)
-      bigdecimal (~> 3.0)
+    dry-types (1.9.0)
+      bigdecimal (>= 3.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0)
       dry-inflector (~> 1.0)
@@ -590,7 +590,7 @@ DEPENDENCIES
   debug (~> 1.11)
   dotenv (~> 3.1)
   dry-monads (~> 1.9)
-  dry-schema (~> 1.13)
+  dry-schema (~> 1.15)
   dry-types (~> 1.7)
   dry-validation (~> 1.10)
   ferrum (~> 0.15)
@@ -682,17 +682,17 @@ CHECKSUMS
   dry-core (1.2.0) sha256=0cc5a7da88df397f153947eeeae42e876e999c1e30900f3c536fb173854e96a1
   dry-events (1.1.0) sha256=53f13960daf02cc06c2ea6cdf3209e29b0dd400f8977a8020834a68c044a78de
   dry-files (1.1.0) sha256=4fe91d007ad78d303b7f3a8a2321bbfc554fcc01aa11a6b37246658bbf8d41de
-  dry-inflector (1.2.0) sha256=22f5d0b50fd57074ae57e2ca17e3b300e57564c218269dcf82ff3e42d3f38f2e
+  dry-inflector (1.3.0) sha256=441082dde958db39df7353c71e520c05732e8da9ace28c78da2d0f1d6c669fa3
   dry-initializer (3.2.0) sha256=37d59798f912dc0a1efe14a4db4a9306989007b302dcd5f25d0a2a20c166c4e3
   dry-logger (1.2.1) sha256=4087bb8dfcd7cf4a1e8f53854589c09904e8341b52fe05c6a1d3ec37d7f03e72
   dry-logic (1.6.0) sha256=da6fedbc0f90fc41f9b0cc7e6f05f5d529d1efaef6c8dcc8e0733f685745cea2
   dry-monads (1.9.0) sha256=9348a67b5c862c7a876342dbd94737fdf3fb3c17978382cf6801a85b27215816
   dry-monitor (1.0.1) sha256=4ac8ed1f85b14bfde1aa0bce9496d7d2fc699c5a4a1131010c8014d5f9e7a309
-  dry-schema (1.14.1) sha256=2fcd7539a7099cacae6a22f6a3a2c1846fe5afeb1c841cde432c89c6cb9b9ff1
+  dry-schema (1.15.0) sha256=0f2a34adba4206bd6d46ec1b6b7691b402e198eecaff1d8349a7d48a77d82cd2
   dry-struct (1.8.0) sha256=74c38b559924fb6462ac43ec780c4533a082d7b1d238a8d7857b773b3b8e2966
   dry-system (1.2.5) sha256=a02f57c18cbcc6c9c4ea99a7eed0afc830263d2051c855a46a7229ea3708d143
   dry-transformer (1.1.0) sha256=87bfe22a708aa69f3e6e76a6119aba0b42999f154e4fe7c261d4673720534da3
-  dry-types (1.8.3) sha256=b5d97a45e0ed273131c0c3d5bc9f5633c2d1242e092ee47401ce7d5eab65c1bc
+  dry-types (1.9.0) sha256=7b656fe0a78d2432500ae1f29fefd6762f5a032ca7000e4f36bc111453d45d4d
   dry-validation (1.11.1) sha256=70900bb5a2d911c8aab566d3e360c6bff389b8bf92ea8e04885ce51c41ff8085
   erb (6.0.1) sha256=28ecdd99c5472aebd5674d6061e3c6b0a45c049578b071e5a52c2a7f13c197e5
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
