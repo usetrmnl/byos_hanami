@@ -592,7 +592,7 @@ DEPENDENCIES
   dry-monads (~> 1.9)
   dry-schema (~> 1.15)
   dry-types (~> 1.9)
-  dry-validation (~> 1.10)
+  dry-validation (~> 1.11)
   ferrum (~> 0.15)
   functionable (~> 1.0)
   git-lint (~> 10.0)
