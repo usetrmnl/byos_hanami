@@ -1,0 +1,75 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
+:yjit_link: link:https://docs.ruby-lang.org/en/master/jit/yjit_md.html[YJIT]
+:hanami_logging_link: link:https://alchemists.io/articles/hanami_logging[Hanami Logging]
+
+= Development
+
+To contribute, ensure you have completed the project setup (i.e. `bin/setup`) and the entire project builds properly by running `bin/rake`. See the sections below to learn more.
+
+== Console
+
+To access the console with direct access to all objects, run:
+
+[source,bash]
+----
+bin/console
+----
+
+Once in the console, you can interact with all objects. Example:
+
+[source,ruby]
+----
+# Use a repository.
+repository = Hanami.app["repositories.device"]
+
+repository.all              # View all devices.
+device = repository.find 1  # Find by Device ID.
+----
+
+== CSS
+
+Pure CSS is used in order to avoid pulling in complicated frameworks. All styles can be found in `app/assets/css`. The following allows you to customize the look and feel of this application as follows:
+
+* *Bits*: These are small reusable components that make up the site. There is a file for each type.
+* *Extensions*: These are third-party extensions to the existing application framework of styles.
+* *Pages*: These are the pages that make up the site. There is a file for each unique page.
+* *Colors*: Use to customize site colors.
+* *Defaults*: Use to customize HTML element default styles.
+* *Keyframes*: Use to customize keyframe behavior.
+* *Layout*: Use to customize the site layout.
+* *Settings*: Use to customize site settings.
+* *View Transitions*: Use to customize view transitions.
+
+== HTML/CSS Sanitization
+
+The link:https://github.com/rgrove/sanitize[Santize] gem is used to sanitize HTML/CSS when using the console, API, or UI. All of this configured via the `Terminus::Sanitizer` class which defaults to the `Sanitize::Config::RELAXED` style with additional support for `style` and `source` elements. If you find elements being stripped from your HTML/CSS content, this is why. Feel free to open an link:https://github.com/usetrmnl/byos_hanami/issues[issue] if you need additional support.
+
+== Logging
+
+By default, all logging is set to `INFO` level but you can get more verbose information by using the `DEBUG` level. There are multiple ways to do this. First, you can export the desired debug level:
+
+[source,bash]
+----
+export LOG_LEVEL=debug
+----
+
+You can also specify the log level before launching the server:
+
+[source,bash]
+----
+LOG_LEVEL=debug overmind start --port-step 10 --procfile Procfile.dev --can-die assets,migrate
+----
+
+Finally, you can configure the app to use a different _default_ log level via `app/providers/cogger.rb` by adjusting log level during registration.
+
+💡 See the {cogger_link} gem documentation or {hanami_logging_link} for further details.
+
+== YJIT
+
+{yjit_link} is enabled by default, when detected, which means you have built and installed Ruby with YJIT enabled. If you didn't build Ruby with YJIT support, YJIT support will be ignored. That said, we _recommend_ you enable YJIT support since the performance improvements are worth it.
+
+💡 To enable YJIT globally, ensure the `--yjit` flag is added to your `RUBYOPT` environment variable. Example: `export RUBYOPT="--yjit"`.

@@ -4,7 +4,6 @@
 
 :jobs_link: link:doc/jobs.adoc[Jobs]
 :chrome_link: link:https://www.google.com/chrome[Google Chrome]
-:cogger_link: link:https://alchemists.io/projects/cogger[Cogger]
 :core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
 :docker_doc_link: link:doc/docker.adoc[Docker]
 :docker_link: link:https://www.docker.com[Docker]
@@ -27,7 +26,7 @@
 :trmnl_link: link:https://usetrmnl.com[TRMNL]
 :unbrickable_pledge_link: link:https://usetrmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
 :valkey_link: link:https://valkey.io[Valkey]
-:yjit_link: link:https://github.com/ruby/ruby/blob/master/doc/yjit/yjit.md[YJIT]
+:yjit_link: link:https://docs.ruby-lang.org/en/master/jit/yjit_md.html[YJIT]
 
 = Terminus
 
@@ -163,7 +162,7 @@ There are several environment variables you can use to customize behavior by upd
 
 * `API_ACCESS_TOKEN_PERIOD`: Used to set the amount of time, in seconds, the JWT access token remains valid before needing to refresh your token. This is only necessary when using the link:doc/api.adoc[Server APIs]. Default: 1,800 seconds (30 minutes).
 * `APP_SECRET`: Used for session, cookie, and Cross-Site Request Forgery (CSRF) protection. This is automatically created for you during setup but is recommended that you update this with your own secure value.
-* `APP_SETUP`: Runs setup/update steps (i.e. asset compliation, database migrations, etc). Used by Docker only via the `entrypoint` script. Default: `nil` but `true` for the web service.
+* `APP_SETUP`: Runs setup/update steps (i.e. asset compilation, database migrations, etc). Used by Docker only via the `entrypoint` script. Default: `nil` but `true` for the web service.
 * `API_URI`: Used for connecting your device to this server or via link:doc/docker.adoc[Docker]. Defaults to your host machine's IP address and port. This assumes you are connecting your device directly to the same server Terminus is running on. If this is not the case and you are using a reverse proxy, DNS, or any service/layer between your device and Terminus then you need to update this value to be your host. For example, if your host is `http://demo.io` then this value must be `http://demo.io`. This includes updating your device, via the TRMNL captive Wifi portal, to use `http://demo.io` as your custom host too. How you configure `http://demo.io` to resolve to the server you are running Terminus on is up to you. All your device (and this value) cares about is what the external host (or IP and port) is for the device to make API requests too (they must be identical).
 * `BROWSER`: Used for configuring headless browser behavior when creating screens for your device. Must be a JSON object. Default: `'{"js_errors": true, "process_timeout": 10, "timeout": 10}'`. Additional keys are ignored. For more details, see the link:https://github.com/rubycdp/ferrum#customization[Ferrum Customization Documentation].
 * `CERTIFICATE_URLS`: Defines a comma-separated list of CA certificate URLs which will be automatically installed as trusted certificates. Example: `"https://example.io/ca1.crt,https://example.org/ca2.pem"` Used by {docker_doc_link} only.
@@ -224,76 +223,7 @@ See link:doc/render.adoc[Render] documentation for details.
 
 == Development
 
-To contribute, ensure you have completed the link:#setup[Setup] and the entire project builds properly by running `bin/rake`.
-
-=== Console
-
-To access the console with direct access to all objects, run:
-
-[source,bash]
-----
-bin/console
-----
-
-Once in the console, you can interact with all objects. A few examples:
-
-[source,ruby]
-----
-# Use a repository.
-repository = Hanami.app["repositories.device"]
-
-repository.all              # View all devices.
-device = repository.find 1  # Find by Device ID.
-----
-
-=== YJIT
-
-{yjit_link} is enabled by default, when detected, which means you have built and installed Ruby with YJIT enabled. If you didn't build Ruby with YJIT support, YJIT support will be ignored. That said, we _recommend_ you enable YJIT support since the performance improvements are worth it.
-
-💡 To enable YJIT globally, ensure the `--yjit` flag is added to your `RUBYOPT` environment variable. Example: `export RUBYOPT="--yjit"`.
-
-=== CSS
-
-Pure CSS is used in order to avoid pulling in complicated frameworks. The following stylesheets allow you to customize the look and feel of this application as follows:
-
-* *Bits*: These are the bits and small reusable components that make up the site. There is a file for each type.
-* *Pages*: These are the pages that make up the site. There is a file for each unique page.
-* *Colors*: Use to customize site colors.
-* *Defaults*: Use to customize HTML element default styles.
-* *Keyframes*: Use to customize keyframe behavior.
-* *Layout*: Use to customize the site layout.
-* *Settings*: Use to customize site settings.
-* *View Transitions*: Use to customize view transitions.
-
-=== HTML/CSS Sanitization
-
-The link:https://github.com/rgrove/sanitize[Santize] gem is used to sanitize HTML/CSS when using the console, API, or UI. All of this configured via the `Terminus::Sanitizer` class which defaults to the `Sanitize::Config::RELAXED` style with additional support for `style` and `source` elements. If you find elements being stripped from your HTML/CSS content, this is why. Feel free to open an link:https://github.com/usetrmnl/byos_hanami/issues[issue] if you need additional support.
-
-=== Logging
-
-By default, all logging is set to `INFO` level but you can get more verbose information by using the `DEBUG` level. There are multiple ways to do this. First, you can export the desired debug level:
-
-[source,bash]
-----
-export LOG_LEVEL=debug
-----
-
-You can also specify the log level before launching the server:
-
-[source,bash]
-----
-LOG_LEVEL=debug overmind start --port-step 10 --procfile Procfile.dev --can-die assets,migrate
-----
-
-Finally, you can configure the app to use a different log level via `lib/terminus/lib_container.rb` by adjusting log level of logger during registration:
-
-[source,ruby]
-----
-register(:logger) { Cogger.new id: :terminus, level: :debug, formatter: :detail }
-
-----
-
-💡 See the {cogger_link} gem documentation for further details.
+See link:doc/development.adoc[Development] documentation for details.
 
 == Tests
 
@@ -304,11 +234,17 @@ To test, run:
 bin/rake
 ----
 
-== Code Coverage
+== Code Quality
 
-link:https://github.com/simplecov-ruby/simplecov[SimpleCov] code coverage reports are generated with every Circle CI build. The badge at the top of this document isn't updated in real-time, unfortunately, but is fairly accurate since this project is configured for 100% code coverage.
+Code quality is an important and vital aspect of the work on this project. The following gems are used to ensure our work remains consistent and of high quality:
 
-To view up-to-date details, follow these steps:
+* link:https://alchemists.io/projects/git-lint[Git Lint]: Ensures Git commit messages are well written and consistent for code review but also for automatic release note generation via {milestoner_link}.
+* link:https://alchemists.io/projects/caliber[Caliber]: Ensures code is consistent in terms of style, layout, performance, best practices, etc.
+* link:https://github.com/troessner/reek[Reek]: Augments Caliber by detecting code smells and antipatterns.
+* link:https://rspec.info[RSpec]: Provides a specification and testing framework for unit and integration tests.
+* link:https://github.com/simplecov-ruby/simplecov[SimpleCov]: Generates interactive reports are for every CI build. Will fail the build if quality drops below 95%. ⚠️ The badge at the top of this document isn't updated in real-time, unfortunately, but is fairly accurate since this project is configured to strive for 100% code coverage.
+
+To view up-to-date code coverage details, follow these steps:
 
 . Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/byos_hanami?branch=main[Circle CI] build page.
 . Click on the latest "Success" build at the top of the page.
