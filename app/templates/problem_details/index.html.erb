@@ -106,6 +106,27 @@
   </details>
 
   <details name="details">
+    <summary id="firmware_payload" class="summary">Firmware Payload</summary>
+
+    <p>Could not create or update firmware. The following is the list of supported keys:</p>
+
+    <h2 class="label">Required</h2>
+
+    <dl class="bit-definition-list">
+      <dt class="key">version</dt>
+      <dd class="value">The unique version.</dd>
+
+      <dt class="key">kind</dt>
+      <dd class="value">The unique kind. Use <code>terminus</code> as the value.</dd>
+
+      <dt class="key">uri</dt>
+      <dd class="value">The remote URI to upload firmware.</dd>
+    </dl>
+
+    <p>When making a POST request the above are required but when making a PATCH request they are optional as long you supply at least one key.</p>
+  </details>
+
+  <details name="details">
     <summary id="log_payload" class="summary">Log Payload</summary>
 
     <p>Could not create log for device due to invalid payload. The payload should be structured as follows:</p>
