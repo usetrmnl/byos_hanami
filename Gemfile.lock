@@ -294,7 +294,7 @@ GEM
     llhttp-ffi (0.5.1)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
-    localhost (1.6.0)
+    localhost (1.7.0)
     logger (1.7.0)
     marameters (5.0.0)
       refinements (~> 14.0)
@@ -528,7 +528,7 @@ GEM
     stringio (3.2.0)
     strscan (3.1.7)
     temple (0.10.4)
-    tilt (2.6.1)
+    tilt (2.7.0)
     tone (3.0.0)
       refinements (~> 14.0)
       zeitwerk (~> 2.7)
@@ -744,7 +744,7 @@ CHECKSUMS
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   liquid (5.11.0) sha256=c338b641f9ee9e03e1377a13d880a0c636fadd944fae0c8a4af9bf4349264800
   llhttp-ffi (0.5.1) sha256=9a25a7fc19311f691a78c9c0ac0fbf4675adbd0cca74310228fdf841018fa7bc
-  localhost (1.6.0) sha256=d99697c6344283d39d8ae8572c22fcd556c95347a30d361594c36846b112fa17
+  localhost (1.7.0) sha256=09b32819537f914ccdf0a7c595fab162517401b6ef644a2afd3708d943c4547f
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   marameters (5.0.0) sha256=409ab894ac94b70e29a25d19ad1e84ee381f8270cd7097c4b4e70201e8e5ef62
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
@@ -834,7 +834,7 @@ CHECKSUMS
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   strscan (3.1.7) sha256=5f76462b94a3ea50b44973225b7d75b2cb96d4e1bee9ef1319b99ca117b72c8c
   temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
-  tilt (2.6.1) sha256=35a99bba2adf7c1e362f5b48f9b581cce4edfba98117e34696dde6d308d84770
+  tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3
   tone (3.0.0) sha256=f5f1b4c2f9afebc02d937bfe179385d1fea842214b4aca6976fc1f466b605b20
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
   trmnl-api (0.8.0) sha256=8b43579904f4ce5ac9fefd4163aadb199b5f2bdfa177bf09ab99af3e75c11975
