@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "dry/types"
-require "versionaire"
 
 module Terminus
   # The custom types.
@@ -21,6 +20,6 @@ module Terminus
       format: /\A[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}\Z/
     )
 
-    Version = Constructor Versionaire::Version, Versionaire.method(:Version)
+    Version = String.constrained(format: /\A[0-9]\.[0-9]\.[0-9]\Z/)
   end
 end

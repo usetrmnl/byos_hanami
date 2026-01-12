@@ -3,8 +3,6 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Types do
-  using Versionaire::Cast
-
   describe "Browser" do
     subject(:type) { described_class::Browser }
 
@@ -92,20 +90,16 @@ RSpec.describe Terminus::Types do
     subject(:type) { described_class::Version }
 
     it "answers primitive" do
-      expect(type.primitive).to eq(Versionaire::Version)
+      expect(type.primitive).to eq(String)
     end
 
     it "answers valid version" do
-      expect(type.call("0.0.0")).to eq(Version("0.0.0"))
+      expect(type.call("0.0.0")).to eq("0.0.0")
     end
 
     it "answers coerces partial version into full version" do
-      expect(type.call("1.2")).to eq(Version("1.2.0"))
-    end
-
-    it "fails when object can't be coerced" do
-      expectation = proc { type.call nil }
-      expect(&expectation).to raise_error(Versionaire::Error, /Invalid version conversion/)
+      expectation = proc { type.call "1.2" }
+      expect(&expectation).to raise_error(Dry::Types::ConstraintError, /violates constraints/)
     end
   end
 end
