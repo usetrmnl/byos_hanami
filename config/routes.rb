@@ -24,6 +24,12 @@ module Terminus
 
     get "/api/display", to: "api.display.show", as: :api_display
 
+    get "/api/firmware", to: "api.firmware.index", as: :api_firmware
+    get "/api/firmware/:id", to: "api.firmware.show", as: :api_firmware_show
+    post "/api/firmware", to: "api.firmware.create", as: :api_firmware_create
+    patch "/api/firmware/:id", to: "api.firmware.patch", as: :api_firmware_patch
+    delete "/api/firmware/:id", to: "api.firmware.delete", as: :api_firmware_delete
+
     post "/api/log", to: "api.log.create", as: :api_log_create
 
     get "/api/models", to: "api.models.index", as: :api_models
