@@ -70,9 +70,5 @@ detectors:
   UtilityFunction:
     exclude:
       - SQLLoggerPatch#log_query
-      - Terminus::Aspects::Croner#for_day
-      - Terminus::Aspects::Croner#for_hour
-      - Terminus::Aspects::Croner#for_minute
-      - Terminus::Aspects::Croner#for_month
-      - Terminus::Aspects::Croner#for_week
+      - Terminus::Aspects::Croner
       - Terminus::Aspects::Liquid::Filters#json
