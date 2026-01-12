@@ -30,7 +30,9 @@
           Model
           <%= render "shared/popovers/trigger", name: :model %>
         </dt>
-        <dd class="value"><%= screen.model.label %></dd>
+        <dd class="value">
+          <%= link_to screen.model.label, routes.path(:model, id: screen.model_id) %>
+        </dd>
 
         <dt class="key">MIME Type</dt>
         <dd class="value"><%= screen.mime_type %></dd>

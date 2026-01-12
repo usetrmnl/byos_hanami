@@ -28,7 +28,9 @@
           Model
           <%= render "shared/popovers/trigger", name: :model %>
         </dt>
-        <dd class="value"><%= device.model ? device.model.label : nil %></dd>
+        <dd class="value">
+          <%= link_to device.model.label, routes.path(:model, id: device.model_id) %>
+        </dd>
 
         <dt class="key">
           Playlist
