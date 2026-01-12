@@ -13,7 +13,7 @@ module Terminus
 
         params do
           required(:firmware).filled :hash do
-            required(:version).filled Types::String.constrained(format: /\A[0-9]\.[0-9]\.[0-9]\Z/)
+            required(:version).filled Types::Version
             required(:kind).filled :string
             required(:attachment).filled :hash
           end

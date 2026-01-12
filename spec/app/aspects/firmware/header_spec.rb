@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "versionaire"
 
 RSpec.describe Terminus::Aspects::Firmware::Header do
-  using Versionaire::Cast
-
   subject(:parser) { described_class.new }
 
   include_context "with firmware headers"
@@ -45,7 +42,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
           api_key: "abc123",
           refresh_rate: 25,
           battery: 4.74,
-          firmware_version: Version("1.2.3"),
+          firmware_version: "1.2.3",
           wifi: -54,
           width: 800,
           height: 480
