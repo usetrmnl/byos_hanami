@@ -39,6 +39,19 @@ RSpec.describe Terminus::Aspects::Downloader do
       end
     end
 
+    context "with request error" do
+      before { allow(http).to receive(:get).and_raise(HTTP::RequestError, "Danger!") }
+
+      it "answers failure" do
+        expect(downloader.call(uri)).to be_failure("Danger!")
+      end
+
+      it "logs error" do
+        downloader.call uri
+        expect(logger.reread).to match(/ERROR.+Danger!/)
+      end
+    end
+
     context "with SSL error" do
       before { allow(http).to receive(:get).and_raise(OpenSSL::SSL::SSLError, "Danger!") }
 

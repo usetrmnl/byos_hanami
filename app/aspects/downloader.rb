@@ -17,7 +17,7 @@ module Terminus
         http.get(uri).then do |response|
           response.status.success? ? Success(response) : Failure(response)
         end
-      rescue OpenSSL::SSL::SSLError => error
+      rescue HTTP::RequestError, OpenSSL::SSL::SSLError => error
         Failure error.message
       end
 
