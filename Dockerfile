@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-ARG RUBY_VERSION=4.0.0
+ARG RUBY_VERSION=4.0.1
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
