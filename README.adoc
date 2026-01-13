@@ -217,6 +217,10 @@ See link:doc/api.adoc[API] documentation for details.
 
 See link:doc/docker.adoc[Docker] documentation for details.
 
+=== Kubernetes
+
+See link:doc/kubernetes.adoc[Kubernetes] documentation for details.
+
 === Render
 
 See link:doc/render.adoc[Render] documentation for details.
