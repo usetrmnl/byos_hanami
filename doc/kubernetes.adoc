@@ -1,14 +1,14 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
 = Kubernetes
-:toc:
-:toclevels: 2
+
+Kubernetes support is *experimental* and untested. 🚧 Use at your own risk! 🚧
 
 toc::[]
 
-== Overview
-
-Kubernetes support is *experimental* and untested. 🚧 Use at your own risk! 🚧 
-
-== Prerequisites
+== Requirements
 
 * A running Kubernetes cluster (v1.25+)
 * A storage class for persistent volumes (e.g., Longhorn, local-path, or cloud provider storage)
