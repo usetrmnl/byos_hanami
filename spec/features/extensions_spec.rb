@@ -59,4 +59,12 @@ RSpec.describe "Extensions", :db do
 
     expect(page).to have_no_content(extension.label)
   end
+
+  it "views gallery", :aggregate_failures do
+    Hanami.app.start :trmnl_api
+    visit routes.path(:extensions_gallery)
+
+    expect(page).to have_content("Gallery")
+    expect(page).to have_content("connection")
+  end
 end

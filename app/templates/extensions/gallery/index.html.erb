@@ -1,0 +1,53 @@
+<%= render "shared/title", text: "Gallery" %>
+
+<section class="bit-page">
+  <header class="bit-header">
+    <ul class="bit-breadcrumbs">
+      <li class="bit-breadcrumb"><%= link_to "Extensions", routes.path(:extensions) %></li>
+      <li class="bit-breadcrumb">
+        Gallery
+        <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+      </li>
+    </ul>
+
+    <div class="bit-actions">
+      <%= render "shared/actions/search", path: routes.path(:extensions_gallery), query: %>
+    </div>
+  </header>
+
+  <%= scope(:popover_content, name: :overview, label: "Gallery").render do %>
+    <p>Welcome to the gallery where you can browse and import <a href="https://usetrmnl.com/recipes">TRMNL Recipes</a> as extensions.</p>
+
+    <h2 class="label">Search</h2>
+
+    <p>You can fuzzy search by recipe label using partial or full label.</p>
+  <% end %>
+
+  <% if payload.data.any? %>
+    <ul class="bit-gallery">
+      <% payload.data.each do |item| %>
+        <%= render :item, item: %>
+      <% end %>
+
+      <% if payload.to < payload.total %>
+        <%= tag.li class: "bit-card",
+                   **HTMX[
+                     get: routes.path(:extensions_gallery, page: next_page, query:),
+                     select: ".bit-card",
+                     trigger: "revealed",
+                     swap: "this"
+                   ] do %>
+          Loading...
+        <% end %>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="bit-gallery">
+      <%= render "shared/empty", message: "No recipes found." %>
+    </div>
+  <% end %>
+
+  <%= scope(:popover_content, name: :import, label: "Import").render do %>
+    <p>We are working on the ability to import recipes as extensions within Terminus! For now, this is a placeholder for full import capabilities that will be added in the future.</p>
+  <% end %>
+</section>

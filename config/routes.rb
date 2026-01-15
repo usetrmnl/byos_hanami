@@ -72,6 +72,8 @@ module Terminus
     put "/extensions/:id", to: "extensions.update", as: :extension_update
     delete "/extensions/:id", to: "extensions.delete", as: :extension_delete
 
+    get "/extensions/gallery", to: "extensions.gallery.index", as: :extensions_gallery
+
     post "/extensions/:extension_id/build",
          to: "extensions.build.create",
          as: :extension_build_create
