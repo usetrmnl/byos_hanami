@@ -3,5 +3,10 @@
 Hanami.app.register_provider :trmnl_api do
   prepare { require "trmnl/api" }
 
-  start { register :trmnl_api, TRMNL::API::Client.new }
+  start do
+    recipes = TRMNL::API.new { |settings| settings.uri = "https://usetrmnl.com" }
+
+    register :trmnl_api, TRMNL::API.new
+    register :trmnl_api_recipes, recipes
+  end
 end
