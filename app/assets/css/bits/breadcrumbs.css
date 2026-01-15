@@ -16,6 +16,9 @@
 }
 
 .bit-breadcrumb {
+  align-items: center;
+  display: flex;
+
   &:not(:last-child)::after {
     background: url("../../images/icons/chevron-right.svg") no-repeat center / contain;
     content: "";
