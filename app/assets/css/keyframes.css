@@ -1,3 +1,20 @@
+@keyframes scaleFromTopLeft {
+  0% {
+    opacity: 0;
+    translate: 0 -50% 0;
+    clip-path: inset(0% 100% 100% 0%);
+  }
+
+  80% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

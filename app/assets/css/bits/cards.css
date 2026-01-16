@@ -49,3 +49,11 @@
     }
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bit-card {
+    animation: scaleFromTopLeft ease-out;
+    animation-timeline: view();
+    animation-range: entry 25% entry 100%;
+  }
+}
