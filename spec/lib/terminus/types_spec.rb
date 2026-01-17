@@ -93,8 +93,12 @@ RSpec.describe Terminus::Types do
       expect(type.primitive).to eq(String)
     end
 
-    it "answers valid version" do
+    it "answers valid single digit version" do
       expect(type.call("0.0.0")).to eq("0.0.0")
+    end
+
+    it "answers valid multiple digit version" do
+      expect(type.call("1.10.100")).to eq("1.10.100")
     end
 
     it "answers coerces partial version into full version" do
