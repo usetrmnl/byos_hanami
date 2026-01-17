@@ -2,18 +2,20 @@
 :toclevels: 5
 :figure-caption!:
 
-:jobs_link: link:doc/jobs.adoc[Jobs]
 :chrome_link: link:https://www.google.com/chrome[Google Chrome]
 :core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
 :docker_doc_link: link:doc/docker.adoc[Docker]
 :docker_link: link:https://www.docker.com[Docker]
 :dragonfly_link: link:https://www.dragonflydb.io[Dragonfly]
+:esbuild_link: link:https://esbuild.github.io[esbuild]
 :firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :git_link: link:https://git-scm.com[Git]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
+:jobs_link: link:doc/jobs.adoc[Jobs]
 :milestoner_link: link:https://alchemists.io/projects/milestoner[Milestoner]
+:node_link: link:https://nodejs.org[Node]
 :overmind_link: link:https://github.com/DarthSim/overmind[Overmind]
 :postgres_link: link:https://www.postgresql.org[PostgreSQL]
 :puma_link: link:https://puma.io[Puma]
@@ -27,6 +29,7 @@
 :unbrickable_pledge_link: link:https://usetrmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
 :valkey_link: link:https://valkey.io[Valkey]
 :yjit_link: link:https://docs.ruby-lang.org/en/master/jit/yjit_md.html[YJIT]
+:youtube_link: link:https://www.youtube.com/@useTRMNL[YouTube]
 
 = Terminus
 
@@ -47,8 +50,9 @@ toc::[]
 
 == Features
 
-* Allows you to run your own server on your own private network.
+* Provides privacy first functionality by empowering you to run your own private server, network, and devices. You own the stack and the data. 🎉
 * Built atop {ruby_link} and {hanami_link}.
+* Used {esbuild_link} for asset management.
 * Uses {htmx_link} for Hypermedia-Driven user interfaces.
 * Uses {imagemagick_link} for image processing.
 * Uses {overmind_link} for running multiple processes.
@@ -89,14 +93,15 @@ The following is a high level overview you can use to compare/contrast when deci
 == Requirements
 
 . {git_link}.
-. {docker_link}.
-. {hanami_link} (optional, for development).
-. {ruby_link} (optional, for development).
-. {postgres_link} (optional, for development).
-. {valkey_link} (optional, for development): Can be swapped out for {redis_link} or {dragonfly_link} if desired.
+. {ruby_link}.
+. {hanami_link}.
+. {node_link}.
+. {postgres_link}.
+. {valkey_link}: Can be swapped out for {redis_link} or {dragonfly_link} if desired.
 . {chrome_link} (optional, for development): For screen generation via the headless browser.
 . {overmind_link} (optional, for development): Uses your `Procfile` to launch processes.
-. {trmnl_link} device (or use a virtual device within the application).
+. {docker_link} (optional when only using Ruby).
+. {trmnl_link} device (optional, you can use virtual devices).
 
 == Quick Start
 
@@ -109,7 +114,7 @@ curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scri
 
 Once launched, open `http://localhost:2300` in your browser then click on the _Register_ link to register and log into the system.
 
-💡 This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. It's only meant for getting up and running quickly. To customize, see the link:doc/docker.adoc[Docker] documentation.
+⚠️ This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. It's only meant for getting up and running quickly to explore the feature set, not permanent use. To customize, see the link:doc/docker.adoc[Docker] documentation.
 
 == Setup
 
@@ -264,18 +269,16 @@ To view all versions and the complete release history to this project -- includi
 
 [source,bash]
 ----
-# Terminus
-git clone https://github.com/usetrmnl/byos_hanami terminus
 cd terminus
-
-# Milestoner
 gem install milestoner
 milestoner build --max 1000 --format web
 ruby -run -e httpd tmp/milestones --port 3030
 open http://127.0.0.1:3030
 ----
 
-We are working to automate this across multiple projects, not only Terminus, because {milestoner_link} also generates a complete syndicated feed of release notes as well. This means, in the future, you'll be able to subscribe to all updates via your feed reader. 🎉
+We are working on automating this across multiple projects, not only Terminus, because {milestoner_link} also generates a complete syndicated feed of release notes as well. This means, in the future, you'll be able to subscribe to all updates via your feed reader. 🎉
+
+💡 You can also subscribe to our {youtube_link} channel and get occasional version release video updates too.
 
 == License
 
