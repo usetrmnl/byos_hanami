@@ -52,7 +52,7 @@ toc::[]
 
 * Provides privacy first functionality by empowering you to run your own private server, network, and devices. You own the stack and the data. 🎉
 * Built atop {ruby_link} and {hanami_link}.
-* Used {esbuild_link} for asset management.
+* Uses {esbuild_link} for asset management.
 * Uses {htmx_link} for Hypermedia-Driven user interfaces.
 * Uses {imagemagick_link} for image processing.
 * Uses {overmind_link} for running multiple processes.
@@ -105,16 +105,16 @@ The following is a high level overview you can use to compare/contrast when deci
 
 == Quick Start
 
-To immediately spin up Terminus on your local machine, run:
+To immediately spin up Terminus on your local machine using {docker_link}, run:
 
 [source,bash]
 ----
 curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scripts/docker/quick.sh | bash
 ----
 
-Once launched, open `http://localhost:2300` in your browser then click on the _Register_ link to register and log into the system.
+Once launched, open `http://localhost:2300` in your browser then click the _Register_ link to register and log into the system.
 
-⚠️ This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. It's only meant for getting up and running quickly to explore the feature set, not permanent use. To customize, see the link:doc/docker.adoc[Docker] documentation.
+⚠️ This script is not idempotent which means you can't run it more than once since your database credentials will be different each time. This is only meant for getting up and running quickly to explore the feature set, not permanent use. For permanent use, see the link:doc/docker.adoc[Docker] documentation.
 
 == Setup
 
@@ -139,7 +139,7 @@ cd terminus
 bin/upgrade
 ----
 
-Watch for any changes that need to be addressed in the output. Otherwise, if no changes are detected, you are all set.
+Watch for any changes that need to be addressed in the output. Otherwise, if no changes are detected, you are set.
 
 == Usage
 
@@ -199,7 +199,7 @@ Also, once logged in, you can manage your settings as follows:
 
 === Devices
 
-Connecting your device to this server is as simple as using the captive WiFi portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request. For more information (including dealing with tricky WiFi situations), check out the help guides below:
+Connecting devices to this server is as simple as using the captive WiFi portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request. For more information (including dealing with tricky WiFi situations), check out the help guides below:
 
 * link:https://help.usetrmnl.com/en/articles/12263392-connect-your-device-to-terminus-byos[How to connect your device to Terminus].
 * link:https://help.usetrmnl.com/en/articles/11663377-setting-up-a-trmnl-on-tricky-wi-fi-situations[Dealing with tricky Wi-Fi situations].
@@ -251,7 +251,7 @@ Code quality is an important and vital aspect of the work on this project. The f
 * link:https://alchemists.io/projects/caliber[Caliber]: Ensures code is consistent in terms of style, layout, performance, best practices, etc.
 * link:https://github.com/troessner/reek[Reek]: Augments Caliber by detecting code smells and antipatterns.
 * link:https://rspec.info[RSpec]: Provides a specification and testing framework for unit and integration tests.
-* link:https://github.com/simplecov-ruby/simplecov[SimpleCov]: Generates interactive reports are for every CI build. Will fail the build if quality drops below 95%. ⚠️ The badge at the top of this document isn't updated in real-time, unfortunately, but is fairly accurate since this project is configured to strive for 100% code coverage.
+* link:https://github.com/simplecov-ruby/simplecov[SimpleCov]: Generates interactive reports with every CI build. Will fail the build if quality drops below 95%. ⚠️ The badge at the top of this document isn't updated in real-time, unfortunately, but is fairly accurate.
 
 To view up-to-date code coverage details, follow these steps:
 
