@@ -482,6 +482,7 @@ GEM
       rubocop-ast (>= 1.44.0, < 2.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    rubyzip (3.2.2)
     rufus-scheduler (3.9.2)
       fugit (~> 1.1, >= 1.11.1)
     runcom (13.1.0)
@@ -634,6 +635,7 @@ DEPENDENCIES
   rom-sql (~> 3.7)
   rspec (~> 3.13)
   rubocop-sequel (~> 0.3)
+  rubyzip (~> 3.2)
   sanitize (~> 7.0)
   sequel (~> 5.97)
   shrine (~> 3.6)
@@ -819,6 +821,7 @@ CHECKSUMS
   rubocop-thread_safety (0.7.3) sha256=067cdd52fbf5deffc18995437e45b5194236eaff4f71de3375a1f6052e48f431
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
+  rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
   rufus-scheduler (3.9.2) sha256=55fa9e4db0ff69d7f38c804f17baba0c9bce5cba39984ae3c5cf6c039d1323b9
   runcom (13.1.0) sha256=58a4dd848408fa0fb342f4489c13074a8013ff0af74d0d04c16383a3d3f05ce5
   sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
