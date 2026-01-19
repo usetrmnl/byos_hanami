@@ -208,8 +208,8 @@ Connecting devices requires using the WiFi captive portal on your mobile phone t
 
 In accordance with the {unbrickable_pledge_link}, the latest version of Terminus always supports the latest version of our {firmware_link}. If you are running on older firmware, you'll need to use an older version of Terminus. Here's a rough breakdown of the Firmware version history where changes were applied that might cause issues if you haven't upgraded your devices in a while:
 
-* *Firmware 1.6.9* (and lower): Supported by Terminus 0.41.0 and lower.
-* *Firmware 1.6.10* (and higher): Supported by Terminus 0.42.0 and higher.
+* *Firmware 1.6.9* (and lower): Supported by Terminus link:https://github.com/usetrmnl/byos_hanami/releases/tag/0.41.0[0.41.0] and lower.
+* *Firmware 1.6.10* (and higher): Supported by Terminus link:https://github.com/usetrmnl/byos_hanami/releases/tag/0.42.0[0.42.0] and higher.
 
 === Extensions
 
