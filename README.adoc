@@ -199,12 +199,17 @@ Also, once logged in, you can manage your settings as follows:
 
 === Devices
 
-Connecting devices to this server is as simple as using the captive WiFi portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request. For more information (including dealing with tricky WiFi situations), check out the help guides below:
+Connecting devices requires using the WiFi captive portal on your mobile phone to connect your TRMNL device to your local network where this server is running. You can also delete your device, via the UI and/or API, and it'll be reconfigured for you automatically when the device next makes a link:doc/api.adoc#display[Display API] request. For more information (including dealing with tricky WiFi situations), check out the help guides:
 
 * link:https://help.usetrmnl.com/en/articles/12263392-connect-your-device-to-terminus-byos[How to connect your device to Terminus].
 * link:https://help.usetrmnl.com/en/articles/11663377-setting-up-a-trmnl-on-tricky-wi-fi-situations[Dealing with tricky Wi-Fi situations].
 
-In accordance with the {unbrickable_pledge_link}, the latest version of Terminus always supports the latest version of our {firmware_link}. If you are running on older firmware, you'll need to use an older version of Terminus that is compatible with that firmware since all code is open sourced (including access to older link:https://github.com/usetrmnl/byos_hanami/tags[versions]).
+=== Firmware
+
+In accordance with the {unbrickable_pledge_link}, the latest version of Terminus always supports the latest version of our {firmware_link}. If you are running on older firmware, you'll need to use an older version of Terminus. Here's a rough breakdown of the Firmware version history where changes were applied that might cause issues if you haven't upgraded your devices in a while:
+
+* *Firmware 1.6.9* (and lower): Supported by Terminus 0.41.0 and lower.
+* *Firmware 1.6.10* (and higher): Supported by Terminus 0.42.0 and higher.
 
 === Extensions
 
