@@ -82,6 +82,7 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
