@@ -38,3 +38,25 @@
     width: 1px;
   }
 }
+
+.bit-popover-device {
+  background: var(--site-black) url("../../images/device.svg") no-repeat center;
+  background-size: contain;
+  border-radius: 1.5rem;
+  max-width: 95vw;
+  max-height: 95vh;
+  width: min(41rem, 95vw);
+  height: min(29rem, 80vh);
+  overflow: visible;
+
+  .label {
+    bottom: -1rem;
+    color: var(--site-white);
+    font-size: 1.2rem;
+    position: relative;
+  }
+
+  .image {
+    border-radius: 0.5rem;
+  }
+}
