@@ -32,6 +32,14 @@
     border: 0.3rem solid var(--site-black);
   }
 
+  .info {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
   .actions {
     align-items: center;
     display: flex;
