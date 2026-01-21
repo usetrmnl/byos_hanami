@@ -3,6 +3,7 @@
 require "dry/core"
 require "htmx"
 require "refinements/hash"
+require "refinements/string"
 
 module Terminus
   module Views
@@ -11,6 +12,7 @@ module Terminus
       extend Hanami::View::Helpers::TagHelper
 
       using Refinements::Hash
+      using Refinements::String
 
       module_function
 
@@ -63,6 +65,10 @@ module Terminus
       def human_at(value) = (value.strftime "%B %d %Y at %H:%M %Z" if value)
 
       def human_time(value) = (value.strftime "%I:%M %p" if value)
+
+      def pluralize value, suffix, count = 0
+        %(#{count} #{value.pluralize suffix, count})
+      end
 
       def select_options_for records, label: :label, id: :id
         records.reduce [["Select...", Dry::Core::EMPTY_STRING]] do |options, record|

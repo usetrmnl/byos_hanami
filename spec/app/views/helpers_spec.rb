@@ -126,6 +126,16 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
+  describe "#pluralize" do
+    it "answers one" do
+      expect(helper.pluralize("test", "s", 1)).to eq("1 test")
+    end
+
+    it "answers many" do
+      expect(helper.pluralize("test", "s", 2)).to eq("2 tests")
+    end
+  end
+
   describe "#select_options_for" do
     it "answers record options" do
       record = Data.define(:id, :label).new 1, "Test"
