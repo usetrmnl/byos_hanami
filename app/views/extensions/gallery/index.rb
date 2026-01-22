@@ -6,9 +6,8 @@ module Terminus
       module Gallery
         # The index view.
         class Index < Hanami::View
-          expose :payload
+          expose :recipe
           expose :query, decorate: false
-          expose(:next_page, decorate: false) { |payload:| payload.current_page + 1 }
         end
       end
     end

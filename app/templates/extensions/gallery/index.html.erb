@@ -23,16 +23,16 @@
     <p>You can fuzzy search by recipe label using partial or full label.</p>
   <% end %>
 
-  <% if payload.data.any? %>
+  <% if recipe.data.any? %>
     <ul class="bit-gallery">
-      <% payload.data.each do |item| %>
+      <% recipe.data.each do |item| %>
         <%= render :item, item: %>
       <% end %>
 
-      <% if payload.to < payload.total %>
+      <% if recipe.meta.more? %>
         <%= tag.li class: "bit-card",
                    **HTMX[
-                     get: routes.path(:extensions_gallery, page: next_page, query:),
+                     get: routes.path(:extensions_gallery, page: recipe.meta.next_page, query:),
                      select: ".bit-card",
                      trigger: "revealed",
                      swap: "this"

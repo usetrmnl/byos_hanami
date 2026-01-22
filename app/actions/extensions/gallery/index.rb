@@ -16,7 +16,7 @@ module Terminus
           def handle request, response
             parameters = request.params
 
-            load(parameters).either -> payload { render request, payload, response },
+            load(parameters).either -> recipe { render request, recipe, response },
                                     -> message { render_error parameters, message, response }
           end
 
@@ -31,14 +31,14 @@ module Terminus
             end
           end
 
-          def render request, payload, response
+          def render request, recipe, response
             query = request.params[:query]
 
             if htmx.request(**request.env).request?
               add_htmx_headers response, query
-              response.render view, payload:, query:, layout: false
+              response.render view, recipe:, query:, layout: false
             else
-              response.render view, payload:, query:
+              response.render view, recipe:, query:
             end
           end
 
@@ -48,24 +48,16 @@ module Terminus
             htmx.response! response.headers, push_url: routes.path(:extensions_gallery, query:)
           end
 
-          # rubocop:todo Metrics/MethodLength
           def render_error parameters, message, response
             response.flash.now[:alert] = message
 
-            payload = TRMNL::API::Models::Recipe[
+            recipe = TRMNL::API::Models::Recipe[
               data: [],
-              total: 0,
-              from: 0,
-              to: 0,
-              per_page: 0,
-              current_page: 0,
-              prev_page_url: nil,
-              next_page_url: nil
+              meta: TRMNL::API::Models::Recipes::Meta.new
             ]
 
-            response.render view, payload:, query: parameters[:query]
+            response.render view, recipe:, query: parameters[:query]
           end
-          # rubocop:enable Metrics/MethodLength
         end
       end
     end
