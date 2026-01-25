@@ -10,6 +10,7 @@
 :esbuild_link: link:https://esbuild.github.io[esbuild]
 :firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :git_link: link:https://git-scm.com[Git]
+:hadolint_link link:https://github.com/hadolint/hadolint[Haskell Dockerfile Linter]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
@@ -92,16 +93,17 @@ The following is a high level overview you can use to compare/contrast when deci
 
 == Requirements
 
-. {git_link}.
-. {ruby_link}.
-. {hanami_link}.
-. {node_link}.
-. {postgres_link}.
-. {valkey_link}: Can be swapped out for {redis_link} or {dragonfly_link} if desired.
-. {chrome_link} (optional, for development): For screen generation via the headless browser.
-. {overmind_link} (optional, for development): Uses your `Procfile` to launch processes.
-. {docker_link} (optional when only using Ruby).
-. {trmnl_link} device (optional, you can use virtual devices).
+* {git_link}.
+* {ruby_link}.
+* {hanami_link}.
+* {node_link}.
+* {postgres_link}.
+* {valkey_link}: Can be swapped out for {redis_link} or {dragonfly_link} if desired.
+* {hadolint_link} (optional, for development): For `Dockerfile` linting.
+* {chrome_link} (optional, for development): For screen generation via the headless browser.
+* {overmind_link} (optional, for development): Uses your `Procfile` to launch processes.
+* {docker_link} (optional when only using Ruby).
+* {trmnl_link} device (optional, you can use virtual devices).
 
 == Quick Start
 
@@ -260,11 +262,11 @@ Code quality is an important and vital aspect of the work on this project. The f
 
 To view up-to-date code coverage details, follow these steps:
 
-. Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/byos_hanami?branch=main[Circle CI] build page.
-. Click on the latest "Success" build at the top of the page.
-. Click on `build`.
-. Click on ARTIFACTS.
-. Click on the `coverage/index.html` file.
+* Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/byos_hanami?branch=main[Circle CI] build page.
+* Click on the latest "Success" build at the top of the page.
+* Click on `build`.
+* Click on ARTIFACTS.
+* Click on the `coverage/index.html` file.
 
 At this point you can click through the tabs at the top of the page to inspect the various namespaces that make up this application.
 
