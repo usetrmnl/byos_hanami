@@ -147,7 +147,7 @@ GEM
       refinements (~> 14.0)
       versionaire (~> 15.0)
       zeitwerk (~> 2.7)
-    faker (3.5.3)
+    faker (3.6.0)
       i18n (>= 1.8.11, < 2)
     ferrum (0.17.1)
       addressable (~> 2.5)
@@ -205,11 +205,11 @@ GEM
       zeitwerk (~> 2.6)
     hanami-assets (2.3.0)
       zeitwerk (~> 2.6)
-    hanami-cli (2.3.3)
+    hanami-cli (2.3.4)
       bundler (>= 2.1)
       dry-cli (~> 1.0, >= 1.1.0)
-      dry-files (~> 1.0, >= 1.0.2, < 2)
-      dry-inflector (~> 1.0, < 2)
+      dry-files (~> 1.0, >= 1.0.2)
+      dry-inflector (~> 1.0)
       irb
       rackup
       rake (~> 13.0)
@@ -381,7 +381,7 @@ GEM
       parser (~> 3.3.0)
       rainbow (>= 2.0, < 4.0)
       rexml (~> 3.1)
-    refinements (14.1.0)
+    refinements (14.2.0)
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -700,7 +700,7 @@ CHECKSUMS
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   et-orbi (1.4.0) sha256=6c7e3c90779821f9e3b324c5e96fda9767f72995d6ae435b96678a4f3e2de8bc
   etcher (4.1.0) sha256=cdac3e890c188f1b13200d28d46fc021c7d870060a272e17ef31086efcb3782a
-  faker (3.5.3) sha256=b961482dc0bb15ccb9a98ea7878b925669e9ae8f5e59b607da540b768137d765
+  faker (3.6.0) sha256=4ce80bf91c8d09bbfff4c5596690bf862d60eac420f86737ca8ce12a54dc464a
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
   ffi (1.17.3-aarch64-linux-gnu) sha256=28ad573df26560f0aedd8a90c3371279a0b2bd0b4e834b16a2baa10bd7a97068
   ffi (1.17.3-aarch64-linux-musl) sha256=020b33b76775b1abacc3b7d86b287cef3251f66d747092deec592c7f5df764b2
@@ -717,7 +717,7 @@ CHECKSUMS
   gitt (5.1.0) sha256=0eb4995cad3f5cd4c65f31a24967b6bede7e026ad79ad2c304e2e39f8850de43
   hanami (2.3.2) sha256=2f1e7e10d760bd0c3929bcb55a42f38281bd5da507e40b98e62282f52f452e3b
   hanami-assets (2.3.0) sha256=c396bb735833458d0ceda013f498154eccafcae50c36db7f27cdd50f0560223d
-  hanami-cli (2.3.3) sha256=998d8bcd801c0ad761add5a9e7f5b607fda8b38a5ba9424c73d29fccd2a4cfc5
+  hanami-cli (2.3.4) sha256=436a1ba457a9cdd025359932e4781c2954b9ea0d800a1a2a01cb6c92f4a749cc
   hanami-controller (2.3.1) sha256=ad48df2b4e437fc8392c236d0ddc2fabc1a466db5ee829f05519134889e2b9d9
   hanami-db (2.3.0) sha256=d6baa6c16a9321e5132799b8b26c3e6a2e19b8c5515c8785fb1ab94720d94711
   hanami-router (2.3.1) sha256=81b3665cb851de5703bd2fea3f375eccb2af871288cf130ab0fbc42b3b8ae31f
@@ -790,7 +790,7 @@ CHECKSUMS
   rdoc (7.1.0) sha256=494899df0706c178596ca6e1d50f1b7eb285a9b2aae715be5abd742734f17363
   redis-client (0.26.3) sha256=37a95ca193b7a79f350c09fe5e696dc15d1701195d559d031a107ab725effc49
   reek (6.5.0) sha256=d26d3a492773b2bbc228888067a21afe33ac07954a17dbd64cdeae42c4c69be1
-  refinements (14.1.0) sha256=f1068b5cad87b186d57bde399d539fcda9bb1f155245b0b15e7a5fb9f40b5715
+  refinements (14.2.0) sha256=0d69befeb1bf118087584e7a111e763528e46961b22da0e404d71e4c8df5ca0f
   regexp_parser (2.11.3) sha256=ca13f381a173b7a93450e53459075c9b76a10433caadcb2f1180f2c741fc55a4
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
   repl_type_completor (0.1.12) sha256=f60671508b0a7fff341b2ced85618e4a89d27fc5829807a3b0c5a44f98585b84
