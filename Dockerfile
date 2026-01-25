@@ -22,10 +22,9 @@ ENV BUNDLE_WITHOUT="development:quality:test:tools"
 
 WORKDIR /app
 
+SHELL ["/bin/bash", "-o", "errexit", "-o", "nounset", "-o", "pipefail", "-c"]
+
 RUN <<STEPS
-  set -o errexit
-  set -o nounset
-  set -o xtrace
   apt-get update -qq
   apt-get install --no-install-recommends -y \
   chromium \
