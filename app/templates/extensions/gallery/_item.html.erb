@@ -27,9 +27,15 @@
   </div>
 
   <dialog id="popover-preview-<%= item.id %>"
-          class="bit-popover-content bit-popover-device"
+          class="bit-popover-content bit-popover-screen"
           popover="auto">
-    <%= tag.img src: item.screenshot_url, alt: "Screen", class: :image, loading: :lazy %>
-    <h1 class="label"><%= item.name %></h1>
+    <figure>
+      <%= tag.img src: item.screenshot_url, alt: "Screen", loading: :lazy %>
+      <figcaption><%= item.name %></figcaption>
+    </figure>
+
+    <p class="brand">
+      <%= image_tag "logo/with_label.svg", alt: "Logo with Label", width: 150, height: 75 %>
+    </p>
   </dialog>
 </li>
