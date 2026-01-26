@@ -19,7 +19,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
 
     it "allows link element with attributes" do
       source = <<~HTML.squeeze(" ").delete("\n").strip
-        <html><head> <link rel="stylesheet" href="https://usetrmnl.com/css/latest/plugins.css">
+        <html><head> <link rel="stylesheet" href="https://trmnl.com/css/latest/plugins.css">
         </head><body></body></html>
       HTML
 
@@ -28,7 +28,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
 
     it "allows script element with attributes" do
       source = <<~HTML.squeeze(" ").delete("\n").strip
-        <html><head> <script src="https://usetrmnl.com/js/latest/plugins.js"></script>
+        <html><head> <script src="https://trmnl.com/js/latest/plugins.js"></script>
         </head><body></body></html>
       HTML
 

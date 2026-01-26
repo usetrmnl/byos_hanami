@@ -4,7 +4,7 @@
   "description": "A TRMNL server.",
   "icons": [
     {
-      "src": "https://usetrmnl.com/icon.svg",
+      "src": "https://trmnl.com/icon.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     }

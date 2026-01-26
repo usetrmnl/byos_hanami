@@ -2,8 +2,8 @@
 :toclevels: 5
 :figure-caption!:
 
-:core_link: link:https://usetrmnl.com[Core]
-:framework_link: link:https://usetrmnl.com/framework[Framework]
+:core_link: link:https://trmnl.com[Core]
+:framework_link: link:https://trmnl.com/framework[Framework]
 :liquid_link: link:https://shopify.github.io/liquid/[Liquid]
 :trmnl_liquid_gem_link: link:https://github.com/usetrmnl/trmnl-liquid[TRMNL Liquid]
 
@@ -36,7 +36,7 @@ The following provides a visual roadmap of current development and work that is 
 
 == Walkthrough
 
-To help you get used to how Terminus extensions work versus Core plugins, let's walk through a scenario building a Core plugin and Terminus extension side-by-side so you can see the differences. To get started, create a new link:https://usetrmnl.com/plugin_settings/new?keyname=private_plugin[private plugin] in Core and then do the same in Terminus but create a new Extension instead. Here's the steps:
+To help you get used to how Terminus extensions work versus Core plugins, let's walk through a scenario building a Core plugin and Terminus extension side-by-side so you can see the differences. To get started, create a new link:https://trmnl.com/plugin_settings/new?keyname=private_plugin[private plugin] in Core and then do the same in Terminus but create a new Extension instead. Here's the steps:
 
 . In both Core and Terminus first start by naming your plugin/extension. In Terminus you can also give yourself a nice label too.
 . In Core, select the _Polling_ strategy. In Terminus, select the _Poll_ kind.

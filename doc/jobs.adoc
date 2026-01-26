@@ -2,7 +2,7 @@
 :toclevels: 5
 :figure-caption!:
 
-:core_link: link:https://usetrmnl.com[Core]
+:core_link: link:https://trmnl.com[Core]
 
 = Jobs
 

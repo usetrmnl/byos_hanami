@@ -3,7 +3,7 @@
 :figure-caption!:
 
 :chrome_link: link:https://www.google.com/chrome[Google Chrome]
-:core_api_link: link:https://usetrmnl.com/api-docs/index.html[Core API]
+:core_api_link: link:https://trmnl.com/api-docs/index.html[Core API]
 :docker_doc_link: link:doc/docker.adoc[Docker]
 :docker_link: link:https://www.docker.com[Docker]
 :dragonfly_link: link:https://www.dragonflydb.io[Dragonfly]
@@ -26,8 +26,8 @@
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sidekiq_link: link:https://github.com/sidekiq/sidekiq[Sidekiq]
-:trmnl_link: link:https://usetrmnl.com[TRMNL]
-:unbrickable_pledge_link: link:https://usetrmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
+:trmnl_link: link:https://trmnl.com[TRMNL]
+:unbrickable_pledge_link: link:https://trmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
 :valkey_link: link:https://valkey.io[Valkey]
 :yjit_link: link:https://docs.ruby-lang.org/en/master/jit/yjit_md.html[YJIT]
 :youtube_link: link:https://www.youtube.com/@useTRMNL[YouTube]
@@ -66,7 +66,7 @@ toc::[]
 * Supports {docker_link}.
 * Supports {trmnl_link} devices.
 
-The following is a high level overview you can use to compare/contrast when deciding between using this Build Your Own Server (BYOS) implementation or our link:https://usetrmnl.com[hosted] solution.
+The following is a high level overview you can use to compare/contrast when deciding between using this Build Your Own Server (BYOS) implementation or our link:https://trmnl.com[hosted] solution.
 
 *Legend*
 

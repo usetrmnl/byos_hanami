@@ -2,7 +2,7 @@
 :toclevels: 5
 :figure-caption!:
 
-:core_link: link:https://usetrmnl.com[Core]
+:core_link: link:https://trmnl.com[Core]
 :image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
 :petail_link: link:https://alchemists.io/projects/petail[Petail]
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
@@ -1001,13 +1001,13 @@ Here's a more complete example using CSS and HTML that you can supply via the AP
 </html>
 ----
 
-Due to this being so flexible, this also means you can pull in and use our link:https://usetrmnl.com/framework[Design Framework] when building custom screens by linking to the following:
+Due to this being so flexible, this also means you can pull in and use our link:https://trmnl.com/framework[Design Framework] when building custom screens by linking to the following:
 
 * Plugins
-** link:https://usetrmnl.com/css/latest/plugins.css[Stylesheet]
-** link:https://usetrmnl.com/js/latest/plugins.js[JavaScript]
+** link:https://trmnl.com/css/latest/plugins.css[Stylesheet]
+** link:https://trmnl.com/js/latest/plugins.js[JavaScript]
 * Components
-** link:https://usetrmnl.com/js/latest/trmnl-component.js[JavaScript]
+** link:https://trmnl.com/js/latest/trmnl-component.js[JavaScript]
 
 💡 You can use the Designer within the UI to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
 ====

@@ -1,6 +1,6 @@
 organization:
   label: "TRMNL"
-  uri: "https://usetrmnl.com"
+  uri: "https://trmnl.com"
 project:
   name: "byos_hanami"
   owner: "usetrmnl"
