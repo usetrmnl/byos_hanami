@@ -20,9 +20,10 @@ RSpec.describe "/api/display", :db do
     firmware
     get routes.path(:api_display), {}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
+      firmware_version: "0.0.0",
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -37,9 +38,10 @@ RSpec.describe "/api/display", :db do
     firmware
     get routes.path(:api_display), {}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
+      firmware_version: "0.0.0",
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 10,
       refresh_rate: 20,
@@ -56,9 +58,10 @@ RSpec.describe "/api/display", :db do
 
     get routes.path(:api_display), {}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
+      firmware_version: "0.0.0",
       image_url: %r(data:image/png;base64.+),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -73,9 +76,10 @@ RSpec.describe "/api/display", :db do
     firmware
     get routes.path(:api_display), {base_64: true}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: "memory://abc123.bin",
+      firmware_version: "0.0.0",
       image_url: %r(data:image/png;base64.+),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -90,9 +94,10 @@ RSpec.describe "/api/display", :db do
     Factory[:firmware, :with_attachment, version: "1.2.3"]
     get routes.path(:api_display), {}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: nil,
+      firmware_version: nil,
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -106,9 +111,10 @@ RSpec.describe "/api/display", :db do
     device
     get routes.path(:api_display), {}, **firmware_headers
 
-    expect(json_payload).to include(
+    expect(json_payload).to match(
       filename: /terminus_welcome_#{device.friendly_id.downcase}-\h{32}\.png/,
       firmware_url: nil,
+      firmware_version: nil,
       image_url: %r(memory://\h{32}\.png),
       image_url_timeout: 0,
       refresh_rate: 900,
@@ -164,9 +170,10 @@ RSpec.describe "/api/display", :db do
     end
 
     it "answers error image" do
-      expect(json_payload).to include(
+      expect(json_payload).to match(
         filename: "#{device.screen_name :error}.png",
         firmware_url: nil,
+        firmware_version: nil,
         image_url: %r(memory://\h{32}\.png),
         image_url_timeout: 0,
         refresh_rate: 900,

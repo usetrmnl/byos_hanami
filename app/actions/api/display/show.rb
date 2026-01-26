@@ -51,19 +51,21 @@ module Terminus
           end
 
           def build_payload device, image_attributes
-            model[
-              firmware_url: fetch_firmware_uri(device),
-              **image_attributes,
-              **device.as_api_display
-            ]
+            model[**fetch_firmware(device), **image_attributes, **device.as_api_display]
           end
 
-          def fetch_firmware_uri device
+          def fetch_firmware device
             firmware_repository.latest.then do |firmware|
               break unless firmware
-              break if device.firmware_version == firmware.version
 
-              firmware.attachment_uri host: settings.api_uri
+              version = firmware.version
+
+              break if device.firmware_version == version
+
+              {
+                firmware_url: firmware.attachment_uri(host: settings.api_uri),
+                firmware_version: version
+              }
             end
           end
 
@@ -74,9 +76,9 @@ module Terminus
 
           def any_error device, screen, response
             payload = model[
-              firmware_url: fetch_firmware_uri(device),
               filename: screen.image_name,
               image_url: screen.image_uri(host: settings.api_uri),
+              **fetch_firmware(device),
               **device.as_api_display
             ]
 

@@ -46,7 +46,7 @@ gem "sequel", "~> 5.97"
 gem "shrine", "~> 3.6"
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-scheduler", "~> 6.0"
-gem "trmnl-api", "~> 0.10"
+gem "trmnl-api", "~> 0.11"
 gem "versionaire", "~> 15.0"
 
 group :quality do

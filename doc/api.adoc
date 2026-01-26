@@ -75,6 +75,7 @@ Only the `ID` HTTP header is required for all of these API calls but these _opti
 {
   "filename": "demo.bmp",
   "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
+  "firmware_version": "1.4.8",
   "image_url": "https://localhost:2443/assets/screens/A1B2C3D4E5F6/demo.bmp",
   "image_url_timeout": 0,
   "refresh_rate": 130,
@@ -91,6 +92,7 @@ Only the `ID` HTTP header is required for all of these API calls but these _opti
 {
   "filename": "demo.bmp",
   "firmware_url": "http://localhost:2443/assets/firmware/1.4.8.bin",
+  "firmware_version": "1.4.8",
   "image_url": "data:image/bmp;base64,<truncated>",
   "image_url_timeout": 0,
   "refresh_rate": 200,
