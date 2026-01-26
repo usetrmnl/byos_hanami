@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/monads"
+require "pipeable"
 
 module Terminus
   module Aspects
@@ -14,7 +15,9 @@ module Terminus
           playlist_repository: "repositories.playlist",
           item_repository: "repositories.playlist_item"
         ]
+
         include Dry::Monads[:result]
+        include Pipeable
 
         def call(mac_address:, **)
           device = repository.find_by(mac_address:)
@@ -27,13 +30,14 @@ module Terminus
         private
 
         def process(mac_address, **)
-          result = create(mac_address, **)
+          cached_device = nil
 
-          case result
-            in Success(device)
-              welcomer.call(device).fmap { |screen| configure device, screen }
-            else result
-          end
+          pipe(
+            create(mac_address, **),
+            fmap { cached_device = it },
+            bind { |device| welcomer.call device },
+            fmap { |screen| configure cached_device, screen }
+          )
         end
 
         def create(mac_address, **)
