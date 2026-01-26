@@ -236,7 +236,7 @@ CREATE TABLE public.device (
     firmware_update boolean DEFAULT true CONSTRAINT devices_firmware_update_not_null NOT NULL,
     sleep_start_at time without time zone,
     sleep_stop_at time without time zone,
-    model_id integer,
+    model_id integer NOT NULL,
     playlist_id integer
 );
 
@@ -1316,4 +1316,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251201105349_alter_model_firmware_columns.rb'),
 ('20251211152911_drop_model_published_at_column.rb'),
 ('20251215154654_add_playlist_mode_enum.rb'),
-('20260106144016_alter_firmware_kind.rb');
+('20260106144016_alter_firmware_kind.rb'),
+('20260126141642_alter_device_table_model_id_as_non_null.rb');
