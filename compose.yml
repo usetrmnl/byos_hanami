@@ -36,7 +36,7 @@ services:
       keyvalue:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:2300/up"]
+      test: ["CMD-SHELL", "curl --fail --silent http://localhost:${HANAMI_PORT}/up"]
       interval: 30s
       timeout: 10s
       retries: 3
