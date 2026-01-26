@@ -35,7 +35,7 @@ RSpec.describe "/api/setup", :db do
     problem = Petail[
       type: "/problem_details#device_setup",
       status: :not_found,
-      detail: %(Unable to find model for ID: nil.),
+      detail: %(Null value in column "model_id" of relation "device" violates not-null constraint.),
       instance: "/api/setup"
     ]
 

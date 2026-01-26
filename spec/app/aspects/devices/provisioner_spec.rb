@@ -58,9 +58,17 @@ RSpec.describe Terminus::Aspects::Devices::Provisioner, :db do
         )
       end
 
-      it "answers failure with invalid foreign key" do
-        result = provisioner.call mac_address: "A1:B2:C3:D4:E5:F6", model_id: 666
-        expect(result).to be_failure(%(Key (model_id)=(666) is not present in table "model".))
+      it "answers failure with nil model ID" do
+        result = provisioner.call mac_address: "A1:B2:C3:D4:E5:F6", model_id: nil
+
+        expect(result).to be_failure(
+          %(Null value in column "model_id" of relation "device" violates not-null constraint.)
+        )
+      end
+
+      it "answers failure with invalid model ID" do
+        result = provisioner.call mac_address: "A1:B2:C3:D4:E5:F6", model_id: 13
+        expect(result).to be_failure(%(Key (model_id)=(13) is not present in table "model".))
       end
     end
   end

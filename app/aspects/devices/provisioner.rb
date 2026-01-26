@@ -38,6 +38,8 @@ module Terminus
 
         def create(mac_address, **)
           Success repository.create(defaulter.call.merge!(mac_address:, **))
+        rescue ROM::SQL::NotNullConstraintError => error
+          Failure "#{error.message.match(/ERROR:  (.+)\n/)[1].capitalize}."
         rescue ROM::SQL::ForeignKeyConstraintError => error
           Failure error.message.sub(/.+DETAIL:  /m, "").strip
         end
