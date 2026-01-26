@@ -10,7 +10,7 @@
 :esbuild_link: link:https://esbuild.github.io[esbuild]
 :firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :git_link: link:https://git-scm.com[Git]
-:hadolint_link link:https://github.com/hadolint/hadolint[Haskell Dockerfile Linter]
+:hadolint_link: link:https://github.com/hadolint/hadolint[Haskell Dockerfile Linter]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :htmx_link: link:https://htmx.org[htmx]
 :imagemagick_link: link:https://imagemagick.org[ImageMagick]
