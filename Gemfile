@@ -47,6 +47,7 @@ gem "shrine", "~> 3.6"
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-scheduler", "~> 6.0"
 gem "trmnl-api", "~> 0.11"
+gem "trmnl-liquid", "~> 0.5"
 gem "versionaire", "~> 15.0"
 
 group :quality do

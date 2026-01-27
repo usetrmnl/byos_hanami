@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 Hanami.app.register_provider :liquid, namespace: true do
-  prepare { require "liquid" }
+  prepare { require "trmnl/liquid" }
 
   start do
-    default = Liquid::Environment.build do |environment|
-      environment.error_mode = :strict
-      environment.register_filter Terminus::Aspects::Liquid::Filters
-    end
+    default = TRMNL::Liquid.new { |environment| environment.error_mode = :strict }
 
     renderer = lambda do |template, data, environment: default|
       Liquid::Template.parse(template, environment:).render data

@@ -37,6 +37,7 @@ GEM
       rack-test (>= 0.6)
     childprocess (5.1.0)
       logger (~> 1.5)
+    chunky_png (1.4.0)
     cogger (2.1.0)
       core (~> 3.0)
       logger (~> 1.7)
@@ -374,6 +375,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    redcarpet (3.6.1)
     redis-client (0.26.4)
       connection_pool
     reek (6.5.0)
@@ -428,6 +430,10 @@ GEM
       rom (~> 5.4)
       sequel (>= 4.49)
     rouge (4.7.0)
+    rqrcode (3.2.0)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 2.0)
+    rqrcode_core (2.1.0)
     rspec (3.13.2)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -546,6 +552,11 @@ GEM
       inspectable (~> 1.0)
       pipeable (~> 2.0)
       zeitwerk (~> 2.7)
+    trmnl-liquid (0.5.0)
+      liquid (~> 5.11)
+      redcarpet (~> 3.6)
+      rqrcode (~> 3.2)
+      tzinfo (~> 2.0)
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -644,6 +655,7 @@ DEPENDENCIES
   sidekiq-scheduler (~> 6.0)
   simplecov (~> 0.22)
   trmnl-api (~> 0.11)
+  trmnl-liquid (~> 0.5)
   versionaire (~> 15.0)
   warning (~> 1.5)
 
@@ -660,6 +672,7 @@ CHECKSUMS
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   capybara-validate_html5 (2.1.0) sha256=9c5bcac8058f05c8468c0856ccfbf91478e24c7ff07c79b8ac7c64ba9291cf5a
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
+  chunky_png (1.4.0) sha256=89d5b31b55c0cf4da3cf89a2b4ebc3178d8abe8cbaf116a1dba95668502fdcfe
   cogger (2.1.0) sha256=8fa3cf964856dca5d0175aa5e9e1f64ededad917700bb29efc5e7471c33902ef
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
@@ -789,6 +802,7 @@ CHECKSUMS
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
   rbs (3.10.3) sha256=70627f3919016134d554e6c99195552ae3ef6020fe034c8e983facc9c192daa6
   rdoc (7.1.0) sha256=494899df0706c178596ca6e1d50f1b7eb285a9b2aae715be5abd742734f17363
+  redcarpet (3.6.1) sha256=d444910e6aa55480c6bcdc0cdb057626e8a32c054c29e793fa642ba2f155f445
   redis-client (0.26.4) sha256=3ad70beff5da2653e02dfeae996e7d8d7147a558da12b16b2282ad345e4c7120
   reek (6.5.0) sha256=d26d3a492773b2bbc228888067a21afe33ac07954a17dbd64cdeae42c4c69be1
   refinements (14.2.0) sha256=0d69befeb1bf118087584e7a111e763528e46961b22da0e404d71e4c8df5ca0f
@@ -805,6 +819,8 @@ CHECKSUMS
   rom-repository (5.4.3) sha256=a45477c6e01241ed9361c6d5e457c398882f97e376f7a0ac1276e0aa8c013557
   rom-sql (3.7.0) sha256=56ba0714603d72d7ab5ad3247b6526d04ae83b6fcc807f4a1fa953cd7a65a639
   rouge (4.7.0) sha256=dba5896715c0325c362e895460a6d350803dbf6427454f49a47500f3193ea739
+  rqrcode (3.2.0) sha256=64c1494ca6bb67d731330f38b50e3fd09eeab4f5dcd04b608e21218d1d0b9542
+  rqrcode_core (2.1.0) sha256=f303b85df89c1b8fc5ee8dc19808c9dc4330e6329b660d99d4a8cbb36ca13051
   rspec (3.13.2) sha256=206284a08ad798e61f86d7ca3e376718d52c0bc944626b2349266f239f820587
   rspec-core (3.13.6) sha256=a8823c6411667b60a8bca135364351dda34cd55e44ff94c4be4633b37d828b2d
   rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
@@ -842,6 +858,7 @@ CHECKSUMS
   tone (3.1.0) sha256=2e2e77f4f43e77d05ae9160c5b16306502b3efc3da1e418c342051f3f4cb2995
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
   trmnl-api (0.11.0) sha256=dcc2127194bff08b33890fcb16ad7ef3597757377e0fea0685d9040e2a916957
+  trmnl-liquid (0.5.0) sha256=37f768cc0bd1155b68042b75970a2792773c7d044e26c9a0b5896907db96e1e1
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   unicode-display_width (3.2.0) sha256=0cdd96b5681a5949cdbc2c55e7b420facae74c4aaf9a9815eee1087cb1853c42
