@@ -279,6 +279,87 @@ RSpec.describe "/api/screens", :db do
     )
   end
 
+  it "patches screen with Base64 encoded data" do
+    data = Base64.strict_encode64 SPEC_ROOT.join("support/fixtures/test.png").read
+
+    patch routes.path(:api_screen_patch, id: screen.id),
+          {screen: {data:}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
+          "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: screen.model_id,
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        filename: "#{screen.name}.png",
+        uri: %r(memory://\h{32}.png),
+        mime_type: "image/png",
+        bit_depth: 1,
+        size: kind_of(Integer),
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
+  it "patches screen with preprocessed URI" do
+    payload = {screen: {uri: SPEC_ROOT.join("support/fixtures/test.png").to_s, preprocessed: true}}
+
+    patch routes.path(:api_screen_patch, id: screen.id),
+          payload.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
+          "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: screen.model_id,
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        filename: "#{screen.name}.png",
+        uri: %r(memory://\h{32}.png),
+        mime_type: "image/png",
+        bit_depth: 1,
+        size: kind_of(Integer),
+        width: 1,
+        height: 1,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
+  it "patches screen with unprocessed URI" do
+    payload = {screen: {uri: SPEC_ROOT.join("support/fixtures/test.png").to_s}}
+
+    patch routes.path(:api_screen_patch, id: screen.id),
+          payload.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
+          "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: screen.model_id,
+        id: kind_of(Integer),
+        label: screen.label,
+        name: screen.name,
+        filename: "#{screen.name}.png",
+        uri: %r(memory://\h{32}.png),
+        mime_type: "image/png",
+        bit_depth: 1,
+        size: kind_of(Integer),
+        width: 800,
+        height: 480,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
   it "patches screen model ID" do
     patch routes.path(:api_screen_patch, id: screen.id),
           {screen: {model_id: model.id}}.to_json,
@@ -319,6 +400,27 @@ RSpec.describe "/api/screens", :db do
     ]
 
     expect(json_payload).to eq(problem.to_h)
+  end
+
+  context "with invalid Base64 data" do
+    before do
+      patch routes.path(:api_screen_patch, id: screen.id),
+            {screen: {data: "invalid-base64-data!!!"}}.to_json,
+            "HTTP_AUTHORIZATION" => access_token,
+            "CONTENT_TYPE" => "application/json"
+    end
+
+    it "answers problem details" do
+      expect(json_payload).to include(
+        type: "/problem_details#screen_payload",
+        status: 422,
+        title: "Unprocessable Content"
+      )
+    end
+
+    it "answers detail with Base64 error" do
+      expect(json_payload[:detail]).to match(/Invalid Base64 data/)
+    end
   end
 
   it "answers problem details for unsupported model" do
