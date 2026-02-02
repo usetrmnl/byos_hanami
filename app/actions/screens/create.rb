@@ -17,6 +17,7 @@ module Terminus
             required(:model_id).filled :integer
             required(:label).filled :string
             required(:name).filled :string
+            required(:image).filled :hash
           end
         end
 
@@ -24,8 +25,8 @@ module Terminus
           parameters = request.params
 
           if parameters.valid?
-            repository.create parameters[:screen]
-            response.render index_view, **view_settings(request)
+            save parameters[:screen]
+            response.render index_view, screens: repository.all
           else
             error response, parameters
           end
@@ -33,10 +34,16 @@ module Terminus
 
         private
 
-        def view_settings request
-          settings = {screens: repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
+        # :reek:FeatureEnvy
+        # :reek:TooManyStatements
+        def save attributes
+          image = attributes.delete :image
+          record = repository.create attributes
+          tempfile = image[:tempfile]
+          extension = File.extname tempfile
+
+          record.upload tempfile, metadata: {"filename" => "#{record.name}#{extension}"}
+          repository.update record.id, image_data: record.image_attributes
         end
 
         def error response, parameters
@@ -44,8 +51,7 @@ module Terminus
                           models: model_repository.all,
                           screen: nil,
                           fields: parameters[:screen],
-                          errors: parameters.errors[:screen],
-                          layout: false
+                          errors: parameters.errors[:screen]
         end
       end
     end
