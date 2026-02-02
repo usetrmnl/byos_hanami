@@ -903,7 +903,7 @@ You'll get an empty hash when there is nothing to delete.
 
 === Screens
 
-Used for generating new device screens by supplying HTML content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name.
+Used for generating new device screens by supplying content for rendering, screenshotting, and grey scaling to render properly on your device. Both `.png` or `.bmp` extensions are supported for the `file_name` key. If you don't supply a `file_name`, the server will generate one for you using a UUID for the file name.
 
 .GET Request
 [%collapsible]
@@ -961,55 +961,6 @@ curl -X "POST" "https://localhost:2443/api/screens" \
   }
 }'
 ----
-
-Allows you to render custom HTML content as an image on your device. Full HTML is supported so you can supply CSS styles, full DOM, etc. At a minimum, you'll want to use the following to prevent white borders showing up around your generated screens:
-
-[source,css]
-----
-* {
-  margin: 0;
-}
-----
-
-Here's a more complete example using CSS and HTML that you can supply via the API request:
-
-[source,html]
-----
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-
-    <title>Demo</title>
-
-    <meta charset="utf-8">
-
-    <style type="text/css">
-      * {
-        margin: 0;
-      }
-    </style>
-
-    <script type="text/javascript">
-    </script>
-  </head>
-
-  <body>
-    <img src="uri/to/image" alt="Image"/>
-  </body>
-</html>
-----
-
-Due to this being so flexible, this also means you can pull in and use our link:https://trmnl.com/framework[Design Framework] when building custom screens by linking to the following:
-
-* Plugins
-** link:https://trmnl.com/css/latest/plugins.css[Stylesheet]
-** link:https://trmnl.com/js/latest/plugins.js[JavaScript]
-* Components
-** link:https://trmnl.com/js/latest/trmnl-component.js[JavaScript]
-
-💡 You can use the Designer within the UI to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
 ====
 
 .POST Request (Preprocessed URI)
@@ -1031,8 +982,6 @@ curl -X "POST" "https://localhost:2443/api/screens" \
   }
 }'
 ----
-
-Allows you to render a preprocessed image -- by you -- on your device. The `preprocessed` value must be `true` when supplied. This assumes the URI you want have rendered on your device is fully compatible with the device in terms of greyscale, bit depth, color depth, and so forth. We _do not process this image_ and only cache the image locally for display on your device. I you want want your image processed then see the Unprocessed URI API Request example.
 ====
 
 .POST Request (Unprocessed URI)
@@ -1053,8 +1002,6 @@ curl -X "POST" "https://localhost:2443/api/screens" \
   }
 }'
 ----
-
-Allows you to render a unprocessed image on your device. We'll automatically process the image for rendering on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
 ====
 
 .POST Request (Base64 Encoded Data)
@@ -1076,8 +1023,6 @@ curl -X "POST" "https://localhost:2443/api/screens" \
   }
 }'
 ----
-
-Allows you to render a strictly Base64 encoded image on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax as the value.
 ====
 
 .POST Response
@@ -1107,7 +1052,7 @@ Allows you to render a strictly Base64 encoded image on your device. The `dimens
 No matter what parameters you use for this request, you'll always get a path (unless an error is encountered).
 ====
 
-.PATCH Request
+.PATCH Request (HTML Content)
 [%collapsible]
 ====
 [source,bash]
@@ -1117,17 +1062,60 @@ curl -X "PATCH" "https://localhost:2443/api/screens/1" \
      -H 'Content-Type: application/json' \
      -d $'{
   "screen": {
-    "model_id": "1",
-    "label": "Demo",
-    "name": "demo",
-    "content": "<h1>Demo</h1>"
+    "content": "<img src=\\"https://leonardo.ai/wp-content/uploads/2023/07/image-129.jpeg\\">"
   }
 }'
 ----
+====
 
-Unlike the POST request, only HTML content is supported at the moment.
+.PATCH Request (Preprocessed URI)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Authorization: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "preprocessed": true,
+    "uri": "https://demo.io/demo.png"
+  }
+}'
+----
+====
 
-All of the above attributes are optional which means you can update only the attribute you care about or multiple attributes at once. At least one attribute must be supplied, though.
+.PATCH Request (Unprocessed URI)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Authorization: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "preprocessed": true,
+    "uri": "https://leonardo.ai/wp-content/uploads/2023/07/image-131.jpeg"
+  }
+}'
+----
+====
+
+.PATCH Request (Base64 Encoded Data)
+[%collapsible]
+====
+[source,bash]
+----
+curl -X "PATCH" "https://localhost:2443/api/screens/1" \
+     -H 'Authorization: <redacted>' \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "screen": {
+    "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAXNSR0IArs4c6QAAAAtJREFUCFtjYGAAAAADAAHc7H1IAAAAAElFTkSuQmCC"
+  }
+}'
+----
 ====
 
 .PATCH Response
@@ -1190,3 +1178,10 @@ curl -X "DELETE" "https://localhost:2443/api/screens/13" \
 }
 ----
 ====
+
+You'll notice the POST and PATCH requests allow you to supply different kinds of content. Here's how you can leverage each:
+
+* *HTML Content*: Allows you to render custom HTML content as an image on your device. This includes CSS, JavaScript, and HTML. At a minimum, you'll want to use the following to prevent white borders appearing around your generated screens: `* { margin: 0; }`. Due to this being so flexible, this also means you can externally link and use our link:https://trmnl.com/framework[Design Framework] when building custom screens. You can also use the Designer, within the Terminus UI, to build custom screens in real-time for faster feedback. The result of your work can be supplied to this endpoint to create a new screen for display on your device.
+* *Preprocessed URI*: Allows you to render a preprocessed image on your device. The `preprocessed` value must be `true` when supplied. This assumes the URI you want have rendered on your device is fully compatible with the device in terms of greyscale, bit depth, color depth, and so forth. We _do not process this image_ and only cache the image locally for display on your device. I you want want your image processed then see the Unprocessed URI API Request example.
+* *Unprocessed URI*: Allows you to render a unprocessed image on your device. We'll automatically process the image for rendering on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax for this value.
+* *Base64 Encoded Data*: Allows you to render a strictly Base64 encoded image on your device. The `dimensions` parameter is optional and defaults to `800x480` when not supplied. You can use the full {image_magick_geometry_link} syntax for this value.

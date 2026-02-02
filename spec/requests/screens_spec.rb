@@ -281,7 +281,7 @@ RSpec.describe "/api/screens", :db do
 
   it "patches screen model ID" do
     patch routes.path(:api_screen_patch, id: screen.id),
-          {screen: {model_id: model.id}}.to_json,
+          {screen: {model_id: model.id, content: "<p>Test</p>"}}.to_json,
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
@@ -291,17 +291,34 @@ RSpec.describe "/api/screens", :db do
         id: kind_of(Integer),
         label: screen.label,
         name: screen.name,
-        filename: "test.png",
-        uri: "memory://abc123.png",
+        filename: "#{screen.name}.png",
+        uri: %r(memory://\h{32}.png),
         mime_type: "image/png",
         bit_depth: 1,
         size: kind_of(Integer),
-        width: 1,
-        height: 1,
+        width: 800,
+        height: 480,
         created_at: match_rfc_3339,
         updated_at: match_rfc_3339
       }
     )
+  end
+
+  it "answers problem details for invalid ID" do
+    patch routes.path(:api_screen_patch, id: 13),
+          {screen: {content: "<h1>Test</h2>"}}.to_json,
+          "HTTP_AUTHORIZATION" => access_token,
+          "CONTENT_TYPE" => "application/json"
+
+    problem = Petail[
+      type: "/problem_details#screen_payload",
+      status: 422,
+      title: "Unprocessable Content",
+      detail: "Unable to find screen: 13.",
+      instance: "/api/screens"
+    ]
+
+    expect(json_payload).to eq(problem.to_h)
   end
 
   it "answers problem details for invalid model ID" do
