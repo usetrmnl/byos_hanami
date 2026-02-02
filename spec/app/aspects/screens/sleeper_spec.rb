@@ -6,13 +6,15 @@ RSpec.describe Terminus::Aspects::Screens::Sleeper, :db do
   subject(:sleeper) { described_class.new }
 
   describe "#call" do
-    let(:device) { Factory[:device, friendly_id: "ABC123"] }
+    let(:device) { Factory[:device, model_id: model.id, friendly_id: "ABC123"] }
+    let(:model) { Factory[:model] }
 
     it "answers existing screen when found" do
-      Factory[:screen, label: "Test", name: "terminus_sleep_abc123"]
+      screen = Factory[:screen, model_id: model.id, name: "terminus_sleep_abc123"]
 
       expect(sleeper.call(device).success).to have_attributes(
-        label: "Test",
+        id: screen.id,
+        label: "Sleep ABC123",
         name: "terminus_sleep_abc123"
       )
     end

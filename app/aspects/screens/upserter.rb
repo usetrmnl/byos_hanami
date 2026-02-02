@@ -6,28 +6,33 @@ require "initable"
 module Terminus
   module Aspects
     module Screens
-      # Saves Base64 encoded content as image.
-      class Creator
-        include Dry::Monads[:result]
+      # Creates or updates a screen.
+      class Upserter
         include Deps[
-          "aspects.screens.creators.encoded",
-          "aspects.screens.creators.html",
-          "aspects.screens.creators.preprocessed",
-          "aspects.screens.creators.unprocessed",
+          "aspects.screens.upserters.encoded",
+          "aspects.screens.upserters.html",
+          "aspects.screens.upserters.preprocessed",
+          "aspects.screens.upserters.unprocessed",
           model_repository: "repositories.model"
         ]
         include Initable[mold: Mold]
+        include Dry::Monads[:result]
 
         def call **parameters
-          id = parameters.delete :model_id
-          model = model_repository.find id
-
-          return Failure "Unable to find model for ID: #{id.inspect}." unless model
-
-          handle model, parameters
+          parameters.delete(:model_id)
+                    .then { |id| find_model id }
+                    .bind { |model| handle model, parameters }
         end
 
         private
+
+        def find_model id
+          model = model_repository.find id
+
+          return Success model if model
+
+          Failure "Unable to find model for ID: #{id.inspect}."
+        end
 
         def handle model, parameters
           case parameters

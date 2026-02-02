@@ -5,7 +5,7 @@ require "dry/monads"
 module Terminus
   module Aspects
     module Screens
-      module Creators
+      module Upserters
         # Creates screen record with image attachment from preprocesed image URI.
         class Preprocessed
           include Deps[:mini_magick, repository: "repositories.screen"]
@@ -18,19 +18,16 @@ module Terminus
 
           def call(mold) = Pathname.mktmpdir { process mold, it }
 
+          private
+
+          attr_reader :struct
+
           def process mold, directory
             path = Pathname(directory).join "input.png"
             mini_magick::Image.open(mold.content).write(path).then { save mold, path }
           end
 
-          private
-
-          attr_reader :struct
-
-          def save mold, path
-            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
-            repository.create_with_image mold, struct
-          end
+          def save(mold, path) = Success repository.upsert_with_image(path, mold, struct)
         end
       end
     end

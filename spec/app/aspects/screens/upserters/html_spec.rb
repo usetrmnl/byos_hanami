@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Creators::HTML, :db do
+RSpec.describe Terminus::Aspects::Screens::Upserters::HTML, :db do
   using Refinements::Struct
 
   subject(:creator) { described_class.new }

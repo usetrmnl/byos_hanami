@@ -20,10 +20,10 @@ RSpec.describe Terminus::Aspects::Screens::Fetcher, :db do
 
     it "answers custom screen when device has updated playlist" do
       playlist = playlist_repository.find device.playlist_id
-      result = Terminus::Aspects::Screens::Creator.new.call model_id: device.model_id,
-                                                            label: "Test",
-                                                            name: "test",
-                                                            content: "<h1>Test</h1>"
+      result = Terminus::Aspects::Screens::Upserter.new.call model_id: device.model_id,
+                                                             label: "Test",
+                                                             name: "test",
+                                                             content: "<h1>Test</h1>"
 
       result.bind do |screen|
         item = item_repository.create_with_position playlist_id: playlist.id, screen_id: screen.id

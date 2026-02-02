@@ -7,7 +7,7 @@ module Terminus
       class Create < Action
         include Deps[
           :htmx,
-          "aspects.screens.creator",
+          "aspects.screens.upserter",
           model_repository: "repositories.model",
           screen_repository: "repositories.screen",
           show_view: "views.designer.show"
@@ -46,7 +46,7 @@ module Terminus
 
         def rebuild_screen name, label, content
           screen_repository.find_by(name:).then { screen_repository.delete it.id if it }
-          creator.call model_id: load_model.id, name:, label:, content:
+          upserter.call model_id: load_model.id, name:, label:, content:
         end
 
         # FIX: Use dynamic lookup once the UI support picking the correct model.
