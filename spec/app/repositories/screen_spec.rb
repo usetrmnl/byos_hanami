@@ -6,6 +6,7 @@ RSpec.describe Terminus::Repositories::Screen, :db do
   subject(:repository) { described_class.new }
 
   let(:screen) { Factory[:screen] }
+  let(:model) { Factory[:model] }
 
   describe "#all" do
     it "answers all records" do
@@ -22,7 +23,6 @@ RSpec.describe Terminus::Repositories::Screen, :db do
 
   describe "#create_with_image" do
     let(:struct) { Factory.structs[:screen, :with_image] }
-    let(:model) { Factory[:model] }
 
     let :mold do
       Terminus::Aspects::Screens::Mold[
@@ -181,6 +181,57 @@ RSpec.describe Terminus::Repositories::Screen, :db do
       expect(result).to be_failure(%(Unable to find screen ID: 13.))
     end
   end
+
+  # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#upsert_with_image" do
+    let(:path) { SPEC_ROOT.join "support/fixtures/test.bmp" }
+
+    let :mold do
+      Terminus::Aspects::Screens::Mold[
+        model_id: model.id,
+        name: "test",
+        label: "Test",
+        content: "<p>test</p>",
+        mime_type: "image/bmp"
+      ]
+    end
+
+    let :proof do
+      {
+        model_id: model.id,
+        name: "test",
+        label: "Test",
+        image_attributes: hash_including(
+          metadata: hash_including(
+            size: kind_of(Integer),
+            width: 1,
+            height: 1,
+            filename: "test.bmp",
+            mime_type: "image/bmp"
+          )
+        )
+      }
+    end
+
+    context "when existing" do
+      let(:struct) { Factory[:screen, :with_image, name: mold.name, model_id: model.id] }
+
+      it "updates attributes" do
+        record = repository.upsert_with_image path, mold, struct
+        expect(record).to have_attributes(proof)
+      end
+    end
+
+    context "when not existing" do
+      let(:struct) { Factory.structs[:screen, :with_image] }
+
+      it "creates when not found" do
+        record = repository.upsert_with_image path, mold, struct
+        expect(record).to have_attributes(proof)
+      end
+    end
+  end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe "#where" do
     it "answers record for single attribute" do
