@@ -1,13 +1,4 @@
 <fieldset class="column">
-  <%= scope(:form_field, key: :model_id, errors:).render do %>
-    <label class="key" for="screen_model_id">
-      Model
-      <%= render "shared/popovers/trigger", name: :model %>
-    </label>
-
-    <%= form.select :model_id, select_options_for(models), id: :screen_model_id, class: :value %>
-  <% end %>
-
   <%= scope(:form_field, key: :label, errors:).render do %>
     <label class="key" for="screen_label">Label</label>
 
@@ -29,6 +20,29 @@
                   value: field_for(:name, fields, screen),
                   class: :value,
                   autocomplete: :off %>
+  <% end %>
+
+  <%= scope(:form_field, key: :model_id, errors:).render do %>
+    <label class="key" for="screen_model_id">
+      Model
+      <%= render "shared/popovers/trigger", name: :model %>
+    </label>
+
+    <%= form.select :model_id, select_options_for(models), id: :screen_model_id, class: :value %>
+  <% end %>
+
+  <%= scope(:form_field, key: :image, errors:).render do %>
+    <label class="key" for="screen_image">
+      Image
+      <%= render "shared/popovers/trigger", name: :image %>
+    </label>
+
+    <%= form.file_field :image,
+                        id: :screen_image,
+                        value: field_for(:image_data, fields, screen),
+                        class: :value %>
+
+    <%= tag.span screen.image_name, class: "bit-pill bit-pill-active" if screen && screen.image_attributes %>
   <% end %>
 </fieldset>
 
