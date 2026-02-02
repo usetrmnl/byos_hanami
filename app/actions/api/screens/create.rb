@@ -6,7 +6,7 @@ module Terminus
       module Screens
         # The create action.
         class Create < Base
-          include Deps["aspects.screens.creator", repository: "repositories.screen"]
+          include Deps["aspects.screens.upserter", repository: "repositories.screen"]
           include Initable[serializer: Serializers::Screen]
 
           using Refines::Actions::Response
@@ -36,7 +36,7 @@ module Terminus
           private
 
           def save parameters, response
-            result = creator.call(**parameters)
+            result = upserter.call(**parameters)
 
             case result
               in Success(screen)

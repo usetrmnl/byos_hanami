@@ -2,21 +2,17 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Creators::Encoded, :db do
+RSpec.describe Terminus::Aspects::Screens::Upserters::Preprocessed, :db do
   using Refinements::Struct
 
   subject(:creator) { described_class.new }
 
-  include_context "with temporary directory"
   include_context "with screen mold"
 
   describe "#call" do
     let(:model) { Factory[:model] }
 
-    before do
-      mold.with! model_id: model.id,
-                 content: Base64.strict_encode64(SPEC_ROOT.join("support/fixtures/test.png").read)
-    end
+    before { mold.with! model_id: model.id, content: SPEC_ROOT.join("support/fixtures/test.png") }
 
     it "answers screen" do
       result = creator.call mold
@@ -28,8 +24,8 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Encoded, :db do
         image_attributes: hash_including(
           metadata: hash_including(
             size: kind_of(Integer),
-            width: 800,
-            height: 480,
+            width: 1,
+            height: 1,
             filename: "test.png",
             mime_type: "image/png"
           )

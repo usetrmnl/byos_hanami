@@ -8,7 +8,7 @@ module Terminus
         # :reek:DataClump
         class Patch < Base
           include Deps[
-            "aspects.screens.creators.temp_path",
+            "aspects.screens.upserters.temp_path",
             repository: "repositories.screen",
             model_repository: "repositories.model"
           ]

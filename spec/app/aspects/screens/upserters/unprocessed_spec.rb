@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Creators::Preprocessed, :db do
+RSpec.describe Terminus::Aspects::Screens::Upserters::Unprocessed, :db do
   using Refinements::Struct
 
   subject(:creator) { described_class.new }
@@ -24,8 +24,8 @@ RSpec.describe Terminus::Aspects::Screens::Creators::Preprocessed, :db do
         image_attributes: hash_including(
           metadata: hash_including(
             size: kind_of(Integer),
-            width: 1,
-            height: 1,
+            width: 800,
+            height: 480,
             filename: "test.png",
             mime_type: "image/png"
           )

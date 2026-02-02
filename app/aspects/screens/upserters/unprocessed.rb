@@ -6,7 +6,7 @@ require "refinements/struct"
 module Terminus
   module Aspects
     module Screens
-      module Creators
+      module Upserters
         # Creates screen record with image attachment from unprocessed image URI.
         class Unprocessed
           include Deps[:mini_magick, "aspects.screens.converter", repository: "repositories.screen"]
@@ -35,10 +35,7 @@ module Terminus
                               .bind { |path| save mold, path }
           end
 
-          def save mold, path
-            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
-            repository.create_with_image mold, struct
-          end
+          def save(mold, path) = Success repository.upsert_with_image(path, mold, struct)
         end
       end
     end

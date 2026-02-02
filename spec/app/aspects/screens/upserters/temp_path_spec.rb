@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Creators::TempPath, :db do
+RSpec.describe Terminus::Aspects::Screens::Upserters::TempPath, :db do
   using Refinements::Struct
 
   subject(:creator) { described_class.new }
