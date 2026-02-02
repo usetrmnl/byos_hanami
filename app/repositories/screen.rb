@@ -6,6 +6,7 @@ require "dry/monads"
 module Terminus
   module Repositories
     # The screen repository.
+    # :reek:RepeatedConditional
     class Screen < DB::Repository[:screen]
       include Dry::Monads[:result]
 
@@ -60,6 +61,26 @@ module Terminus
           end
         end
       end
+
+      # :reek:DuplicateMethodCall
+      # :reek:FeatureEnvy
+      # :reek:NestedIterators
+      # :reek:TooManyStatements
+      # rubocop:todo Metrics/AbcSize
+      def upsert_with_image path, mold, struct
+        name = mold.name
+
+        find_by(name:, model_id: mold.model_id).then do |record|
+          if record
+            path.open { |io| record.replace io, metadata: {"filename" => mold.filename} }
+            update record.id, image_data: record.image_attributes, **mold.image_attributes
+          else
+            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
+            create image_data: struct.image_attributes, **mold.image_attributes
+          end
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
 
       def where(**)
         with_associations.where(**)
