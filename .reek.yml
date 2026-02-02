@@ -10,6 +10,9 @@ detectors:
     exclude:
       - Terminus::Aspects::Croner
       - Terminus::Aspects::Screens::Shoter
+  DuplicateMethodCall:
+    exclude:
+      - Terminus::Aspects::Devices::Provisioner#create
   ControlParameter:
     exclude:
       - Terminus::Aspects::PasswordEncryptor#call
