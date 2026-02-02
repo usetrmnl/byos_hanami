@@ -5,11 +5,7 @@ module Terminus
     module Screens
       # The update action.
       class Update < Action
-        include Deps[
-          repository: "repositories.screen",
-          model_repository: "repositories.model",
-          show_view: "views.screens.show"
-        ]
+        include Deps[repository: "repositories.screen", model_repository: "repositories.model"]
 
         params do
           required(:id).filled :integer
@@ -18,6 +14,7 @@ module Terminus
             required(:model_id).filled :integer
             required(:label).filled :string
             required(:name).filled :string
+            optional(:image).filled :hash
           end
         end
 
@@ -36,11 +33,26 @@ module Terminus
 
         private
 
-        def save screen, parameters, response
-          id = screen.id
-          repository.update id, **parameters[:screen]
+        # :reek:TooManyStatements
+        def save record, parameters, response
+          id = record.id
+          attributes = parameters[:screen]
+          image = attributes.delete :image
 
-          response.render show_view, screen: repository.find(id), layout: false
+          repository.update id, **attributes
+          attach record, image
+          response.redirect_to routes.path(:screen, id:)
+        end
+
+        # :reek:FeatureEnvy
+        def attach record, image
+          return unless image
+
+          tempfile = image[:tempfile]
+          extension = File.extname tempfile
+
+          record.replace tempfile, metadata: {"filename" => "#{record.name}#{extension}"}
+          repository.update record.id, image_data: record.image_attributes
         end
 
         def error screen, parameters, response
@@ -48,8 +60,7 @@ module Terminus
                           models: model_repository.all,
                           screen:,
                           fields: parameters[:screen],
-                          errors: parameters.errors[:screen],
-                          layout: false
+                          errors: parameters.errors[:screen]
         end
       end
     end

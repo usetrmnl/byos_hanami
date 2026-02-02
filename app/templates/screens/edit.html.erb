@@ -18,27 +18,17 @@
       <%= form_for :screen,
                    routes.path(:screen_update, id: screen.id),
                    method: :put,
-                   class: "bit-card bit-form screen" do |form| %>
+                   enctype: "multipart/form-data",
+                   accept: "application/octet-stream",
+                   class: "bit-card bit-form" do |form| %>
         <h1 class="label">Edit Screen</h1>
 
         <%= render "shared/screen", uri: screen.image_uri %>
         <%= render "screens/shared/fields", form:, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">
-          <%= render "shared/actions/save",
-                     form:,
-                     verb: :put,
-                     path: routes.path(:screen_update, id: screen.id) %>
-
-          <%= link_to "Cancel",
-                      routes.path(:screen, id: screen.id),
-                      class: "bit-button-decline",
-                      **HTMX[
-                        get: routes.path(:screen, id: screen.id),
-                        trigger: :click,
-                        target: "closest .bit-page",
-                        push_url: true
-                      ] %>
+          <%= form.submit "Save", class: "bit-button-accept" %>
+          <%= link_to "Cancel", routes.path(:screen, id: screen.id), class: "bit-button-decline" %>
         </div>
       <% end %>
     </div>
