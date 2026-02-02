@@ -3,19 +3,26 @@
 require "hanami_helper"
 
 RSpec.describe "Screens", :db do
-  it "creates and edits screen", :aggregate_failures, :js do
+  let(:path) { SPEC_ROOT.join "support/fixtures/test.png" }
+
+  it "creates, edits, and deletes screens", :aggregate_failures, :js do
     model = Factory[:model]
 
     visit routes.path(:screens)
     click_link "New"
-    select model.label, from: "screen[model_id]"
-    fill_in "screen[label]", with: "Test"
-
     click_button "Save"
 
     expect(page).to have_content("must be filled")
 
+    select model.label, from: "screen[model_id]"
+    fill_in "screen[label]", with: "Test"
     fill_in "screen[name]", with: "test"
+    attach_file "Image", path
+    click_button "Save"
+
+    expect(page).to have_content("Test")
+
+    click_link "Edit"
     click_button "Save"
 
     expect(page).to have_content("Test")
@@ -27,17 +34,14 @@ RSpec.describe "Screens", :db do
     expect(page).to have_content("must be filled")
 
     fill_in "screen[label]", with: "Test II"
+    attach_file "Image", path
     click_button "Save"
 
     expect(page).to have_content("Test II")
-  end
 
-  it "deletes screen", :js do
-    screen = Factory[:screen]
-
-    visit routes.path(:screens)
+    visit routes.path(:firmware)
     accept_prompt { click_button "Delete" }
 
-    expect(page).to have_no_content(screen.label)
+    expect(page).to have_no_content("Test")
   end
 end
