@@ -27,7 +27,7 @@ module Terminus
             parameters = request.params
 
             if parameters.valid?
-              save parameters[:screen], response
+              save parameters, response
             else
               unprocessable_content_for_parameters parameters.errors.to_h, response
             end
@@ -36,13 +36,21 @@ module Terminus
           private
 
           def save parameters, response
-            result = upserter.call(**parameters)
+            result = find(parameters).bind { upserter.call(**parameters[:screen]) }
 
             case result
               in Success(screen)
                 response.body = {data: serializer.new(screen).to_h}.to_json
               else unprocessable_content_for_creation result, response
             end
+          end
+
+          def find parameters
+            model_id, name = parameters[:screen].to_h.values_at :model_id, :name
+
+            return Success() unless repository.find_by(model_id:, name:)
+
+            Failure "Screen exists with name (#{name.inspect}) and model ID (#{model_id})."
           end
 
           def unprocessable_content_for_parameters errors, response
