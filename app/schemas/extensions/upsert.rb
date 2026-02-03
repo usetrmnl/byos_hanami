@@ -16,6 +16,7 @@ module Terminus
         required(:uris).maybe :array
         required(:body).maybe :hash
         required(:template).maybe :string
+        required(:fields).maybe :array
         required(:data).maybe :hash
         required(:interval).maybe { int? > gteq?(0) }
         optional(:unit).filled :string
@@ -29,6 +30,7 @@ module Terminus
         after(:value_coercer, &Coercers::Empty.curry[:days])
         after(:value_coercer, &Coercers::Hash.curry[:headers])
         after(:value_coercer, &Coercers::Hash.curry[:body])
+        after(:value_coercer, &Coercers::Hash.curry[:fields])
         after(:value_coercer, &Coercers::Hash.curry[:data])
       end
     end
