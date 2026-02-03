@@ -8,7 +8,7 @@ RSpec.describe "/api/screens", :db do
   include_context "with JWT"
 
   let(:model) { Factory[:model] }
-  let(:screen) { Factory[:screen, :with_image] }
+  let(:screen) { Factory[:screen, :with_image, model_id: model.id] }
 
   it "answers records when screens exist" do
     screen
@@ -167,6 +167,34 @@ RSpec.describe "/api/screens", :db do
         updated_at: match_rfc_3339
       }
     )
+  end
+
+  context "with existing record" do
+    before do
+      post routes.path(:api_screen_create),
+           {
+             screen: {
+               model_id: model.id,
+               label: screen.label,
+               name: screen.name,
+               content: "<p>Test.</p>"
+             }
+           }.to_json,
+           "HTTP_AUTHORIZATION" => access_token,
+           "CONTENT_TYPE" => "application/json"
+    end
+
+    it "answers problem details" do
+      problem = Petail[
+        type: "/problem_details#screen_payload",
+        status: 422,
+        title: "Unprocessable Content",
+        detail: %(Screen exists with name (#{screen.name.inspect}) and model ID (#{model.id}).),
+        instance: "/api/screens"
+      ]
+
+      expect(json_payload).to eq(problem.to_h)
+    end
   end
 
   context "with unknown model" do
