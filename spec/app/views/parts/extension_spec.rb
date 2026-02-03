@@ -93,7 +93,7 @@ RSpec.describe Terminus::Views::Parts::Extension do
   end
 
   describe "#formatted_fields" do
-    it "answers filled hash string" do
+    it "answers hash" do
       allow(extension).to receive(:fields).and_return(label: "Test", description: "A test.")
 
       expect(part.formatted_fields).to eq(<<~JSON.strip)
@@ -104,6 +104,18 @@ RSpec.describe Terminus::Views::Parts::Extension do
       JSON
     end
 
+    it "answers array" do
+      allow(extension).to receive(:fields).and_return([1, 2, 3])
+
+      expect(part.formatted_fields).to eq(<<~JSON.strip)
+        [
+          1,
+          2,
+          3
+        ]
+      JSON
+    end
+
     it "answers empty string when empty" do
       allow(extension).to receive(:fields).and_return({})
       expect(part.formatted_fields).to eq("")
@@ -111,6 +123,14 @@ RSpec.describe Terminus::Views::Parts::Extension do
 
     it "answers empty string when nil" do
       expect(part.formatted_fields).to eq("")
+    end
+
+    it "fails with invalid type" do
+      allow(extension).to receive(:fields).and_return(:danger)
+
+      expectation = proc { part.formatted_fields }
+
+      expect(&expectation).to raise_error(TypeError, /method: field/)
     end
   end
 

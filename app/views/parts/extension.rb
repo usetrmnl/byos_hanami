@@ -36,9 +36,11 @@ module Terminus
         private
 
         def format_as_json method
-          content = Hash public_send method
-
-          content.empty? ? Dry::Core::EMPTY_STRING : json_formatter.call(content)
+          case public_send method
+            in nil | Dry::Core::EMPTY_ARRAY | Dry::Core::EMPTY_HASH then Dry::Core::EMPTY_STRING
+            in Array | Hash => content then json_formatter.call content
+            else fail TypeError, "Unknown type to format as JSON for method: #{method}."
+          end
         end
       end
     end
