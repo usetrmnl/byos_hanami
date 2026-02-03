@@ -13,7 +13,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
 
     let :context do
       {
-        "extension" => {},
+        "extension" => {"fields" => [], "values" => {}},
         "model" => model.liquid_attributes.stringify_keys!
       }
     end

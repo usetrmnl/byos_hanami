@@ -35,7 +35,11 @@ module Terminus
 
         def build_context extension, model_id
           model = model_repository.find model_id
-          {"extension" => extension.data, "model" => model.liquid_attributes.stringify_keys!}
+
+          {
+            "extension" => extension.to_liquid_context,
+            "model" => model.liquid_attributes.stringify_keys!
+          }
         end
       end
     end
