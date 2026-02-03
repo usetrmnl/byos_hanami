@@ -12,8 +12,7 @@ module Terminus
           mode: "light",
           kind: "poll",
           verb: "get",
-          start_at: Time.now
-                        .then { Time.new(it.year, it.month, it.day).strftime "%Y-%m-%dT%H:%M:%S" },
+          start_at: Time.now.strftime("%Y-%m-%dT00:00:00"),
           days: [],
           interval: 1,
           template: <<~BODY
