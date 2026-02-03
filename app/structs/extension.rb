@@ -14,6 +14,17 @@ module Terminus
 
       def to_cron(croner: Aspects::Croner) = croner.call interval, unit, time: start_at
 
+      def to_liquid_context
+        all_fields = Array fields
+
+        values = all_fields.each.with_object({}) do |item, all|
+          key, value = item.values_at "keyname", "default"
+          all[key] = value
+        end
+
+        Hash(data).merge "fields" => all_fields, "values" => values
+      end
+
       def to_schedule
         [
           screen_name,

@@ -35,6 +35,38 @@ RSpec.describe Terminus::Structs::Extension do
     end
   end
 
+  describe "#to_liquid_context" do
+    it "answers empty data and fields when nothing exists" do
+      expect(extension.to_liquid_context).to eq({"fields" => [], "values" => {}})
+    end
+
+    it "answers data and fields when they exist" do
+      extension = Factory.structs[
+        :extension,
+        data: {"id" => 123},
+        fields: [
+          {"keyname" => "one", "default" => 1},
+          {"keyname" => "two"},
+          {"keyname" => "three", "default" => 3}
+        ]
+      ]
+
+      expect(extension.to_liquid_context).to eq(
+        "id" => 123,
+        "fields" => [
+          {"keyname" => "one", "default" => 1},
+          {"keyname" => "two"},
+          {"keyname" => "three", "default" => 3}
+        ],
+        "values" => {
+          "one" => 1,
+          "two" => nil,
+          "three" => 3
+        }
+      )
+    end
+  end
+
   describe "#to_schedule" do
     it "answers schedule" do
       expect(extension.to_schedule).to eq(

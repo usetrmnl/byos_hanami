@@ -6,6 +6,8 @@ Factory.define :extension, relation: :extension do |factory|
   factory.kind "poll"
   factory.verb "get"
   factory.uris []
+  factory.data Hash.new
+  factory.fields []
   factory.start_at Time.utc(2025, 1, 1, 0, 0, 0)
   factory.unit "none"
 
