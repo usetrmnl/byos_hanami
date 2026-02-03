@@ -268,6 +268,20 @@
     <fieldset class="column">
       <legend class="legend">Miscellaneous</legend>
 
+      <%= scope(:form_field, key: :fields, errors:).render do %>
+        <label class="key" for="extension_fields">
+          Fields
+          <%= render "shared/popovers/trigger", name: :fields %>
+        </label>
+
+        <%= form.text_area :fields,
+                           field_for(:formatted_fields, fields, extension),
+                           id: :extension_fields,
+                           class: "bit-editor",
+                           autocomplete: :off,
+                           data: {language: :json} %>
+      <% end %>
+
       <%= scope(:form_field, key: :data, errors:).render do %>
         <label class="key" for="extension_data">
           Data
