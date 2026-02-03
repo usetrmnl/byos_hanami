@@ -6,7 +6,6 @@ require "dry/monads"
 module Terminus
   module Repositories
     # The screen repository.
-    # :reek:RepeatedConditional
     class Screen < DB::Repository[:screen]
       include Dry::Monads[:result]
 
@@ -19,19 +18,6 @@ module Terminus
       def all
         with_associations.order { updated_at.desc }
                          .to_a
-      end
-
-      def create_with_image mold, struct
-        name = mold.name
-
-        find_by(name:, model_id: mold.model_id).then do |record|
-          if record
-            struct.image_destroy
-            Failure "Screen exists with name: #{name.inspect}."
-          else
-            Success create(image_data: struct.image_attributes, **mold.image_attributes)
-          end
-        end
       end
 
       def delete id
@@ -49,38 +35,10 @@ module Terminus
                          .to_a
       end
 
-      def update_with_image(id, io, **attributes)
-        screen_attributes, image_attributes = attributes.values_at :screen, :image
-
-        find(id).then do |record|
-          if record
-            record.replace(io, **image_attributes)
-            Success update record.id, **screen_attributes, image_data: record.image_attributes
-          else
-            Failure "Unable to find screen ID: #{id}."
-          end
-        end
-      end
-
-      # :reek:DuplicateMethodCall
-      # :reek:FeatureEnvy
-      # :reek:NestedIterators
-      # :reek:TooManyStatements
-      # rubocop:todo Metrics/AbcSize
       def upsert_with_image path, mold, struct
-        name = mold.name
-
-        find_by(name:, model_id: mold.model_id).then do |record|
-          if record
-            path.open { |io| record.replace io, metadata: {"filename" => mold.filename} }
-            update record.id, image_data: record.image_attributes, **mold.image_attributes
-          else
-            path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
-            create image_data: struct.image_attributes, **mold.image_attributes
-          end
-        end
+        record = find_by name: mold.name, model_id: mold.model_id
+        record ? update_with_image(path, mold, record) : create_with_image(path, mold, struct)
       end
-      # rubocop:enable Metrics/AbcSize
 
       def where(**)
         with_associations.where(**)
@@ -91,6 +49,16 @@ module Terminus
       private
 
       def with_associations = screen.combine :model
+
+      def create_with_image path, mold, struct
+        path.open { |io| struct.upload io, metadata: {"filename" => mold.filename} }
+        create image_data: struct.image_attributes, **mold.image_attributes
+      end
+
+      def update_with_image path, mold, record
+        path.open { |io| record.replace io, metadata: {"filename" => mold.filename} }
+        update record.id, image_data: record.image_attributes, **mold.image_attributes
+      end
     end
   end
 end

@@ -21,54 +21,6 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     end
   end
 
-  describe "#create_with_image" do
-    let(:struct) { Factory.structs[:screen, :with_image] }
-
-    let :mold do
-      Terminus::Aspects::Screens::Mold[
-        model_id: model.id,
-        name: "test",
-        label: "Test",
-        content: "<p>test</p>"
-      ]
-    end
-
-    it "answer success when unique" do
-      result = repository.create_with_image mold, struct
-
-      expect(result.success).to have_attributes(
-        model_id: model.id,
-        name: "test",
-        label: "Test",
-        image_attributes: hash_including(
-          metadata: hash_including(
-            size: kind_of(Integer),
-            width: 1,
-            height: 1,
-            filename: "test.png",
-            mime_type: "image/png"
-          )
-        )
-      )
-    end
-
-    context "when existing" do
-      let(:struct) { instance_spy Terminus::Structs::Screen }
-
-      before { Factory[:screen, model_id: model.id, name: "test"] }
-
-      it "destroys image attachment" do
-        repository.create_with_image mold, struct
-        expect(struct).to have_received(:image_destroy)
-      end
-
-      it "answer failure when existing" do
-        result = repository.create_with_image mold, struct
-        expect(result).to be_failure(%(Screen exists with name: "test".))
-      end
-    end
-  end
-
   describe "#delete" do
     it "deletes existing record" do
       screen
@@ -138,47 +90,6 @@ RSpec.describe Terminus::Repositories::Screen, :db do
 
     it "answers empty array for invalid value" do
       expect(repository.search(:label, "bogus")).to eq([])
-    end
-  end
-
-  describe "#update_with_image" do
-    let(:screen) { Factory[:screen] }
-
-    it "updates existing screen with screen and image attributes" do
-      result = SPEC_ROOT.join("support/fixtures/test.png").open do |io|
-        repository.update_with_image screen.id,
-                                     io,
-                                     screen: {name: "update", label: "Update"},
-                                     image: {metadata: {filename: "update.png"}}
-      end
-
-      expect(result.success).to have_attributes(
-        model_id: screen.model_id,
-        name: "update",
-        label: "Update",
-        image_attributes: hash_including(
-          metadata: hash_including(
-            size: kind_of(Integer),
-            width: 1,
-            height: 1,
-            filename: "update.png",
-            mime_type: "image/png"
-          )
-        )
-      )
-    end
-
-    it "answers success with no update issues" do
-      result = SPEC_ROOT.join("support/fixtures/test.png").open do |io|
-        repository.update_with_image screen.id, io, image: {metadata: {filename: "update.png"}}
-      end
-
-      expect(result).to be_success
-    end
-
-    it "answers failure when screen isn't found" do
-      result = repository.update_with_image 13, nil
-      expect(result).to be_failure(%(Unable to find screen ID: 13.))
     end
   end
 
