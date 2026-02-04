@@ -11,8 +11,6 @@ module Terminus
           module Transformers
             # Transforms (mutates) the full Liquid template for initialization.
             class Template
-              include Dry::Monads[:result]
-
               include Initable[
                 key_map: {
                   "trmnl.plugin_settings.custom_fields_values" => "extension.values",
@@ -31,6 +29,8 @@ module Terminus
                   </div>
                 BODY
               ]
+
+              include Dry::Monads[:result]
 
               def call attributes, content
                 uris content
