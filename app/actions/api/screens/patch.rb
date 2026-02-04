@@ -56,10 +56,7 @@ module Terminus
           end
 
           def update record, parameters
-            upserter.call model_id: record.model_id,
-                          name: record.name,
-                          label: record.label,
-                          **parameters[:screen]
+            upserter.call(**record.to_h.slice(:model_id, :name, :label), **parameters[:screen])
           end
 
           def unprocessable_content_for_parameters errors, response
