@@ -16,21 +16,21 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     end
   end
 
-  describe "#image_uri" do
+  describe "#current_screen" do
     let :device do
       attributes = {model_id: Factory[:model].id, mac_address: "A1:B2:C3:D4:E5:F6"}
       Terminus::Aspects::Devices::Provisioner.new.call(**attributes).value!
     end
 
-    it "answers screen URI when device is provisioned" do
-      expect(part.image_uri).to match(%r(memory://\h{32}\.png))
+    it "answers screen when device is provisioned" do
+      expect(part.current_screen).to be_a(Terminus::Structs::Screen)
     end
 
     context "without playlist" do
       let(:device) { Factory[:device] }
 
-      it "answers setup URI when device has no playlist" do
-        expect(part.image_uri).to eq("/assets/setup.svg")
+      it "answers placeholder when device has no playlist" do
+        expect(part.current_screen).to eq(Terminus::Aspects::Screens::Placeholder[id: device.id])
       end
     end
   end

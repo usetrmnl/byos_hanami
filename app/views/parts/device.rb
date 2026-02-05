@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 require "hanami/view"
+require "refinements/struct"
 
 module Terminus
   module Views
     module Parts
       # The device presenter.
       class Device < Hanami::View::Part
-        include Deps["aspects.screens.fetcher"]
+        include Deps["aspects.screens.fetcher", "aspects.screens.placeholder"]
+
+        using Refinements::Struct
 
         def battery_percentage
           case battery
@@ -43,9 +46,9 @@ module Terminus
 
         def dimensions = "#{width}x#{height}"
 
-        def image_uri
-          fetcher.call(value).either -> screen { screen.image_uri },
-                                     proc { "/assets/setup.svg" }
+        def current_screen
+          fetcher.call(value).either -> screen { screen },
+                                     proc { placeholder.with id: id }
         end
       end
     end

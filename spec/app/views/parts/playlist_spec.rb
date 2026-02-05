@@ -46,14 +46,21 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
     end
   end
 
-  describe "#current_screen_uri" do
-    it "answers URI when current item, screen, and image exist" do
-      expect(part.current_screen_uri).to eq("memory://abc123.png")
+  describe "#current_screen" do
+    it "answers screen when current item, screen, and image exist" do
+      expect(part.current_screen).to be_a(Terminus::Structs::Screen)
     end
 
-    it "answers fallback when current item is missing" do
-      part = described_class.new value: Factory[:playlist], rendering: view.new.rendering
-      expect(part.current_screen_uri).to match(%r(/assets/blank.*\.svg))
+    it "answers placeholder when current item is missing" do
+      playlist = Factory[:playlist]
+      part = described_class.new value: playlist, rendering: view.new.rendering
+
+      expect(part.current_screen).to eq(
+        Terminus::Aspects::Screens::Placeholder[
+          id: playlist.id,
+          image_uri: Hanami.app[:assets]["blank.svg"].path
+        ]
+      )
     end
   end
 end
