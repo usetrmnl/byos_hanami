@@ -12,7 +12,16 @@
     <div class="bit-card screen">
       <h2 class="label"><%= screen.label %></h2>
 
-      <%= render "shared/screen", uri: screen.image_uri %>
+      <%= render "shared/popovers/triggers/preview", name: "preview-#{screen.id}" do %>
+        <%= render "shared/screen", uri: screen.image_uri %>
+      <% end %>
+
+      <%= render "shared/popovers/content/preview",
+                 id: screen.id,
+                 label: screen.label,
+                 uri: screen.image_uri,
+                 width: screen.width,
+                 height: screen.height %>
 
       <div class="actions">
         <%= render "shared/actions/edit", path: routes.path(:screen_edit, id: screen.id) %>

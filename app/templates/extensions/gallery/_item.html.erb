@@ -1,7 +1,9 @@
 <li id="<%= item.id %>" class="bit-card">
   <h2 class="label"><%= item.name %></h2>
 
-  <%= tag.img src: item.screenshot_url, alt: "Screenshot", class: :screen, loading: :lazy %>
+  <%= render "shared/popovers/triggers/preview", name: "preview-#{item.id}" do %>
+    <%= tag.img src: item.screenshot_url, alt: "Screenshot", class: :screen, loading: :lazy %>
+  <% end %>
 
   <div class="info">
     <span><%= pluralize "connection", "s", item.statistics.installs %></span>
@@ -10,32 +12,23 @@
 
   <div class="actions">
     <%= render "shared/popovers/trigger",
-               name: "preview-#{item.id}",
-               icon: :eye,
+               name: :import,
+               icon: :plus,
+               class: "action bit-popover-trigger",
                width: 25,
                height: 25 %>
-
-    <%= render "shared/popovers/trigger", name: :import, icon: :plus, width: 25, height: 25 %>
 
     <%#= form_for routes.path(:extensions_gallery_create) do |form| %>
       <%#= form.hidden_field :id, value: item.id %>
 
-      <%#= form.submit class: "bit-button" do %>
+      <%#= form.submit class: "action bit-button" do %>
        <%#= image_tag "icons/plus.svg", alt: "Import", class: :icon, width: 25, height: 25 %>
       <%# end %>
     <%# end %>
   </div>
 
-  <dialog id="popover-preview-<%= item.id %>"
-          class="bit-popover-content bit-popover-screen"
-          popover="auto">
-    <figure>
-      <%= tag.img src: item.screenshot_url, alt: "Screen", loading: :lazy %>
-      <figcaption><%= item.name %></figcaption>
-    </figure>
-
-    <p class="brand">
-      <%= image_tag "logo/with_label.svg", alt: "Logo with Label", width: 150, height: 75 %>
-    </p>
-  </dialog>
+  <%= render "shared/popovers/content/preview",
+             id: item.id,
+             label: item.name,
+             uri: item.screenshot_url %>
 </li>

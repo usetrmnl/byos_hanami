@@ -1,7 +1,9 @@
 <li id="<%= screen.id %>" class="bit-card screen">
   <h2 class="label"><%= screen.label %></h2>
 
-  <%= render "shared/screen", uri: screen.image_uri %>
+  <%= render "shared/popovers/triggers/preview", name: "preview-#{screen.id}" do %>
+    <%= render "shared/screen", uri: screen.image_uri %>
+  <% end %>
 
   <span class="type">
     <%= link_to screen.model.label, routes.path(:model, id: screen.model_id) %>
@@ -18,4 +20,11 @@
                path: routes.path(:screen_delete, id: screen.id),
                subject: :screen %>
   </div>
+
+  <%= render "shared/popovers/content/preview",
+             id: screen.id,
+             label: screen.label,
+             uri: screen.image_uri,
+             width: screen.width,
+             height: screen.height %>
 </li>

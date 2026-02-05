@@ -1,5 +1,16 @@
+<% screen = item.screen %>
+
 <div class="item">
-  <%= render "shared/screen", uri: item.screen.image_uri %>
+  <%= render "shared/popovers/triggers/preview", name: "preview-#{screen.id}" do %>
+    <%= render "shared/screen", uri: screen.image_uri %>
+  <% end %>
+
+  <%= render "shared/popovers/content/preview",
+             id: screen.id,
+             label: screen.label,
+             uri: screen.image_uri,
+             width: screen.width,
+             height: screen.height %>
 
   <div class="actions">
     <%= render "shared/actions/edit",
