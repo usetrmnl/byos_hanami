@@ -1,0 +1,17 @@
+<dialog id="popover-preview-<%= id %>"
+        class="bit-popover-content bit-popover-screen"
+        popover="auto">
+  <figure>
+    <%= tag.img src: uri,
+                alt: locals.fetch(:alt, "Image"),
+                width: locals.fetch(:width, 800),
+                height: locals.fetch(:height, 480),
+                loading: :lazy %>
+
+    <figcaption><%= label %></figcaption>
+  </figure>
+
+  <p class="brand">
+    <%= image_tag "logo/with_label.svg", alt: "Logo with Label", width: 150, height: 75 %>
+  </p>
+</dialog>
