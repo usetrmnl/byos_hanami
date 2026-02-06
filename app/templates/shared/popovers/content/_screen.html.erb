@@ -1,13 +1,8 @@
-<dialog id="popover-preview-<%= id %>"
+<dialog id="<%= dom_id %>"
         class="bit-popover-content bit-popover-screen"
         popover="auto">
   <figure>
-    <%= tag.img src: uri,
-                alt: locals.fetch(:alt, "Image"),
-                width: locals.fetch(:width, 800),
-                height: locals.fetch(:height, 480),
-                loading: :lazy %>
-
+    <%= tag.img src: uri, alt: label, width: width, height: height, loading: :lazy %>
     <figcaption><%= label %></figcaption>
   </figure>
 
