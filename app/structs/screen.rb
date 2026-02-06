@@ -75,6 +75,8 @@ module Terminus
 
       def width = image_attributes.dig :metadata, :width
 
+      def popover_attributes = {id:, label:, uri: image_uri, width:, height:}
+
       private
 
       attr_reader :store, :attacher

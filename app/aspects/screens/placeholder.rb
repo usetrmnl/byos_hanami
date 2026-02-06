@@ -15,6 +15,8 @@ module Terminus
         )
           super
         end
+
+        def popover_attributes = {id:, label:, uri: image_uri, width:, height:}
       end
     end
   end

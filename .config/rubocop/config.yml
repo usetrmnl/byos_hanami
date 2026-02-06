@@ -29,6 +29,7 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Exclude:
     - app/aspects/screens/converters/png.rb
+    - app/aspects/screens/placeholder.rb
 Naming/VariableNumber:
   AllowedPatterns:
     - md5

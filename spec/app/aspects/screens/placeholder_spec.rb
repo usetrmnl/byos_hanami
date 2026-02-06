@@ -29,4 +29,16 @@ RSpec.describe Terminus::Aspects::Screens::Placeholder do
       expect(described_class[**attributes]).to have_attributes(attributes)
     end
   end
+
+  describe "#popover_attributes" do
+    it "answers attributes" do
+      expect(placeholder.popover_attributes).to eq(
+        id: nil,
+        label: "Placeholder",
+        uri: "/assets/setup.svg",
+        width: 800,
+        height: 480
+      )
+    end
+  end
 end

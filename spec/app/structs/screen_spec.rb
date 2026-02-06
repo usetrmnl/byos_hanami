@@ -301,4 +301,16 @@ RSpec.describe Terminus::Structs::Screen, :db do
       expect(screen.width).to eq(1)
     end
   end
+
+  describe "#popover_attributes" do
+    it "answers attributes" do
+      expect(screen.popover_attributes).to eq(
+        id: screen.id,
+        label: screen.label,
+        uri: screen.image_uri,
+        width: screen.width,
+        height: screen.height
+      )
+    end
+  end
 end
