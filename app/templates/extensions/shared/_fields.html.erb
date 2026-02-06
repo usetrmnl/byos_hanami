@@ -10,7 +10,7 @@
     <%= scope(:form_field, key: :label, errors:).render do %>
       <label class="key" for="extension_label">
         Label
-        <%= render "shared/popovers/trigger", name: :label %>
+        <%= render "shared/popovers/triggers/default", name: :label %>
       </label>
 
       <%= form.text_field :label,
@@ -23,7 +23,7 @@
     <%= scope(:form_field, key: :name, errors:).render do %>
       <label class="key" for="extension_name">
         Name
-        <%= render "shared/popovers/trigger", name: :name %>
+        <%= render "shared/popovers/triggers/default", name: :name %>
       </label>
 
       <%= form.text_field :name,
@@ -36,7 +36,7 @@
     <%= scope(:form_field, key: :description, errors:).render do %>
       <label class="key" for="extension_description">
         Description
-        <%= render "shared/popovers/trigger", name: :description %>
+        <%= render "shared/popovers/triggers/default", name: :description %>
       </label>
 
       <%= form.text_field :description,
@@ -57,7 +57,7 @@
 
       <label class="key" for="tag">
         Tags
-        <%= render "shared/popovers/trigger", name: :tags %>
+        <%= render "shared/popovers/triggers/default", name: :tags %>
       </label>
 
       <%= tag.input id: :tag,
@@ -107,7 +107,7 @@
     <%= scope(:form_field, key: :headers, errors:, alpine: {show: "kind === 'poll'"}).render do %>
       <label class="key" for="extension_headers">
         Headers
-        <%= render "shared/popovers/trigger", name: :headers %>
+        <%= render "shared/popovers/triggers/default", name: :headers %>
       </label>
 
       <%= form.text_area :headers,
@@ -140,7 +140,7 @@
 
       <label class="key" for="extension_uris">
         URLs
-        <%= render "shared/popovers/trigger", name: :urls %>
+        <%= render "shared/popovers/triggers/default", name: :urls %>
       </label>
 
       <%= form.text_area :uris,
@@ -159,7 +159,7 @@
 
       <label class="key" for="extension_body">
         Body
-        <%= render "shared/popovers/trigger", name: :body %>
+        <%= render "shared/popovers/triggers/default", name: :body %>
       </label>
 
       <%= form.text_area :body,
@@ -178,7 +178,7 @@
       <%= scope(:form_field, key: :models, errors:).render do %>
         <label class="key" for="extension_models">
           Models
-          <%= render "shared/popovers/trigger", name: :models %>
+          <%= render "shared/popovers/triggers/default", name: :models %>
         </label>
 
         <select name="model_ids[]" id="extension_models" multiple="multiple" class="value">
@@ -196,7 +196,7 @@
       <%= scope(:form_field, key: :schedule_start, errors:).render do %>
         <label class="key" for="extension_start_at">
           Start
-          <%= render "shared/popovers/trigger", name: :schedule_start %>
+          <%= render "shared/popovers/triggers/default", name: :schedule_start %>
         </label>
 
         <%= form.datetime_local_field :start_at,
@@ -208,7 +208,7 @@
       <%= scope(:form_field, key: :schedule_interval, errors:).render do %>
         <label class="key" for="extension_interval">
           Interval
-          <%= render "shared/popovers/trigger", name: :schedule_interval %>
+          <%= render "shared/popovers/triggers/default", name: :schedule_interval %>
         </label>
 
         <%= form.number_field :interval,
@@ -221,7 +221,7 @@
       <%= scope(:form_field, key: :schedule_unit, errors:).render do %>
         <label class="key" for="extension_unit">
           Unit
-          <%= render "shared/popovers/trigger", name: :schedule_unit %>
+          <%= render "shared/popovers/triggers/default", name: :schedule_unit %>
         </label>
 
         <% units = %w[none minute hour day week month] %>
@@ -232,7 +232,7 @@
       <div class="bit-toggle-field" x-show="unit === 'week'">
         <h2 class="bit-toggle-label">
           Days
-          <%= render "shared/popovers/trigger", name: :schedule_days %>
+          <%= render "shared/popovers/triggers/default", name: :schedule_days %>
         </h2>
 
         <%= render "shared/checkboxes/bar",
@@ -260,7 +260,7 @@
 
         <label class="key" for="extension_last_day_of_month">
           Last Day Of Month
-          <%= render "shared/popovers/trigger", name: :last_day_of_month %>
+          <%= render "shared/popovers/triggers/default", name: :last_day_of_month %>
         </label>
       <% end %>
     <% end %>
@@ -271,7 +271,7 @@
       <%= scope(:form_field, key: :fields, errors:).render do %>
         <label class="key" for="extension_fields">
           Fields
-          <%= render "shared/popovers/trigger", name: :fields %>
+          <%= render "shared/popovers/triggers/default", name: :fields %>
         </label>
 
         <%= form.text_area :fields,
@@ -285,7 +285,7 @@
       <%= scope(:form_field, key: :data, errors:).render do %>
         <label class="key" for="extension_data">
           Data
-          <%= render "shared/popovers/trigger", name: :data %>
+          <%= render "shared/popovers/triggers/default", name: :data %>
         </label>
 
         <%= form.text_area :data,
@@ -303,7 +303,7 @@
   <%= scope(:form_field, key: :template, errors:).render do %>
     <label class="key" for="extension_template">
       Template
-      <%= render "shared/popovers/trigger", name: :template %>
+      <%= render "shared/popovers/triggers/default", name: :template %>
     </label>
 
     <%= form.text_area :template,
@@ -318,7 +318,7 @@
     <%= scope(:form_field, key: :response, errors:).render do %>
       <label class="key">
         Response
-        <%= render "shared/popovers/trigger", name: :response %>
+        <%= render "shared/popovers/triggers/default", name: :response %>
       </label>
 
       <%= tag.pre id: :extension_response,

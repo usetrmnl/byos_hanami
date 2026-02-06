@@ -20,7 +20,7 @@
       <h1 class="label">Edit Extension</h1>
 
       <div class="bit-actions">
-        <%= render "shared/popovers/trigger",
+        <%= render "shared/popovers/triggers/default",
                    name: :preview,
                    label: "Preview",
                    icon: :eye,
@@ -32,7 +32,7 @@
                    path: routes.path(:extension_build_create, extension_id: extension.id) %>
       </div>
 
-      <%= scope(:popover_content, name: :preview, label: nil).render do %>
+      <%= scope(:popover_default_content, name: :preview, label: nil).render do %>
         <% model_id = extension.models.any? ? extension.models.first.id : nil %>
         <%= tag.iframe src: routes.path(:extension_preview, extension_id: extension.id, model_id:),
                        class: "bit-frame" %>

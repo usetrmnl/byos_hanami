@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Views::Scopes::PopoverContent do
+RSpec.describe Terminus::Views::Scopes::PopoverDefaultContent do
   subject :scope do
     described_class.new locals: {name: "test", label: "Test"}, rendering: view.new.rendering
   end
@@ -14,9 +14,9 @@ RSpec.describe Terminus::Views::Scopes::PopoverContent do
     end
   end
 
-  describe "#id" do
+  describe "#dom_id" do
     it "answers ID" do
-      expect(scope.id).to eq("popover-test")
+      expect(scope.dom_id).to eq("popover-test")
     end
   end
 

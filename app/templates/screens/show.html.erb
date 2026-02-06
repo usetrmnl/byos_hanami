@@ -31,13 +31,13 @@
       <dl class="bit-definition-list">
         <dt class="key">
           Name
-          <%= render "shared/popovers/trigger", name: :name %>
+          <%= render "shared/popovers/triggers/default", name: :name %>
         </dt>
         <dd class="value"><%= screen.name %></dd>
 
         <dt class="key">
           Model
-          <%= render "shared/popovers/trigger", name: :model %>
+          <%= render "shared/popovers/triggers/default", name: :model %>
         </dt>
         <dd class="value">
           <%= link_to screen.model.label, routes.path(:model, id: screen.model_id) %>

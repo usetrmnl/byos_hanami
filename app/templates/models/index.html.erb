@@ -4,7 +4,7 @@
   <header class="bit-header">
     <h1 class="label">
       Models
-      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+      <%= render "shared/popovers/triggers/default", name: :overview, width: 20, height: 20 %>
     </h1>
 
     <div class="bit-actions">
@@ -14,7 +14,7 @@
     </div>
   </header>
 
-  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+  <%= scope(:popover_default_content, name: :overview, label: "Overview").render do %>
     <p>Models provide the low-level specifications for <%= link_to "Devices", routes.path(:devices) %> and <%= link_to "Screens", routes.path(:screens) %>. These specifications dictate how screens should be created and rendered on your devices. All models must use unique labels and names so you can distinguish between them.</p>
 
     <h2 class="label">Search</h2>

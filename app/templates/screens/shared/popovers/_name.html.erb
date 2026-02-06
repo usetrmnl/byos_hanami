@@ -1,4 +1,4 @@
-<%= scope(:popover_content, name: :name, label: "Name").render do %>
+<%= scope(:popover_default_content, name: :name, label: "Name").render do %>
   <p>The screen name. Must be unique.</p>
 
   <p>⚠️ Avoid changing the name when the name starts with <code>plugin-</code> as this is required for device proxying to work properly since the name is matched against the same name as used on the <%= link_to "Core", "https://trmnl.com" %> server.</p>

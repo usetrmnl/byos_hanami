@@ -6,11 +6,11 @@
   <header class="bit-header">
     <h1 class="label">
       Designer
-      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+      <%= render "shared/popovers/triggers/default", name: :overview, width: 20, height: 20 %>
     </h1>
   </header>
 
-  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+  <%= scope(:popover_default_content, name: :overview, label: "Overview").render do %>
     <p>Use the text area to design custom screens for your device using pure HTML/CSS. Changes are applied automatically as you make edits and saved as a screen which you can view via the <%= link_to "Screens", routes.path(:screens) %> page.</p>
   <% end %>
 

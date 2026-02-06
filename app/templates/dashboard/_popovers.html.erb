@@ -1,13 +1,13 @@
-<%= scope(:popover_content, name: :devices, label: "Devices").render do %>
+<%= scope(:popover_default_content, name: :devices, label: "Devices").render do %>
   <p>These are your currently registered devices.</p>
 <% end %>
 
-<%= scope(:popover_content, name: :ip_addresses, label: "IP Addresses").render do %>
+<%= scope(:popover_default_content, name: :ip_addresses, label: "IP Addresses").render do %>
   <p>These are the Internet Protocol (IP) addresses of this server which are provided for convenience and debugging purposes. Use the API address to connect all devices to this server since this is the value defined by your <code>API_URI</code> environment variable.</p>
 
   <p>💡 Prefer wired over wireless since the former is likely not to change as much.</p>
 <% end %>
 
-<%= scope(:popover_content, name: :firmware, label: "Firmware").render do %>
+<%= scope(:popover_default_content, name: :firmware, label: "Firmware").render do %>
   <p>Displays recently downloaded firmware versions in descending order with the latest version listed first. New versions will appear once the firmware poller (background process) detects them.</p>
 <% end %>

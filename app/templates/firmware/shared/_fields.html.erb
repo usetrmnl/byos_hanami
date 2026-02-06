@@ -2,7 +2,7 @@
   <%= scope(:form_field, key: :version, errors:).render do %>
     <label class="key" for="firmware_version">
       Version
-      <%= render "shared/popovers/trigger", name: :version %>
+      <%= render "shared/popovers/triggers/default", name: :version %>
     </label>
 
     <%= form.text_field :version,
@@ -15,7 +15,7 @@
   <%= scope(:form_field, key: :kind, errors:).render do %>
     <label class="key" for="firmware_kind">
       Kind
-      <%= render "shared/popovers/trigger", name: :kind %>
+      <%= render "shared/popovers/triggers/default", name: :kind %>
     </label>
 
     <%= form.text_field :kind,
@@ -28,7 +28,7 @@
   <%= scope(:form_field, key: :attachment, errors:).render do %>
     <label class="key" for="firmware_attachment">
       Attachment
-      <%= render "shared/popovers/trigger", name: :attachment %>
+      <%= render "shared/popovers/triggers/default", name: :attachment %>
     </label>
 
     <%= form.file_field :attachment,

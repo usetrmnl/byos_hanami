@@ -6,7 +6,7 @@
       <li class="bit-breadcrumb"><%= link_to "Extensions", routes.path(:extensions) %></li>
       <li class="bit-breadcrumb">
         Gallery
-        <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+        <%= render "shared/popovers/triggers/default", name: :overview, width: 20, height: 20 %>
       </li>
     </ul>
 
@@ -15,7 +15,7 @@
     </div>
   </header>
 
-  <%= scope(:popover_content, name: :overview, label: "Gallery").render do %>
+  <%= scope(:popover_default_content, name: :overview, label: "Gallery").render do %>
     <p>Welcome to the gallery where you can browse and import <a href="https://trmnl.com/recipes">TRMNL Recipes</a> as extensions.</p>
 
     <h2 class="label">Search</h2>

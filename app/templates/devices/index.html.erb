@@ -4,7 +4,7 @@
   <header class="bit-header">
     <h1 class="label">
       Devices
-      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+      <%= render "shared/popovers/triggers/default", name: :overview, width: 20, height: 20 %>
     </h1>
 
     <div class="bit-actions">
@@ -13,7 +13,7 @@
     </div>
   </header>
 
-  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+  <%= scope(:popover_default_content, name: :overview, label: "Overview").render do %>
     <p>These are you devices, both physical and virtual, managed by this server.</p>
 
     <h2 class="label">Search</h2>

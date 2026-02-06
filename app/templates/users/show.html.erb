@@ -22,13 +22,13 @@
 
         <dt class="key">
           Email
-          <%= render "shared/popovers/trigger", name: :email %>
+          <%= render "shared/popovers/triggers/default", name: :email %>
         </dt>
         <dd class="value"><%= tag.a user.email, href: "mailto:#{user.email}" %></dd>
 
         <dt class="key">
           Status
-          <%= render "shared/popovers/trigger", name: :status %>
+          <%= render "shared/popovers/triggers/default", name: :status %>
         </dt>
         <dd class="value"><%= user.status.name %></dd>
 

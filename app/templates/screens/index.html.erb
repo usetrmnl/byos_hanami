@@ -4,7 +4,7 @@
   <header class="bit-header">
     <h1 class="label">
       Screens
-      <%= render "shared/popovers/trigger", name: :overview, width: 20, height: 20 %>
+      <%= render "shared/popovers/triggers/default", name: :overview, width: 20, height: 20 %>
     </h1>
 
     <div class="bit-actions">
@@ -13,7 +13,7 @@
     </div>
   </header>
 
-  <%= scope(:popover_content, name: :overview, label: "Overview").render do %>
+  <%= scope(:popover_default_content, name: :overview, label: "Overview").render do %>
     <p>Screens are the final artifacts produced when proxying, creating images via API requests, and so forth. Use these screens to add to your playlists for display on your device(s). Once created, you can modify these screens to alter what is displayed on your device(s).</p>
 
     <p>All screens must use unique labels and names so you can distinguish between them. When proxying, your screen name ensures the screen of the same name is updated locally to prevent duplication.</p>

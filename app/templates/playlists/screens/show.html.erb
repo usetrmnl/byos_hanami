@@ -14,9 +14,9 @@
       <%= tag.li "Screens", class: "bit-breadcrumb" %>
     </ul>
 
-    <%= render "shared/popovers/trigger", name: :shortcuts, width: 20, height: 20 %>
+    <%= render "shared/popovers/triggers/default", name: :shortcuts, width: 20, height: 20 %>
 
-    <%= scope(:popover_content, name: :shortcuts, label: "Keyboard Shortcuts").render do %>
+    <%= scope(:popover_default_content, name: :shortcuts, label: "Keyboard Shortcuts").render do %>
       <ul>
         <li><kbd>←</kbd>: Go to previous slide</li>
         <li><kbd>→</kbd>: Go to next slide</li>
