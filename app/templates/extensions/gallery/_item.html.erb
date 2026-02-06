@@ -1,9 +1,16 @@
 <li id="<%= item.id %>" class="bit-card">
   <h2 class="label"><%= item.name %></h2>
 
-  <%= render "shared/popovers/triggers/preview", name: "preview-#{item.id}" do %>
+  <%= render "shared/popovers/triggers/screen", name: "screen-#{item.id}" do %>
     <%= tag.img src: item.screenshot_url, alt: "Screenshot", class: :screen, loading: :lazy %>
   <% end %>
+
+  <%= scope(
+        :popover_screen_content,
+        id: item.id,
+        label: item.name,
+        uri: item.screenshot_url
+      ).render %>
 
   <div class="info">
     <span><%= pluralize "connection", "s", item.statistics.installs %></span>
@@ -26,9 +33,4 @@
       <%# end %>
     <%# end %>
   </div>
-
-  <%= render "shared/popovers/content/preview",
-             id: item.id,
-             label: item.name,
-             uri: item.screenshot_url %>
 </li>

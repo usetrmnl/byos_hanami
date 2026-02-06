@@ -23,17 +23,11 @@
                    class: "bit-card bit-form" do |form| %>
         <h1 class="label">Edit Screen</h1>
 
-        <%= render "shared/popovers/triggers/preview", name: "preview-#{screen.id}" do %>
+        <%= render "shared/popovers/triggers/screen", name: "screen-#{screen.id}" do %>
           <%= render "shared/screen", uri: screen.image_uri %>
         <% end %>
 
-        <%= render "shared/popovers/content/preview",
-                   id: screen.id,
-                   label: screen.label,
-                   uri: screen.image_uri,
-                   width: screen.width,
-                   height: screen.height %>
-
+        <%= scope(:popover_screen_content, **screen.popover_attributes).render %>
         <%= render "screens/shared/fields", form:, models:, screen:, fields: fields.value, errors: %>
 
         <div class="form-actions">

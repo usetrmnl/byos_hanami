@@ -14,19 +14,12 @@
     <div class="bit-card device">
       <h2 class="label"><%= device.label %></h2>
 
-      <%= render "shared/popovers/triggers/preview", name: "preview-#{current_screen.id}" do %>
+      <%= render "shared/popovers/triggers/screen", name: "screen-#{current_screen.id}" do %>
         <%= render "shared/screen", uri: current_screen.image_uri %>
       <% end %>
 
-      <%= render "shared/popovers/content/preview",
-                 id: current_screen.id,
-                 label: current_screen.label,
-                 uri: current_screen.image_uri,
-                 width: current_screen.width,
-                 height: current_screen.height %>
-
+      <%= scope(:popover_screen_content, **current_screen.popover_attributes).render %>
       <div class="bit-pill bit-pill-active">Current Screen</div>
-
       <%= render "measurements", device: %>
 
       <div class="actions">
