@@ -56,10 +56,7 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
       part = described_class.new value: playlist, rendering: view.new.rendering
 
       expect(part.current_screen).to eq(
-        Terminus::Aspects::Screens::Placeholder[
-          id: playlist.id,
-          image_uri: Hanami.app[:assets]["blank.svg"].path
-        ]
+        Terminus::Aspects::Screens::Placeholder[id: playlist.id, uri: "blank.svg"]
       )
     end
   end

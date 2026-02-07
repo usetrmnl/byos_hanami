@@ -7,9 +7,7 @@ RSpec.describe Terminus::Views::Scopes::PopoverScreenContent do
 
   subject(:scope) { described_class.new locals:, rendering: Terminus::View.new.rendering }
 
-  let :locals do
-    Terminus::Aspects::Screens::Placeholder[id: 1].to_h.transform_keys! image_uri: :uri
-  end
+  let(:locals) { Terminus::Aspects::Screens::Placeholder[id: 1].popover_attributes }
 
   describe "#dom_id" do
     it "answers ID" do
