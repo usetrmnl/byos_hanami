@@ -49,6 +49,7 @@ gem "sidekiq-scheduler", "~> 6.0"
 gem "trmnl-api", "~> 0.11"
 gem "trmnl-liquid", "~> 0.5"
 gem "versionaire", "~> 15.0"
+gem "wholeable", "~> 2.1"
 
 group :quality do
   gem "caliber", "~> 0.88"
