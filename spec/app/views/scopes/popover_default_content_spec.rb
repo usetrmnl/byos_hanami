@@ -4,14 +4,8 @@ require "hanami_helper"
 
 RSpec.describe Terminus::Views::Scopes::PopoverDefaultContent do
   subject :scope do
-    described_class.new locals: {name: "test", label: "Test"}, rendering: view.new.rendering
-  end
-
-  let :view do
-    Class.new Hanami::View do
-      config.paths = [Hanami.app.root.join("app/templates")]
-      config.template = "n/a"
-    end
+    described_class.new locals: {name: "test", label: "Test"},
+                        rendering: Terminus::View.new.rendering
   end
 
   describe "#dom_id" do

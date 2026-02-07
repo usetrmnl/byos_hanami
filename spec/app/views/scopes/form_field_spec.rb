@@ -3,18 +3,9 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Views::Scopes::FormField do
-  subject :scope do
-    described_class.new locals:, rendering: view.new.rendering
-  end
+  subject(:scope) { described_class.new locals:, rendering: Terminus::View.new.rendering }
 
   let(:locals) { {key: :label, errors: {label: %w[invalid missing]}} }
-
-  let :view do
-    Class.new Hanami::View do
-      config.paths = [Hanami.app.root.join("app/templates")]
-      config.template = "n/a"
-    end
-  end
 
   describe "#alpine" do
     it "answers attributes when present" do
@@ -54,7 +45,7 @@ RSpec.describe Terminus::Views::Scopes::FormField do
     end
 
     it "answers empty string with missing local" do
-      scope = described_class.new rendering: view.new.rendering
+      scope = described_class.new rendering: Terminus::View.new.rendering
       expect(scope.error_message).to eq("")
     end
 
