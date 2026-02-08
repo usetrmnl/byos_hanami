@@ -11,9 +11,9 @@ We support Raspberry Pi and have tested using the following:
 * link:https://www.raspberrypi.com/products/raspberry-pi-5[Raspberry Pi 5]: Recommended due to great performance and feature set.
 * link:https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/[Raspberry Pi Zero 2 W]: Good if you want a compact form factor and don't care about speed.
 
-A great project to help you manage multiple Raspberry Pi devices and configurations is the {pi_project_link} project. This project provides Bash shell scripts for formatting, installing the Raspberry Pi OS, and spinning up Terminus.
+A great project to help you manage multiple Raspberry Pi devices is the {pi_project_link} project. This project provides Bash shell scripts for formatting, installing the Raspberry Pi OS, and spinning up Terminus.
 
-For Terminus, you only need to add the following to your `projects` configuration (i.e. `$XDG_CONFIG_HOME/pi/scripts/projects`):
+For Terminus, you only need to add the following as a service (i.e. `$XDG_CONFIG_HOME/pi/scripts/services/terminus`) with the following contents:
 
 [source,bash]
 ----
@@ -38,6 +38,6 @@ cd terminus
 docker compose up
 ----
 
-This would allow you to visit `http://demo.local:2300` in your browser to register/login and start using Terminus. That's it!
+This would allow you to visit `http://demo.local:2300`, for example, in your browser to register/login and start using Terminus. That's it!
 
 Definitely check out the {pi_project_link} project for more details.
