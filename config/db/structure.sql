@@ -441,7 +441,9 @@ CREATE TABLE public.model (
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     kind text DEFAULT 'terminus'::text NOT NULL,
-    scale_factor double precision DEFAULT 1 NOT NULL
+    scale_factor double precision DEFAULT 1 NOT NULL,
+    palette_ids text[] DEFAULT '{}'::text[] NOT NULL,
+    css jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -1317,4 +1319,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20251211152911_drop_model_published_at_column.rb'),
 ('20251215154654_add_playlist_mode_enum.rb'),
 ('20260106144016_alter_firmware_kind.rb'),
-('20260126141642_alter_device_table_model_id_as_non_null.rb');
+('20260126141642_alter_device_table_model_id_as_non_null.rb'),
+('20260209163817_add_model_palette_ids_and_css_columns.rb');
