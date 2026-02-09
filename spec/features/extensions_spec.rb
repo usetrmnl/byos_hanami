@@ -20,6 +20,7 @@ RSpec.describe "Extensions", :db do
   end
 
   it "edits, saves, builds, and clones extension", :aggregate_failures, :js do
+    Factory[:model, name: "og_plus"]
     extension = Factory[:extension]
 
     visit routes.path(:extension_edit, id: extension.id)

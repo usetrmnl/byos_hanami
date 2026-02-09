@@ -14,10 +14,20 @@
                  rel: :stylesheet,
                  href: "https://trmnl.com/css/latest/plugins.css" %>
 
+    <style type="text/css">
+      .trmnl {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    </style>
+
     <%= javascript_tag "https://trmnl.com/js/latest/plugins.js" %>
   </head>
 
-  <body class="trmnl environment">
+  <body class="trmnl">
     <%= yield %>
   </body>
 </html>
+

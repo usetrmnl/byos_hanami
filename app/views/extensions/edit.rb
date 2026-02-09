@@ -7,6 +7,7 @@ module Terminus
       class Edit < View
         include Deps[model_repository: "repositories.model"]
 
+        expose(:default_model) { model_repository.find_by name: "og_plus" }
         expose(:models) { model_repository.all.map { [it.label, it.id] } }
         expose :extension
         expose :fields, default: Dry::Core::EMPTY_HASH

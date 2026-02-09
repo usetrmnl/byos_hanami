@@ -1,7 +1,5 @@
 .bit-frame {
-  aspect-ratio: 16 / 9;
-  border-radius: 0.5rem;
-  border: 0.1rem solid var(--site-black);
-  display: block;
-  height: 480px;
+  iframe {
+    border: none;
+  }
 }

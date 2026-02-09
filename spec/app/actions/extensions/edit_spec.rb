@@ -8,6 +8,8 @@ RSpec.describe Terminus::Actions::Extensions::Edit, :db do
   describe "#call" do
     let(:extension) { Factory[:extension] }
 
+    before { Factory[:model, name: "og_plus"] }
+
     it "answers 200 OK status with valid parameters" do
       response = action.call id: extension.id
       expect(response.status).to eq(200)
