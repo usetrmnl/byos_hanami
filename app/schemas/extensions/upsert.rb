@@ -4,7 +4,7 @@
 module Terminus
   module Schemas
     module Extensions
-      # Defines device upsert schema.
+      # Defines extension upsert schema.
       Upsert = Dry::Schema.Params do
         required(:name).filled :string
         required(:label).filled :string
