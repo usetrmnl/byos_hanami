@@ -89,6 +89,22 @@
          </dt>
          <dd class="value"><%= model.height %></dd>
 
+         <dt class="key">
+           Palettes
+           <%= render "shared/popovers/triggers/default", name: :palettes %>
+         </dt>
+         <dd class="value"><%= model.palettes %></dd>
+
+         <dt class="key">
+           CSS
+           <%= render "shared/popovers/triggers/default", name: :css %>
+         </dt>
+         <dd class="value">
+          <%= tag.textarea id: :css,
+                           class: "bit-editor",
+                           data: {language: :json, mode: :read} do %><%= model.formatted_css %><% end %>
+         </dd>
+
         <dt class="key">Created</dt>
         <dd class="value"><%= human_at model.created_at %></dd>
 

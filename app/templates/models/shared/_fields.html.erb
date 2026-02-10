@@ -146,6 +146,52 @@
                           value: field_for(:height, fields, model),
                           class: :value %>
   <% end %>
+
+  <%= scope(
+        :form_field,
+        key: :palette_ids,
+        errors:,
+        alpine: {data: "{palette_ids: #{model ? model.alpine_palettes : []}, nascence: '', index: 0}"}
+      ).render do %>
+
+    <%= form.hidden_field :palette_ids, id: :model_palette_ids, "x-bind:value" => "palette_ids.join(' ')" %>
+
+    <label class="key" for="palette_ids">
+      Palette IDs
+      <%= render "shared/popovers/triggers/default", name: :palettes %>
+    </label>
+
+    <%= tag.input id: :palette_ids,
+                  name: :palette_ids,
+                  class: :value,
+                  placeholder: "Type your ID and hit enter to create.",
+                  "x-model" => "nascence",
+                  "x-on:keydown.enter.prevent" => "if (nascence.trim() !== '') { palette_ids.push(nascence.trim()); nascence = '';}" %>
+
+    <div class="bit-pills">
+      <template x-for="(id, index) in palette_ids" x-bind="index">
+        <button type="button"
+                class="bit-pill bit-pill-active"
+                x-text="id"
+                x-on:click="palette_ids.splice(index, 1)">
+        </button>
+      </template>
+    </div>
+  <% end %>
+
+  <%= scope(:form_field, key: :css, errors:).render do %>
+    <label class="key" for="model_css">
+      CSS
+      <%= render "shared/popovers/triggers/default", name: :css %>
+    </label>
+
+    <%= form.text_area :css,
+                       field_for(:formatted_css, fields, model),
+                       id: :model_css,
+                       class: "bit-editor",
+                       autocomplete: :off,
+                       data: {language: :json} %>
+  <% end %>
 </fieldset>
 
 <%= render "models/shared/popovers/all" %>
