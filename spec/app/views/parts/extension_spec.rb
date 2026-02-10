@@ -33,7 +33,7 @@ RSpec.describe Terminus::Views::Parts::Extension do
   end
 
   describe "#formatted_body" do
-    it "answers filled hash string" do
+    it "answers hash" do
       allow(extension).to receive(:body).and_return(sort: :name, limit: 5)
 
       expect(part.formatted_body).to eq(<<~JSON.strip)
@@ -43,19 +43,10 @@ RSpec.describe Terminus::Views::Parts::Extension do
         }
       JSON
     end
-
-    it "answers empty string when empty" do
-      allow(extension).to receive(:body).and_return({})
-      expect(part.formatted_body).to eq("")
-    end
-
-    it "answers empty string when nil" do
-      expect(part.formatted_body).to eq("")
-    end
   end
 
   describe "#formatted_data" do
-    it "answers filled hash string" do
+    it "answers hash" do
       allow(extension).to receive(:data).and_return(label: "Test", description: "A test.")
 
       expect(part.formatted_data).to eq(<<~JSON.strip)
@@ -64,15 +55,6 @@ RSpec.describe Terminus::Views::Parts::Extension do
           "description": "A test."
         }
       JSON
-    end
-
-    it "answers empty string when empty" do
-      allow(extension).to receive(:data).and_return({})
-      expect(part.formatted_data).to eq("")
-    end
-
-    it "answers empty string when nil" do
-      expect(part.formatted_data).to eq("")
     end
   end
 
@@ -115,27 +97,10 @@ RSpec.describe Terminus::Views::Parts::Extension do
         ]
       JSON
     end
-
-    it "answers empty string when empty" do
-      allow(extension).to receive(:fields).and_return({})
-      expect(part.formatted_fields).to eq("")
-    end
-
-    it "answers empty string when nil" do
-      expect(part.formatted_fields).to eq("")
-    end
-
-    it "fails with invalid type" do
-      allow(extension).to receive(:fields).and_return(:danger)
-
-      expectation = proc { part.formatted_fields }
-
-      expect(&expectation).to raise_error(TypeError, /method: field/)
-    end
   end
 
   describe "#formatted_headers" do
-    it "answers filled hash string" do
+    it "answers hash" do
       allow(extension).to receive(:headers).and_return(
         "Accept" => "application/json",
         "Accept-Encoding" => "deflate,gzip"
@@ -147,15 +112,6 @@ RSpec.describe Terminus::Views::Parts::Extension do
           "Accept-Encoding": "deflate,gzip"
         }
       JSON
-    end
-
-    it "answers empty string when empty" do
-      allow(extension).to receive(:headers).and_return({})
-      expect(part.formatted_headers).to eq("")
-    end
-
-    it "answers empty string when nil" do
-      expect(part.formatted_headers).to eq("")
     end
   end
 

@@ -43,7 +43,10 @@ RSpec.describe Terminus::Actions::Extensions::Poll::Show, :db do
     end
 
     it "renders empty text area with empty result" do
-      expect(response.body.first).to include("{}")
+      expect(response.body.first).to eq(<<~HTML)
+        <textarea id="extension_response" class="bit-editor" data-mode="read" data-language="json">
+        </textarea>
+      HTML
     end
 
     it "answers not found error with invalid ID" do

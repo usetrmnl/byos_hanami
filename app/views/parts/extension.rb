@@ -17,30 +17,20 @@ module Terminus
                      .then { "[#{it}]" }
         end
 
-        def formatted_body = format_as_json :body
+        def formatted_body = json_formatter.call body
 
-        def formatted_data = format_as_json :data
+        def formatted_data = json_formatter.call data
 
         def formatted_days = days ? days.join(",") : ""
 
-        def formatted_fields = format_as_json :fields
+        def formatted_fields = json_formatter.call fields
 
-        def formatted_headers = format_as_json :headers
+        def formatted_headers = json_formatter.call headers
 
         def formatted_uris = uris.join "\n"
 
         def formatted_start_at
           start_at ? start_at.strftime("%Y-%m-%dT%H:%M:%S") : "2025-01-01T00:00:00"
-        end
-
-        private
-
-        def format_as_json method
-          case public_send method
-            in nil | Dry::Core::EMPTY_ARRAY | Dry::Core::EMPTY_HASH then Dry::Core::EMPTY_STRING
-            in Array | Hash => content then json_formatter.call content
-            else fail TypeError, "Unknown type to format as JSON for method: #{method}."
-          end
         end
       end
     end
