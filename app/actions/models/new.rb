@@ -7,20 +7,7 @@ module Terminus
       class New < Action
         include Deps[:htmx]
 
-        DEFAULTS = {
-          description: nil,
-          mime_type: "image/png",
-          colors: 2,
-          bit_depth: 1,
-          rotation: 0,
-          offset_x: 0,
-          offset_y: 0,
-          scale_factor: 1,
-          width: 800,
-          height: 480
-        }.freeze
-
-        def initialize(defaults: DEFAULTS, **)
+        def initialize(defaults: Aspects::Models::DEFAULTS, **)
           @defaults = defaults
           super(**)
         end

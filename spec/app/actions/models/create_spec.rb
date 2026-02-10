@@ -13,7 +13,7 @@ RSpec.describe Terminus::Actions::Models::Create, :db do
         model: {
           label: "Test",
           name: "test",
-          **Terminus::Actions::Models::New::DEFAULTS
+          **Terminus::Aspects::Models::DEFAULTS
         }
       }
     end

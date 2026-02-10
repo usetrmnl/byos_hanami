@@ -22,7 +22,7 @@ module Terminus
       end
     end
 
-    config.inflections { it.acronym "BMP", "HTML", "IP", "PNG" }
+    config.inflections { it.acronym "BMP", "DEFAULTS", "HTML", "IP", "PNG" }
 
     config.actions.content_security_policy.then do |csp|
       csp[:connect_src] += " https://trmnl.com"

@@ -7,23 +7,7 @@ module Terminus
       class New < Action
         include Deps[:htmx]
 
-        DEFAULTS = {
-          tags: [],
-          mode: "light",
-          kind: "poll",
-          verb: "get",
-          start_at: Time.now.strftime("%Y-%m-%dT00:00:00"),
-          days: [],
-          interval: 1,
-          template: <<~BODY
-            <div class="screen screen--{{model.bit_depth}}bit screen--{{model.name}} screen--lg screen--{{model.orientation}} screen--1x">
-              <div class="view view--full">
-              </div>
-            </div>
-          BODY
-        }.freeze
-
-        def initialize(defaults: DEFAULTS, **)
+        def initialize(defaults: Aspects::Extensions::DEFAULTS, **)
           @defaults = defaults
           super(**)
         end
