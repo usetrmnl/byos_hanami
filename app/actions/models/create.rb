@@ -7,22 +7,7 @@ module Terminus
       class Create < Action
         include Deps[:htmx, repository: "repositories.model", index_view: "views.models.index"]
 
-        params do
-          required(:model).filled(:hash) do
-            required(:name).filled :string
-            required(:label).filled :string
-            required(:description).maybe :string
-            required(:mime_type).filled :string
-            required(:colors).filled :integer
-            required(:bit_depth).filled :integer
-            required(:rotation).filled :integer
-            required(:offset_x).filled :integer
-            required(:offset_y).filled :integer
-            required(:scale_factor).filled :float
-            required(:width).filled :integer
-            required(:height).filled :integer
-          end
-        end
+        contract Contracts::Models::Create
 
         def handle request, response
           parameters = request.params
