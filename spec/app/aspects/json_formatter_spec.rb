@@ -6,6 +6,10 @@ RSpec.describe Terminus::Aspects::JSONFormatter do
   subject(:formatter) { described_class }
 
   describe ".call" do
+    it "answers empty string when nil" do
+      expect(formatter.call(nil)).to eq("")
+    end
+
     it "pretty prints an array as JSON" do
       data = [1, 2, 3]
 
@@ -30,6 +34,11 @@ RSpec.describe Terminus::Aspects::JSONFormatter do
           ]
         }
       JSON
+    end
+
+    it "fails for unknown type" do
+      expectation = proc { described_class.call Object }
+      expect(&expectation).to raise_error(TypeError, "Unknown type to format as JSON for: Object.")
     end
   end
 end
