@@ -25,10 +25,17 @@ function initializeCodeMirror() {
       keymap.of([indentWithTab, indentSelection]),
       EditorState.readOnly.of(readable),
       EditorView.lineWrapping,
-      EditorView.theme({
-        "&": {minHeight: "10rem", maxHeight: "25rem"},
-        ".cm-scroller": {overflow: "auto"}
-      }),
+      EditorView.theme(
+        {
+          "&": {
+            minHeight: "10rem",
+            maxHeight: "25rem"
+          },
+          ".cm-scroller": {
+            overflow: "auto"
+          }
+        }
+      ),
       EditorView.updateListener.of((update) => {
         if (update.docChanged) {
           element.value = update.state.doc.toString();
