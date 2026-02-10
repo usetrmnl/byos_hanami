@@ -3,3 +3,5 @@ en:
     errors:
       extension:
         hash?: "must be a JSON object"
+      model:
+        hash?: "must be a JSON object"
