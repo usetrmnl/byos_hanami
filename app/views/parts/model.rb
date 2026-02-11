@@ -19,6 +19,11 @@ module Terminus
                             .then { "[#{it}]" }
         end
 
+        def css_screen_classes
+          "screen screen--#{name} screen--#{bit_depth}bit #{css_class_size} " \
+          "screen--#{orientation} screen--1x".squeeze " "
+        end
+
         def dimensions = "#{width}x#{height}"
 
         def formatted_css = json_formatter.call css
@@ -33,6 +38,10 @@ module Terminus
         def palettes = palette_ids.to_sentence
 
         def type = mime_type ? mime_type.delete_prefix("image/").upcase : "Unknown"
+
+        private
+
+        def css_class_size = css.dig "classes", "size"
       end
     end
   end

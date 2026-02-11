@@ -30,6 +30,26 @@ RSpec.describe Terminus::Views::Parts::Model do
     end
   end
 
+  describe "#css_screen_classes" do
+    context "with required attributes" do
+      let :model do
+        Factory.structs[:model, bit_depth: 4, css: {"classes" => {"size" => "screen--lg"}}]
+      end
+
+      it "answers all classes" do
+        expect(part.css_screen_classes).to eq(
+          "screen screen--#{model.name} screen--4bit screen--lg screen--landscape screen--1x"
+        )
+      end
+    end
+
+    it "answers defaults when missing attributes" do
+      expect(part.css_screen_classes).to eq(
+        "screen screen--#{model.name} screen--bit screen--landscape screen--1x"
+      )
+    end
+  end
+
   describe "#formatted_css" do
     it "answers empty string when attributes are empty" do
       expect(part.formatted_css).to eq("")
