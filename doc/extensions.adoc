@@ -72,18 +72,7 @@ Additionally, in Terminus, ensure you set a schedule for updating your screen. Y
 
 == Liquid Templates
 
-All extensions use {liquid_link} templates which allows you to format and style raw data into HTML for rendering as a screen. We also support a JSON filter (i.e. `json`) which allows you to use JSON data in your script tags. Example:
-
-[source,html]
-----
-<script>
-  const js_object = {{ data | json }};
-</script>
-----
-
-The above allows you to keep the `data` as JSON for use in your JavaScript code.
-
-We plan to support additional filters and capabilities as found in the {trmnl_liquid_gem_link} gem but additional work needs to be completed before Terminus can fully support that gem. Once the work is complete, you will gain even more functionality beyond what {liquid_link} provides for you by default.
+All extensions use {liquid_link} templates which allows you to format and style raw data into HTML for rendering as a screen. This includes default functionality and enhanced functionality as provided by the {trmnl_liquid_gem_link} gem.
 
 == Schedules
 
