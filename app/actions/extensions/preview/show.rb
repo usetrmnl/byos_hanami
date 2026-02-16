@@ -23,11 +23,7 @@ module Terminus
 
             halt :not_found unless extension
 
-            if model_id
-              response.render view, body: body_for(extension, model_id)
-            else
-              render_error response
-            end
+            response.render view, body: body_for(extension, model_id)
           end
 
           private
@@ -38,18 +34,6 @@ module Terminus
               in Failure(message) then message
               else "Unable to render body for extension: #{extension.id}."
             end
-          end
-
-          def render_error response
-            response.render view, body: <<~CONTENT
-              <div class="screen screen--4bit screen--v2 screen--lg screen--landscape screen--1x">
-                <div class="view view--full">
-                  <span class="value">
-                    No model selected.
-                  </span>
-                </div>
-              </div>
-            CONTENT
           end
         end
       end
