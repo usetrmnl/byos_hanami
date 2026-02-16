@@ -12,8 +12,10 @@ module Terminus
         days: [],
         interval: 1,
         template: <<~BODY
-          <div class="screen screen--{{model.bit_depth}}bit screen--{{model.name}} screen--lg screen--{{model.orientation}} screen--1x">
+          <div class="{{model.css_screen_classes}}">
             <div class="view view--full">
+              <div class="layout">
+              </div>
             </div>
           </div>
         BODY
