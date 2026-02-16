@@ -12,9 +12,9 @@ RSpec.describe Terminus::Aspects::Extensions::MultiFetcher do
 
     it "answers success with single item" do
       allow(fetcher).to receive(:call).with(extension.uris.first, extension)
-                                      .and_return(Success("one"))
+                                      .and_return(Success("source" => Success("one")))
 
-      expect(multi_fetcher.call(extension)).to be_success("source_1" => Success("one"))
+      expect(multi_fetcher.call(extension)).to be_success("source" => Success("one"))
     end
 
     it "answers success with multiple items" do

@@ -18,7 +18,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Static do
         },
         template: <<~BODY
           <h1>{{extension.label}}</h1>
-          {% for holiday in holidays %}
+          {% for holiday in source.holidays %}
             <p>{{holiday.label}} ({{holiday.label}})</p>
           {% endfor %}
         BODY

@@ -60,12 +60,14 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
 
       it "answers success due to header overriding response content type" do
         expect(fetcher.call(uri, extension)).to be_success(
-          "data" => [
-            {
-              "title" => "Castle in the Sky",
-              "director" => "Hayao Miyazaki"
-            }
-          ]
+          "source" => Success(
+            [
+              {
+                "title" => "Castle in the Sky",
+                "director" => "Hayao Miyazaki"
+              }
+            ]
+          )
         )
       end
     end
@@ -91,12 +93,14 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
 
       it "answers success" do
         expect(fetcher.call(uri, extension)).to be_success(
-          "data" => [
-            {
-              "title" => "Castle in the Sky",
-              "director" => "Hayao Miyazaki"
-            }
-          ]
+          "source" => Success(
+            [
+              {
+                "title" => "Castle in the Sky",
+                "director" => "Hayao Miyazaki"
+              }
+            ]
+          )
         )
       end
     end
@@ -114,7 +118,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("<binary>")
+        expect(fetcher.call(uri, extension)).to be_success("source" => Success("<binary>"))
       end
     end
 
@@ -135,12 +139,14 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
 
       it "answers success" do
         expect(fetcher.call(uri, extension)).to be_success(
-          "data" => [
-            {
-              "title" => "Castle in the Sky",
-              "director" => "Hayao Miyazaki"
-            }
-          ]
+          "source" => Success(
+            [
+              {
+                "title" => "Castle in the Sky",
+                "director" => "Hayao Miyazaki"
+              }
+            ]
+          )
         )
       end
     end
@@ -162,7 +168,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("data" => %w[one two three])
+        expect(fetcher.call(uri, extension)).to be_success("source" => Success(%w[one two three]))
       end
     end
 
@@ -182,7 +188,9 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("catalog" => "Empty")
+        expect(fetcher.call(uri, extension)).to be_success(
+          "source" => Success("catalog" => "Empty")
+        )
       end
     end
 
@@ -202,7 +210,9 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("catalog" => "Empty")
+        expect(fetcher.call(uri, extension)).to be_success(
+          "source" => Success("catalog" => "Empty")
+        )
       end
     end
 
@@ -222,7 +232,9 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("catalog" => "Empty")
+        expect(fetcher.call(uri, extension)).to be_success(
+          "source" => Success("catalog" => "Empty")
+        )
       end
     end
 
@@ -242,7 +254,9 @@ RSpec.describe Terminus::Aspects::Extensions::Fetcher do
       end
 
       it "answers success" do
-        expect(fetcher.call(uri, extension)).to be_success("catalog" => "Empty")
+        expect(fetcher.call(uri, extension)).to be_success(
+          "source" => Success("catalog" => "Empty")
+        )
       end
     end
 

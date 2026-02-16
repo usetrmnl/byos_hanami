@@ -37,7 +37,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll do
         uris: ["https://test.io/test.json"],
         template: <<~CONTENT
           <h1>{{extension.label}}</h1>
-          {% for item in data %}
+          {% for item in source.data %}
             <p>{{item.label}}: {{item.description}}</p>
           {% endfor %}
         CONTENT
@@ -58,7 +58,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll do
     end
 
     it "renders template with single response" do
-      allow(fetcher).to receive(:call).and_return(Success("source_1" => Success(data)))
+      allow(fetcher).to receive(:call).and_return(Success("source" => Success(data)))
 
       expect(renderer.call(extension, context:)).to be_success(
         %(<h1>Test Label</h1>\n\n  <p>Test: A test.</p>\n\n)

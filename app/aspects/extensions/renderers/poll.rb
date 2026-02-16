@@ -21,7 +21,6 @@ module Terminus
           def call extension, context: Dry::Core::EMPTY_HASH
             fetcher.call(extension)
                    .fmap { |collection| self.class.reduce collection }
-                   .fmap { |data| data.one? ? data["source_1"] : data }
                    .fmap { |data| render extension.template, context, data }
           end
 

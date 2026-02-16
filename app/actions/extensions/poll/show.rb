@@ -43,8 +43,7 @@ module Terminus
           def fetch extension
             fetcher.call(extension)
                    .fmap { |collection| self.class.reduce collection }
-                   .fmap { |data| data.one? ? data["source_1"] : data }
-                   .fmap { |data| data.is_a?(Hash) ? json_formatter.call(data) : data }
+                   .fmap { |data| json_formatter.call data }
           end
         end
       end
