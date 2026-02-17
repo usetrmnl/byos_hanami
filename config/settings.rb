@@ -23,6 +23,9 @@ module Terminus
     setting :firmware_poller, constructor: Types::Params::Bool, default: true
     setting :keyvalue_url, constructor: Types::Params::String.constrained(filled: true)
     setting :model_poller, constructor: Types::Params::Bool, default: true
+    setting :sensors_path,
+            constructor: Terminus::Types::Pathname,
+            default: Hanami.app.root.join("public/sensors.json")
     setting :screen_poller, constructor: Types::Params::Bool, default: true
   end
 end
