@@ -49,7 +49,7 @@ RSpec.describe Terminus::Repositories::DeviceLog, :db do
     end
   end
 
-  describe "#delete_logs" do
+  describe "#delete_all_by_device" do
     it "deletes associated logs" do
       id = log.device_id
       repository.delete_all_by_device id
