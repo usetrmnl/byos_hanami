@@ -55,6 +55,9 @@ detectors:
       - Terminus::Repositories::Screen#update_with_image
   LongParameterList:
     enabled: false
+  TooManyInstanceVariables:
+    exclude:
+      - Terminus::Aspects::Screens::Placeholder
   TooManyStatements:
     exclude:
       - RackLoggerPatch#prepare_app_providers
@@ -71,6 +74,7 @@ detectors:
       - Terminus::Aspects::Screens::Converters::BMP#convert
       - Terminus::Aspects::Screens::Converters::PNG#call
       - Terminus::Aspects::Screens::Converters::PNG#convert
+      - Terminus::Aspects::Screens::Placeholder#initialize
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::Providers::Sidekiq#load_schedule
       - Terminus::Views::Parts::Device#battery_percentage
