@@ -9,6 +9,7 @@ module Terminus
           belongs_to :model, relation: :model
           belongs_to :playlist, relation: :playlist
           has_many :device_logs, relation: :device_log, as: :logs
+          has_many :device_sensors, relation: :device_sensor, as: :sensors
         end
       end
     end
