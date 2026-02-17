@@ -5,10 +5,14 @@ module Terminus
     module Extensions
       # The edit view.
       class Edit < View
-        include Deps[model_repository: "repositories.model"]
+        include Deps[
+          model_repository: "repositories.model",
+          device_repository: "repositories.device"
+        ]
 
         expose(:default_model) { model_repository.find_by name: "og_plus" }
         expose(:models) { model_repository.all.map { [it.label, it.id] } }
+        expose(:devices) { device_repository.all.map { [it.label, it.id] } }
         expose :extension
         expose :fields, default: Dry::Core::EMPTY_HASH
         expose :errors, default: Dry::Core::EMPTY_HASH

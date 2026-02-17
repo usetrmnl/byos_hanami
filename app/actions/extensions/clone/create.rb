@@ -15,7 +15,6 @@ module Terminus
           params do
             required(:extension_id).filled :integer
             required(:extension).filled Schemas::Extensions::Upsert
-            optional(:model_ids).filled :array
           end
 
           def handle request, response
@@ -31,8 +30,12 @@ module Terminus
           private
 
           def save parameters, response
-            attributes, model_ids = parameters.to_h.values_at :extension, :model_ids
-            extension = repository.create_with_models attributes, Array(model_ids)
+            attributes = parameters[:extension]
+
+            extension = repository.create_with_models attributes, Array(attributes[:model_ids])
+            extension = repository.update_with_devices extension.id,
+                                                       {},
+                                                       Array(attributes[:device_ids])
 
             schedule.upsert(*extension.to_schedule)
             response.redirect_to routes.path(:extensions)

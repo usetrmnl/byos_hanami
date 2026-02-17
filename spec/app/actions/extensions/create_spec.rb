@@ -9,6 +9,7 @@ RSpec.describe Terminus::Actions::Extensions::Create, :db do
     let :params do
       {
         extension: {
+          model_ids: [],
           label: "Test",
           name: "test",
           description: nil,

@@ -172,22 +172,60 @@
   </fieldset>
 
   <fieldset class="column">
-    <fieldset class="column">
+    <fieldset class="column" x-data="{matrix: 'models'}">
       <legend class="legend">Build Matrix</legend>
+        <div class="bit-toggle-field">
+          <%= render "shared/radios/bar",
+                     items: [%w[Models models], %w[Devices devices]],
+                     name: "matrix",
+                     show: "matrix === 'models'",
+                     model: "matrix" %>
 
-      <%= scope(:form_field, key: :models, errors:).render do %>
-        <label class="key" for="extension_models">
-          Models
-          <%= render "shared/popovers/triggers/default", name: :models %>
-        </label>
+          <p class="help" x-show="matrix === 'models'">
+            Select the model(s) to render to.
+          </p>
 
-        <select name="model_ids[]" id="extension_models" multiple="multiple" class="value">
-          <% selected_model_ids = extension ? extension.models.map(&:id) : [] %>
-          <% models.each do |label, id| %>
-            <%= tag.option label, value: id, selected: selected_model_ids.include?(id) %>
-          <% end %>
-        </select>
-      <% end %>
+          <p class="help" x-show="matrix === 'devices'">
+            Select the device(s) to render to.
+            <em>Takes precedence over any selected models.</em>
+          </p>
+        </div>
+
+        <%= scope(:form_field, key: :models, errors:, alpine: {show: "matrix === 'models'"}).render do %>
+
+          <label class="key" for="extension_models">
+            Models
+            <%= render "shared/popovers/triggers/default", name: :models %>
+          </label>
+
+          <select name="extension[model_ids][]"
+                  id="extension_models"
+                  multiple="multiple"
+                  class="value">
+            <% selected_model_ids = extension ? extension.models.map(&:id) : [] %>
+            <% models.each do |label, id| %>
+              <%= tag.option label, value: id, selected: selected_model_ids.include?(id) %>
+            <% end %>
+          </select>
+        <% end %>
+
+        <%= scope(:form_field, key: :devices, errors:, alpine: {show: "matrix === 'devices'"}).render do %>
+
+          <label class="key" for="extension_devices">
+            Devices
+            <%= render "shared/popovers/triggers/default", name: :devices %>
+          </label>
+
+          <select name="extension[device_ids][]"
+                  id="extension_devices"
+                  multiple="multiple"
+                  class="value">
+            <% selected_device_ids = extension ? extension.devices.map(&:id) : [] %>
+            <% devices.each do |label, id| %>
+              <%= tag.option label, value: id, selected: selected_device_ids.include?(id) %>
+            <% end %>
+          </select>
+        <% end %>
     </fieldset>
 
     <%= tag.fieldset class: :column, "x-data" => "{unit: '#{field_for :unit, fields, extension}'}" do %>
@@ -264,45 +302,13 @@
         </label>
       <% end %>
     <% end %>
-
-    <fieldset class="column">
-      <legend class="legend">Miscellaneous</legend>
-
-      <%= scope(:form_field, key: :fields, errors:).render do %>
-        <label class="key" for="extension_fields">
-          Fields
-          <%= render "shared/popovers/triggers/default", name: :fields %>
-        </label>
-
-        <%= form.text_area :fields,
-                           field_for(:formatted_fields, fields, extension),
-                           id: :extension_fields,
-                           class: "bit-editor",
-                           autocomplete: :off,
-                           data: {language: :json} %>
-      <% end %>
-
-      <%= scope(:form_field, key: :data, errors:).render do %>
-        <label class="key" for="extension_data">
-          Data
-          <%= render "shared/popovers/triggers/default", name: :data %>
-        </label>
-
-        <%= form.text_area :data,
-                           field_for(:formatted_data, fields, extension),
-                           id: :extension_data,
-                           class: "bit-editor",
-                           autocomplete: :off,
-                           data: {language: :json} %>
-      <% end %>
-    </fieldset>
   </fieldset>
 </fieldset>
 
-<fieldset class="column">
+<fieldset class="column" x-data="{data: 'source'}">
   <%= scope(:form_field, key: :template, errors:).render do %>
     <label class="key" for="extension_template">
-      Template
+      Template and Data
       <%= render "shared/popovers/triggers/default", name: :template %>
     </label>
 
@@ -314,13 +320,73 @@
                        data: {language: :liquid} %>
   <% end %>
 
-  <% if extension %>
-    <%= scope(:form_field, key: :response, errors:).render do %>
-      <label class="key">
-        Response
-        <%= render "shared/popovers/triggers/default", name: :response %>
-      </label>
+  <div class="bit-toggle-field">
+    <%= render "shared/radios/bar",
+               items: [
+                 %w[Source source],
+                 %w[Sensors sensors],
+                 %w[Fields fields],
+                 %w[Shared shared]
+               ],
+               name: "data",
+               show: "data === 'source'",
+               model: "data" %>
 
+    <details open x-show="data === 'source'">
+      <summary>Usage</summary>
+
+      <p>Provides read-only data sourced from the URLs you provided above. This allows you to see all keys and values for use within your template.</p>
+
+      <p>When supplying a single URL, the top-level key will be <code>source</code>. Otherwise, when using multiple URLs, you'll get numbered source keys. Example: <code>source_1</code>, <code>source_2</code>, and so forth. Each key is numbered in the same order as your URLs.</p>
+    </details>
+
+    <details open x-show="data === 'sensors'">
+      <summary>Usage</summary>
+
+      <p>Provides read-only sensor data for use in your <a href="https://shopify.github.io/liquid/">Liquid</a> templates. Data is obtained as follows:</p>
+
+      <ul>
+        <li><strong>Device</strong>: Obtained from sensors connected to your e-ink device(s).</li>
+        <li><strong>Server</strong>: Obtained from the sensors connected to the host that Terminus is running on. For example, a Raspberry Pi, using the <a href="https://github.com/usetrmnl/sensor_scanner">Sensor Scanner</a> project.</li>
+      </ul>
+
+      <p>This will be empty when no sensors are connected.</p>
+    </details>
+
+    <details open x-show="data === 'fields'">
+      <summary>Usage</summary>
+
+      <p>Provides editable data which allows you to supply custom form fields for use in your template. <em>Must be a JSON array of hashes</em>.</p>
+
+      <p>These fields can be used in your Liquid template as follows:</p>
+
+      <ul>
+        <li><code>{{extension.fields}}</code>: Provides full access to all fields which means you can loop over all fields or pluck out a specific field by index. Example: <code>{{extension.fields[0].name}}</code>.</li>
+        <li><code>{{extension.values}}</code>: Provides quick access to the default values (i.e. the value of the <code>default</code> key) of your fields. You can access thes values via the key's name (i.e. <code>keyname</code>). Example: <code>{{extension.values.demo}}</code>.</li>
+      </ul>
+
+      <p>💡 Check out our <a href="https://help.trmnl.com/en/articles/10513740-custom-plugin-form-builder">Help Center</a> documentation for further examples.</p>
+    </details>
+
+    <details open x-show="data === 'shared'">
+      <summary>Usage</summary>
+
+      <p>Provides editable data which allows you to share common JSON data across all of your <a href="https://shopify.github.io/liquid">Liquid</a> templates. All keys are wrapped within a top-level <code>extension</code> key. For example, let's assume you have the following data associated with your extension:</p>
+
+      <p>
+        <code>
+          {
+            "demo": "This is a demo!"
+          }
+        </code>
+      </p>
+
+      <p>This means you can leverage the above in your Liquid template as <code>{{extension.demo}}</code>.</p>
+    </details>
+  </div>
+
+  <% if extension %>
+    <%= scope(:form_field, key: :response, errors:, alpine: {show: "data === 'source'"}).render do %>
       <%= tag.pre id: :extension_response,
                   **HTMX[
                     get: routes.path(:extension_poll, extension_id: extension.id),
@@ -328,7 +394,34 @@
                     swap: "outerHTML"
                   ] do %>Loading...<% end %>
     <% end %>
+
+    <%= scope(:form_field, key: :sensors, errors:, alpine: {show: "data === 'sensors'"}).render do %>
+      <%= form.text_area :fields,
+                         nil,
+                         id: :extension_fields,
+                         class: "bit-editor",
+                         data: {mode: :read, language: :json} %>
+    <% end %>
+  <% end %>
+
+  <%= scope(:form_field, key: :data, errors:, alpine: {show: "data === 'shared'"}).render do %>
+    <%= form.text_area :data,
+                       field_for(:formatted_data, fields, extension),
+                       id: :extension_data,
+                       class: "bit-editor",
+                       autocomplete: :off,
+                       data: {language: :json} %>
+  <% end %>
+
+  <%= scope(:form_field, key: :fields, errors:, alpine: {show: "data === 'fields'"}).render do %>
+    <%= form.text_area :fields,
+                       field_for(:formatted_fields, fields, extension),
+                       id: :extension_fields,
+                       class: "bit-editor",
+                       autocomplete: :off,
+                       data: {language: :json} %>
   <% end %>
 </fieldset>
 
 <%= render "extensions/shared/popovers/all" %>
+
