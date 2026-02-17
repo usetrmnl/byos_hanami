@@ -10,3 +10,7 @@ screen_poller:
   class: Terminus::Jobs::Pollers::Screen
   cron: "0/5 * * * *"
   description: "Polls TRMNL API for device screen updates."
+sensor_poller:
+  class: Terminus::Jobs::Pollers::Sensor
+  cron: "0/1 * * * *"
+  description: "Polls local sensor data on host (if any)."
