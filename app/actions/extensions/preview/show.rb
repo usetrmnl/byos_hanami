@@ -29,7 +29,7 @@ module Terminus
           private
 
           def body_for extension, model_id
-            case renderer.call extension, model_id
+            case renderer.call(extension, model_id:)
               in Success(body) then body
               in Failure(message) then message
               else "Unable to render body for extension: #{extension.id}."

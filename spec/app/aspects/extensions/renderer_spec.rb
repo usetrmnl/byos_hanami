@@ -14,7 +14,8 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
     let :context do
       {
         "extension" => {"fields" => [], "values" => {}},
-        "model" => model.liquid_attributes.stringify_keys!
+        "model" => model.liquid_attributes.stringify_keys!,
+        "sensors" => []
       }
     end
 
@@ -25,7 +26,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
 
       it "delegates to image renderer" do
         allow(extension).to receive(:kind).and_return("image")
-        renderer.call extension, model.id
+        renderer.call extension, model_id: model.id
 
         expect(image).to have_received(:call).with(extension, context:)
       end
@@ -37,7 +38,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
       let(:poll) { instance_spy Terminus::Aspects::Extensions::Renderers::Poll }
 
       it "delegates to poll renderer" do
-        renderer.call extension, model.id
+        renderer.call extension, model_id: model.id
         expect(poll).to have_received(:call).with(extension, context:)
       end
     end
@@ -49,7 +50,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
 
       it "delegates to static renderer" do
         allow(extension).to receive(:kind).and_return("static")
-        renderer.call extension, model.id
+        renderer.call extension, model_id: model.id
 
         expect(static).to have_received(:call).with(extension, context:)
       end
@@ -59,9 +60,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
       it "answers failure" do
         allow(extension).to receive(:kind).and_return("bogus")
 
-        expect(renderer.call(extension, model.id)).to be_failure(
-          "Unsupported extension kind: bogus."
-        )
+        expect(renderer.call(extension)).to be_failure("Unsupported extension kind: bogus.")
       end
     end
   end
