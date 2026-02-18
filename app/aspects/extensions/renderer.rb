@@ -37,7 +37,7 @@ module Terminus
           model = model_repository.find model_id
 
           {
-            "extension" => extension.to_liquid_context,
+            "extension" => extension.liquid_attributes,
             "model" => model.liquid_attributes.stringify_keys!
           }
         end

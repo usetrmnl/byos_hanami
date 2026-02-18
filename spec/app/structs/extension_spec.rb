@@ -7,6 +7,38 @@ RSpec.describe Terminus::Structs::Extension do
     Factory.structs[:extension, id: 1, name: "test", label: "Test", interval: 5, unit: "minute"]
   end
 
+  describe "#liquid_attributes" do
+    it "answers empty data and fields when nothing exists" do
+      expect(extension.liquid_attributes).to eq({"fields" => [], "values" => {}})
+    end
+
+    it "answers data and fields when they exist" do
+      extension = Factory.structs[
+        :extension,
+        data: {"id" => 123},
+        fields: [
+          {"keyname" => "one", "default" => 1},
+          {"keyname" => "two"},
+          {"keyname" => "three", "default" => 3}
+        ]
+      ]
+
+      expect(extension.liquid_attributes).to eq(
+        "id" => 123,
+        "fields" => [
+          {"keyname" => "one", "default" => 1},
+          {"keyname" => "two"},
+          {"keyname" => "three", "default" => 3}
+        ],
+        "values" => {
+          "one" => 1,
+          "two" => nil,
+          "three" => 3
+        }
+      )
+    end
+  end
+
   describe "#screen_name" do
     it "answers name" do
       expect(extension.screen_name).to eq("extension-test")
@@ -32,38 +64,6 @@ RSpec.describe Terminus::Structs::Extension do
 
     it "answers empty string when there is no schedule" do
       expect(Factory.structs[:extension].to_cron).to eq("")
-    end
-  end
-
-  describe "#to_liquid_context" do
-    it "answers empty data and fields when nothing exists" do
-      expect(extension.to_liquid_context).to eq({"fields" => [], "values" => {}})
-    end
-
-    it "answers data and fields when they exist" do
-      extension = Factory.structs[
-        :extension,
-        data: {"id" => 123},
-        fields: [
-          {"keyname" => "one", "default" => 1},
-          {"keyname" => "two"},
-          {"keyname" => "three", "default" => 3}
-        ]
-      ]
-
-      expect(extension.to_liquid_context).to eq(
-        "id" => 123,
-        "fields" => [
-          {"keyname" => "one", "default" => 1},
-          {"keyname" => "two"},
-          {"keyname" => "three", "default" => 3}
-        ],
-        "values" => {
-          "one" => 1,
-          "two" => nil,
-          "three" => 3
-        }
-      )
     end
   end
 

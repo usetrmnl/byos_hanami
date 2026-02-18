@@ -6,15 +6,7 @@ module Terminus
   module Structs
     # The extension struct.
     class Extension < DB::Struct
-      def screen_label = "Extension #{label}"
-
-      def screen_name = "extension-#{name}"
-
-      def screen_attributes = {label: screen_label, name: screen_name}
-
-      def to_cron(croner: Aspects::Croner) = croner.call interval, unit, time: start_at
-
-      def to_liquid_context
+      def liquid_attributes
         all_fields = Array fields
 
         values = all_fields.each.with_object({}) do |item, all|
@@ -24,6 +16,14 @@ module Terminus
 
         Hash(data).merge "fields" => all_fields, "values" => values
       end
+
+      def screen_label = "Extension #{label}"
+
+      def screen_name = "extension-#{name}"
+
+      def screen_attributes = {label: screen_label, name: screen_name}
+
+      def to_cron(croner: Aspects::Croner) = croner.call interval, unit, time: start_at
 
       def to_schedule
         [
