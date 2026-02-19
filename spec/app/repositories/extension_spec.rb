@@ -20,6 +20,36 @@ RSpec.describe Terminus::Repositories::Extension, :db do
     end
   end
 
+  describe "#create_with_devices" do
+    let(:device) { Factory[:device] }
+    let(:union_repository) { Terminus::Repositories::ExtensionDevice.new }
+
+    it "answers record" do
+      record = repository.create_with_devices({name: "test", label: "Test"}, [device.id])
+      expect(record).to have_attributes(name: "test", label: "Test")
+    end
+
+    it "creates associations" do
+      extension = repository.create_with_devices({name: "test", label: "Test"}, [device.id])
+
+      expect(union_repository.all).to include(
+        having_attributes(extension_id: extension.id, device_id: device.id)
+      )
+    end
+
+    it "doesn't create record when IDs are invalid" do
+      repository.create_with_devices({name: "test", label: "Test"}, [13])
+    rescue ROM::SQL::ForeignKeyConstraintError
+      expect(repository.all).to eq([])
+    end
+
+    it "doesn't associations when IDs are invalid" do
+      repository.create_with_devices({name: "test", label: "Test"}, [13])
+    rescue ROM::SQL::ForeignKeyConstraintError
+      expect(union_repository.all).to eq([])
+    end
+  end
+
   describe "#create_with_models" do
     let(:model) { Factory[:model] }
     let(:union_repository) { Terminus::Repositories::ExtensionModel.new }
@@ -101,6 +131,33 @@ RSpec.describe Terminus::Repositories::Extension, :db do
 
     it "answers empty array for invalid value" do
       expect(repository.search(:label, "bogus")).to eq([])
+    end
+  end
+
+  describe "#update_with_devices" do
+    let(:device) { Factory[:device] }
+    let(:union_repository) { Terminus::Repositories::ExtensionDevice.new }
+
+    it "answers record" do
+      record = repository.update_with_devices extension.id,
+                                              {name: "test", label: "Test"},
+                                              [device.id]
+      expect(record).to have_attributes(name: "test", label: "Test")
+    end
+
+    it "creates missing associations" do
+      repository.update_with_devices extension.id, {name: "test", label: "Test"}, [device.id]
+
+      expect(union_repository.all).to include(
+        having_attributes(extension_id: extension.id, device_id: device.id)
+      )
+    end
+
+    it "adds and subtracts associations" do
+      repository.update_with_devices extension.id, {name: "test", label: "Test"}, [device.id]
+      repository.update_with_devices extension.id, {name: "test", label: "Test"}, []
+
+      expect(union_repository.all).to eq([])
     end
   end
 

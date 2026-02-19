@@ -15,13 +15,20 @@ module Terminus
                  .to_a
       end
 
-      # :reek:TooManyStatements
+      def create_with_devices attributes, device_ids
+        transaction do
+          record = create attributes
+
+          create_associations :extension_device, record, :device_id, device_ids
+          record
+        end
+      end
+
       def create_with_models attributes, model_ids
         transaction do
           record = create attributes
-          associations = model_ids.map { |id| {extension_id: record.id, model_id: id} }
 
-          extension_model.changeset(:create, associations).commit
+          create_associations :extension_model, record, :model_id, model_ids
           record
         end
       end
@@ -36,23 +43,23 @@ module Terminus
                  .to_a
       end
 
-      # :reek:TooManyStatements
-      # rubocop:todo Metrics/AbcSize
+      def update_with_devices id, attributes, device_ids
+        transaction do
+          record = update id, attributes
+
+          update_associations :extension_device, id, :device_id, device_ids
+          record
+        end
+      end
+
       def update_with_models id, attributes, model_ids
         transaction do
           record = update id, attributes
 
-          extension_model.where(extension_id: id).exclude(model_id: model_ids).delete
-
-          old_ids = extension_model.where(extension_id: id, model_id: model_ids).map(:model_id)
-          new_ids = model_ids.reject { |id| old_ids.include? id.to_i }
-          associations = new_ids.map { |model_id| {extension_id: id, model_id:} }
-
-          extension_model.changeset(:create, associations).commit
+          update_associations :extension_model, id, :model_id, model_ids
           record
         end
       end
-      # rubocop:enable Metrics/AbcSize
 
       def where(**)
         extension.where(**)
@@ -62,7 +69,30 @@ module Terminus
 
       private
 
-      def with_associations = extension.combine :models
+      def with_associations = extension.combine :devices, :models
+
+      # rubocop:todo Metrics/ParameterLists
+      def create_associations name, record, foreign_key, values
+        associations = values.map { |id| {extension_id: record.id, foreign_key => id} }
+        __send__(name).changeset(:create, associations).commit
+      end
+      # rubocop:enable Metrics/ParameterLists
+
+      # :reek:FeatureEnvy
+      # :reek:TooManyStatements
+      # rubocop:todo Metrics/ParameterLists
+      def update_associations name, id, foreign_key, values
+        association = __send__ name
+
+        association.where(extension_id: id).exclude(foreign_key => values).delete
+
+        old_ids = association.where(extension_id: id, foreign_key => values).map(foreign_key)
+        new_ids = values.reject { |id| old_ids.include? id.to_i }
+        associations = new_ids.map { |model_id| {extension_id: id, foreign_key => model_id} }
+
+        association.changeset(:create, associations).commit
+      end
+      # rubocop:enable Metrics/ParameterLists
     end
   end
 end
