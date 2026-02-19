@@ -6,6 +6,8 @@ module Terminus
     class Extension < DB::Relation
       schema :extension, infer: true do
         associations do
+          has_many :extension_devices, relation: :extension_device
+          has_many :devices, through: :extension_device, relation: :device, as: :devices
           has_many :extension_models, relation: :extension_model
           has_many :models, through: :extension_model, relation: :model, as: :models
         end
