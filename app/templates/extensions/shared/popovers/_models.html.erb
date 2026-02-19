@@ -1,3 +1,3 @@
 <%= scope(:popover_default_content, name: :models, label: "Models").render do %>
-  <p>The model(s) to render a screen for. This allows you to dynamically create/update a screen for each model you select. You can then add the generated screens to your <a href="/playlists">Playlists</a> as desired.</p>
+  <p>The model(s) to render a screen for. This allows you to dynamically create/update a screen for each model you select. You can then add the generated screens to your <%= link_to "Playlists", routes.path(:playlists) %> as desired.</p>
 <% end %>
