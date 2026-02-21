@@ -6,6 +6,8 @@ module Terminus
     module Extensions
       # Defines extension upsert schema.
       Upsert = Dry::Schema.Params do
+        optional(:model_ids).filled :array
+        optional(:device_ids).filled :array
         required(:name).filled :string
         required(:label).filled :string
         required(:description).maybe :string
