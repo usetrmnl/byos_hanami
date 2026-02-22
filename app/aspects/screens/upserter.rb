@@ -9,30 +9,23 @@ module Terminus
       # Creates or updates a screen.
       class Upserter
         include Deps[
+          "aspects.models.finder",
           "aspects.screens.upserters.encoded",
           "aspects.screens.upserters.html",
           "aspects.screens.upserters.preprocessed",
-          "aspects.screens.upserters.unprocessed",
-          model_repository: "repositories.model"
+          "aspects.screens.upserters.unprocessed"
         ]
         include Initable[mold: Mold]
         include Dry::Monads[:result]
 
         def call **parameters
-          parameters.delete(:model_id)
-                    .then { |id| find_model id }
-                    .bind { |model| handle model, parameters }
+          model_id = parameters.delete :model_id
+          device_id = parameters.delete :device_id
+
+          finder.call(model_id:, device_id:).bind { |model| handle model, parameters }
         end
 
         private
-
-        def find_model id
-          model = model_repository.find id
-
-          return Success model if model
-
-          Failure "Unable to find model for ID: #{id.inspect}."
-        end
 
         def handle model, parameters
           case parameters

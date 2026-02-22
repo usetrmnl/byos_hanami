@@ -210,7 +210,7 @@ RSpec.describe "/api/screens", :db do
         type: "/problem_details#screen_payload",
         status: 422,
         title: "Unprocessable Content",
-        detail: "Unable to find model for ID: 666.",
+        detail: "Unable to find model for model ID (666) or device ID (nil).",
         instance: "/api/screens"
       ]
 
@@ -359,7 +359,7 @@ RSpec.describe "/api/screens", :db do
       type: "/problem_details#screen_payload",
       status: 422,
       title: "Unprocessable Content",
-      detail: "Unable to find model for ID: 666.",
+      detail: "Unable to find model for model ID (666) or device ID (nil).",
       instance: "/api/screens"
     ]
 

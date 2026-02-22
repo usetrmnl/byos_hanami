@@ -11,11 +11,12 @@ module Terminus
           view: "views.extensions.dynamic"
         ]
 
-        def call extension, model_id
-          renderer.call(extension, model_id:)
+        def call extension, model_id: nil, device_id: nil
+          renderer.call(extension, model_id:, device_id:)
                   .fmap { view.call body: it }
                   .bind do |content|
                     upserter.call model_id:,
+                                  device_id:,
                                   content: String.new(content),
                                   **extension.screen_attributes
                   end

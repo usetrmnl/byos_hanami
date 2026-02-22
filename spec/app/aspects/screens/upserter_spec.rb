@@ -100,11 +100,15 @@ RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
     end
 
     it "answers failure with nil value" do
-      expect(creator.call(model_id: nil)).to be_failure("Unable to find model for ID: nil.")
+      expect(creator.call(model_id: nil)).to be_failure(
+        "Unable to find model for model ID (nil) or device ID (nil)."
+      )
     end
 
     it "answers failure with no parameters" do
-      expect(creator.call(model_id: 666)).to be_failure("Unable to find model for ID: 666.")
+      expect(creator.call(model_id: 13)).to be_failure(
+        "Unable to find model for model ID (13) or device ID (nil)."
+      )
     end
 
     it "answers failure with invalid parameters" do

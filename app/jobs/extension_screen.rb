@@ -14,7 +14,7 @@ module Terminus
 
         return Failure "Unable to find by extension ID: #{id}." unless extension
 
-        screen_upserter.call extension, model_id
+        screen_upserter.call extension, model_id:
       end
     end
   end
