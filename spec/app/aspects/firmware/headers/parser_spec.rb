@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Firmware::Header do
+RSpec.describe Terminus::Aspects::Firmware::Headers::Parser do
   subject(:parser) { described_class.new }
 
   include_context "with firmware headers"

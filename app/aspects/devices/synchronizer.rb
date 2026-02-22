@@ -10,7 +10,7 @@ module Terminus
       class Synchronizer
         include Deps[
           :settings,
-          firmware_parser: "aspects.firmware.header",
+          firmware_parser: "aspects.firmware.headers.parser",
           repository: "repositories.device"
         ]
         include Pipeable
