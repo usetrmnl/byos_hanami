@@ -18,6 +18,8 @@ RSpec.describe Terminus::Contracts::Firmware::Header do
         HTTP_MODEL: "og_png",
         HTTP_REFRESH_RATE: 25,
         HTTP_RSSI: -54,
+        HTTP_SENSORS: "make=Sensirion;model=SCD41;kind=humidity;" \
+                      "value=26;unit=percent;created_at=1735714800",
         HTTP_USER_AGENT: "ESP32HTTPClient",
         HTTP_WIDTH: 800,
         HTTP_HEIGHT: 480

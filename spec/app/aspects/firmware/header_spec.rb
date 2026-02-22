@@ -11,8 +11,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
   describe "#call" do
     let :debug_message_pattern do
       /
-        DEBUG.+
-        Processing\sdevice\srequest\sheaders.+
+        DEBUG.+Processing\sdevice\srequest\sheaders.+
         HTTP_ACCESS_TOKEN.+
         HTTP_BATTERY_VOLTAGE.+
         HTTP_FW_VERSION.+
@@ -22,6 +21,7 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
         HTTP_MODEL.+
         HTTP_REFRESH_RATE.+
         HTTP_RSSI.+
+        HTTP_SENSORS.+
         HTTP_USER_AGENT.+
         HTTP_WIDTH.+
       /x
@@ -45,7 +45,9 @@ RSpec.describe Terminus::Aspects::Firmware::Header do
           firmware_version: "1.2.3",
           wifi: -54,
           width: 800,
-          height: 480
+          height: 480,
+          sensors: "make=Sensirion;model=SCD41;kind=humidity;" \
+                   "value=26;unit=percent;created_at=1735714800"
         ]
       )
     end

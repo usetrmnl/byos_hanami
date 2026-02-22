@@ -41,7 +41,9 @@ RSpec.describe Terminus::Models::Firmware::Header do
           firmware_version: "1.2.3",
           wifi: "-54",
           width: "800",
-          height: "480"
+          height: "480",
+          sensors: "make=Sensirion;model=SCD41;kind=humidity;" \
+                   "value=26;unit=percent;created_at=1735714800"
         ]
       )
     end

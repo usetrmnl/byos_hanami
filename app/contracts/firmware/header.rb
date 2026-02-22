@@ -14,6 +14,7 @@ module Terminus
         optional(:HTTP_MODEL).filled :string
         optional(:HTTP_REFRESH_RATE).filled :integer
         optional(:HTTP_RSSI).filled :integer
+        optional(:HTTP_SENSORS).maybe :string
         optional(:HTTP_USER_AGENT).filled :string
         optional(:HTTP_WIDTH).filled :integer
       end

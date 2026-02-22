@@ -9,14 +9,15 @@ module Terminus
         HTTP_ACCESS_TOKEN: :api_key,
         HTTP_BATTERY_VOLTAGE: :battery,
         HTTP_FW_VERSION: :firmware_version,
+        HTTP_HEIGHT: :height,
         HTTP_HOST: :host,
         HTTP_ID: :mac_address,
         HTTP_MODEL: :model_name,
         HTTP_REFRESH_RATE: :refresh_rate,
         HTTP_RSSI: :wifi,
+        HTTP_SENSORS: :sensors,
         HTTP_USER_AGENT: :user_agent,
-        HTTP_WIDTH: :width,
-        HTTP_HEIGHT: :height
+        HTTP_WIDTH: :width
       }.freeze
 
       # Models the HTTP headers for quick access to attributes.
