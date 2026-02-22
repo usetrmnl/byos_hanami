@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Jobs::ExtensionScreen, :db do
+RSpec.describe Terminus::Jobs::Extensions::Screen, :db do
   subject(:job) { described_class.new }
 
   describe "#perform" do

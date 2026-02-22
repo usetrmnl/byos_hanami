@@ -9,7 +9,7 @@ module Terminus
       # Enqueues a job for each model ID.
       class Extension < Base
         include Deps[repository: "repositories.extension"]
-        include Initable[job: Jobs::ExtensionScreen]
+        include Initable[job: Jobs::Extensions::Screen]
 
         sidekiq_options queue: "within_1_minute"
 
