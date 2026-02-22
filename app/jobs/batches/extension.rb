@@ -18,8 +18,19 @@ module Terminus
 
           return Failure "Unable to enqueue jobs for extension: #{id}." unless extension
 
-          extension.models.each { |model| job.perform_async extension.id, model.id }
+          extension.devices.any? ? enqueue_devices(extension) : enqueue_models(extension)
+
           Success "Enqueued jobs for extension: #{id}."
+        end
+
+        private
+
+        def enqueue_models extension
+          extension.models.each { |model| job.perform_async extension.id, model.id }
+        end
+
+        def enqueue_devices extension
+          extension.devices.each { |device| job.perform_async extension.id, nil, device.id }
         end
       end
     end

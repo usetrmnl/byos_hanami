@@ -50,6 +50,8 @@ detectors:
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::Aspects::Screens::Upserters::TempPath#capture_input
       - Terminus::IPFinder#all
+      - Terminus::Jobs::Batches::Extension#enqueue_devices
+      - Terminus::Jobs::Batches::Extension#enqueue_models
       - Terminus::Repositories::Playlist#auto_update_current_item
       - Terminus::Repositories::Screen#create_with_image
       - Terminus::Repositories::Screen#update_with_image
