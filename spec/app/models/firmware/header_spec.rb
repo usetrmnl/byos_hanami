@@ -9,17 +9,18 @@ RSpec.describe Terminus::Models::Firmware::Header do
 
   subject :record do
     described_class[
-      host: "https://localhost",
-      user_agent: "ESP32HTTPClient",
-      mac_address: "A1:B2:C3:D4:E5:F6",
-      model_name: "og_png",
       api_key: "abc123",
-      refresh_rate: 25,
       battery: 4.74,
       firmware_version: Version("1.2.3"),
-      wifi: -40,
+      height: 480,
+      host: "https://localhost",
+      mac_address: "A1:B2:C3:D4:E5:F6",
+      model_name: "og_png",
+      refresh_rate: 25,
+      sensors: [],
+      user_agent: "ESP32HTTPClient",
       width: 800,
-      height: 480
+      wifi: -40
     ]
   end
 
@@ -31,19 +32,28 @@ RSpec.describe Terminus::Models::Firmware::Header do
 
       expect(record).to eq(
         described_class[
-          host: "https://localhost",
-          user_agent: "ESP32HTTPClient",
-          mac_address: "A1:B2:C3:D4:E5:F6",
-          model_name: "og_png",
           api_key: "abc123",
-          refresh_rate: "25",
           battery: "4.74",
           firmware_version: "1.2.3",
-          wifi: "-54",
-          width: "800",
           height: "480",
-          sensors: "make=Sensirion;model=SCD41;kind=humidity;" \
-                   "value=26;unit=percent;created_at=1735714800"
+          host: "https://localhost",
+          mac_address: "A1:B2:C3:D4:E5:F6",
+          model_name: "og_png",
+          refresh_rate: "25",
+          sensors: [
+            {
+              make: "Sensirion",
+              model: "SCD41",
+              kind: "humidity",
+              value: "26",
+              unit: "percent",
+              source: "device",
+              created_at: Time.at(1735714800)
+            }
+          ],
+          user_agent: "ESP32HTTPClient",
+          width: "800",
+          wifi: "-54"
         ]
       )
     end

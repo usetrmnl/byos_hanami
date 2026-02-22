@@ -46,8 +46,17 @@ RSpec.describe Terminus::Aspects::Firmware::Headers::Parser do
           wifi: -54,
           width: 800,
           height: 480,
-          sensors: "make=Sensirion;model=SCD41;kind=humidity;" \
-                   "value=26;unit=percent;created_at=1735714800"
+          sensors: [
+            {
+              make: "Sensirion",
+              model: "SCD41",
+              kind: "humidity",
+              value: "26",
+              unit: "percent",
+              source: "device",
+              created_at: Time.at(1735714800)
+            }
+          ]
         ]
       )
     end
