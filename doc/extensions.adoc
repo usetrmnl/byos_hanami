@@ -6,6 +6,7 @@
 :framework_link: link:https://trmnl.com/framework[Framework]
 :liquid_link: link:https://shopify.github.io/liquid/[Liquid]
 :trmnl_liquid_gem_link: link:https://github.com/usetrmnl/trmnl-liquid[TRMNL Liquid]
+:trmnl_sensor_scanner_link: link:https://github.com/usetrmnl/sensor_scanner[Sensor Scanner]
 
 = Extensions
 
