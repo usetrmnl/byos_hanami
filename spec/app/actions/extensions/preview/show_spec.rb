@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::Extensions::Preview::Show, :db do
   subject(:action) { described_class.new renderer: }
 
   let(:renderer) { instance_double Terminus::Aspects::Extensions::Renderer, call: result }
-  let(:result) { Success({}) }
+  let(:result) { Success ["", {}] }
 
   describe "#call" do
     let(:extension) { Factory[:extension, uris: ["https://one.io"]] }
@@ -20,7 +20,7 @@ RSpec.describe Terminus::Actions::Extensions::Preview::Show, :db do
     end
 
     context "with success" do
-      let(:result) { Success "Test" }
+      let(:result) { Success Terminus::Aspects::Extensions::Capsule[content: "Test"] }
 
       it "renders body" do
         expect(response.body.first).to include("Test")
@@ -28,10 +28,15 @@ RSpec.describe Terminus::Actions::Extensions::Preview::Show, :db do
     end
 
     context "with failure" do
-      let(:result) { Failure "Danger!" }
+      let :result do
+        Failure Terminus::Aspects::Extensions::Capsule[
+          content: "Test",
+          errors: {"https://test.io" => "Danger!"}
+        ]
+      end
 
       it "renders body" do
-        expect(response.body.first).to include("Danger!")
+        expect(response.body.first).to include({"https://test.io" => "Danger!"}.inspect)
       end
     end
 

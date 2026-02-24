@@ -9,17 +9,11 @@ module Terminus
       # Fetches remote data.
       class Fetcher
         include Deps[:http]
-        include Initable[parser: Extensions::Parser]
+        include Initable[parser: Extensions::Parser, special_header: "Accept"]
         include Dry::Monads[:result]
 
-        def self.mime_type_and_body_for headers, response
-          type = headers && headers["Accept"]
-
-          [type || response.mime_type, response.body]
-        end
-
         def call uri, extension
-          request(uri, extension).fmap { self.class.mime_type_and_body_for extension.headers, it }
+          request(uri, extension).fmap { maybe_alter_mime_type extension.headers, it }
                                  .bind { |mime_type, body| parse mime_type, body }
         end
 
@@ -29,6 +23,12 @@ module Terminus
           http.headers(extension.headers)
               .public_send(extension.verb, uri)
               .then { it.status.success? ? Success(it) : Failure(it) }
+        end
+
+        def maybe_alter_mime_type headers, response
+          type = headers && headers[special_header]
+
+          [type || response.mime_type, response.body]
         end
 
         def parse type, body

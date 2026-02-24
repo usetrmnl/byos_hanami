@@ -24,7 +24,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
 
       let(:image) { instance_spy Terminus::Aspects::Extensions::Renderers::Image }
 
-      it "delegates to image renderer" do
+      it "delegates to poll renderer" do
         allow(extension).to receive(:kind).and_return("image")
         renderer.call extension, model_id: model.id
 

@@ -7,28 +7,6 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll do
 
   let(:fetcher) { instance_double Terminus::Aspects::Extensions::MultiFetcher }
 
-  describe ".reduce" do
-    let :collection do
-      {
-        "source_1" => Success("one"),
-        "source_2" => Failure("Danger!"),
-        "source_3" => Success("three")
-      }
-    end
-
-    it "reduces collection" do
-      expect(described_class.reduce(collection)).to eq(
-        "source_1" => "one",
-        "source_2" => "Danger!",
-        "source_3" => "three"
-      )
-    end
-
-    it "mutates collection" do
-      expect(described_class.reduce(collection.dup)).not_to eq(collection)
-    end
-  end
-
   describe "#call" do
     let :extension do
       Factory.structs[
@@ -57,38 +35,52 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll do
       }
     end
 
-    it "renders template with single response" do
-      allow(fetcher).to receive(:call).and_return(Success("source" => Success(data)))
+    it "renders template without errors for single response" do
+      allow(fetcher).to receive(:call).and_return(
+        Success(Terminus::Aspects::Extensions::Capsule[content: {"source" => data}])
+      )
 
       expect(renderer.call(extension, context:)).to be_success(
-        %(<h1>Test Label</h1>\n\n  <p>Test: A test.</p>\n\n)
+        Terminus::Aspects::Extensions::Capsule[
+          content: %(<h1>Test Label</h1>\n\n  <p>Test: A test.</p>\n\n)
+        ]
       )
     end
 
-    it "renders template with multiple responses" do
-      allow(fetcher).to receive(:call).and_return(
-        Success(
-          {
-            "source_1" => Success(data),
-            "source_2" => Failure("Danger!"),
-            "source_3" => Success(data)
-          }
+    context "with mixed responses" do
+      before do
+        allow(fetcher).to receive(:call).and_return(
+          Failure(
+            Terminus::Aspects::Extensions::Capsule[
+              content: {"source_1" => data, "source_3" => data},
+              errors: {"https://test.io" => "Danger!"}
+            ]
+          )
         )
-      )
 
-      allow(extension).to receive(:template).and_return(<<~CONTENT)
-        <h1>{{extension.label}}</h1>
-        {% for item in source_1.data %}<p>{{item.label}}</p>{% endfor %}
-        {% for item in source_2.data %}<p>{{item.label}}</p>{% endfor %}
-        {% for item in source_3.data %}<p>{{item.label}}</p>{% endfor %}
-      CONTENT
+        allow(extension).to receive(:template).and_return(<<~CONTENT)
+          <h1>{{extension.label}}</h1>
+          {% for item in source_1.data %}<p>{{item.label}}</p>{% endfor %}
+          {% for item in source_2.data %}<p>{{item.label}}</p>{% endfor %}
+          {% for item in source_3.data %}<p>{{item.label}}</p>{% endfor %}
+        CONTENT
+      end
 
-      expect(renderer.call(extension, context:)).to be_success(<<~CONTENT)
-        <h1>Test Label</h1>
-        <p>Test</p>
+      it "answers render template and captures errors" do
+        html = <<~CONTENT
+          <h1>Test Label</h1>
+          <p>Test</p>
 
-        <p>Test</p>
-      CONTENT
+          <p>Test</p>
+        CONTENT
+
+        expect(renderer.call(extension, context:)).to be_failure(
+          Terminus::Aspects::Extensions::Capsule[
+            content: html,
+            errors: {"https://test.io" => "Danger!"}
+          ]
+        )
+      end
     end
   end
 end

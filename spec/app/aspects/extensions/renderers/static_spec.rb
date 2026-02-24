@@ -11,25 +11,27 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Static do
         :extension,
         kind: "static",
         body: {
-          "holidays" => [
-            {"label" => "Halloween", "at" => "2025-10-31"},
-            {"label" => "New Years", "at" => "2026-01-01"}
+          "days" => [
+            {"label" => "One", "at" => "2025-10-31"},
+            {"label" => "Two", "at" => "2026-01-01"}
           ]
         },
         template: <<~BODY
           <h1>{{extension.label}}</h1>
-          {% for holiday in source.holidays %}
-            <p>{{holiday.label}} ({{holiday.label}})</p>
+          {% for day in source.days %}
+            <p>{{day.label}}</p>
           {% endfor %}
         BODY
       ]
     end
 
     it "renders template" do
-      context = {"extension" => {"label" => "Holidays"}}
+      context = {"extension" => {"label" => "Days"}}
 
       expect(renderer.call(extension, context:)).to be_success(
-        %(<h1>Holidays</h1>\n\n  <p>Halloween (Halloween)</p>\n\n  <p>New Years (New Years)</p>\n\n)
+        Terminus::Aspects::Extensions::Capsule[
+          content: %(<h1>Days</h1>\n\n  <p>One</p>\n\n  <p>Two</p>\n\n)
+        ]
       )
     end
   end

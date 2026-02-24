@@ -12,21 +12,24 @@ module Terminus
           include Deps[fetcher: "aspects.extensions.multi_fetcher", renderer: "liquid.default"]
           include Dry::Monads[:result]
 
-          def self.reduce collection
-            collection.each do |key, value|
-              collection[key] = value.success? ? value.success : value.failure
-            end
-          end
-
+          # :reek:DuplicateMethodCall
           def call extension, context: Dry::Core::EMPTY_HASH
+            template = extension.template
+
             fetcher.call(extension)
-                   .fmap { |collection| self.class.reduce collection }
-                   .fmap { |data| render extension.template, context, data }
+                   .either -> capsule { success template, context.merge(capsule.content), capsule },
+                           -> capsule { failure template, context.merge(capsule.content), capsule }
           end
 
           private
 
-          def render(template, context, data) = renderer.call template, context.merge(data)
+          def success template, context, capsule
+            Success capsule.with(content: renderer.call(template, context))
+          end
+
+          def failure template, context, capsule
+            Failure capsule.with(content: renderer.call(template, context))
+          end
         end
       end
     end

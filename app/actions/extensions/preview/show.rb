@@ -23,15 +23,15 @@ module Terminus
 
             halt :not_found unless extension
 
-            response.render view, body: body_for(extension, model_id)
+            response.render view, content: content_for(extension, model_id)
           end
 
           private
 
-          def body_for extension, model_id
+          def content_for extension, model_id
             case renderer.call(extension, model_id:)
-              in Success(body) then body
-              in Failure(message) then message
+              in Success(content:, errors:) then content
+              in Failure(content:, errors:) then errors
               else "Unable to render body for extension: #{extension.id}."
             end
           end

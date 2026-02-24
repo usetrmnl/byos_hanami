@@ -6,7 +6,7 @@ RSpec.describe Terminus::Actions::Extensions::Poll::Show, :db do
   subject(:action) { described_class.new fetcher: }
 
   let(:fetcher) { instance_double Terminus::Aspects::Extensions::MultiFetcher, call: result }
-  let(:result) { Success({}) }
+  let(:result) { Success Terminus::Aspects::Extensions::Capsule.new }
 
   describe "#call" do
     let(:extension) { Factory[:extension, uris: ["https://one.io"]] }
@@ -18,35 +18,44 @@ RSpec.describe Terminus::Actions::Extensions::Poll::Show, :db do
       )
     end
 
-    context "with success" do
-      let(:result) { Success "source_1" => Success("data" => [{"name" => "test"}]) }
+    context "with success (non-image kind)" do
+      let :result do
+        Success Terminus::Aspects::Extensions::Capsule[
+          content: {"source_1" => {"data" => [{"name" => "test"}]}}
+        ]
+      end
 
       it "renders data" do
         expect(response.body.first).to match(/name.+test/)
       end
     end
 
-    context "with outer failure" do
-      let(:result) { Failure "Danger!" }
+    context "with success (image kind)" do
+      let(:extension) { Factory[:extension, kind: "image", uris: ["https://one.io"]] }
 
-      it "renders error" do
-        expect(response.body.first).to include("Danger!")
+      let :result do
+        Success Terminus::Aspects::Extensions::Capsule[content: {"source" => "Image test."}]
+      end
+
+      it "renders data" do
+        expect(response.body.first).to match(/source.+Binary request\.\.\./)
       end
     end
 
-    context "with inner failure" do
-      let(:result) { Success "source_1" => Failure("Danger!") }
+    context "with failure" do
+      let :result do
+        Failure Terminus::Aspects::Extensions::Capsule[
+          content: nil,
+          errors: {"https://test.io" => "Danger!"}
+        ]
+      end
 
       it "renders error" do
-        expect(response.body.first).to match("Danger!")
+        expect(response.body.first).to include(<<~HTML)
+          <textarea id="extension_response" class="bit-editor" data-mode="read" data-language="json">
+          </textarea>
+        HTML
       end
-    end
-
-    it "renders empty text area with empty result" do
-      expect(response.body.first).to eq(<<~HTML)
-        <textarea id="extension_response" class="bit-editor" data-mode="read" data-language="json">
-        </textarea>
-      HTML
     end
 
     it "answers not found error with invalid ID" do

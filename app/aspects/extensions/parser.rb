@@ -17,31 +17,29 @@ module Terminus
         extend Functionable
 
         def from_csv body
-          Success({"source" => Success(::CSV.parse(String(body), headers: true).each.map(&:to_h))})
+          Success ::CSV.parse(String(body), headers: true).each.map(&:to_h)
         rescue ::CSV::MalformedCSVError => error
           Failure error.message
         end
 
-        def from_image(body) = Success "source" => Success(body)
+        def from_image(body) = Success body
 
         def from_json body
-          return Success({"source" => Success(Dry::Core::EMPTY_ARRAY)}) if String(body).empty?
-
-          content = JSON(body).then { {"source" => Success(it)} }
+          content = String(body).empty? ? Dry::Core::EMPTY_ARRAY : JSON(body)
           Success content
         rescue ::JSON::ParserError => error
           Failure "#{error.message.capitalize}."
         end
 
         def from_text body
-          Success({"source" => Success(String(body).split)})
+          Success String(body).split
         rescue ArgumentError => error
           Failure "#{error.message.capitalize}."
         end
 
         def from_xml body, nori: Nori.new(parser: :rexml)
           content = nori.parse String(body)
-          Success({"source" => Success(content)})
+          Success content.empty? ? Dry::Core::EMPTY_ARRAY : content
         rescue REXML::ParseException => error
           Failure error.message
         end

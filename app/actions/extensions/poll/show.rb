@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "refinements/hash"
+
 module Terminus
   module Actions
     module Extensions
@@ -12,38 +14,34 @@ module Terminus
           ]
           include Initable[json_formatter: Aspects::JSONFormatter]
 
-          params { required(:extension_id).filled :integer }
+          using Refinements::Hash
 
-          # TODO: This is a duplicate of what is found in the Poll renderer.
-          def self.reduce collection
-            collection.each do |key, value|
-              collection[key] = value.success? ? value.success : value.failure
-            end
-          end
+          params { required(:extension_id).filled :integer }
 
           def handle request, response
             extension = repository.find request.params[:extension_id]
 
             halt :not_found unless extension
 
-            response.render view, body: body_for(extension), layout: false
+            render extension, response
           end
 
           private
 
-          def body_for extension
-            case fetch extension
-              in Success(body) then body
-              in Failure(message) then message
+          def render extension, response
+            case fetcher.call extension
+              in Success(content:, errors:)
+                response.render view, content: sanitize(extension, content), layout: false
+              in Failure(content:, errors:)
+                response.render view, content:, errors:, layout: false
               # :nocov:
               # :nocov:
             end
           end
 
-          def fetch extension
-            fetcher.call(extension)
-                   .fmap { |collection| self.class.reduce collection }
-                   .fmap { |data| json_formatter.call data }
+          def sanitize extension, content
+            content.transform_values! { "Binary request..." } if extension.kind == "image"
+            json_formatter.call content
           end
         end
       end

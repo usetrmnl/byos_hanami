@@ -7,7 +7,7 @@ module Terminus
       class Dynamic < View
         config.layout = "extension"
 
-        expose :body
+        expose :content
       end
     end
   end
