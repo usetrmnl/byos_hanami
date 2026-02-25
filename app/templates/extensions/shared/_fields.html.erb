@@ -346,7 +346,7 @@
       <p>Provides read-only sensor data for use in your <a href="https://shopify.github.io/liquid/">Liquid</a> templates. Data is obtained as follows:</p>
 
       <ul>
-        <li><strong>Device</strong>: Obtained from sensors connected to your e-ink device(s).</li>
+        <li><strong>Device</strong>: Obtained from sensors connected to your ePaper device(s).</li>
         <li><strong>Server</strong>: Obtained from the sensors connected to the host that Terminus is running on. For example, a Raspberry Pi, using the <a href="https://github.com/usetrmnl/sensor_scanner">Sensor Scanner</a> project.</li>
       </ul>
 
@@ -387,8 +387,7 @@
 
   <% if extension %>
     <%= scope(:form_field, key: :response, errors:, alpine: {show: "data === 'source'"}).render do %>
-      <%= tag.pre id: :extension_response,
-                  **HTMX[
+      <%= tag.pre **HTMX[
                     get: routes.path(:extension_poll, extension_id: extension.id),
                     trigger: :load,
                     swap: "outerHTML"
@@ -396,11 +395,11 @@
     <% end %>
 
     <%= scope(:form_field, key: :sensors, errors:, alpine: {show: "data === 'sensors'"}).render do %>
-      <%= form.text_area :fields,
-                         nil,
-                         id: :extension_fields,
-                         class: "bit-editor",
-                         data: {mode: :read, language: :json} %>
+      <%= tag.pre **HTMX[
+                    get: routes.path(:extension_sensors, extension_id: extension.id),
+                    trigger: :load,
+                    swap: "outerHTML"
+                  ] do %>Loading...<% end %>
     <% end %>
   <% end %>
 
