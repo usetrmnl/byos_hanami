@@ -52,7 +52,7 @@ RSpec.describe Terminus::Actions::Extensions::Poll::Show, :db do
 
       it "renders error" do
         expect(response.body.first).to include(<<~HTML)
-          <textarea id="extension_response" class="bit-editor" data-mode="read" data-language="json">
+          <textarea class="bit-editor" data-mode="read" data-language="json">
           </textarea>
         HTML
       end
