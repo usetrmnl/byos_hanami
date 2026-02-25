@@ -33,8 +33,8 @@ module Terminus
 
             return JSON path.read if path.exist?
 
-            logger.info { "Sensors path not found: #{path}. Skipped." }
-            Dry::Core::EMPTY_ARRAY
+            logger.debug { "Sensors path not found: #{path}. Skipped." }
+            Dry::Core::EMPTY_HASH
           end
 
           def process_devices data
@@ -44,7 +44,7 @@ module Terminus
           end
 
           def process_sensors device_id, data
-            data.fetch("data").map do |entry|
+            data.fetch("data", Dry::Core::EMPTY_ARRAY).map do |entry|
               result = schema.call entry
 
               if result.success?

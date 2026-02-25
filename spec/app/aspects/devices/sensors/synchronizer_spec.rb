@@ -91,7 +91,15 @@ RSpec.describe Terminus::Aspects::Devices::Sensors::Synchronizer, :db do
     context "with missing sensors path" do
       let(:path) { temp_dir.join "sensors.json" }
 
-      it "doesn't upsert" do
+      it "doesn't upsert with devices" do
+        Factory[:device]
+        expectation = proc { synchronizer.call }
+        count = proc { repository.all.size }
+
+        expect(&expectation).not_to change(&count)
+      end
+
+      it "doesn't upsert without devices" do
         expectation = proc { synchronizer.call }
         count = proc { repository.all.size }
 
@@ -100,7 +108,7 @@ RSpec.describe Terminus::Aspects::Devices::Sensors::Synchronizer, :db do
 
       it "logs synchronization was skipped" do
         synchronizer.call
-        expect(logger.reread).to match(/INFO.+Sensors path not found: #{path}. Skipped./)
+        expect(logger.reread).to match(/DEBUG.+Sensors path not found: #{path}. Skipped./)
       end
     end
 
