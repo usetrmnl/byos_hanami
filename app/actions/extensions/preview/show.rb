@@ -15,21 +15,24 @@ module Terminus
           params do
             required(:extension_id).filled :integer
             required(:model_id).filled :integer
+            required(:device_id).maybe :integer
           end
 
           def handle request, response
-            id, model_id = request.params.to_h.values_at :extension_id, :model_id
+            id, model_id, device_id = request.params.to_h.values_at :extension_id,
+                                                                    :model_id,
+                                                                    :device_id
             extension = repository.find id
 
             halt :not_found unless extension
 
-            response.render view, content: content_for(extension, model_id)
+            response.render view, content: content_for(extension, model_id, device_id)
           end
 
           private
 
-          def content_for extension, model_id
-            case renderer.call(extension, model_id:)
+          def content_for extension, model_id, device_id
+            case renderer.call(extension, model_id:, device_id:)
               in Success(content:, errors:) then content
               in Failure(content:, errors:) then errors
               else "Unable to render body for extension: #{extension.id}."

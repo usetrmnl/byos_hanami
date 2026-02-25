@@ -31,7 +31,11 @@
 
       <%= scope(:popover_default_content, name: :preview, label: nil).render do %>
         <% model = extension.models.any? ? extension.models.first : default_model %>
-        <% uri = routes.path:extension_preview, extension_id: extension.id, model_id: model.id %>
+        <% device_id = extension.devices.first.id if extension.devices.any? %>
+        <% uri = routes.path :extension_preview,
+                             extension_id: extension.id,
+                             model_id: model.id,
+                             device_id: %>
 
         <div class="bit-frame">
           <%= tag.iframe src: uri,

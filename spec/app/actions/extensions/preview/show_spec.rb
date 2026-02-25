@@ -6,16 +6,19 @@ RSpec.describe Terminus::Actions::Extensions::Preview::Show, :db do
   subject(:action) { described_class.new renderer: }
 
   let(:renderer) { instance_double Terminus::Aspects::Extensions::Renderer, call: result }
-  let(:result) { Success ["", {}] }
+  let(:result) { Success Terminus::Aspects::Extensions::Capsule.new }
 
   describe "#call" do
     let(:extension) { Factory[:extension, uris: ["https://one.io"]] }
-    let(:model) { Factory[:model] }
 
     let :response do
       action.call Rack::MockRequest.env_for(
         extension.id.to_s,
-        "router.params" => {extension_id: extension.id, model_id: model.id}
+        "router.params" => {
+          extension_id: extension.id,
+          model_id: Factory[:model].id,
+          device_id: Factory[:device].id
+        }
       )
     end
 
