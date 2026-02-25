@@ -85,6 +85,7 @@ module Terminus
 
     get "/extensions/:extension_id/preview", to: "extensions.preview.show", as: :extension_preview
     get "/extensions/:extension_id/poll", to: "extensions.poll.show", as: :extension_poll
+    get "/extensions/:extension_id/sensors", to: "extensions.sensors.index", as: :extension_sensors
 
     get "/firmware", to: "firmware.index", as: :firmware
     get "/firmware/:id", to: "firmware.show", as: :firmware_show
