@@ -8,6 +8,7 @@ RSpec.describe Terminus::Structs::DeviceSensor do
   describe "#liquid_attributes" do
     it "answers attributes" do
       expect(sensor.liquid_attributes).to eq(
+        "device_id" => nil,
         "kind" => "temperature",
         "make" => "ACME",
         "model" => "Test",

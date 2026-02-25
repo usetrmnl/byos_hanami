@@ -24,6 +24,7 @@ RSpec.describe Terminus::Aspects::Extensions::Contextualizer, :db do
         "model" => {"bit_depth" => 1, "name" => "test", "orientation" => "landscape"},
         "sensors" => [
           {
+            "device_id" => device.id,
             "kind" => "temperature",
             "make" => "ACME",
             "model" => "Test",

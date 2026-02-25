@@ -9,7 +9,7 @@ module Terminus
       using Refinements::Hash
 
       def liquid_attributes
-        {make:, model:, kind:, value:, unit:, source:, created_at:}.stringify_keys!
+        {device_id:, make:, model:, kind:, value:, unit:, source:, created_at:}.stringify_keys!
       end
     end
   end
