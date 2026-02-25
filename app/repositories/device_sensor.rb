@@ -15,6 +15,13 @@ module Terminus
 
       def find_by(**) = with_associations.where(**).one
 
+      def limited_where(max = 25, **)
+        device_sensor.where(**)
+                     .limit(max)
+                     .order { created_at.desc }
+                     .to_a
+      end
+
       def search(key, value, **)
         with_associations.where(**)
                          .where(Sequel.ilike(key, "%#{value}%"))

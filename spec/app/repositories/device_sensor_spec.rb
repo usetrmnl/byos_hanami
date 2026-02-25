@@ -52,6 +52,34 @@ RSpec.describe Terminus::Repositories::DeviceSensor, :db do
     end
   end
 
+  describe "#limited_where" do
+    let(:other) { Factory[:device_sensor] }
+
+    before do
+      sensor
+      other
+    end
+
+    it "answers records for default limit" do
+      expect(repository.limited_where).to contain_exactly(
+        have_attributes(id: sensor.id, device_id: sensor.device_id),
+        have_attributes(id: other.id, device_id: other.device_id)
+      )
+    end
+
+    it "answers records for specific attributes" do
+      expect(repository.limited_where(id: sensor.id)).to contain_exactly(
+        have_attributes(id: sensor.id, device_id: sensor.device_id)
+      )
+    end
+
+    it "answers records for specific limit" do
+      expect(repository.limited_where(1)).to contain_exactly(
+        have_attributes(id: sensor.id, device_id: sensor.device_id)
+      )
+    end
+  end
+
   describe "#search" do
     it "answers records for case insensitive value and device ID" do
       expect(repository.search(:make, "ACME", device_id: sensor.device_id)).to contain_exactly(
