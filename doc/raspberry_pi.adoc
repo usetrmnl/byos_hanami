@@ -3,6 +3,7 @@
 :figure-caption!:
 
 :pi_project_link: link:https://alchemists.io/projects/pi[Pi]
+:sensor_project_link: link:https://github.com/usetrmnl/sensor_scanner[Sensor Scanner]
 
 = Raspberry Pi
 
@@ -29,7 +30,39 @@ cd terminus
 bin/setup docker
 ----
 
-Then you can run `bin/run s` to format and configure your micro SSD card and run a dockerized version of Terminus on your Raspberry Pi device. Finally, once your Raspberry Pi has booted, you can SSH in to launch Terminus. Example:
+If you'd like sensor support, you can add a service for the {sensor_project_link} (i.e. `$XDG_CONFIG_HOME/pi/scripts/services/trmnl_sensors`) with the following contents
+
+[source,bash]
+----
+#! /usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+IFS=$'\n\t'
+
+cd "$HOME"
+
+sudo apt-get install libi2c-dev
+sudo raspi-config nonint do_i2c 0
+
+git clone https://github.com/bitbank2/bb_scd41 scd41
+
+(
+  cd scd41/Linux
+  make
+)
+
+git clone https://github.com/usetrmnl/sensor_scanner
+
+(
+  cd sensor_scanner
+  make
+  sensor2json "$HOME/terminus/public/sensors.json" &
+)
+----
+
+With the above services in place, you can then run `bin/run s` to format and configure your micro SSD card and run a dockerized version of Terminus on your Raspberry Pi device. Finally, once your Raspberry Pi has booted, you can SSH in to launch Terminus. Example:
 
 [source,bash]
 ----
@@ -40,4 +73,4 @@ docker compose up
 
 This would allow you to visit `http://demo.local:2300`, for example, in your browser to register/login and start using Terminus. That's it!
 
-Definitely check out the {pi_project_link} project for more details.
+Definitely check out the {pi_project_link} and {sensor_project_link} projects for more details.
