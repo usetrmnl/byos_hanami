@@ -18,9 +18,12 @@ RSpec.describe "Dashboard", :db do
   end
 
   it "lists firmware" do
-    Factory[:firmware, :with_attachment]
+    firmware = Factory[:firmware]
     visit routes.path(:root)
 
-    expect(page).to have_link("0.0.0", href: "memory://abc123.bin", download: "test.bin")
+    expect(page).to have_link(
+      "0.0.0",
+      href: Hanami.app[:routes].path(:firmware_show, id: firmware.id)
+    )
   end
 end

@@ -44,9 +44,10 @@
       </legend>
 
       <ul class="list">
-        <% firmwares.select(&:attachment_uri).each do |record| %>
+        <% firmwares.each do |record| %>
           <li>
-            <%= link_to record.version, record.attachment_uri, download: record.attachment_name %> (<%= size record.attachment_size %>)
+            <%= link_to record.version, routes.path(:firmware_show, id: record.id) %>
+            (<%= size record.attachment_size %>)
           </li>
         <% end %>
 
