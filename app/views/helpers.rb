@@ -50,7 +50,7 @@ module Terminus
         settings = Hanami.app[:settings]
 
         link_to "Latest (ahead of #{settings.git_tag})",
-                "https://github.com/usetrmnl/byos_hanami/commit/#{settings.git_latest_sha}",
+                "https://github.com/usetrmnl/terminus/commit/#{settings.git_latest_sha}",
                 class: :link
       end
 
@@ -58,7 +58,7 @@ module Terminus
         tag = Hanami.app[:settings].git_tag
 
         link_to "Version #{tag}",
-                "https://github.com/usetrmnl/byos_hanami/releases/tag/#{tag}",
+                "https://github.com/usetrmnl/terminus/releases/tag/#{tag}",
                 class: :link
       end
 

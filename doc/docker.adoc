@@ -8,7 +8,7 @@
 
 = Docker
 
-We provide {docker_link} support in case you don't want to use our {ruby_link} stack. This includes both a development and production environment. In most cases, you'll want to use {docker_compose_link} to manage the stack. Pre-built Docker link:https://github.com/usetrmnl/byos_hanami/pkgs/container/terminus[images] for AMD 64 and ARM 64 are included as well.
+We provide {docker_link} support in case you don't want to use our {ruby_link} stack. This includes both a development and production environment. In most cases, you'll want to use {docker_compose_link} to manage the stack. Pre-built Docker link:https://github.com/usetrmnl/terminus/pkgs/container/terminus[images] for AMD 64 and ARM 64 are included as well.
 
 Continue reading to learn more.
 
@@ -20,7 +20,7 @@ To get setup, run:
 
 [source,bash]
 ----
-git clone https://github.com/usetrmnl/byos_hanami terminus
+git clone https://github.com/usetrmnl/terminus
 cd terminus
 bin/setup docker
 ----

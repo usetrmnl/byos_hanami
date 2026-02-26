@@ -50,7 +50,7 @@ if [[ -d "terminus" ]]; then
   abort "Terminus project directory exists. Please remove or run from a different location."
 fi
 
-git clone https://github.com/usetrmnl/byos_hanami terminus
+git clone https://github.com/usetrmnl/terminus
 cd terminus
 printf "%s\n" "Terminus has been cloned into: $PWD."
 bin/setup docker

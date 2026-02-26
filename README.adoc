@@ -34,9 +34,9 @@
 
 = Terminus
 
-image:https://dl.circleci.com/status-badge/img/gh/usetrmnl/byos_hanami/tree/main.svg?style=svg[CircleCI, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main]
-image:https://github.com/usetrmnl/byos_hanami/actions/workflows/docker.yml/badge.svg[Docker, link="https://github.com/usetrmnl/byos_hanami/actions"]
-image:https://alchemists.io/images/projects/caliber/coverage.svg[Code Coverage, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/byos_hanami/tree/main, width=139.1, height=20]
+image:https://dl.circleci.com/status-badge/img/gh/usetrmnl/terminus/tree/main.svg?style=svg[CircleCI, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/terminus/tree/main]
+image:https://github.com/usetrmnl/terminus/actions/workflows/docker.yml/badge.svg[Docker, link="https://github.com/usetrmnl/terminus/actions"]
+image:https://alchemists.io/images/projects/caliber/coverage.svg[Code Coverage, link=https://dl.circleci.com/status-badge/redirect/gh/usetrmnl/terminus/tree/main, width=139.1, height=20]
 image:https://alchemists.io/images/badges/style.svg[Style, link=https://alchemists.io/projects/caliber, width=81, height=20]
 
 Terminus is a {ruby_link}/{hanami_link} web server that allows you to manage {trmnl_link} devices running on your own local network or hosted cloud. This is our flagship BYOS implementation that aims to be compatible with our {trmnl_link} Core server but _also different_ since this open source solution provides features not possible in our Core application.
@@ -115,7 +115,7 @@ To immediately spin up Terminus on your local machine using {docker_link}, run:
 
 [source,bash]
 ----
-curl https://raw.githubusercontent.com/usetrmnl/byos_hanami/refs/heads/main/scripts/docker/quick.sh | bash
+curl https://raw.githubusercontent.com/usetrmnl/terminus/refs/heads/main/scripts/docker/quick.sh | bash
 ----
 
 Once launched, open `http://localhost:2300` in your browser then click the _Register_ link to register and log into the system.
@@ -128,7 +128,7 @@ To set up this project for local development, run:
 
 [source,bash]
 ----
-git clone https://github.com/usetrmnl/byos_hanami terminus
+git clone https://github.com/usetrmnl/terminus
 cd terminus
 bin/setup
 ----
@@ -214,8 +214,8 @@ Connecting devices requires using the WiFi captive portal on your mobile phone t
 
 In accordance with the {unbrickable_pledge_link}, the latest version of Terminus always supports the latest version of our {firmware_link}. If you are running on older firmware, you'll need to use an older version of Terminus. Here's a rough breakdown of the Firmware version history where changes were applied that might cause issues if you haven't upgraded your devices in a while:
 
-* *Firmware 1.6.9* (and lower): Supported by Terminus link:https://github.com/usetrmnl/byos_hanami/releases/tag/0.41.0[0.41.0] and lower.
-* *Firmware 1.6.10* (and higher): Supported by Terminus link:https://github.com/usetrmnl/byos_hanami/releases/tag/0.42.0[0.42.0] and higher.
+* *Firmware 1.6.9* (and lower): Supported by Terminus link:https://github.com/usetrmnl/terminus/releases/tag/0.41.0[0.41.0] and lower.
+* *Firmware 1.6.10* (and higher): Supported by Terminus link:https://github.com/usetrmnl/terminus/releases/tag/0.42.0[0.42.0] and higher.
 
 === Extensions
 
@@ -270,7 +270,7 @@ Code quality is an important and vital aspect of the work on this project. The f
 
 To view up-to-date code coverage details, follow these steps:
 
-* Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/byos_hanami?branch=main[Circle CI] build page.
+* Visit the link:https://app.circleci.com/pipelines/github/usetrmnl/terminus?branch=main[Circle CI] build page.
 * Click on the latest "Success" build at the top of the page.
 * Click on `build`.
 * Click on ARTIFACTS.

@@ -72,7 +72,7 @@ RSpec.describe Terminus::Views::Helpers do
                                   .and_return(latest_sha)
 
       expect(helper.git_link(kernel:)).to eq(
-        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/releases/tag/1.2.3">) \
+        %(<a class="link" href="https://github.com/usetrmnl/terminus/releases/tag/1.2.3">) \
         "Version 1.2.3</a>"
       )
     end
@@ -82,7 +82,7 @@ RSpec.describe Terminus::Views::Helpers do
                                   .and_return("different")
 
       expect(helper.git_link(kernel:)).to eq(
-        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/commit/abcdefghijkl">) \
+        %(<a class="link" href="https://github.com/usetrmnl/terminus/commit/abcdefghijkl">) \
         "Latest (ahead of 1.2.3)</a>"
       )
     end
@@ -91,7 +91,7 @@ RSpec.describe Terminus::Views::Helpers do
   describe "#git_latest_link" do
     it "answers version link when latest and tag SHAs match" do
       expect(helper.git_latest_link).to eq(
-        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/commit/abcdefghijkl">) \
+        %(<a class="link" href="https://github.com/usetrmnl/terminus/commit/abcdefghijkl">) \
         "Latest (ahead of 1.2.3)</a>"
       )
     end
@@ -100,7 +100,7 @@ RSpec.describe Terminus::Views::Helpers do
   describe "#git_version_link" do
     it "answers version link when latest and tag SHAs match" do
       expect(helper.git_version_link).to eq(
-        %(<a class="link" href="https://github.com/usetrmnl/byos_hanami/releases/tag/1.2.3">) \
+        %(<a class="link" href="https://github.com/usetrmnl/terminus/releases/tag/1.2.3">) \
         "Version 1.2.3</a>"
       )
     end

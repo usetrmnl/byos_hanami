@@ -60,7 +60,7 @@ STEPS
 COPY .ruby-version Gemfile Gemfile.lock .node-version package.json package-lock.json ./
 
 RUN <<STEPS
-  git clone --bare --depth 1 --single-branch https://github.com/usetrmnl/byos_hanami .git
+  git clone --bare --depth 1 --single-branch https://github.com/usetrmnl/terminus
   git -C .git fetch --tags
   bundle install
   npm ci
