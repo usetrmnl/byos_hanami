@@ -11,7 +11,7 @@
     </ul>
 
     <div class="bit-actions">
-      <%= render "shared/actions/search", path: routes.path(:extensions_gallery), query: %>
+      <%= render "shared/actions/search", path: routes.path(:extensions_gallery), query:, page: %>
     </div>
   </header>
 
@@ -35,7 +35,8 @@
                      get: routes.path(:extensions_gallery, page: recipe.meta.next_page, query:),
                      select: ".bit-card",
                      trigger: "revealed",
-                     swap: "this"
+                     swap: "this",
+                     push_url: true
                    ] do %>
           Loading...
         <% end %>

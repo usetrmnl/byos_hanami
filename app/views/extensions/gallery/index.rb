@@ -8,6 +8,7 @@ module Terminus
         class Index < Hanami::View
           expose :recipe
           expose :query, decorate: false
+          expose :page, decorate: false
         end
       end
     end

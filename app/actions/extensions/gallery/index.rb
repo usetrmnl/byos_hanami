@@ -7,6 +7,7 @@ module Terminus
         # The index action.
         class Index < Action
           include Deps[:htmx, trmnl_api: :trmnl_api_recipes]
+          include Initable[empty_recipe: proc { TRMNL::API::Models::Recipe.empty }]
 
           params do
             optional(:query).filled :string
@@ -32,31 +33,20 @@ module Terminus
           end
 
           def render request, recipe, response
-            query = request.params[:query]
+            query, page = request.params.to_h.values_at :query, :page
 
             if htmx.request(**request.env).request?
-              add_htmx_headers response, query
-              response.render view, recipe:, query:, layout: false
+              htmx.response! response.headers,
+                             push_url: routes.path(:extensions_gallery, query:, page:)
+              response.render view, recipe:, query:, page:, layout: false
             else
-              response.render view, recipe:, query:
+              response.render view, recipe:, query:, page:
             end
-          end
-
-          def add_htmx_headers response, query
-            return if String(query).empty?
-
-            htmx.response! response.headers, push_url: routes.path(:extensions_gallery, query:)
           end
 
           def render_error parameters, message, response
             response.flash.now[:alert] = message
-
-            recipe = TRMNL::API::Models::Recipe[
-              data: [],
-              meta: TRMNL::API::Models::Recipes::Meta.new
-            ]
-
-            response.render view, recipe:, query: parameters[:query]
+            response.render view, recipe: empty_recipe, **parameters.to_h.slice(:query, :page)
           end
         end
       end
