@@ -32,20 +32,21 @@ module Terminus
           end
 
           def render request, recipe, response
-            query = request.params[:query]
+            query, page = request.params.to_h.values_at :query, :page
 
             if htmx.request(**request.env).request?
-              add_htmx_headers response, query
-              response.render view, recipe:, query:, layout: false
+              add_htmx_headers response, query, page
+              response.render view, recipe:, query:, page:, layout: false
             else
-              response.render view, recipe:, query:
+              response.render view, recipe:, query:, page:
             end
           end
 
-          def add_htmx_headers response, query
+          def add_htmx_headers response, query, page
             return if String(query).empty?
 
-            htmx.response! response.headers, push_url: routes.path(:extensions_gallery, query:)
+            htmx.response! response.headers,
+                           push_url: routes.path(:extensions_gallery, query:, page:)
           end
 
           def render_error parameters, message, response
