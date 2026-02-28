@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.8)
+    addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     amazing_print (2.0.0)
     ast (2.4.3)
@@ -548,7 +548,7 @@ GEM
       refinements (~> 14.0)
       zeitwerk (~> 2.7)
     transproc (1.1.1)
-    trmnl-api (0.11.0)
+    trmnl-api (0.12.0)
       cogger (~> 2.0)
       containable (~> 2.0)
       dry-monads (~> 1.9)
@@ -662,14 +662,14 @@ DEPENDENCIES
   sidekiq (~> 8.0)
   sidekiq-scheduler (~> 6.0)
   simplecov (~> 0.22)
-  trmnl-api (~> 0.11)
+  trmnl-api (~> 0.12)
   trmnl-liquid (~> 0.5)
   versionaire (~> 15.0)
   warning (~> 1.5)
   wholeable (~> 2.1)
 
 CHECKSUMS
-  addressable (2.8.8) sha256=7c13b8f9536cf6364c03b9d417c19986019e28f7c00ac8132da4eb0fe393b057
+  addressable (2.8.9) sha256=cc154fcbe689711808a43601dee7b980238ce54368d23e127421753e46895485
   amazing_print (2.0.0) sha256=2e36aba46ac78d37ed27ca0e2056afe3583183bb5c64f157c246b267355e5d6a
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
@@ -868,7 +868,7 @@ CHECKSUMS
   tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3
   tone (3.1.0) sha256=2e2e77f4f43e77d05ae9160c5b16306502b3efc3da1e418c342051f3f4cb2995
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
-  trmnl-api (0.11.0) sha256=dcc2127194bff08b33890fcb16ad7ef3597757377e0fea0685d9040e2a916957
+  trmnl-api (0.12.0) sha256=7d5e3bc60a638f5540ef9f0e080990320d66c89e523804878adbe71c31ee2c31
   trmnl-liquid (0.5.0) sha256=37f768cc0bd1155b68042b75970a2792773c7d044e26c9a0b5896907db96e1e1
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
