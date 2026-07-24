@@ -12,3 +12,7 @@ public/*
 !public/404.html
 !public/500.html
 tmp
+configuration.adoc
+docker-compose.override.yml
+overide
+overide.yml
