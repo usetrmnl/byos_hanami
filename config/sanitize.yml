@@ -43,7 +43,7 @@ attributes:
     - height
   circle:
     - cx
-    - cv
+    - cy
     - r
     - stroke
     - stroke-dasharray
@@ -56,9 +56,9 @@ attributes:
     - transform
   ellipse:
     - cx
-    - cv
+    - cy
     - rx
-    - rv
+    - ry
     - stroke
     - stroke-dasharray
     - stroke-dashoffset
@@ -76,8 +76,8 @@ attributes:
   line:
     - x1
     - x2
-    - v1
-    - v2
+    - y1
+    - y2
     - stroke
     - stroke-dasharray
     - stroke-dashoffset
