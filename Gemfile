@@ -47,7 +47,7 @@ gem "shrine", "~> 3.6"
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-scheduler", "~> 6.0"
 gem "trmnl-api", "~> 0.19"
-gem "trmnl-liquid", "~> 0.6"
+gem "trmnl-liquid", "~> 0.8"
 gem "versionaire", "~> 15.3"
 gem "wholeable", "~> 2.1"
 
