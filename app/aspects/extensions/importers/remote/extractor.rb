@@ -10,7 +10,6 @@ module Terminus
       module Importers
         module Remote
           # Downloads and decompresses a TRMNL plugin archive.
-          # simplecov:disable
           class Extractor
             include Deps["aspects.downloader", "aspects.unzipper"]
             include Initable[uri: "https://usetrmnl.com/api/plugin_settings/%<id>s/archive"]
@@ -30,7 +29,6 @@ module Terminus
               attributes.transform_keys! { Pathname(it).name.to_s.to_sym }
             end
           end
-          # simplecov:enable
         end
       end
     end

@@ -7,8 +7,6 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Extractor do
 
   describe "#call" do
     it "successfully extracts content" do
-      pending "Disabled until Core's Cloudflare SSL configuration is fixed."
-
       expect(extractor.call(150460)).to match(
         Success(
           hash_including(
