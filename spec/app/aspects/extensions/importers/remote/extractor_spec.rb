@@ -7,6 +7,8 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Extractor do
 
   describe "#call" do
     it "successfully extracts content" do
+      pending "Disabled until Core's Cloudflare SSL configuration is fixed."
+
       expect(extractor.call(150460)).to match(
         Success(
           hash_including(
@@ -19,6 +21,10 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Extractor do
           )
         )
       )
+    end
+
+    it "fails to extract content when recipe doesn't exist" do
+      expect(extractor.call(666)).to match(Failure(kind_of(HTTP::Response)))
     end
   end
 end
