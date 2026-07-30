@@ -24,7 +24,7 @@ module Terminus
       def log result, uri
         case result
           in Success then logger.info { "Downloaded: #{uri}." }
-          in Failure(HTTP::Response => response) then log_error response.body
+          in Failure(HTTP::Response => response) then log_error response.body.to_s
           in Failure(String => message) then log_error message
           else log_error "Unable to download: #{uri.inspect}."
         end
