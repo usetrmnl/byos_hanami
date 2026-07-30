@@ -37,7 +37,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
       source = <<~HTML.squeeze(" ").delete("\n").strip
         <html><head></head>
           <body>
-            <circle cx="5" cv="5" r="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-opacity="0.5" stroke-width="5" fill="#FFF" fill-opacity="0.5" shape-rendering="crispEdges" transform="scale(5)"></circle>
+            <circle cx="5" cy="5" r="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-opacity="0.5" stroke-width="5" fill="#FFF" fill-opacity="0.5" shape-rendering="crispEdges" transform="scale(5)"></circle>
         </body></html>
       HTML
 
@@ -70,7 +70,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
       source = <<~HTML.squeeze(" ").delete("\n").strip
         <html><head></head>
           <body>
-            <ellipse cx="5" cv="5" rx="5" rv="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-opacity="0.5" stroke-width="5" fill="#FFF" fill-opacity="0.5" shape-rendering="crispEdges" transform="scale(5)"></ellipse>
+            <ellipse cx="5" cy="5" rx="5" ry="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-opacity="0.5" stroke-width="5" fill="#FFF" fill-opacity="0.5" shape-rendering="crispEdges" transform="scale(5)"></ellipse>
         </body></html>
       HTML
 
@@ -92,7 +92,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
       source = <<~HTML.squeeze(" ").delete("\n").strip
         <html><head></head>
           <body>
-            <line x1="5" x2="5" v1="5" v2="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-linecap="round" stroke-width="5" shape-rendering="crispEdges" transform="scale(5)"></line>
+            <line x1="5" x2="5" y1="5" y2="5" stroke="#000" stroke-dasharray="6,7" stroke-dashoffset="5" stroke-linecap="round" stroke-width="5" shape-rendering="crispEdges" transform="scale(5)"></line>
         </body></html>
       HTML
 
