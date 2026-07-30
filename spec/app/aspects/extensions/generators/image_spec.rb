@@ -2,8 +2,8 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Renderers::Image do
-  subject(:renderer) { described_class.new exchange_repository: }
+RSpec.describe Terminus::Aspects::Extensions::Generators::Image do
+  subject(:generator) { described_class.new exchange_repository: }
 
   let(:exchange_repository) { instance_double Terminus::Repositories::ExtensionExchange }
 
@@ -21,13 +21,13 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Image do
                                                    .and_return(exchanges)
     end
 
-    it "renders template with single URI" do
-      expect(renderer.call(extension, context:)).to be_success(
+    it "answers template with single URI" do
+      expect(generator.call(extension, context:)).to be_success(
         %(<html><head></head><body><img src="https://test.io/test.png" alt="Image"></body></html>)
       )
     end
 
-    it "renders template with multipe URIs" do
+    it "answers template with multipe URIs" do
       allow(extension).to receive(:template).and_return(<<~CONTENT)
         <img src="{{source_1.url}}" alt="{{extension.alt}}">
         <img src="{{source_2.url}}" alt="{{extension.alt}}">
@@ -35,7 +35,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Image do
 
       exchanges.append exchange
 
-      expect(renderer.call(extension, context:)).to be_success(<<~CONTENT.strip)
+      expect(generator.call(extension, context:)).to be_success(<<~CONTENT.strip)
         <html><head></head><body><img src="https://test.io/test.png" alt="Image">
         <img src="https://test.io/test.png" alt="Image">
         </body></html>

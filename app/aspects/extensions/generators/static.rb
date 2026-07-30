@@ -6,7 +6,7 @@ require "dry/monads"
 module Terminus
   module Aspects
     module Extensions
-      module Renderers
+      module Generators
         # Uses Liquid template to render static data.
         class Static
           include Deps[renderer: "liquid.sanitize"]

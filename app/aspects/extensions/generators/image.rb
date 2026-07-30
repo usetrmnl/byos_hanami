@@ -6,7 +6,7 @@ require "dry/monads"
 module Terminus
   module Aspects
     module Extensions
-      module Renderers
+      module Generators
         # Uses Liquid template to render images.
         class Image
           include Deps[

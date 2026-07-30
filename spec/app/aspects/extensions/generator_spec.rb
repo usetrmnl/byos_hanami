@@ -2,8 +2,8 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
-  subject(:renderer) { described_class.new }
+RSpec.describe Terminus::Aspects::Extensions::Generator, :db do
+  subject(:generator) { described_class.new }
 
   using Refinements::Hash
 
@@ -26,37 +26,37 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
     end
 
     context "with image kind" do
-      subject(:renderer) { described_class.new image: }
+      subject(:generator) { described_class.new image: }
 
-      let(:image) { instance_spy Terminus::Aspects::Extensions::Renderers::Image }
+      let(:image) { instance_spy Terminus::Aspects::Extensions::Generators::Image }
 
-      it "delegates to poll renderer" do
+      it "delegates to generator" do
         allow(extension).to receive(:kind).and_return("image")
-        renderer.call extension, model_id: model.id
+        generator.call extension, model_id: model.id
 
         expect(image).to have_received(:call).with(extension, context:)
       end
     end
 
     context "with poll kind" do
-      subject(:renderer) { described_class.new poll: }
+      subject(:generator) { described_class.new poll: }
 
-      let(:poll) { instance_spy Terminus::Aspects::Extensions::Renderers::Poll }
+      let(:poll) { instance_spy Terminus::Aspects::Extensions::Generators::Poll }
 
-      it "delegates to poll renderer" do
-        renderer.call extension, model_id: model.id
+      it "delegates generator" do
+        generator.call extension, model_id: model.id
         expect(poll).to have_received(:call).with(extension, context:)
       end
     end
 
     context "with static kind" do
-      subject(:renderer) { described_class.new static: }
+      subject(:generator) { described_class.new static: }
 
-      let(:static) { instance_spy Terminus::Aspects::Extensions::Renderers::Static }
+      let(:static) { instance_spy Terminus::Aspects::Extensions::Generators::Static }
 
-      it "delegates to static renderer" do
+      it "delegates to generator" do
         allow(extension).to receive(:kind).and_return("static")
-        renderer.call extension, model_id: model.id
+        generator.call extension, model_id: model.id
 
         expect(static).to have_received(:call).with(extension, context:)
       end
@@ -66,7 +66,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
       it "answers failure" do
         allow(extension).to receive(:kind).and_return("bogus")
 
-        expect(renderer.call(extension)).to be_failure("Unsupported extension kind: bogus.")
+        expect(generator.call(extension)).to be_failure("Unsupported extension kind: bogus.")
       end
     end
   end

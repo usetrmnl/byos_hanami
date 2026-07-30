@@ -7,7 +7,7 @@ require "initable"
 module Terminus
   module Aspects
     module Extensions
-      module Renderers
+      module Generators
         # Uses Liquid template to render poll data.
         class Poll
           include Deps[

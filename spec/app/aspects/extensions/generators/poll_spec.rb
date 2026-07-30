@@ -2,8 +2,8 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll, :db do
-  subject(:renderer) { described_class.new refresher: }
+RSpec.describe Terminus::Aspects::Extensions::Generators::Poll, :db do
+  subject(:generator) { described_class.new refresher: }
 
   let(:refresher) { instance_spy Terminus::Aspects::Extensions::Exchanges::Refresher }
 
@@ -38,15 +38,15 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll, :db do
 
     it "calls refresher" do
       exchange
-      renderer.call(extension, context:)
+      generator.call(extension, context:)
 
       expect(refresher).to have_received(:call).with(kind_of(Terminus::Structs::ExtensionExchange))
     end
 
-    it "renders success for single source" do
+    it "answers success for single source" do
       exchange
 
-      expect(renderer.call(extension, context:)).to be_success(<<~CONTENT.strip)
+      expect(generator.call(extension, context:)).to be_success(<<~CONTENT.strip)
         <html><head></head><body><h1>Test Label</h1>
 
           <p>Test: A test.</p>
@@ -55,7 +55,7 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll, :db do
       CONTENT
     end
 
-    it "renders success for multiple sources" do
+    it "answers success for multiple sources" do
       extension.template.replace <<~CONTENT
         <p>{{source_1.label}}</p>
         <p>{{source_2.label}}</p>
@@ -64,17 +64,17 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll, :db do
       data.merge! "source_1" => {"label" => "One"}, "source_2" => {"label" => "Two"}
       exchange
 
-      expect(renderer.call(extension, context:)).to be_success(<<~CONTENT.strip)
+      expect(generator.call(extension, context:)).to be_success(<<~CONTENT.strip)
         <html><head></head><body><p>One</p>
         <p>Two</p>
         </body></html>
       CONTENT
     end
 
-    it "renders empty content without exchanges" do
+    it "answers empty content without exchanges" do
       extension.template.clear
 
-      expect(renderer.call(extension, context:)).to be_success(
+      expect(generator.call(extension, context:)).to be_success(
         "<html><head></head><body></body></html>"
       )
     end

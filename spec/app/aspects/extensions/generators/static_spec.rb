@@ -2,8 +2,8 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Renderers::Static do
-  subject(:renderer) { described_class.new }
+RSpec.describe Terminus::Aspects::Extensions::Generators::Static do
+  subject(:generator) { described_class.new }
 
   describe "#call" do
     let :extension do
@@ -25,10 +25,10 @@ RSpec.describe Terminus::Aspects::Extensions::Renderers::Static do
       ]
     end
 
-    it "renders template" do
+    it "answers HTML" do
       data = {"extension" => {"label" => "Days"}}
 
-      expect(renderer.call(extension, context: data)).to be_success(<<~CONTENT.strip)
+      expect(generator.call(extension, context: data)).to be_success(<<~CONTENT.strip)
         <html><head></head><body><h1>Days</h1>
 
           <p>One</p>

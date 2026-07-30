@@ -6,13 +6,13 @@ require "refinements/hash"
 module Terminus
   module Aspects
     module Extensions
-      # Renders extension based on kind.
-      class Renderer
+      # Generates specific kind of extension.
+      class Generator
         include Deps[
           "aspects.extensions.contextualizer",
-          "aspects.extensions.renderers.image",
-          "aspects.extensions.renderers.poll",
-          "aspects.extensions.renderers.static"
+          "aspects.extensions.generators.image",
+          "aspects.extensions.generators.poll",
+          "aspects.extensions.generators.static"
         ]
         include Dry::Monads[:result]
 

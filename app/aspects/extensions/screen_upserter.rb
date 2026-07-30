@@ -7,7 +7,7 @@ module Terminus
       class ScreenUpserter
         include Deps[
           "aspects.extensions.contextualizer",
-          "aspects.extensions.renderer",
+          "aspects.extensions.generator",
           "aspects.screens.upserter",
           view: "views.extensions.dynamic"
         ]
@@ -15,14 +15,14 @@ module Terminus
         def call extension, model_id: nil, device_id: nil
           screen_variables = load_screen_variables(extension, model_id:, device_id:)
 
-          renderer.call(extension, model_id:, device_id:)
-                  .fmap { view.call screen_variables:, content: it }
-                  .bind do |content|
-                    upserter.call model_id:,
-                                  device_id:,
-                                  content: String.new(content),
-                                  **extension.screen_attributes
-                  end
+          generator.call(extension, model_id:, device_id:)
+                   .fmap { view.call screen_variables:, content: it }
+                   .bind do |content|
+                     upserter.call model_id:,
+                                   device_id:,
+                                   content: String.new(content),
+                                   **extension.screen_attributes
+                   end
         end
 
         private

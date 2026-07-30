@@ -3,9 +3,9 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Actions::Extensions::Preview::Show, :db do
-  subject(:action) { described_class.new renderer: }
+  subject(:action) { described_class.new generator: }
 
-  let(:renderer) { instance_double Terminus::Aspects::Extensions::Renderer, call: result }
+  let(:generator) { instance_double Terminus::Aspects::Extensions::Generator, call: result }
   let(:result) { "" }
 
   describe "#call" do

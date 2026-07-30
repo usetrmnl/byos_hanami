@@ -7,7 +7,7 @@ module Terminus
         # The show action.
         class Show < Action
           include Deps[
-            "aspects.extensions.renderer",
+            "aspects.extensions.generator",
             repository: "repositories.extension",
             view: "views.extensions.dynamic"
           ]
@@ -32,7 +32,7 @@ module Terminus
           private
 
           def content_for extension, model_id, device_id
-            case renderer.call(extension, model_id:, device_id:)
+            case generator.call(extension, model_id:, device_id:)
               in Success(content) then content
               in Failure(message) then message
               else "Unable to render body for extension: #{extension.id}."
