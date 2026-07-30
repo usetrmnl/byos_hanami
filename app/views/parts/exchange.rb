@@ -10,7 +10,7 @@ module Terminus
     module Parts
       # The extension exchange presenter.
       class Exchange < Hanami::View::Part
-        include Deps["aspects.extensions.curler", "aspects.extensions.uri_builder"]
+        include Deps["aspects.extensions.curler", "aspects.extensions.exchanges.request_builder"]
         include Initable[json_formatter: Aspects::JSONFormatter]
 
         using Refinements::String
@@ -28,7 +28,8 @@ module Terminus
         def formatted_verb = verb.upcase
 
         def requests extension, length = 50
-          uri_builder.call(extension, template).map { it.trim_end length }
+          request_builder.call(value, extension)
+                         .map { it.uri.trim_end length }
         end
 
         def status

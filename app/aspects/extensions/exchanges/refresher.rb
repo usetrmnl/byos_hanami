@@ -11,8 +11,8 @@ module Terminus
         # Updates an exchange based on multiple responses.
         class Refresher
           include Deps[
-            "aspects.extensions.uri_builder",
             "aspects.extensions.fetchers.client",
+            "aspects.extensions.exchanges.request_builder",
             extension_repository: "repositories.extension",
             exchange_repository: "repositories.extension_exchange"
           ]
@@ -25,16 +25,10 @@ module Terminus
 
             return Failure "Unable to find extension by ID: #{extension_id}." unless extension
 
-            update exchange, build_requests(exchange, extension)
+            update exchange, request_builder.call(exchange, extension)
           end
 
           private
-
-          def build_requests exchange, extension
-            uri_builder.call(extension, exchange.template).map do |uri|
-              request[uri:, **exchange.http_attributes]
-            end
-          end
 
           def update exchange, requests
             id = exchange.id

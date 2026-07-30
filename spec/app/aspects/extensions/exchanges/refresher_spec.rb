@@ -39,7 +39,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
       )
     end
 
-    it "answers success that retains previous data while updating error" do
+    it "answers success which retains previous data while updating error" do
       exchange = Factory[:extension_exchange, data: {"source_1" => "initial"}]
 
       allow(client).to receive(:call).and_return(

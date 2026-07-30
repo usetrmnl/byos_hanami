@@ -8,10 +8,13 @@ module Terminus
     module Extensions
       # Renders curl command for exchange and associated data.
       class Curler
-        include Deps["aspects.extensions.uri_builder"]
+        include Deps["aspects.extensions.exchanges.request_builder"]
         include Initable[json_formatter: proc { Terminus::Aspects::JSONFormatter }]
 
-        def self.render_request verb, uri
+        def self.render request
+          verb = request.verb
+          uri = request.uri
+
           verb.include?("get") ? "curl #{uri}" : "curl --request #{verb.upcase} #{uri}"
         end
 
@@ -22,20 +25,20 @@ module Terminus
         end
 
         def call extension, exchange
-          uri_builder.call(extension, exchange.template)
-                     .map { |uri| render uri, exchange }
-                     .join "\n"
+          request_builder.call(exchange, extension)
+                         .map { |request| render request }
+                         .join "\n"
         end
 
         private
 
-        def render uri, exchange
+        def render request
           klass = self.class
 
           [
-            klass.render_request(exchange.verb, uri),
-            *klass.render_headers(exchange.headers),
-            render_body(exchange.body)
+            klass.render(request),
+            *klass.render_headers(request.headers),
+            render_body(request.body)
           ].compact
            .each
            .with_index
