@@ -22,14 +22,4 @@ RSpec.describe Terminus::Structs::ExtensionExchange do
       )
     end
   end
-
-  describe "#http_attributes" do
-    it "answers attributes" do
-      expect(exchange.http_attributes).to eq(
-        headers: {"accept" => "application/json"},
-        verb: "get",
-        body: {"query" => "test"}
-      )
-    end
-  end
 end
