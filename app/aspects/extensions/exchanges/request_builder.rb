@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
-require "dry/monads"
 require "initable"
 
 module Terminus
@@ -12,7 +10,6 @@ module Terminus
         class RequestBuilder
           include Deps["aspects.extensions.contextualizer", renderer: "liquid.basic"]
           include Initable[request: Fetchers::Request]
-          include Dry::Monads[:result]
 
           def call exchange, extension
             context = contextualizer.call extension
