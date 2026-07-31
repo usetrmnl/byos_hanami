@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "core"
 require "hanami/view"
 require "initable"
 require "refinements/string"
@@ -28,8 +27,7 @@ module Terminus
         def formatted_verb = verb.upcase
 
         def requests extension, length = 50
-          request_builder.call(value, extension)
-                         .map { it.uri.trim_end length }
+          request_builder.call(value, extension).map { it.uri.trim_end length }
         end
 
         def status
