@@ -20,6 +20,7 @@ detectors:
   DuplicateMethodCall:
     exclude:
       - Terminus::Aspects::Devices::Provisioner#create
+      - Terminus::Aspects::Extensions::Exchanges::RequestBuilder#render
       - UniversalLoggerPatch#_log_structured
   FeatureEnvy:
     exclude:
@@ -105,6 +106,7 @@ detectors:
       - Terminus::Action#handle_rodauth_redirect
       - Terminus::Actions::Extensions::Poll::Show#fetch
       - Terminus::Aspects::Croner#call
+      - Terminus::Aspects::Extensions::Exchanges::RequestBuilder#render
       - Terminus::Aspects::Extensions::Fetchers::Client#parse
       - Terminus::Aspects::Extensions::Fetchers::Client#process
       - Terminus::Aspects::Extensions::Importers::Remote::Transformer#process

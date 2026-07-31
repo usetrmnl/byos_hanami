@@ -26,11 +26,36 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
       )
     end
 
-    it "answers single request when headers and data are nil" do
+    it "answers single request when headers and body are nil" do
       exchange = Factory.structs[:extension_exchange, headers: nil, body: nil]
 
       expect(builder.call(exchange, extension)).to contain_exactly(
         Terminus::Aspects::Extensions::Fetchers::Request[uri: exchange.template]
+      )
+    end
+
+    it "answers single request with nested body" do
+      body = {
+        array: [
+          0,
+          "one",
+          {a: 1},
+          {b: 2}
+        ],
+        hash: {
+          one: {
+            two: {
+              three: 3
+            }
+          }
+        },
+        string: "test"
+      }
+
+      exchange = Factory.structs[:extension_exchange, body:]
+
+      expect(builder.call(exchange, extension)).to contain_exactly(
+        Terminus::Aspects::Extensions::Fetchers::Request[uri: exchange.template, body:]
       )
     end
 

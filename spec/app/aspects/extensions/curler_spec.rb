@@ -64,7 +64,7 @@ RSpec.describe Terminus::Aspects::Extensions::Curler do
              --data $'{
           "sort": "desc",
           "query": "test",
-          "limit": "10"
+          "limit": 10
         }'
       CONTENT
     end
