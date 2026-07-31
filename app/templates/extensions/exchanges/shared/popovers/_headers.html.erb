@@ -1,5 +1,5 @@
 <%= scope(:popover_default_content, name: :headers, label: "Headers").render do %>
-  <p>Allows you to configure the appropriate HTTP headers necessary for making HTTP requests. These are optional but definitely useful when needing specific behavior. Otherwise, all headers will default to what is supplied by the server response.</p>
+  <p>Allows you to configure the appropriate HTTP headers necessary for making HTTP requests. These are optional but definitely useful when needing specific behavior. Otherwise, all headers will default to what is supplied by the server response. <%= link_to "Liquid", "https://shopify.github.io/liquid" %> syntax is supported.</p>
 
   <p>
     For example, when requesting raw content (or <a href="https://gist.github.com">gists</a>) from <a href="https://github.com">GitHub</a>, you'll always get <code>text/plain</code> as the MIME Type despite the URL ending in <code>*.cvs</code>, <code>*.json</code>, or some other format. To prevent this, add a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept">Accept</a> header to ensure the HTTP response is parsed in the desired format (MIME Type). Example:
@@ -7,5 +7,5 @@
 
   <p><code>{"accept": "application/json"}</code></p>
 
-  <p>Finally, you're not limited to a single header since you can add a new key for each HTTP header as desired.</p>
+  <p>You're not limited to a single header since you can add a new key for each HTTP header as desired.</p>
 <% end %>
