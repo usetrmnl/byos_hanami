@@ -9,16 +9,17 @@ RSpec.describe Terminus::Actions::Extensions::Exchanges::Update, :db do
     let(:exchange) { Factory[:extension_exchange] }
 
     let :response do
-      action.call Rack::MockRequest.env_for(
-        exchange.id.to_s,
-        "router.params" => {
-          extension_id: exchange.extension_id,
-          id: exchange.id,
-          exchange: {
-            template: "test"
-          }
+      action.call Rack::MockRequest.env_for(exchange.id.to_s, "router.params" => parameters)
+    end
+
+    let :parameters do
+      {
+        extension_id: exchange.extension_id,
+        id: exchange.id,
+        exchange: {
+          template: "test"
         }
-      )
+      }
     end
 
     it "enqueues job" do
@@ -29,6 +30,11 @@ RSpec.describe Terminus::Actions::Extensions::Exchanges::Update, :db do
           hash_including("args" => [exchange.id])
         )
       end
+    end
+
+    it "errors when template is not filled" do
+      parameters[:exchange][:template] = nil
+      expect(response.body.to_s).to include("must be filled")
     end
   end
 end

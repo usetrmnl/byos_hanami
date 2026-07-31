@@ -33,8 +33,9 @@
   <%= form.text_area :template,
                      field_for(:template, fields, exchange),
                      id: :exchange_template,
-                     class: :value,
-                     autocomplete: :off %>
+                     class: "bit-editor",
+                     autocomplete: :off,
+                     data: {language: :liquid} %>
 <% end %>
 
 <%= scope(:form_field, key: :body, errors:).render do %>
