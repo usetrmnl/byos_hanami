@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "core"
 require "initable"
 
 module Terminus
@@ -9,14 +8,7 @@ module Terminus
       # Renders curl command for exchange and associated data.
       class Curler
         include Deps["aspects.extensions.exchanges.request_builder"]
-        include Initable[json_formatter: proc { Terminus::Aspects::JSONFormatter }]
-
-        def self.render request
-          verb = request.verb
-          uri = request.uri
-
-          verb.include?("get") ? "curl #{uri}" : "curl --request #{verb.upcase} #{uri}"
-        end
+        include Initable[command: "curl", json_formatter: proc { Terminus::Aspects::JSONFormatter }]
 
         def self.render_headers attributes
           return if Hash(attributes).empty?
@@ -26,18 +18,16 @@ module Terminus
 
         def call extension, exchange
           request_builder.call(exchange, extension)
-                         .map { |request| render request }
+                         .map { render it }
                          .join "\n"
         end
 
         private
 
         def render request
-          klass = self.class
-
           [
-            klass.render(request),
-            *klass.render_headers(request.headers),
+            render_command(request),
+            *self.class.render_headers(request.headers),
             render_body(request.body)
           ].compact
            .each
@@ -46,10 +36,15 @@ module Terminus
            .join " \\\n"
         end
 
-        def render_body attributes
-          return if Hash(attributes).empty?
+        def render_command request
+          verb = request.verb
+          uri = request.uri
 
-          "--data $'#{json_formatter.call attributes}'"
+          verb.include?("get") ? "#{command} #{uri}" : "#{command} --request #{verb.upcase} #{uri}"
+        end
+
+        def render_body attributes
+          "--data $'#{json_formatter.call attributes}'" unless Hash(attributes).empty?
         end
       end
     end
