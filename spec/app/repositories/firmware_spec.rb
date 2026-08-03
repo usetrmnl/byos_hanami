@@ -28,7 +28,7 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
 
     it "deletes associated attachment" do
       upload = firmware.upload StringIO.new([123].pack("N"))
-      repository.update firmware.id, attachment_data: upload.data
+      repository.update firmware.id, attachment_data: upload.attachment_attributes
       repository.delete firmware.id
 
       expect(Hanami.app[:shrine].storages[:store].store).to eq({})
@@ -50,7 +50,7 @@ RSpec.describe Terminus::Repositories::Firmware, :db do
 
     it "deletes all attachments" do
       upload = firmware.upload StringIO.new([123].pack("N"))
-      repository.update firmware.id, attachment_data: upload.data
+      repository.update firmware.id, attachment_data: upload.attachment_attributes
       repository.delete_all
 
       expect(Hanami.app[:shrine].storages[:store].store).to eq({})

@@ -147,68 +147,6 @@ RSpec.describe Terminus::Structs::Screen, :db do
     end
   end
 
-  describe "#replace" do
-    it "replaces file when valid" do
-      instance = path.open { |io| screen.replace io }
-
-      expect(instance.image_attributes).to match(
-        id: /\h{32}\.png/,
-        metadata: {
-          bit_depth: 1,
-          checksum: match_md5_checksum,
-          filename: "test.png",
-          height: 1,
-          size: 81,
-          mime_type: "image/png",
-          width: 1
-        },
-        storage: "store"
-      )
-    end
-
-    it "updates attributes when valid" do
-      instance = path.open { |io| screen.replace io }
-
-      expect(instance.image_attributes).to match(
-        id: /\h{32}\.png/,
-        storage: "store",
-        metadata: {
-          bit_depth: 1,
-          checksum: match_md5_checksum,
-          filename: "test.png",
-          size: 81,
-          mime_type: "image/png",
-          width: 1,
-          height: 1
-        }
-      )
-    end
-
-    it "updates storage ID" do
-      id = screen.image_id
-      instance = path.open { |io| screen.replace io }
-      expect(id).not_to eq(instance.image_id)
-    end
-
-    it "doesn't replace file when invalid" do
-      instance = screen.replace StringIO.new
-
-      expect(instance.image_attributes).to match(
-        id: /\h{32}/,
-        metadata: {
-          bit_depth: nil,
-          checksum: match_md5_checksum,
-          filename: nil,
-          height: nil,
-          size: 0,
-          mime_type: nil,
-          width: nil
-        },
-        storage: "store"
-      )
-    end
-  end
-
   describe "#upload" do
     it "uploads file when valid" do
       instance = path.open { |io| screen.upload io }
@@ -244,6 +182,13 @@ RSpec.describe Terminus::Structs::Screen, :db do
           height: 1
         }
       )
+    end
+
+    it "updates storage ID" do
+      id = screen.image_id
+      instance = path.open { |io| screen.upload io }
+
+      expect(id).not_to eq(instance.image_id)
     end
 
     it "doesn't upload file when invalid" do

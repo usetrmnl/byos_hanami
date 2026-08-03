@@ -123,47 +123,22 @@ RSpec.describe Terminus::Structs::Firmware, :db do
     end
   end
 
-  describe "#replace" do
-    it "replaces file" do
-      instance = path.open { |io| firmware.replace io }
+  describe "#upload" do
+    it "uploads file when valid" do
+      path = temp_dir.join "test.bin"
+      path.binwrite [123].pack("N")
+      instance = path.open { |io| firmware.upload io }
 
       expect(instance.attachment_attributes).to match(
         id: /\h{32}\.bin/,
         metadata: {
           filename: "test.bin",
+          height: nil,
           size: 4,
           mime_type: "application/octet-stream",
-          width: nil,
-          height: nil
+          width: nil
         },
         storage: "store"
-      )
-    end
-
-    it "updates storage ID" do
-      id = firmware.attachment_id
-      instance = path.open { |io| firmware.replace io }
-      expect(id).not_to eq(instance.attachment_id)
-    end
-  end
-
-  describe "#upload" do
-    it "uploads file when valid" do
-      path = temp_dir.join "test.bin"
-      path.binwrite [123].pack("N")
-
-      upload = firmware.upload path.open
-
-      expect(upload.data).to match(
-        "id" => /\h{32}\.bin/,
-        "metadata" => {
-          "filename" => "test.bin",
-          "height" => nil,
-          "size" => 4,
-          "mime_type" => "application/octet-stream",
-          "width" => nil
-        },
-        "storage" => "store"
       )
     end
 
@@ -185,19 +160,26 @@ RSpec.describe Terminus::Structs::Firmware, :db do
       )
     end
 
+    it "updates storage ID" do
+      id = firmware.attachment_id
+      instance = path.open { |io| firmware.upload io }
+
+      expect(id).not_to eq(instance.attachment_id)
+    end
+
     it "doesn't upload file when invalid" do
       upload = firmware.upload StringIO.new
 
-      expect(upload.data).to match(
-        "id" => /\h{32}/,
-        "metadata" => {
-          "filename" => nil,
-          "height" => nil,
-          "size" => 0,
-          "mime_type" => nil,
-          "width" => nil
+      expect(upload.attachment_attributes).to match(
+        id: /\h{32}/,
+        metadata: {
+          filename: nil,
+          height: nil,
+          size: 0,
+          mime_type: nil,
+          width: nil
         },
-        "storage" => "store"
+        storage: "store"
       )
     end
   end

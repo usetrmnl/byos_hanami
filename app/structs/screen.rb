@@ -30,7 +30,7 @@ module Terminus
 
       def image_destroy
         store.delete image_id if image_id
-        attributes[:image_data].clear
+        attributes[:image_data].clear if attributes.key? :image_data
       end
 
       def image_id = image_attributes[:id]
@@ -61,13 +61,8 @@ module Terminus
 
       def mime_type = image_attributes.dig :metadata, :mime_type
 
-      def replace(io, **)
-        image_destroy
-        upload(io, **)
-        self
-      end
-
       def upload(io, **)
+        image_destroy
         attacher.upload(io, **).tap { |file| attributes[:image_data] = file.data }
         self
       end
