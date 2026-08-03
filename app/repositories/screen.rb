@@ -40,10 +40,21 @@ module Terminus
                          .to_a
       end
 
+      # :reek:TooManyStatements
+      # rubocop:todo Metrics/AbcSize
       def upsert_with_image path, mold, struct
-        record = find_by name: mold.name, model_id: mold.model_id
-        record ? update_with_image(path, mold, record) : create_with_image(path, mold, struct)
+        path.open { |io| struct.upload io, metadata: {"filename" => mold.file_name} }
+
+        attributes = {image_data: Sequel.pg_jsonb(struct.image_attributes), **mold.image_attributes}
+
+        update = attributes.each_key
+                           .with_object({updated_at: Sequel.function(:now)}) do |column, all|
+                             all[column] = Sequel[:excluded][column]
+                           end
+
+        find screen.dataset.insert_conflict(target: %i[model_id name], update:).insert(attributes)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def where(**)
         with_associations.where(**)
@@ -54,11 +65,6 @@ module Terminus
       private
 
       def with_associations = screen.combine :model
-
-      def update_with_image path, mold, record
-        path.open { |io| record.replace io, metadata: {"filename" => mold.file_name} }
-        update record.id, image_data: record.image_attributes, **mold.image_attributes
-      end
     end
   end
 end
