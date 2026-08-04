@@ -21,6 +21,7 @@ detectors:
     exclude:
       - Terminus::Aspects::Devices::Provisioner#create
       - Terminus::Aspects::Extensions::Exchanges::RequestBuilder#render
+      - Terminus::Views::Helpers#default_option
       - UniversalLoggerPatch#_log_structured
   FeatureEnvy:
     exclude:

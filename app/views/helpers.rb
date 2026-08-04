@@ -14,11 +14,20 @@ module Terminus
       using Refinements::Hash
       using Refinements::String
 
+      DEFAULT_OPTION = ["Select...", Core::EMPTY_STRING].freeze
+
       module_function
 
       def boolean value
         css_class = value == true ? "bit-text-green" : "bit-text-red"
         tag.span value.to_s, class: css_class
+      end
+
+      def default_option records, selection, key_map: Core::EMPTY_HASH
+        label, id = build_label_and_id key_map
+
+        records.find { it.public_send(label) == selection }
+               .then { it ? [it.public_send(label), it.public_send(id)] : Core::EMPTY_ARRAY }
       end
 
       # rubocop:todo Metrics/ParameterLists
@@ -70,12 +79,12 @@ module Terminus
         %(#{count} #{value.pluralize suffix, count})
       end
 
-      def select_options list, default: ["Select...", Core::EMPTY_STRING]
+      def select_options list, default: DEFAULT_OPTION
         list.reduce([default]) { |options, (name, label)| options.append [label, name] }
       end
 
-      def select_options_for records, key_map: {}, default: ["Select...", Core::EMPTY_STRING]
-        label, id = {label: :label, id: :id}.merge(key_map).values_at :label, :id
+      def select_options_for records, key_map: Core::EMPTY_HASH, default: DEFAULT_OPTION
+        label, id = build_label_and_id key_map
 
         records.reduce [default] do |options, record|
           options.append [record.public_send(label), record.public_send(id)]
@@ -93,6 +102,12 @@ module Terminus
 
         "#{bytes.round 2} #{units[index]}"
       end
+
+      def build_label_and_id key_map, defaults: {label: :label, id: :id}
+        defaults.merge(key_map).values_at :label, :id
+      end
+
+      private_class_method :build_label_and_id
     end
   end
 end

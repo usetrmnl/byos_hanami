@@ -17,6 +17,18 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
+  describe ".default_option" do
+    it "answers default when found" do
+      record = Data.define(:id, :label).new 1, "Test"
+      expect(helper.default_option([record], "Test")).to eq(["Test", 1])
+    end
+
+    it "answers empty array when not found" do
+      record = Data.define(:id, :label).new 1, "Test"
+      expect(helper.default_option([record], "Invalid")).to eq([])
+    end
+  end
+
   describe ".field_for" do
     let(:record) { Data.define(:label).new label: "Test" }
     let(:attributes) { {label: "Other"} }
@@ -45,7 +57,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#field_included?" do
+  describe ".field_included?" do
     let(:record) { Data.define(:days).new days: %w[monday wednesday friday] }
     let(:attributes) { {days: ["wednesday"]} }
 
@@ -62,7 +74,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#git_sha_link" do
+  describe ".git_sha_link" do
     let(:kernel) { class_double Kernel }
 
     it "answers version link when latest and tag SHAs match" do
@@ -88,7 +100,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#git_latest_link" do
+  describe ".git_latest_link" do
     it "answers version link when latest and tag SHAs match" do
       expect(helper.git_latest_link).to eq(
         %(<a class="link" href="https://github.com/usetrmnl/terminus/commit/abcdefghijkl">) \
@@ -97,7 +109,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#git_version_link" do
+  describe ".git_version_link" do
     it "answers version link when latest and tag SHAs match" do
       expect(helper.git_version_link).to eq(
         %(<a class="link" href="https://alchemists.io/projects/terminus/versions/1.2.3/">) \
@@ -126,7 +138,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#pluralize" do
+  describe ".pluralize" do
     it "answers one" do
       expect(helper.pluralize("test", "s", 1)).to eq("1 test")
     end
@@ -136,7 +148,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#select_options" do
+  describe ".select_options" do
     it "answers options" do
       list = {one: "One", two: "Two"}
 
@@ -154,7 +166,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#select_options_for" do
+  describe ".select_options_for" do
     it "answers record options" do
       record = Data.define(:id, :label).new 1, "Test"
       expect(helper.select_options_for([record])).to eq([["Select...", ""], ["Test", 1]])
@@ -187,7 +199,7 @@ RSpec.describe Terminus::Views::Helpers do
     end
   end
 
-  describe "#size" do
+  describe ".size" do
     it "answers zero if nil" do
       expect(helper.size(nil)).to eq("0.0 B")
     end
