@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
 require "refinements/time"
 
 module Terminus

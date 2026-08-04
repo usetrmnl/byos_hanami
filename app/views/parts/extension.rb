@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
 require "hanami/view"
 require "initable"
 

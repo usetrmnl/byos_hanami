@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
 require "dry/monads"
 require "initable"
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core"
-
 module Terminus
   module Structs
     # The palette struct.
