@@ -12,12 +12,12 @@ RSpec.describe "Devices", :db do
     model
     visit routes.path(:devices)
     click_link "New"
-    select "None", from: "Command"
+    select model.label, from: "device[model_id]"
+    fill_in "device[mac_address]", with: "Bogus!"
     click_button "Save"
 
-    expect(page).to have_text("must be filled")
+    expect(page).to have_text("is in invalid format")
 
-    select model.label, from: "device[model_id]"
     fill_in "device[mac_address]", with: "AA:BB:CC:11:22:33"
     click_button "Save"
     click_link "View"

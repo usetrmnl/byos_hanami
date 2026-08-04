@@ -5,7 +5,10 @@
       <%= scope(:popover_trigger_button, tip: :info, target: :model).render %>
     </label>
 
-    <%= form.select :model_id, select_options_for(models), id: :device_model_id, class: :value %>
+    <%= form.select :model_id,
+                    select_options_for(models, default: default_option(models, "TRMNL OG (2-bit)")),
+                    id: :device_model_id,
+                    class: :value %>
   <% end %>
 
   <%= scope(:form_field, key: :playlist_id, errors:).render do %>
@@ -137,7 +140,10 @@
     </label>
 
     <%= form.select :command,
-                    select_options(translate("devices.shared._fields.commands")),
+                    select_options(
+                      translate("devices.shared._fields.commands"),
+                      default: ["None", "none"]
+                    ),
                     id: :device_command,
                     class: :value %>
   <% end %>
