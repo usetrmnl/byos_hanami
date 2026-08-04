@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Fetchers::Response do
+RSpec.describe Terminus::Aspects::Extensions::Fetcher::Response do
   subject(:response) { described_class.new }
 
   describe "#initialize" do

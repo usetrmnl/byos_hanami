@@ -3,7 +3,7 @@
 require "hanami_helper"
 require "http"
 
-RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
+RSpec.describe Terminus::Aspects::Extensions::Fetcher::Client do
   subject(:client) { described_class.new http: }
 
   let(:http) { class_double HTTP }
@@ -12,7 +12,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
   describe "#call" do
     let :input do
-      Terminus::Aspects::Extensions::Fetchers::Request[
+      Terminus::Aspects::Extensions::Fetcher::Request[
         headers: {"Accept" => "application/json"},
         uri: "https://ghibliapi.vercel.app/films"
       ]
@@ -35,7 +35,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
       it "answers success" do
         expect(client.call(input)).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: [
               {
                 "title" => "Castle in the Sky",
@@ -70,7 +70,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/ld+json"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {
               "@context" => "https://json-ld.org/contexts/person.jsonld",
               "@id" => "http://dbpedia.org/resource/John_Lennon",
@@ -110,7 +110,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/geo+json"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {
               "@context" => [
                 "https://geojson.org/geojson-ld/geojson-context.jsonld",
@@ -148,7 +148,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         )
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: [
               {
                 "title" => "Castle in the Sky",
@@ -179,7 +179,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/+json"})
 
         expect(result).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,
@@ -203,7 +203,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
       it "answers success" do
         result = client.call input.with(headers: {content_type: "image/png"})
-        expect(result).to be_success(Terminus::Aspects::Extensions::Fetchers::Response.new)
+        expect(result).to be_success(Terminus::Aspects::Extensions::Fetcher::Response.new)
       end
     end
 
@@ -226,7 +226,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "text/csv"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: [
               {
                 "title" => "Castle in the Sky",
@@ -258,7 +258,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "text/plain"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: %w[one two three]
           ]
         )
@@ -284,7 +284,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "text/xml"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {"catalog" => "Empty"}
           ]
         )
@@ -310,7 +310,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/xml"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {"catalog" => "Empty"}
           ]
         )
@@ -336,7 +336,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/rss+xml"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {"catalog" => "Empty"}
           ]
         )
@@ -362,7 +362,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "application/atom+xml"})
 
         expect(result).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {"catalog" => "Empty"}
           ]
         )
@@ -371,7 +371,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
     context "with POST body" do
       let :input do
-        Terminus::Aspects::Extensions::Fetchers::Request[
+        Terminus::Aspects::Extensions::Fetcher::Request[
           headers: {content_type: "application/json"},
           verb: :post,
           uri: "https://test.io",
@@ -395,7 +395,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
       it "answers success" do
         expect(client.call(input)).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             data: {"name" => "test"}
           ]
         )
@@ -404,7 +404,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
     context "with POST but without body" do
       let :input do
-        Terminus::Aspects::Extensions::Fetchers::Request[
+        Terminus::Aspects::Extensions::Fetcher::Request[
           headers: {content_type: "application/json"},
           verb: :post,
           uri: "https://test.io"
@@ -427,7 +427,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
       it "answers success" do
         expect(client.call(input)).to be_success(
-          Terminus::Aspects::Extensions::Fetchers::Response[data: "{}"]
+          Terminus::Aspects::Extensions::Fetcher::Response[data: "{}"]
         )
       end
     end
@@ -446,7 +446,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         result = client.call input.with(headers: {content_type: "text/html"})
 
         expect(result).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,
@@ -470,7 +470,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
 
       it "answers failure" do
         expect(client.call(input)).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: 404,
@@ -489,7 +489,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         allow(http).to receive(:headers).and_raise HTTP::RequestError, "Danger!"
 
         expect(client.call(input)).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,
@@ -508,7 +508,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         allow(http).to receive(:headers).and_raise HTTP::ConnectionError, "Danger!"
 
         expect(client.call(input)).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,
@@ -527,7 +527,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         allow(http).to receive(:headers).and_raise HTTP::TimeoutError, "Danger!"
 
         expect(client.call(input)).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,
@@ -546,7 +546,7 @@ RSpec.describe Terminus::Aspects::Extensions::Fetchers::Client do
         allow(http).to receive(:headers).and_raise OpenSSL::SSL::SSLError, "Danger!"
 
         expect(client.call(input)).to be_failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[
+          Terminus::Aspects::Extensions::Fetcher::Response[
             errors: {
               uri: "https://ghibliapi.vercel.app/films",
               code: nil,

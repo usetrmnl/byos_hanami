@@ -5,8 +5,8 @@ require "core"
 module Terminus
   module Aspects
     module Extensions
-      module Fetchers
-        # Captures the HTTP response details.
+      module Fetcher
+        # Captures HTTP response details.
         Response = Data.define :data, :errors do
           def initialize data: {}, errors: {}
             super

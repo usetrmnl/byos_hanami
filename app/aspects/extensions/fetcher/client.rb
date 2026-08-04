@@ -6,8 +6,8 @@ require "initable"
 module Terminus
   module Aspects
     module Extensions
-      module Fetchers
-        # A client for processing HTTP requests.
+      module Fetcher
+        # A specialized client for processing HTTP requests.
         class Client
           include Deps[:http]
           include Initable[source: Extensions::Source, special_header: "Accept", response: Response]

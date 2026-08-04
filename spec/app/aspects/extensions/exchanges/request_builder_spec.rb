@@ -22,7 +22,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
       exchange = Factory.structs[:extension_exchange]
 
       expect(builder.call(exchange, extension)).to contain_exactly(
-        Terminus::Aspects::Extensions::Fetchers::Request[uri: exchange.template]
+        Terminus::Aspects::Extensions::Fetcher::Request[uri: exchange.template]
       )
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
       exchange = Factory.structs[:extension_exchange, headers: nil, body: nil]
 
       expect(builder.call(exchange, extension)).to contain_exactly(
-        Terminus::Aspects::Extensions::Fetchers::Request[uri: exchange.template]
+        Terminus::Aspects::Extensions::Fetcher::Request[uri: exchange.template]
       )
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
       exchange = Factory.structs[:extension_exchange, body:]
 
       expect(builder.call(exchange, extension)).to contain_exactly(
-        Terminus::Aspects::Extensions::Fetchers::Request[uri: exchange.template, body:]
+        Terminus::Aspects::Extensions::Fetcher::Request[uri: exchange.template, body:]
       )
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
       ]
 
       expect(builder.call(exchange, extension)).to contain_exactly(
-        Terminus::Aspects::Extensions::Fetchers::Request[
+        Terminus::Aspects::Extensions::Fetcher::Request[
           headers: {"content_type" => "application/json"},
           verb: "post",
           uri: "https://test.io/1",
@@ -90,13 +90,13 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::RequestBuilder do
 
       expect(builder.call(exchange, extension)).to eq(
         [
-          Terminus::Aspects::Extensions::Fetchers::Request[
+          Terminus::Aspects::Extensions::Fetcher::Request[
             headers: {"content_type" => "application/json"},
             verb: "post",
             uri: "https://test.io/1",
             body: {"sort" => "desc"}
           ],
-          Terminus::Aspects::Extensions::Fetchers::Request[
+          Terminus::Aspects::Extensions::Fetcher::Request[
             headers: {"content_type" => "application/json"},
             verb: "post",
             uri: "https://test.io/2",

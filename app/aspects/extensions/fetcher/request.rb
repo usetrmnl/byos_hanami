@@ -5,7 +5,7 @@ require "core"
 module Terminus
   module Aspects
     module Extensions
-      module Fetchers
+      module Fetcher
         # Captures HTTP request details.
         Request = Data.define :headers, :verb, :uri, :body do
           def initialize uri:, headers: Core::EMPTY_HASH, verb: "get", body: Core::EMPTY_HASH

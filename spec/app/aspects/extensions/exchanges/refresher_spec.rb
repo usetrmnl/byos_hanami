@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
   subject(:refresher) { described_class.new client: }
 
-  let(:client) { instance_double Terminus::Aspects::Extensions::Fetchers::Client }
+  let(:client) { instance_double Terminus::Aspects::Extensions::Fetcher::Client }
 
   describe "#call" do
     let(:exchange) { Factory[:extension_exchange] }
@@ -13,7 +13,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
     it "answers success with data and no errors" do
       allow(client).to receive(:call).and_return(
         Success(
-          Terminus::Aspects::Extensions::Fetchers::Response[data: "test"]
+          Terminus::Aspects::Extensions::Fetcher::Response[data: "test"]
         )
       )
 
@@ -25,7 +25,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
     it "answers success with errors only" do
       allow(client).to receive(:call).and_return(
         Failure(
-          Terminus::Aspects::Extensions::Fetchers::Response[errors: "Danger!"]
+          Terminus::Aspects::Extensions::Fetcher::Response[errors: "Danger!"]
         )
       )
 
@@ -43,7 +43,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
       exchange = Factory[:extension_exchange, data: {"source_1" => "initial"}]
 
       allow(client).to receive(:call).and_return(
-        Failure(Terminus::Aspects::Extensions::Fetchers::Response[errors: "Danger!"])
+        Failure(Terminus::Aspects::Extensions::Fetcher::Response[errors: "Danger!"])
       )
 
       expect(refresher.call(exchange)).to match(
@@ -60,8 +60,8 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
       exchange = Factory[:extension_exchange, template: "https://one.io\nhttps://two.io"]
 
       allow(client).to receive(:call).and_return(
-        Failure(Terminus::Aspects::Extensions::Fetchers::Response[errors: "Danger!"]),
-        Success(Terminus::Aspects::Extensions::Fetchers::Response[data: "pass"])
+        Failure(Terminus::Aspects::Extensions::Fetcher::Response[errors: "Danger!"]),
+        Success(Terminus::Aspects::Extensions::Fetcher::Response[data: "pass"])
       )
 
       expect(refresher.call(exchange)).to match(
@@ -89,7 +89,7 @@ RSpec.describe Terminus::Aspects::Extensions::Exchanges::Refresher, :db do
 
     it "answers an exchange" do
       allow(client).to receive(:call).and_return(
-        Success(Terminus::Aspects::Extensions::Fetchers::Response[data: "test"])
+        Success(Terminus::Aspects::Extensions::Fetcher::Response[data: "test"])
       )
 
       expect(refresher.call(exchange)).to match(

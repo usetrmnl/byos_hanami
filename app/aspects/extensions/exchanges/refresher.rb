@@ -10,12 +10,12 @@ module Terminus
         # Updates an exchange based on multiple responses.
         class Refresher
           include Deps[
-            "aspects.extensions.fetchers.client",
+            "aspects.extensions.fetcher.client",
             "aspects.extensions.exchanges.request_builder",
             extension_repository: "repositories.extension",
             exchange_repository: "repositories.extension_exchange"
           ]
-          include Initable[request: Fetchers::Request]
+          include Initable[request: Fetcher::Request]
           include Dry::Monads[:result]
 
           def call exchange

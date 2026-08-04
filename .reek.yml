@@ -69,7 +69,7 @@ detectors:
       - Terminus::Aspects::Errors::Problem#enum
       - Terminus::Aspects::Extensions::Cloner#build_attributes
       - Terminus::Aspects::Extensions::Exchanges::Refresher#fetch
-      - Terminus::Aspects::Extensions::Fetchers::Client#maybe_alter_mime_type
+      - Terminus::Aspects::Extensions::Fetcher::Client#maybe_alter_mime_type
       - Terminus::Aspects::Extensions::Importers::Remote::Extractor#build
       - Terminus::Aspects::Extensions::Importers::Remote::Transformers::Kind#process
       - Terminus::Aspects::Extensions::Renderers::Image#render_multiple
@@ -107,8 +107,7 @@ detectors:
       - Terminus::Actions::Extensions::Poll::Show#fetch
       - Terminus::Aspects::Croner#call
       - Terminus::Aspects::Extensions::Exchanges::RequestBuilder#render
-      - Terminus::Aspects::Extensions::Fetchers::Client#parse
-      - Terminus::Aspects::Extensions::Fetchers::Client#process
+      - Terminus::Aspects::Extensions::Fetcher::Client#parse
       - Terminus::Aspects::Extensions::Importers::Remote::Transformer#process
       - Terminus::Aspects::Extensions::Parser#from_json
       - Terminus::Aspects::Firmware::Downloader#get

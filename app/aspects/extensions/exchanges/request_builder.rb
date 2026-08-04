@@ -9,7 +9,7 @@ module Terminus
         # Builds fully rendereed requests.
         class RequestBuilder
           include Deps["aspects.extensions.contextualizer", renderer: "liquid.basic"]
-          include Initable[request: Fetchers::Request]
+          include Initable[request: Fetcher::Request]
 
           def call exchange, extension
             context = contextualizer.call extension
