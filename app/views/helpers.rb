@@ -70,14 +70,14 @@ module Terminus
         %(#{count} #{value.pluralize suffix, count})
       end
 
-      def select_options list
-        list.reduce [["Select...", Core::EMPTY_STRING]] do |options, (name, label)|
-          options.append [label, name]
-        end
+      def select_options list, default: ["Select...", Core::EMPTY_STRING]
+        list.reduce([default]) { |options, (name, label)| options.append [label, name] }
       end
 
-      def select_options_for records, label: :label, id: :id
-        records.reduce [["Select...", Core::EMPTY_STRING]] do |options, record|
+      def select_options_for records, key_map: {}, default: ["Select...", Core::EMPTY_STRING]
+        label, id = {label: :label, id: :id}.merge(key_map).values_at :label, :id
+
+        records.reduce [default] do |options, record|
           options.append [record.public_send(label), record.public_send(id)]
         end
       end

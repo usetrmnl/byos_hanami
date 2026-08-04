@@ -40,7 +40,7 @@
     </label>
 
     <%= form.select :status_id,
-                    select_options_for(statuses, label: :name),
+                    select_options_for(statuses, key_map: {label: :name}),
                     id: :user_status_id,
                     class: :value %>
   <% end %>

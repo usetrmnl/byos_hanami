@@ -163,7 +163,7 @@ RSpec.describe Terminus::Views::Helpers do
     it "answers record options with custom label" do
       record = Data.define(:id, :title).new 1, "Test"
 
-      expect(helper.select_options_for([record], label: :title)).to eq(
+      expect(helper.select_options_for([record], key_map: {label: :title})).to eq(
         [
           ["Select...", ""],
           ["Test", 1]
@@ -174,7 +174,7 @@ RSpec.describe Terminus::Views::Helpers do
     it "answers record options with custom ID" do
       record = Data.define(:name, :label).new "test", "Test"
 
-      expect(helper.select_options_for([record], id: :name)).to eq(
+      expect(helper.select_options_for([record], key_map: {id: :name})).to eq(
         [
           ["Select...", ""],
           ["Test", "test"]
