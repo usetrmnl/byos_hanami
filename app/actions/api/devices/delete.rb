@@ -6,11 +6,11 @@ module Terminus
       module Devices
         # The delete action.
         class Delete < Base
-          include Deps[repository: "repositories.device"]
+          include Deps["aspects.devices.deleter"]
           include Initable[serializer: Serializers::Device]
 
           def handle request, response
-            device = repository.delete request.params[:id]
+            device = deleter.call request.params[:id]
             response.body = {data: serializer.new(device).to_h}.to_json
           end
         end

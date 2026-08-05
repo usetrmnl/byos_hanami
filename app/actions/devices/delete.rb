@@ -5,7 +5,7 @@ module Terminus
     module Devices
       # The delete action.
       class Delete < Action
-        include Deps[repository: "repositories.device"]
+        include Deps["aspects.devices.deleter"]
 
         params { required(:id).filled :integer }
 
@@ -14,7 +14,7 @@ module Terminus
 
           halt :unprocessable_content unless parameters.valid?
 
-          repository.delete parameters[:id]
+          deleter.call parameters[:id]
           response.body = ""
         end
       end
