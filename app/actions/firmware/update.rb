@@ -47,7 +47,7 @@ module Terminus
         def attach record, attachment
           return unless attachment
 
-          record.upload attachment[:tempfile], metadata: {"filename" => "#{record.version}.bin"}
+          record.replace attachment[:tempfile], metadata: {"filename" => "#{record.version}.bin"}
           repository.update record.id, attachment_data: record.attachment_attributes
         end
 

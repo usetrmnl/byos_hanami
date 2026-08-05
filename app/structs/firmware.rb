@@ -25,7 +25,7 @@ module Terminus
 
       def attachment_destroy
         store.delete attachment_id if attachment_id
-        attributes[:attachment_data].clear if attributes.key? :attachment_data
+        attributes[:attachment_data].clear
       end
 
       def attachment_id = attachment_attributes[:id]
@@ -49,10 +49,14 @@ module Terminus
         attacher.assign(io, **).tap { |file| attributes[:attachment_data] = file.data }
       end
 
-      def upload(io, **)
+      def replace(io, **)
         attachment_destroy
-        attacher.upload(io, **).tap { |file| attributes[:attachment_data] = file.data }
+        upload(io, **)
         self
+      end
+
+      def upload(io, **)
+        attacher.upload(io, **).tap { |file| attributes[:attachment_data] = file.data }
       end
 
       def errors = attacher.errors

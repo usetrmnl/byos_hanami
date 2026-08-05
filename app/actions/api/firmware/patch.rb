@@ -54,7 +54,7 @@ module Terminus
           # :reek:FeatureEnvy
           def replace record, content, response
             Pathname.mktmpdir do |root|
-              root.join("#{record.version}.bin").write(content).open { record.upload it }
+              root.join("#{record.version}.bin").write(content).open { record.replace it }
             end
 
             update = repository.update record.id, attachment_data: record.attachment_attributes

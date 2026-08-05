@@ -51,7 +51,7 @@ module Terminus
       def with_associations = screen.combine :model
 
       def update_with_image path, mold, record
-        path.open { |io| record.upload io, metadata: {"filename" => mold.file_name} }
+        path.open { |io| record.replace io, metadata: {"filename" => mold.file_name} }
         update record.id, image_data: record.image_attributes, **mold.image_attributes
       end
     end

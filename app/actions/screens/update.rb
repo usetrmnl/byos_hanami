@@ -42,7 +42,7 @@ module Terminus
           tempfile = image[:tempfile]
           extension = File.extname tempfile
 
-          record.upload tempfile, metadata: {"filename" => "#{record.name}#{extension}"}
+          record.replace tempfile, metadata: {"filename" => "#{record.name}#{extension}"}
           repository.update record.id, image_data: record.image_attributes
         end
 
