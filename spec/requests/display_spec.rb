@@ -33,7 +33,7 @@ RSpec.describe "/api/display", :db do
       special_function: "none",
       temperature_profile: "default",
       touchbar_mode: "tap",
-      update_firmware: true
+      update_firmware: false
     )
   end
 
@@ -54,7 +54,7 @@ RSpec.describe "/api/display", :db do
       special_function: "none",
       temperature_profile: "default",
       touchbar_mode: "tap",
-      update_firmware: true
+      update_firmware: false
     )
   end
 
@@ -75,7 +75,7 @@ RSpec.describe "/api/display", :db do
       special_function: "none",
       temperature_profile: "default",
       touchbar_mode: "tap",
-      update_firmware: true
+      update_firmware: false
     )
   end
 
@@ -95,7 +95,7 @@ RSpec.describe "/api/display", :db do
       special_function: "none",
       temperature_profile: "default",
       touchbar_mode: "tap",
-      update_firmware: true
+      update_firmware: false
     )
   end
 
