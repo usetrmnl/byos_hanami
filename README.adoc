@@ -258,7 +258,7 @@ While this project is distributed under the permissive link:/LICENSE.adoc[MIT Li
 
 == Survey
 
-We'd love to learn more about how you use Terminus and welcome you to link:https://docs.google.com/forms/d/1FLVa9I1u6wk6ExMYj-l9P9a_Kw7XGXCPPyC0SSvv3hs/viewform[take our survey]. It's short and would help us serve your better. Thanks. 🙇🏻
+link:https://docs.google.com/forms/d/1FLVa9I1u6wk6ExMYj-l9P9a_Kw7XGXCPPyC0SSvv3hs/viewform[Take our survey] to help us learn more about how you use Terminus along with any feedback you might have.
 
 == Credits
 

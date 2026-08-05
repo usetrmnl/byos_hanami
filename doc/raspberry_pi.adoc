@@ -10,6 +10,8 @@
 
 = Raspberry Pi
 
+📣 link:https://docs.google.com/forms/d/1bLbOoxDkKi5YudneeOvBUHvgvmRRuZXxvxjIHg6fq18/viewform?edit_requested=true[Sign up] to pre-order a plug-n-play version of Terminus on a Raspberry Pi. Suggestions welcome.
+
 We support Raspberry Pi and have tested Terminus with the following hardware:
 
 * link:https://www.raspberrypi.com/products/raspberry-pi-5[Raspberry Pi 5]: Recommended due to great performance and feature set.
