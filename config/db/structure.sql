@@ -1654,7 +1654,7 @@ ALTER TABLE ONLY public.playlist_item
 --
 
 ALTER TABLE ONLY public.screen
-    ADD CONSTRAINT screen_device_id_fkey FOREIGN KEY (device_id) REFERENCES public.device(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT screen_device_id_fkey FOREIGN KEY (device_id) REFERENCES public.device(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
@@ -1805,4 +1805,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260630091508_add_device_log_level_column.rb'),
 ('20260714090149_add_device_api_key_column.rb'),
 ('20260721160734_add_device_command_column.rb'),
-('20260721160742_rename_device_log_function_columan_as_command.rb');
+('20260721160742_rename_device_log_function_columan_as_command.rb'),
+('20260805142625_alter_screen_device_id_constraint.rb');
