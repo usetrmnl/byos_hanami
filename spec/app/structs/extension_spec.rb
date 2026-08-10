@@ -108,6 +108,7 @@ RSpec.describe Terminus::Structs::Extension do
       extension = Factory.structs[:extension, id: 1, name: "test", label: "Test", mode: "dither"]
 
       expect(extension.screen_attributes).to eq(
+        extension_id: 1,
         label: "Extension Test",
         name: "extension-test",
         mode: "dither"
