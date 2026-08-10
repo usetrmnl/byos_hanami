@@ -77,6 +77,7 @@ module Terminus
     delete "/devices/:device_id/logs/:id", to: "devices.logs.delete", as: :device_log
 
     get "/designs", to: "designs.index", as: :designs
+    get "/designs/:id", to: "designs.show", as: :design
     get "/designs/new", to: "designs.new", as: :design_new
     post "/designs", to: "designs.create", as: :designs
     get "/designs/:id/edit", to: "designs.edit", as: :design_edit
