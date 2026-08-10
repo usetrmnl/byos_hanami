@@ -1466,13 +1466,6 @@ CREATE INDEX playlist_mode_index ON public.playlist USING btree (mode);
 
 
 --
--- Name: screen_device_id_kind_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX screen_device_id_kind_index ON public.screen USING btree (device_id, kind) WHERE (device_id IS NOT NULL);
-
-
---
 -- Name: screen_image_data_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1816,4 +1809,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260721160734_add_device_command_column.rb'),
 ('20260721160742_rename_device_log_function_columan_as_command.rb'),
 ('20260805142625_alter_screen_device_id_constraint.rb'),
-('20260810100653_add_screen_extension_id_column.rb');
+('20260810100653_add_screen_extension_id_column.rb'),
+('20260810102551_drop_screen_device_id_and_kind_index.rb');
