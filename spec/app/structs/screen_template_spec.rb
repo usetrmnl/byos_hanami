@@ -8,7 +8,7 @@ RSpec.describe Terminus::Structs::ScreenTemplate do
   describe "#screen_attributes" do
     it "answers attributes" do
       expect(screen_template.screen_attributes).to eq(
-        template_id: 1,
+        template_id: screen_template.id,
         label: "Test",
         name: "test",
         content: "<h1>Test</h1>"
