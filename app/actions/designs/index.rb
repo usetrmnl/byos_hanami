@@ -5,7 +5,7 @@ module Terminus
     module Designs
       # The index action.
       class Index < Action
-        include Deps[:htmx, template_repository: "repositories.screen_template"]
+        include Deps[:htmx, repository: "repositories.screen_template"]
 
         def handle request, response
           query = request.params[:query].to_s
@@ -21,9 +21,7 @@ module Terminus
 
         private
 
-        def load query
-          query.empty? ? template_repository.all : template_repository.search(:label, query)
-        end
+        def load(query) = query.empty? ? repository.all : repository.search(:label, query)
 
         def add_htmx_headers response, query
           return if query.empty?

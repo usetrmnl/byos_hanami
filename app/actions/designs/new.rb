@@ -7,7 +7,7 @@ module Terminus
       class New < Action
         include Deps[
           :htmx_layout,
-          template_relation: "relations.screen_template",
+          relation: "relations.screen_template",
           model_repository: "repositories.model"
         ]
 
@@ -22,7 +22,7 @@ module Terminus
 
         def with_welcome
           content = config.root_directory.join("app/templates/designs/_welcome.html.erb").read
-          Struct.new(*template_relation.columns).new(content:)
+          Struct.new(*relation.columns).new(content:)
         end
       end
     end

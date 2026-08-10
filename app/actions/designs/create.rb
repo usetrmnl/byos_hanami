@@ -7,7 +7,7 @@ module Terminus
       class Create < Terminus::Action
         include Deps[
           "aspects.screens.upserter",
-          template_repository: "repositories.screen_template",
+          repository: "repositories.screen_template",
           model_repository: "repositories.model"
         ]
 
@@ -34,7 +34,7 @@ module Terminus
         private
 
         def create_with_screen parameters, response
-          template = template_repository.create parameters[:template]
+          template = repository.create parameters[:template]
 
           upserter.call(model_id: parameters[:model_id], **template.screen_attributes)
           response.redirect_to routes.path(:design_edit, id: template.id)

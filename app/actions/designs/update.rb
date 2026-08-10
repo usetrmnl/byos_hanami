@@ -10,7 +10,7 @@ module Terminus
       class Update < Action
         include Deps[
           :htmx_layout,
-          template_repository: "repositories.screen_template",
+          repository: "repositories.screen_template",
           screen_repository: "repositories.screen"
         ]
         include Initable[job: Jobs::Screens::Upsert]
@@ -42,7 +42,7 @@ module Terminus
 
         def save request, parameters, response
           attributes = parameters[:template]
-          template = template_repository.update parameters[:id], **attributes
+          template = repository.update parameters[:id], **attributes
           screen = screen_repository.find parameters[:screen_id]
 
           job.perform_async screen.model_id, template.screen_attributes.stringify_keys!
@@ -59,7 +59,7 @@ module Terminus
                           layout: htmx_layout.call(request)
         end
 
-        def find_template(parameters) = template_repository.find parameters[:id]
+        def find_template(parameters) = repository.find parameters[:id]
       end
     end
   end

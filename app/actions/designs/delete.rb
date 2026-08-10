@@ -7,7 +7,7 @@ module Terminus
       class Delete < Action
         include Deps[
           :htmx_layout,
-          template_repository: "repositories.screen_template",
+          repository: "repositories.screen_template",
           view: "views.designs.index"
         ]
 
@@ -18,11 +18,9 @@ module Terminus
 
           halt :unprocessable_content unless parameters.valid?
 
-          template_repository.delete parameters[:id]
+          repository.delete parameters[:id]
 
-          response.render view,
-                          templates: template_repository.all,
-                          layout: htmx_layout.call(request)
+          response.render view, templates: repository.all, layout: htmx_layout.call(request)
         end
       end
     end

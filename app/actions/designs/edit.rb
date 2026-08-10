@@ -5,7 +5,7 @@ module Terminus
     module Designs
       # The edit action.
       class Edit < Action
-        include Deps[:htmx_layout, template_repository: "repositories.screen_template"]
+        include Deps[:htmx_layout, repository: "repositories.screen_template"]
 
         params { required(:id).filled :integer }
 
@@ -15,7 +15,7 @@ module Terminus
           halt :unprocessable_content unless parameters.valid?
 
           response.render view,
-                          template: template_repository.find(parameters[:id]),
+                          template: repository.find(parameters[:id]),
                           layout: htmx_layout.call(request)
         end
       end
