@@ -15,6 +15,7 @@ RSpec.describe Terminus::Aspects::Extensions::ScreenUpserter, :db do
     let :proof do
       {
         model_id: model.id,
+        extension_id: extension.id,
         name: "extension-test",
         label: "Extension Test",
         image_attributes: hash_including(
