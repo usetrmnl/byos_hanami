@@ -44,6 +44,22 @@
           <%= link_to screen.model.label, routes.path(:model, id: screen.model_id) %>
         </dd>
 
+        <dt class="key">
+          Extension
+          <%= scope(:popover_trigger_button, tip: :info, target: :extension).render %>
+        </dt>
+        <dd class="value">
+          <%= screen.extension_link %>
+        </dd>
+
+        <dt class="key">
+          Design
+          <%= scope(:popover_trigger_button, tip: :info, target: :design).render %>
+        </dt>
+        <dd class="value">
+          <%= screen.design_link %>
+        </dd>
+
         <dt class="key">MIME Type</dt>
         <dd class="value"><%= screen.mime_type %></dd>
 
