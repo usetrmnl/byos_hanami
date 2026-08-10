@@ -11,6 +11,7 @@ module Terminus
           has_many :extension_models, relation: :extension_model
           has_many :models, through: :extension_model, relation: :model, as: :models
           has_many :extension_exchanges, relation: :extension_exchange
+          has_many :screens, relation: :screen
         end
       end
     end
