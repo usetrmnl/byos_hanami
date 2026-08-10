@@ -7,6 +7,21 @@ RSpec.describe Terminus::Views::Parts::Screen do
 
   let(:screen) { Factory.structs[:screen, :with_image] }
 
+  describe "#design_link" do
+    it "answers link when template exists" do
+      screen.define_singleton_method :template do
+        Factory.structs[:screen_template, id: 1, label: "Test"]
+      end
+
+      expect(part.design_link).to eq(%(<a href="/designs/1">Test</a>))
+    end
+
+    it "answers none when template doesn't exist" do
+      screen.define_singleton_method(:template) { nil }
+      expect(part.design_link).to eq("None")
+    end
+  end
+
   describe "#dimensions" do
     it "answers default dimensions" do
       expect(part.dimensions).to eq("1x1")
@@ -26,6 +41,21 @@ RSpec.describe Terminus::Views::Parts::Screen do
       it "answers custom width and height" do
         expect(part.dimensions).to eq("Unknown")
       end
+    end
+  end
+
+  describe "#extension_link" do
+    it "answers link when extension exists" do
+      screen.define_singleton_method :extension do
+        Factory.structs[:extension, id: 1, label: "Test"]
+      end
+
+      expect(part.extension_link).to eq(%(<a href="/extensions/1/edit">Test</a>))
+    end
+
+    it "answers none when extension doesn't exist" do
+      screen.define_singleton_method(:extension) { nil }
+      expect(part.extension_link).to eq("None")
     end
   end
 
