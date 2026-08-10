@@ -19,7 +19,7 @@ module Terminus
 
       def create_with_image path, mold, struct
         path.open { |io| struct.upload io, metadata: {"filename" => mold.file_name} }
-        create image_data: struct.image_attributes, **mold.image_attributes
+        find create(image_data: struct.image_attributes, **mold.image_attributes).id
       end
 
       def delete id
@@ -38,8 +38,11 @@ module Terminus
       end
 
       def upsert_with_image path, mold, struct
-        record = find_by name: mold.name, model_id: mold.model_id
-        record ? update_with_image(path, mold, record) : create_with_image(path, mold, struct)
+        record = find_by(name: mold.name, model_id: mold.model_id).then do |found|
+          found ? update_with_image(path, mold, found) : create_with_image(path, mold, struct)
+        end
+
+        find record.id
       end
 
       def where(**)
@@ -50,7 +53,7 @@ module Terminus
 
       private
 
-      def with_associations = screen.combine :model
+      def with_associations = screen.combine :model, :template, :extension
 
       def update_with_image path, mold, record
         path.open { |io| record.replace io, metadata: {"filename" => mold.file_name} }
