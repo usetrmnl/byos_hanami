@@ -2,6 +2,7 @@
   <h2 class="label"><%= template.label %></h2>
 
   <div class="actions">
+    <%= render "shared/actions/view", path: routes.path(:design, id: template.id) %>
     <%= render "shared/actions/edit", path: routes.path(:design_edit, id: template.id) %>
 
     <%= render "shared/actions/delete",
