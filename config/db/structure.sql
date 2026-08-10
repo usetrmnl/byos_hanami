@@ -761,7 +761,8 @@ CREATE TABLE public.screen (
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     device_id integer,
     kind public.screen_kind_enum DEFAULT 'general'::public.screen_kind_enum NOT NULL,
-    template_id integer
+    template_id integer,
+    extension_id integer
 );
 
 
@@ -1658,6 +1659,14 @@ ALTER TABLE ONLY public.screen
 
 
 --
+-- Name: screen screen_extension_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.screen
+    ADD CONSTRAINT screen_extension_id_fkey FOREIGN KEY (extension_id) REFERENCES public.extension(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
 -- Name: screen screen_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1806,4 +1815,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260714090149_add_device_api_key_column.rb'),
 ('20260721160734_add_device_command_column.rb'),
 ('20260721160742_rename_device_log_function_columan_as_command.rb'),
-('20260805142625_alter_screen_device_id_constraint.rb');
+('20260805142625_alter_screen_device_id_constraint.rb'),
+('20260810100653_add_screen_extension_id_column.rb');
