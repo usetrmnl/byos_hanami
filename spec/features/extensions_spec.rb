@@ -102,7 +102,7 @@ RSpec.describe "Extensions", :db do
     extension
 
     visit routes.path(:extensions)
-    click_link "Export"
+    click_link "Download"
 
     expect(page.source.encoding).to eq(Encoding::ASCII_8BIT)
   end
