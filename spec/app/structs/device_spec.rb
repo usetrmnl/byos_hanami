@@ -147,6 +147,16 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
   end
 
+  describe "#liquid_attributes" do
+    it "answers translation" do
+      expect(device.liquid_attributes).to eq(
+        "id" => device.id,
+        "battery_percentage" => 70,
+        "wifi_percentage" => 90
+      )
+    end
+  end
+
   describe "#slug" do
     it "answers string with no colons" do
       expect(device.slug).to eq("AABBCC112233")

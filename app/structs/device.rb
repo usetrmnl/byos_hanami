@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require "core"
+require "refinements/hash"
 
 module Terminus
   module Structs
     # The device struct.
     class Device < DB::Struct
+      using Refinements::Hash
+
       def asleep? at = Time.now, type: Sequel::SQLTime
         return false unless sleep_start_at && sleep_stop_at
 
@@ -32,6 +35,8 @@ module Terminus
           update_firmware: firmware_update
         }
       end
+
+      def liquid_attributes = {id:, battery_percentage:, wifi_percentage:}.stringify_keys!
 
       def slug
         return Core::EMPTY_STRING unless mac_address
