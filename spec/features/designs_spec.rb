@@ -27,8 +27,14 @@ RSpec.describe "Designs", :db do
 
   it "edits", :js do
     visit routes.path(:design_edit, id: template.id)
-
     expect(page).to have_text("Edit Design")
+  end
+
+  it "exports" do
+    visit routes.path(:designs)
+    click_link "Download"
+
+    expect(page.source.encoding).to eq(Encoding::ASCII_8BIT)
   end
 
   it "deletes", :js do
