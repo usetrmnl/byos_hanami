@@ -18,7 +18,8 @@ RSpec.describe Terminus::Aspects::Extensions::Generator, :db do
           "css_classes" => "screen screen--#{model.name} screen--1bit screen--landscape",
           "fields" => [],
           "values" => {},
-          "data" => {}
+          "data" => {},
+          "device" => {}
         },
         "screen_variables" => "",
         "sensors" => []
