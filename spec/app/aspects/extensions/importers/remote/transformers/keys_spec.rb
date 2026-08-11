@@ -16,6 +16,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::K
           }
         ],
         dark_mode: "yes",
+        id: 123,
         name: "Test",
         polling_body: %({"sort":"name", "limit": 10}),
         polling_headers: "accept=application/json&content-type=application/json",
@@ -27,6 +28,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::K
 
     let :proof do
       {
+        external_id: 123,
         fields: [
           {
             "keyname" => "test",

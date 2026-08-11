@@ -42,7 +42,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformer do
 
     let :proof do
       {
-        id: 123,
+        external_id: 123,
         name: "test",
         label: "Test",
         description: "Imported from TRMNL.",

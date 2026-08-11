@@ -18,12 +18,13 @@ module Terminus
 
               include Initable[
                 map: {
-                  name: :label,
-                  polling_headers: :poll_headers,
-                  polling_verb: :poll_verb,
-                  polling_url: :poll_template,
-                  polling_body: :poll_body,
                   custom_fields: :fields,
+                  id: :external_id,
+                  name: :label,
+                  polling_body: :poll_body,
+                  polling_headers: :poll_headers,
+                  polling_url: :poll_template,
+                  polling_verb: :poll_verb,
                   refresh_interval: :interval
                 },
                 deletes: %i[dark_mode]
