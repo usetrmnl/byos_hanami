@@ -1,0 +1,43 @@
+# frozen_string_literal: true
+
+require "hanami_helper"
+require "trmnl/api"
+
+RSpec.describe Terminus::Actions::Designs::Export::Show, :db do
+  subject(:action) { described_class.new }
+
+  include_context "with application dependencies"
+
+  describe "#call" do
+    let(:screen_template) { Factory[:screen_template] }
+    let(:unzipper) { Terminus::Aspects::Unzipper.new }
+
+    it "renders zip when success" do
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {design_id: screen_template.id}
+      )
+
+      keys = unzipper.call(response.body.first).value!.keys
+
+      expect(keys).to eq(%w[configuration.yml index.html.liquid])
+    end
+
+    it "renders error when failure" do
+      exporter = instance_double Terminus::Aspects::Designs::Exporter, call: Failure("Danger!")
+      action = described_class.new(exporter:)
+
+      response = action.call Rack::MockRequest.env_for(
+        "",
+        "router.params" => {design_id: screen_template.id}
+      )
+
+      expect(response.body.first).to eq("Danger!")
+    end
+
+    it "answers unprocessable entity with invalid parameters" do
+      response = action.call Rack::MockRequest.env_for("")
+      expect(response.status).to eq(422)
+    end
+  end
+end

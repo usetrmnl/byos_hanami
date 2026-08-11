@@ -84,6 +84,8 @@ module Terminus
     put "/designs/:id", to: "designs.update", as: :design
     delete "/designs/:id", to: "designs.delete", as: :design
 
+    get "/designs/:design_id/export", to: "designs.export.show", as: :design_export
+
     get "/extensions", to: "extensions.index", as: :extensions
     get "/extensions/new", to: "extensions.new", as: :extension_new
     post "/extensions", to: "extensions.create", as: :extensions
