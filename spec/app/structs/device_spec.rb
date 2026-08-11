@@ -47,6 +47,93 @@ RSpec.describe Terminus::Structs::Device, :db do
     end
   end
 
+  describe "#battery_percentage" do
+    it "answers percentage when charge is positive" do
+      device = Factory.structs[:device, battery_charge: 85]
+      expect(device.battery_percentage).to eq(85)
+    end
+
+    it "answers zero when charge and voltage are zero" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0]
+      expect(device.battery_percentage).to eq(0)
+    end
+
+    it "answers ten percent when voltage is extremely low" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0.1]
+      expect(device.battery_percentage).to eq(10)
+    end
+
+    it "answers ten percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0.25]
+      expect(device.battery_percentage).to eq(10)
+    end
+
+    it "answers twenty percent when voltage is just above the ten percent band" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0.455]
+      expect(device.battery_percentage).to eq(20)
+    end
+
+    it "answers twenty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0.75]
+      expect(device.battery_percentage).to eq(20)
+    end
+
+    it "answers thirty percent when voltage is just above the twenty percent band" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 0.95]
+      expect(device.battery_percentage).to eq(30)
+    end
+
+    it "answers thirty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 1.15]
+      expect(device.battery_percentage).to eq(30)
+    end
+
+    it "answers fourty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 1.5]
+      expect(device.battery_percentage).to eq(40)
+    end
+
+    it "answers fifty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 2.0]
+      expect(device.battery_percentage).to eq(50)
+    end
+
+    it "answers sixty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 2.5]
+      expect(device.battery_percentage).to eq(60)
+    end
+
+    it "answers seventy percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 3.0]
+      expect(device.battery_percentage).to eq(70)
+    end
+
+    it "answers eighty percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 3.3]
+      expect(device.battery_percentage).to eq(80)
+    end
+
+    it "answers ninety percent when voltage is just above the eighty percent band" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 3.605]
+      expect(device.battery_percentage).to eq(90)
+    end
+
+    it "answers ninety percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 3.9]
+      expect(device.battery_percentage).to eq(90)
+    end
+
+    it "answers one hundred percent when voltage is in range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 4.5]
+      expect(device.battery_percentage).to eq(100)
+    end
+
+    it "answers one hundred percent when voltage is beyond range" do
+      device = Factory.structs[:device, battery_charge: 0, battery_voltage: 4.8]
+      expect(device.battery_percentage).to eq(100)
+    end
+  end
+
   describe "#display_attributes" do
     it "answers display specific attributes" do
       expect(device.display_attributes).to eq(
@@ -92,6 +179,68 @@ RSpec.describe Terminus::Structs::Device, :db do
         name: "welcome_#{device.id}",
         kind: "welcome"
       )
+    end
+  end
+
+  describe "#wifi_percentage" do
+    it "answers zero when zero" do
+      device = Factory.structs[:device, wifi_signal: 0]
+      expect(device.wifi_percentage).to eq(0)
+    end
+
+    it "answers ten percent when extremely low" do
+      device = Factory.structs[:device, wifi_signal: -100]
+      expect(device.wifi_percentage).to eq(10)
+    end
+
+    it "answers ten percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -95]
+      expect(device.wifi_percentage).to eq(10)
+    end
+
+    it "answers twenty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -85]
+      expect(device.wifi_percentage).to eq(20)
+    end
+
+    it "answers thirty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -75]
+      expect(device.wifi_percentage).to eq(30)
+    end
+
+    it "answers fourty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -69]
+      expect(device.wifi_percentage).to eq(40)
+    end
+
+    it "answers fifty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -65]
+      expect(device.wifi_percentage).to eq(50)
+    end
+
+    it "answers sixty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -59]
+      expect(device.wifi_percentage).to eq(60)
+    end
+
+    it "answers seventy percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -54]
+      expect(device.wifi_percentage).to eq(70)
+    end
+
+    it "answers eighty percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -49]
+      expect(device.wifi_percentage).to eq(80)
+    end
+
+    it "answers ninety percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -45]
+      expect(device.wifi_percentage).to eq(90)
+    end
+
+    it "answers one hundred percent when in range" do
+      device = Factory.structs[:device, wifi_signal: -25]
+      expect(device.wifi_percentage).to eq(100)
     end
   end
 end
