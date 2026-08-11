@@ -19,6 +19,14 @@ RSpec.describe Terminus::Aspects::Models::Finder, :db do
       expect(finder.call(device_id: device.id)).to match(Success(having_attributes(id: model.id)))
     end
 
+    it "answers success when found by model ID instead of device ID" do
+      device = Factory[:device]
+
+      expect(finder.call(model_id: model.id, device_id: device.id)).to match(
+        Success(having_attributes(id: model.id))
+      )
+    end
+
     it "answers failure when unable to find by model or device ID" do
       expect(finder.call(model_id: 13, device_id: 666)).to be_failure(
         "Unable to find model for model ID (13) or device ID (666)."

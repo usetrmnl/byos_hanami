@@ -5,7 +5,7 @@ require "dry/monads"
 module Terminus
   module Aspects
     module Models
-      # Finds model record by model or device ID.
+      # Finds model by model ID (primary) or device ID (fallback).
       class Finder
         include Deps[
           model_repository: "repositories.model",
@@ -26,7 +26,7 @@ module Terminus
         private
 
         def find model_id, device_id
-          return model_repository.find model_id unless device_id
+          return model_repository.find model_id if model_id
 
           device = device_repository.find device_id
           model_repository.find device.model_id if device
