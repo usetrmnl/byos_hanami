@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Parts::Device, :db do
   subject(:part) { described_class.new value: device, rendering: Terminus::View.new.rendering }
 
-  let(:device) { Factory[:device] }
+  let(:device) { Factory.structs[:device] }
 
   describe "#current_screen" do
     let :device do
@@ -17,7 +17,7 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
     end
 
     context "without playlist" do
-      let(:device) { Factory[:device] }
+      let(:device) { Factory.structs[:device] }
 
       it "answers placeholder when device has no playlist" do
         expect(part.current_screen).to eq(Terminus::Aspects::Screens::Placeholder[id: device.id])
@@ -26,12 +26,14 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
   end
 
   describe "#dimensions" do
-    it "answers default width and height" do
+    let(:device) { Factory.structs[:device, width: 0, height: 0] }
+
+    it "answers zero width and height" do
       expect(part.dimensions).to eq("0x0")
     end
 
     context "with custom dimensions" do
-      let(:device) { Factory[:device, width: 800, height: 480] }
+      let(:device) { Factory.structs[:device, width: 800, height: 480] }
 
       it "answers custom width and height" do
         expect(part.dimensions).to eq("800x480")
