@@ -14,6 +14,8 @@ module Terminus
               include Initable[
                 key_map: {
                   "rss." => "source_1.rss.",
+                  "trmnl.device.friendly_id" => "extension.device.label",
+                  "trmnl.device.percent_charged" => "extension.device.battery_percentage",
                   "trmnl.plugin_settings.instance_name" => "extension.label",
                   "trmnl.plugin_settings.custom_fields_values" => "extension.values",
                   "trmnl.plugin_settings.custom_fields[0]" => "extension.fields[0]",

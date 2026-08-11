@@ -33,6 +33,8 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::T
         <<~CONTENT
           {{ data }}
           {{ rss.channel.item[0] }}
+          {{ trmnl.device.friendly_id }}
+          {{ trmnl.device.percent_charged }}
           {{ trmnl.plugin_settings.instance_name }}
           {{ trmnl.plugin_settings.custom_fields_values.test }}
           {{ trmnl.plugin_settings.custom_fields[0].name }}
@@ -43,6 +45,8 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::T
         <<~CONTENT
           {{ source_1.data }}
           {{ source_1.rss.channel.item[0] }}
+          {{ extension.device.label }}
+          {{ extension.device.battery_percentage }}
           {{ extension.label }}
           {{ extension.values.test }}
           {{ extension.fields[0].name }}
