@@ -24,14 +24,14 @@ Terminus supports multiple models (as found via the _Models_ page within the UI)
 
 === CrowPanel ESP32 4.2inch E-paper
 
-⚠️ **Currently, not supported but might be in the future.**
+**Currently, not supported at the moment.**
 
 * link:https://www.elecrow.com[Site]: Visit the web site to learn more.
 * link:https://www.elecrow.com/crowpanel-esp32-4-2-e-paper-hmi-display-with-400-300-resolution-black-white-color-driven-by-spi-interface.html[Model]: The product page.
 
 === Lilygo T5 E-Paper S3 Pro
 
-⚠️ **Currently, not supported is being worked on.**
+**Currently, not supported at the moment.**
 
 * link:https://lilygo.cc[Site]: Visit the web site to learn more.
 * link:https://lilygo.cc/products/t5-e-paper-s3-pro?variant=51702172385461[Model]: The product page.
@@ -40,18 +40,22 @@ Great for development purposes especially if you want a quick way to test sensor
 
 === TRMNL OG (B/W/R/Y)
 
-⚠️ **Requires Firmware 1.7.6.** Ensure you disable automatic firmware updates once the device is provisioned or you'll be stuck with a loading screen only showing the TRMNL logo in the right hand corner of the screen. You'll probably need to {flash_link} the device before using.
+**Requires Firmware 1.8.12 (or higher).** Ensure you disable automatic firmware updates once the device is provisioned or you'll be stuck with a loading screen only showing the TRMNL logo in the right hand corner of the screen.
+
+=== TRMNL reMarkable Paper Pro
+
+**Requires manual flashing.** See link:https://github.com/usetrmnl/trmnl-remarkable[documentation] for details.
 
 === Waveshare ESP32-S3 ePaper Development Board
 
-⚠️ **Currently, not supported but might be in the future.**
+**Currently, not supported but might be in the future.**
 
 * link:https://www.waveshare.com[Site]: Visit the web site to learn more.
 * link:https://www.waveshare.com/esp32-s3-epaper-3.97.htm?sku=33810[Model]: The product page.
 
 === XTEINK X4
 
-⚠️ **Requires Firmware 1.7.4** Ensure you disable automatic firmware updates once the device is provisioned or you'll be stuck with a loading screen only showing the TRMNL logo in the right hand corner of the screen. Despite having a _Xteink X4_ you must use the _TRMNL OG (1-bit)_ model to properly render screens (this is automatically applied by default). You'll probably need to {flash_link} the device before using.
+**Requires Firmware 1.8.12 (or higher).** Ensure you disable automatic firmware updates once the device is provisioned or you'll be stuck with a loading screen only showing the TRMNL logo in the right hand corner of the screen. You might need to {flash_link} the device before using.
 
 Provides a slim design that supports 800x480 resolutions like our TRMNL OG devices. The only downside is that the WiFi signal is weaker so range is limited.
 
