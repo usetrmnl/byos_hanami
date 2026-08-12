@@ -12,7 +12,7 @@
   </header>
 
   <div class="bit-body">
-    <%= form_for :template, routes.path(:designs), class: "bit-card bit-form" do |form| %>
+    <%= form_for :design, routes.path(:designs), class: "bit-card bit-form" do |form| %>
       <h1 class="label">New Design</h1>
 
       <%= scope(:form_field, key: :model_id, errors:).render do %>

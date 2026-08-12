@@ -20,8 +20,8 @@ RSpec.describe "Designs", :db do
     visit routes.path(:designs)
     click_link "New"
     select model.label, from: "model_id"
-    fill_in "template[label]", with: "Test"
-    fill_in "template[name]", with: "test"
+    fill_in "design[label]", with: "Test"
+    fill_in "design[name]", with: "test"
     click_button "Save"
 
     expect(page).to have_text("Edit Design")

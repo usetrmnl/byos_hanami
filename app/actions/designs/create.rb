@@ -14,7 +14,7 @@ module Terminus
         params do
           required(:model_id).filled :integer
 
-          required(:template).hash do
+          required(:design).hash do
             required(:label).filled :string
             required(:name).filled :string
             required(:content).filled :string
@@ -34,18 +34,18 @@ module Terminus
         private
 
         def create_with_screen parameters, response
-          template = repository.create parameters[:template]
+          screen_template = repository.create parameters[:design]
 
-          upserter.call(model_id: parameters[:model_id], **template.screen_attributes)
-          response.redirect_to routes.path(:design_edit, id: template.id)
+          upserter.call(model_id: parameters[:model_id], **screen_template.screen_attributes)
+          response.redirect_to routes.path(:design_edit, id: screen_template.id)
         end
 
         def error response, parameters
           response.render view,
                           models: model_repository.all,
                           template: nil,
-                          fields: parameters[:template],
-                          errors: parameters.errors[:template]
+                          fields: parameters[:design],
+                          errors: parameters.errors[:design]
         end
       end
     end
