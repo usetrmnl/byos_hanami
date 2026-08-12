@@ -499,7 +499,7 @@ GEM
     sidekiq-scheduler (6.0.2)
       rufus-scheduler (~> 3.2)
       sidekiq (>= 7.3, < 9)
-    simplecov (1.0.3)
+    simplecov (1.1.0)
     sod (2.4.0)
       cogger (~> 2.3)
       containable (~> 2.3)
@@ -817,7 +817,7 @@ CHECKSUMS
   shrine (3.9.0) sha256=3ccc2dd1cff89efc034449675f6524017084485b8b387059d68b4f303c848aa7
   sidekiq (8.1.6) sha256=be20cd051124b1a16cf97ea9157137abbd30a515c16a5ae9312d2eadd045e40f
   sidekiq-scheduler (6.0.2) sha256=1065f1a989e750849de1d23d1f34338c104ed6ec5a6dc22a2620c5af54a2d6fc
-  simplecov (1.0.3) sha256=38ef0514f16ae7562f0d0f4df02610071115103d301b6de7dacbcc000082e39b
+  simplecov (1.1.0) sha256=30f12f31a659c377ef402d5463a50eaf9037035fe1fac3d263cb389682cae1b4
   sod (2.4.0) sha256=e948a13d2f8231568bb1252661a4f6d85228dd77e86097ea8daa87a6733ab11e
   spek (5.4.0) sha256=c163b87135c04c1ce10f6455e3686eae4f91e1cc61753fcb64bfae0830e74975
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
