@@ -3,6 +3,8 @@
 require "hanami_helper"
 
 RSpec.describe "Designs", :db do
+  using Refinements::Pathname
+
   let(:model) { Factory[:model] }
   let(:template) { Factory[:screen_template] }
 
@@ -28,6 +30,27 @@ RSpec.describe "Designs", :db do
   it "edits", :js do
     visit routes.path(:design_edit, id: template.id)
     expect(page).to have_text("Edit Design")
+  end
+
+  it "imports", :aggregate_failures, :js do
+    model
+    exporter = Terminus::Aspects::Designs::Exporter.new
+    importer = Terminus::Aspects::Designs::Importer.new
+    screen_template = Factory.structs[:screen_template, label: "Design Import Test"]
+    path = exporter.call(screen_template).bind { |io| temp_dir.join("test.zip").write io.read }
+
+    path.open { importer.call it }
+
+    visit routes.path(:designs)
+    click_button "Upload"
+
+    within ".bit-popover-content", text: "Import" do
+      select model.label, from: "model_id"
+      attach_file "design_attachment", path
+      click_button "Submit"
+    end
+
+    expect(page).to have_text("Design Import Test")
   end
 
   it "exports" do

@@ -1,0 +1,38 @@
+<%= scope(:popover_default_content, name: :import, label: "Import").render do %>
+  <%= form_for :design,
+               routes.path(:design_import),
+               enctype: "multipart/form-data",
+               class: "bit-form" do |form| %>
+
+    <p>Please attach a zip file to import a previously exported design into your collection.</p>
+
+    <%= tag.select id: :model_id, name: :model_id, class: :value do %>
+      <%= tag.option "Select model...", value: nil %>
+
+      <% models.each do |model| %>
+        <%= tag.option model.label, value: model.id %>
+      <% end %>
+    <% end %>
+
+    <%= form.file_field :attachment,
+                        id: :design_attachment,
+                        value: nil,
+                        class: :value,
+                        accept: "application/zip" %>
+
+    <div class="form-actions">
+      <%= form.submit "Submit",
+                      class: "bit-button-accept",
+                      **HTMX[
+                        post: routes.path(:design_import),
+                        encoding: "multipart/form-data",
+                        trigger: :click,
+                        target: ".site-body",
+                        select: ".site-body",
+                        disabled_elt: "this"
+                      ] %>
+
+      <%= link_to "Cancel", routes.path(:designs), class: "bit-button-decline" %>
+    </div>
+  <% end %>
+<% end %>

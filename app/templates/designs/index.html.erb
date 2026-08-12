@@ -15,9 +15,21 @@
 
     <div class="bit-actions">
       <%= render "shared/actions/search", path: routes.path(:designs), query: %>
+
+      <%= scope(
+        :popover_trigger_button,
+        icon: :upload,
+        tip: :import,
+        target: :import,
+        width: 25,
+        height: 25
+      ).render %>
+
       <%= render "shared/actions/new", path: routes.path(:design_new) %>
     </div>
   </header>
+
+  <%= render :import, models: %>
 
   <%= scope(:popover_default_content, name: :overview, label: "Overview").render do %>
     <p>Use to manage templates for building screens. Each template can have multiple screens associated with it.</p>
@@ -39,6 +51,7 @@
 
   <%= scope(:tooltip_action_content, label: "Info").render %>
   <%= scope(:tooltip_action_content, label: "New").render %>
+  <%= scope(:tooltip_action_content, label: "Import").render %>
   <%= scope(:tooltip_action_content, label: "Search").render %>
   <%= scope(:tooltip_action_content, label: "Clear").render %>
   <%= scope(:tooltip_action_content, label: "View").render %>
