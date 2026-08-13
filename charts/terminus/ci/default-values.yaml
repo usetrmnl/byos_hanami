@@ -1,0 +1,11 @@
+# Values used by chart-testing (ct lint) only.
+# The chart requires non-empty connection settings and an app secret, so
+# linting against bare defaults would fail the validation guards in
+# _helpers.tpl. These are throwaway values and are never deployed.
+config:
+  apiUri: "https://terminus.example.com"
+
+secrets:
+  databaseUrl: "postgres://user:pass@postgres:5432/terminus"
+  keyvalueUrl: "redis://redis:6379/0"
+  appSecret: "ci0000000000000000000000000000000000000000000000000000000000000000"

@@ -1,0 +1,500 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+= Helm Chart
+
+The Helm chart is use to deploy Terminus to Kubernetes. It wraps the manifests described in the {doc_kubernetes_link} documentation into a single, configurable release.
+
+toc::[]
+
+== Requirements
+
+* Helm 3.8+ (OCI registry support)
+* A running Kubernetes cluster (v1.25+)
+* A storage class for persistent volumes (e.g., Longhorn, local-path, or cloud provider storage)
+* A PostgreSQL database — either external (`secrets.databaseUrl`) or the chart's optional bundled instance (`database.enabled`)
+* A Redis-compatible store for Sidekiq — either external (`secrets.keyvalueUrl`) or the chart's optional bundled Valkey (`keyvalue.enabled`)
+* Optionally, link:https://gateway.envoyproxy.io[Envoy Gateway] (or another Gateway API implementation) or an Ingress controller for external access
+* Optionally, link:https://www.vaultproject.io[HashiCorp Vault] with the Agent Injector webhook, if you don't want secrets stored as a Kubernetes `Secret`
+
+
+**Note**: Use external PostgreSQL and Redis installation for production use.
+
+== Chart Structure
+
+The chart lives at `charts/terminus`:
+
+[source]
+----
+charts/terminus/
+├── Chart.yaml                       # Chart metadata (name, version, appVersion)
+├── values.yaml                      # Default configuration values
+├── ci/
+│   └── default-values.yaml          # Values used by `ct lint` in CI (bare defaults fail validation)
+└── templates/
+    ├── _helpers.tpl                  # Named templates: names, labels, connection URLs, annotation maps, value validation
+    ├── NOTES.txt                     # Post-install/upgrade usage hints
+    ├── serviceaccount.yaml           # ServiceAccount (optional, created by default)
+    ├── configmap.yaml                # Non-sensitive env vars (HANAMI_PORT, API_URI, APP_SETUP, TZ, RACK_ATTACK_ALLOWED_SUBNETS)
+    ├── secret.yaml                   # DATABASE_URL / KEYVALUE_URL / APP_SECRET (only when vault.enabled is false)
+    ├── pvc.yaml                      # PersistentVolumeClaims for uploads and fonts
+    ├── deployment-web.yaml           # Deployment running the "web" (Puma) and "worker" (Sidekiq) containers in one pod
+    ├── service.yaml                  # ClusterIP (or other) Service in front of the web container
+    ├── ingress.yaml                  # Optional networking.k8s.io/v1 Ingress
+    ├── httproute.yaml                # Optional Gateway API HTTPRoute (Envoy Gateway, etc.)
+    ├── hpa.yaml                      # Optional HorizontalPodAutoscaler targeting the Deployment
+    ├── database.yaml                 # Optional bundled PostgreSQL: Secret, PVC, Service, Deployment
+    ├── keyvalue.yaml                 # Optional bundled Valkey: Secret, PVC, Service, Deployment
+    ├── job-migrate.yaml              # pre-install/pre-upgrade Helm hook Job running `hanami db migrate`
+    ├── configmap-migrate.yaml        # Hook-scoped ConfigMap for the migration Job
+    ├── secret-migrate.yaml           # Hook-scoped Secret for the migration Job
+    └── serviceaccount-migrate.yaml   # Hook-scoped ServiceAccount (only when vault.migrateInject)
+----
+
+[cols="1,3"]
+|===
+|Component |Purpose
+
+|Deployment (`*-web`)
+|Single pod with two containers: `web` (Puma, serves HTTP) and `worker` (Sidekiq, background jobs). They share the `uploads` and `fonts` volumes.
+
+|Service
+|ClusterIP Service exposing the `web` container's HTTP port.
+
+|PersistentVolumeClaim ×2
+|`uploads` (generated images/content) and `fonts` (custom fonts), both `ReadWriteOnce`.
+
+|ConfigMap / Secret
+|Non-sensitive and sensitive environment variables injected into both containers via `envFrom`. Replaced by Vault Agent injection when `vault.enabled: true`.
+
+|Job (`*-migrate`)
+|Runs `hanami db migrate` as a `pre-install,pre-upgrade` Helm hook before the Deployment is updated.
+
+|ConfigMap / Secret / ServiceAccount (`*-migrate`)
+|Hook-scoped copies at `hook-weight: "-5"`, created before the Job at `-1`. See <<Migration Job>>.
+
+|Deployment (`*-database`)
+|Optional bundled PostgreSQL, with its own Secret, `ReadWriteOnce` PVC and ClusterIP Service. Disabled by default.
+
+|Deployment (`*-keyvalue`)
+|Optional bundled Valkey, with its own PVC and ClusterIP Service (plus a Secret when a password is set). Disabled by default.
+
+|Ingress / HTTPRoute
+|Optional external access via a standard Ingress or a Gateway API `HTTPRoute`.
+
+|HorizontalPodAutoscaler
+|Optional CPU/memory-based autoscaling of the web Deployment (which also scales the worker sidecar, since they share a pod).
+
+|ServiceAccount
+|Created by default; can be disabled or pointed at an existing one.
+|===
+
+== Installing the Chart
+
+=== From the OCI registry
+
+Tagged releases are packaged and pushed to GitHub Container Registry by `.github/workflows/helm.yml`:
+
+[source,bash]
+----
+helm install terminus oci://ghcr.io/usetrmnl/charts/terminus \
+  --version 0.1.0 \
+  --namespace terminus --create-namespace \
+  --set config.apiUri="https://terminus.example.com" \
+  --set secrets.databaseUrl="postgres://user:password@postgres-host:5432/terminus" \
+  --set secrets.keyvalueUrl="redis://:password@valkey-host:6379/0" \
+  --set secrets.appSecret="$(openssl rand -hex 64)"
+----
+
+=== From source
+
+[source,bash]
+----
+git clone https://github.com/usetrmnl/terminus.git
+cd terminus
+
+helm install terminus ./charts/terminus \
+  --namespace terminus --create-namespace \
+  -f my-values.yaml
+----
+
+💡 Prefer a values file over `--set` for anything beyond a quick test — secrets in particular are easy to leak into shell history via `--set`.
+
+Example `my-values.yaml`:
+
+[source,yaml]
+----
+image:
+  tag: "0.42.0"          # pin a real tag; the chart default is "latest"
+
+config:
+  apiUri: "https://terminus.example.com"
+  tz: "America/New_York"
+  rackAttackAllowedSubnets: "10.42.0.0/16"
+
+secrets:
+  databaseUrl: "postgres://user:password@postgres-host:5432/terminus"
+  keyvalueUrl: "redis://:password@valkey-host:6379/0"
+  appSecret: "CHANGE_ME"   # 64+ characters; generate with: openssl rand -hex 64
+
+persistence:
+  uploads:
+    storageClass: "local-path"
+    size: 5Gi
+  fonts:
+    storageClass: "local-path"
+    size: 500Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  host: "terminus.example.com"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  tls:
+    - hosts: ["terminus.example.com"]
+      secretName: terminus-tls
+----
+
+Then verify the release:
+
+[source,bash]
+----
+helm upgrade --install terminus ./charts/terminus -n terminus -f my-values.yaml
+kubectl get pods -n terminus
+kubectl logs -n terminus deployment/terminus-web -c web
+kubectl logs -n terminus deployment/terminus-web -c worker
+----
+
+You can also render the manifests locally without installing anything, which is what CI does to lint the chart:
+
+[source,bash]
+----
+helm template terminus ./charts/terminus -f charts/terminus/ci/default-values.yaml
+----
+
+⚠️ Rendering with bare defaults fails on purpose — `config.apiUri` and the `secrets.*` values have no usable defaults, so the chart calls `fail` rather than deploying an app that crashes at boot. `ci/default-values.yaml` exists so `ct lint` has a valid set of throwaway values. See <<Value Validation>>.
+
+== Bundled Datastores
+
+By default the chart deploys neither PostgreSQL nor Valkey, and you point `secrets.databaseUrl` / `secrets.keyvalueUrl` at your own. Setting `database.enabled` or `keyvalue.enabled` makes the chart deploy a single-instance datastore instead, mirroring the `database` and `keyvalue` services in `compose.yml`:
+
+[source,yaml]
+----
+config:
+  apiUri: "https://terminus.example.com"
+
+secrets:
+  appSecret: "CHANGE_ME"   # 64+ characters
+
+migrate:
+  enabled: false           # required when database.enabled — see below
+
+database:
+  enabled: true
+  auth:
+    username: terminus
+    database: terminus
+    password: "CHANGE_ME"
+  persistence:
+    storageClass: "local-path"
+    size: 8Gi
+
+keyvalue:
+  enabled: true
+  auth:
+    password: "CHANGE_ME"  # optional; omit to run without authentication
+  persistence:
+    storageClass: "local-path"
+    size: 2Gi
+----
+
+When a datastore is bundled, its connection URL is derived by the chart (`terminus.databaseUrl` / `terminus.keyvalueUrl` in `_helpers.tpl`) and the corresponding `secrets.*` value is ignored:
+
+[source]
+----
+postgres://<username>:<password>@<release>-database:5432/<database>
+redis://[:<password>@]<release>-keyvalue:6379/0
+----
+
+⚠️ Passwords are interpolated into those URLs without percent-encoding. Avoid characters that need escaping there: `@ : / ? # [ ]` and whitespace.
+
+=== Readiness gating
+
+Kubernetes has no equivalent of Compose's `depends_on: condition: service_healthy`, and `scripts/docker/entrypoint` ignores the exit status of `hanami db migrate`. A web pod that starts before PostgreSQL is ready therefore migrates nothing, logs nothing, and serves an unmigrated schema.
+
+To prevent that, `database.waitForReady` and `keyvalue.waitForReady` (both `true` by default) add init containers to the web pod that block on `pg_isready` and `valkey-cli ping`. See <<Service Mesh Caveats>> for when you have to turn them off.
+
+=== Why `migrate.enabled` must be false
+
+The migration Job is a `pre-install` hook, so it runs *before* the bundled database Deployment exists. Making the database hook-scoped would take a stateful Deployment and PVC out of release management and orphan them on `helm uninstall`, which is worse. So `database.enabled` requires `migrate.enabled: false`, enforced by a validation guard.
+
+Migrations then run at pod startup via `config.appSetup: "true"` (the default), correctly gated by the `wait-for-database` init container.
+
+=== Security context
+
+Both bundled images start as root and drop privileges in their entrypoint, and that entrypoint chowns the data directory only when running as uid 0 — which fails outright on NFS `root_squash` or without `CAP_CHOWN`. The chart therefore runs both as their non-root image user so the chown is skipped entirely:
+
+[cols="2,1,1,2"]
+|===
+|Image |uid |gid |Note
+
+|`postgres:18.4-alpine`
+|`70`
+|`70`
+|Debian-based tags (e.g. `18.4`) use `999:999` instead — update `database.podSecurityContext` if you change the tag.
+
+|`valkey/valkey:9.1-alpine`
+|`999`
+|`1000`
+|Note the differing gid.
+|===
+
+`fsGroup` matches the gid so the mounted volume is group-writable.
+
+⚠️ Bundled datastores have no replication, backups or failover, and `database.enabled` cannot be combined with `vault.enabled`. Use a managed database for anything you care about losing.
+
+== Configuration Reference
+
+The most commonly overridden values (see `charts/terminus/values.yaml` for the full, commented list):
+
+[cols="2,3,1"]
+|===
+|Key |Description |Default
+
+|`image.repository` / `image.tag`
+|Container image and tag. Tag defaults to `.Chart.AppVersion` ("latest") when unset.
+|`ghcr.io/usetrmnl/terminus` / `""`
+
+|`replicaCount`
+|Replicas for the web+worker Deployment. Ignored when `autoscaling.enabled` is `true`.
+|`1`
+
+|`service.type` / `service.port`
+|Service exposing the web container.
+|`ClusterIP` / `2345`
+
+|`ingress.*`
+|Standard `networking.k8s.io/v1` Ingress.
+|`enabled: false`
+
+|`route.*`
+|Gateway API `HTTPRoute` (e.g., for Envoy Gateway).
+|`enabled: false`
+
+|`config.*`
+|Non-sensitive env vars written to the ConfigMap (`apiUri`, `tz`, `rackAttackAllowedSubnets`, `appSetup`, `hanamiPort`). `apiUri` is required.
+|see `values.yaml`
+
+|`secrets.*`
+|`databaseUrl`, `keyvalueUrl`, `appSecret` — written to a `Secret` when `vault.enabled` is `false`. `appSecret` must be 64+ characters. Ignored per-datastore when that datastore is bundled.
+|`""`
+
+|`podAnnotations` / `podLabels`
+|Annotations and labels for the web pod. Values are coerced to strings, so an unquoted `true` in your values file is safe.
+|`{}`
+
+|`vault.*`
+|Enables Vault Agent Injector annotations instead of a Kubernetes `Secret`.
+|`enabled: false`
+
+|`vault.migrateInject`
+|Read the migration Job's secrets from Vault via an Agent init container, instead of `migrate.databaseUrl`. Requires Vault-side role changes — see <<Secrets Management>>.
+|`false`
+
+|`migrate.enabled`
+|Toggles the pre-install/pre-upgrade migration Job. Must be `false` when `database.enabled`.
+|`true`
+
+|`migrate.databaseUrl` / `migrate.keyvalueUrl`
+|Connection values for the migration Job when `vault.enabled` and `migrateInject` is off. `databaseUrl` is required in that combination.
+|`""` / `redis://localhost:6379/0`
+
+|`migrate.podAnnotations`
+|Annotations for the migration Job's pod, e.g. to opt it out of a service mesh.
+|`{}`
+
+|`database.*`
+|Optional bundled PostgreSQL. `auth.password` is required when enabled.
+|`enabled: false`
+
+|`keyvalue.*`
+|Optional bundled Valkey. `auth.password` is optional.
+|`enabled: false`
+
+|`database.waitForReady` / `keyvalue.waitForReady`
+|Gate the web pod on the bundled datastore accepting connections, via init containers.
+|`true`
+
+|`persistence.uploads.*` / `persistence.fonts.*`
+|Storage class and size for the two `ReadWriteOnce` PVCs.
+|`5Gi` / `500Mi`
+
+|`resources.web.*` / `resources.worker.*`
+|Resource requests/limits per container.
+|see `values.yaml`
+
+|`autoscaling.*`
+|HPA for the web Deployment (also scales the worker sidecar).
+|`enabled: false`
+|===
+
+=== Value Validation
+
+`terminus.validateValues` in `_helpers.tpl` fails the render rather than letting a misconfiguration surface as a crash loop. The current guards:
+
+[cols="3,4"]
+|===
+|Condition |Reason
+
+|`ingress.enabled` and `route.enabled` both set
+|Would silently create two sets of routing resources.
+
+|`config.apiUri` empty
+|Hanami constrains `api_uri` to be non-empty with no default (`config/settings.rb`).
+
+|`secrets.databaseUrl` empty, no Vault, no bundled database
+|Nothing would supply `DATABASE_URL`.
+
+|`secrets.keyvalueUrl` empty, no Vault, no bundled Valkey
+|Nothing would supply `KEYVALUE_URL`.
+
+|`secrets.appSecret` shorter than 64 characters
+|Hanami constrains `app_secret` to `min_size: 64`.
+
+|`vault.enabled` with `database.enabled` or `keyvalue.enabled`
+|Vault supplies the connection URLs, so a bundled datastore has nothing to provide them to.
+
+|`database.enabled` with `migrate.enabled`
+|The migration hook runs before the bundled database exists.
+
+|`database.enabled` without `database.auth.password`
+|The PostgreSQL image requires `POSTGRES_PASSWORD`.
+
+|`vault.enabled` and `migrate.enabled` without `migrate.databaseUrl` or `vault.migrateInject`
+|The migration Job would have no way to reach the database.
+|===
+
+💡 An empty environment variable *overrides* the application's own default rather than falling back to it, which is why these are hard failures at template time instead of best-effort defaults.
+
+== Migration Job
+
+The Job runs `hanami db migrate` as a `pre-install,pre-upgrade` hook at `hook-weight: "-1"`. Because hooks execute before ordinary release resources exist, the Job cannot reference the release-managed ConfigMap, Secret or ServiceAccount — on a fresh install none of them exist yet.
+
+It therefore carries hook-scoped copies of its dependencies at `hook-weight: "-5"`, so they are created first:
+
+* `configmap-migrate.yaml` — `API_URI`, `TZ`, and `APP_SETUP: "false"` (the Job calls `hanami db migrate` directly, bypassing the entrypoint)
+* `secret-migrate.yaml` — `DATABASE_URL`, `KEYVALUE_URL`, `APP_SECRET` (omitted when `vault.enabled`)
+* `serviceaccount-migrate.yaml` — only when `vault.migrateInject`, since the Vault Agent needs a mounted token
+
+Otherwise the Job sets `automountServiceAccountToken: false` and uses the namespace `default` ServiceAccount, because migrations make no Kubernetes API calls.
+
+💡 These hook resources use `hook-delete-policy: before-hook-creation` only, deliberately without `hook-succeeded`: Helm deletes each hook resource as soon as it is ready, and a ConfigMap is ready the instant it is created — `hook-succeeded` would remove it before the Job at `-1` ever started. The consequence is that they persist after install and, being hook resources, are not removed by `helm uninstall`.
+
+== Secrets Management
+
+By default (`vault.enabled: false`), `DATABASE_URL`, `KEYVALUE_URL`, and `APP_SECRET` are stored base64-encoded in a Kubernetes `Secret` and injected via `envFrom`.
+
+Setting `vault.enabled: true` switches to link:https://developer.hashicorp.com/vault/docs/platform/k8s/injector[Vault Agent Injector]: no `Secret` is created, and the pod is annotated so Vault writes an env file to `/vault/secrets/terminus-env`, which is sourced before the `web` and `worker` entrypoints run. The Vault secret at `vault.secretPath` must contain `database_url`, `keyvalue_url`, and `app_secret` keys.
+
+=== The migration Job and Vault
+
+The migration Job cannot take the ordinary Vault Agent sidecar: the agent never exits, so the Job would never reach `Completed`. There are two ways to handle it.
+
+*Explicit values (default).* Set `migrate.databaseUrl`, meaning a plaintext database URL still needs to reach the cluster separately from Vault. `migrate.keyvalueUrl` also has to be present — migrations never touch Redis, but Hanami validates `keyvalue_url` at boot — and its placeholder default is usually fine.
+
+*Vault Agent init container (`vault.migrateInject: true`).* The Job is annotated with `agent-pre-populate-only: "true"`, which injects the agent as an init container only. It authenticates, writes the env file, and exits, so the Job can complete. `migrate.databaseUrl` and `migrate.keyvalueUrl` are then unused.
+
+⚠️ `migrateInject` requires a Vault-side change. The agent authenticates with a hook-scoped ServiceAccount named `<release>-migrate`, which cannot share a name with the release-managed one (Helm rejects a hook-owned and a release-owned object sharing a name). That name must appear in the Vault Kubernetes auth role's `bound_service_account_names`, or the init container fails to authenticate and the Job sits in `Init:0/1`:
+
+[source,bash]
+----
+vault write auth/kubernetes/role/terminus \
+  audience=https://kubernetes.default.svc.cluster.local \
+  bound_service_account_names=terminus,terminus-migrate \
+  bound_service_account_namespaces=terminus \
+  policies=terminus \
+  ttl=1h
+----
+
+`vault write` replaces the whole role, so carry over your existing bindings. Vault v1.21+ requires `audience` on Kubernetes auth roles; it must match the `aud` claim of the token the agent presents, which for the default projected ServiceAccount token is your API server's default audience.
+
+== Example: Install with Vault
+
+[source,yaml]
+----
+vault:
+  enabled: true
+  role: "terminus"
+  secretPath: "terminus/prod/secret"
+  migrateInject: true    # or set migrate.databaseUrl instead
+
+config:
+  apiUri: "https://terminus.example.com"
+----
+
+== Service Mesh Caveats
+
+Init containers run before the mesh sidecar starts, so their traffic is redirected to a proxy that is not listening yet. In Istio this affects three things the chart uses: the migration Job's Vault Agent init container, and both `waitForReady` init containers.
+
+The symptom is `connection refused` — or, once Istio's DNS capture is also in play, `Name has no usable address`. Neither is a DNS or naming problem; the mesh is simply unavailable that early.
+
+Additionally, a classic (non-native) Istio sidecar never exits, so a Job pod stays `NotReady` and never reaches `Completed` — the migration Job would hang even after migrations succeed.
+
+*Opt the migration Job out of the mesh* (both problems at once):
+
+[source,yaml]
+----
+migrate:
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+----
+
+Only do this if the database is reachable without mesh mTLS.
+
+*Disable the readiness gates* if they cannot reach the datastores:
+
+[source,yaml]
+----
+database:
+  waitForReady: false
+keyvalue:
+  waitForReady: false
+----
+
+⚠️ These are not equally safe. Dropping the Valkey gate is low risk — Sidekiq reconnects on its own. Dropping the database gate means a web pod may start before PostgreSQL is ready and serve an unmigrated schema silently. Verify afterwards, and restart the Deployment if needed:
+
+[source,bash]
+----
+kubectl exec -n terminus deploy/terminus-web -c web -- bundle exec hanami db version
+kubectl rollout restart deploy/terminus-web -n terminus
+----
+
+💡 The clean fix is Istio's native sidecar mode (`ENABLE_NATIVE_SIDECARS=true` on istiod), which runs `istio-proxy` as an init container with `restartPolicy: Always`. It starts before other init containers, so mesh-aware init containers and Jobs both work normally and none of the workarounds above are needed. This is cluster configuration, outside the chart.
+
+== Limitations
+
+* *Bundled datastores are minimal.* `database.enabled` / `keyvalue.enabled` deploy a single replica with no replication, backups, failover or connection pooling, cannot be combined with `vault.enabled`, and force `migrate.enabled: false`. They exist for small self-hosted deployments, not production.
+* *Web and worker cannot scale independently.* They run as two containers in the same pod (`deployment-web.yaml`), so `replicaCount`/HPA scales both together — there's no way to run more Sidekiq workers than Puma processes (or vice versa) via chart values alone.
+* *`ReadWriteOnce` storage forces `Recreate` deployments.* The `uploads` and `fonts` PVCs are `RWO`, so the Deployment uses `strategy: Recreate` — upgrades briefly take the app down, and pods can't be scheduled across nodes without a `ReadWriteMany`-capable storage class. The bundled datastore Deployments use `Recreate` for the same reason.
+* *Hook resources are not cleaned up.* The `*-migrate` ConfigMap, Secret and ServiceAccount are hook-scoped, so `helm uninstall` leaves them behind; delete them manually.
+* *No TLS automation.* The chart does not create `Certificate` resources; `ingress.tls` / `route` listener certs and any `cert-manager` annotations are entirely bring-your-own.
+* *No `PodDisruptionBudget`, `NetworkPolicy`, or `ServiceMonitor` templates.*
+* *No `helm test` hooks* (no `templates/tests/`), so `helm test` has nothing to run.
+* *Floating image tag by default.* `image.tag` defaults to empty (falls back to `appVersion: "latest"`) with `pullPolicy: Always` — fine for trying it out, but pin `image.tag` for reproducible production deploys.
+* *No PVC retention protection.* Deleting the release (or its PVCs) has no chart-managed backup/retention policy — `uploads`, `fonts` and bundled datastore data can be lost.
+* *Single migration attempt window.* The migrate Job's `backoffLimit: 3` runs before the Deployment is touched; if migrations fail, the install/upgrade fails and must be retried from scratch rather than resumed.
+* *Chart declares no dependencies.* `Chart.yaml` has no `dependencies`, so CI's `helm dependency update` is a no-op today.
+
+== Troubleshooting
+
+See the Troubleshooting section of {doc_kubernetes_link} — the same failure modes (CrashLoopBackOff from a bad `DATABASE_URL`/`KEYVALUE_URL`, missing `APP_SECRET`, permission errors on `/app/public/uploads`) apply here. To inspect a chart-managed release specifically:
+
+[source,bash]
+----
+helm status terminus -n terminus
+helm get values terminus -n terminus
+kubectl logs -n terminus job/terminus-migrate
+kubectl logs -n terminus pod/terminus-web -c <wroker|web> --follow
+----

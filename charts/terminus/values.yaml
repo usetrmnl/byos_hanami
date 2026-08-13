@@ -1,0 +1,269 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/usetrmnl/terminus
+  pullPolicy: Always
+  tag: ""
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+service:
+  type: ClusterIP
+  port: 2345
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: ""
+  tls: []
+
+# HTTPRoute for Envoy Gateway / Gateway API (mutually exclusive with ingress)
+route:
+  enabled: false
+  host: ""
+  annotations: {}
+  gateway:
+    name: ingress-gateway
+    namespace: istio-system
+
+# Non-sensitive env vars injected via ConfigMap
+config:
+  hanamiPort: "2345"
+  apiUri: ""
+  tz: "UTC"
+  rackAttackAllowedSubnets: ""
+  # Set to "true" to run db migrate + asset compile on every pod startup.
+  # Equivalent to compose.yml APP_SETUP behaviour. Set to "false" and rely
+  # on the pre-upgrade migration job when running multiple replicas.
+  appSetup: "true"
+
+# Optional Vault Agent Injector integration.
+# When enabled, secrets are written as env exports to /vault/secrets/terminus-env
+# and sourced before the app starts. No k8s Secret is created.
+# The Vault secret must contain keys: database_url, keyvalue_url, app_secret
+vault:
+  enabled: false
+  role: "terminus"
+  secretPath: "terminus/prod/secret"
+  agentRunAsUser: "1000"
+  # Read the migration job's secrets from Vault too, via an Agent init
+  # container (no sidecar — a sidecar would stop the Job from completing).
+  # Requires the Vault Kubernetes auth role named above to include the
+  # "<release>-migrate" ServiceAccount in its bound_service_account_names,
+  # otherwise the init container fails to authenticate and the Job hangs.
+  # When false, migrate.databaseUrl and migrate.keyvalueUrl are used instead.
+  migrateInject: false
+
+# Optional bundled PostgreSQL. A single instance with no replication, backups
+# or failover — intended for small self-hosted deployments, mirroring the
+# database service in compose.yml. Point secrets.databaseUrl at a managed
+# database instead for anything you care about losing.
+#
+# Passwords are interpolated into a connection URL, so avoid characters that
+# need percent-encoding there (@ : / ? # [ ] and whitespace).
+database:
+  enabled: false
+  image:
+    repository: postgres
+    tag: "18.4-alpine"
+    pullPolicy: IfNotPresent
+  auth:
+    username: terminus
+    database: terminus
+    password: ""
+  port: 5432
+  # Gate the web pod on the database accepting connections, via an init
+  # container. Set false in an Istio mesh: init containers run before
+  # istio-proxy, so their traffic is redirected to an Envoy that is not
+  # listening yet and the gate spins on "connection refused" forever.
+  #
+  # Turning this off is not free. scripts/docker/entrypoint ignores the exit
+  # status of `hanami db migrate`, so a web pod that starts before the
+  # database is ready will serve an unmigrated schema without erroring.
+  # Prefer keeping the gate and excluding the port from mesh redirection:
+  #
+  #   podAnnotations:
+  #     traffic.sidecar.istio.io/excludeOutboundPorts: "5432,6379"
+  waitForReady: true
+  # postgres:*-alpine creates its postgres user as 70:70 (the Debian-based
+  # tags use 999 instead). Running as that user rather than root matters:
+  # the image entrypoint chowns the data directory only when it starts as
+  # uid 0, which fails outright on NFS root_squash or without CAP_CHOWN.
+  podSecurityContext:
+    runAsUser: 70
+    runAsGroup: 70
+    fsGroup: 70
+    runAsNonRoot: true
+  persistence:
+    storageClass: ""
+    size: 8Gi
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: "1"
+    requests:
+      memory: 512Mi
+      cpu: "250m"
+
+# Optional bundled Valkey (Redis-compatible), mirroring the keyvalue service
+# in compose.yml. Same caveats as the bundled database above.
+keyvalue:
+  enabled: false
+  image:
+    repository: valkey/valkey
+    tag: "9.1-alpine"
+    pullPolicy: IfNotPresent
+  auth:
+    # Leave empty to run without authentication. In-cluster traffic to a
+    # ClusterIP service is not reachable from outside the cluster.
+    password: ""
+  port: 6379
+  database: "0"
+  # noeviction is deliberate: under any eviction policy Valkey discards queued
+  # Sidekiq jobs when memory fills, rather than refusing new writes.
+  maxmemory: "512mb"
+  maxmemoryPolicy: "noeviction"
+  # See database.waitForReady. Lower stakes here: Sidekiq reconnects to Valkey
+  # on its own, so a web pod that starts early recovers without intervention.
+  waitForReady: true
+  # The valkey user is 999:1000 — note the differing gid. As with the database
+  # above, running non-root makes the entrypoint skip its chown of /data.
+  podSecurityContext:
+    runAsUser: 999
+    runAsGroup: 1000
+    fsGroup: 1000
+    runAsNonRoot: true
+  persistence:
+    storageClass: ""
+    size: 2Gi
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: "500m"
+    requests:
+      memory: 128Mi
+      cpu: "100m"
+
+# Used only when vault.enabled: false.
+# databaseUrl is ignored when database.enabled, as is keyvalueUrl when
+# keyvalue.enabled — both are derived from the bundled service instead.
+secrets:
+  databaseUrl: ""
+  keyvalueUrl: ""
+  appSecret: ""
+
+migrate:
+  enabled: true
+  # Annotations for the migration Job's pod.
+  #
+  # In an Istio mesh the sidecar breaks this Job twice over: init containers
+  # run before istio-proxy starts, so the Vault Agent's egress is redirected to
+  # an Envoy that is not listening yet, and the proxy never exits, so the Job
+  # never reaches Completed. Opting the Job out of the mesh solves both:
+  #
+  #   podAnnotations:
+  #     sidecar.istio.io/inject: "false"
+  #
+  # Only do this if the database is reachable without mesh mTLS. If it is not,
+  # keep the sidecar and exclude just the Vault traffic from redirection:
+  #
+  #   podAnnotations:
+  #     traffic.sidecar.istio.io/excludeOutboundPorts: "8200"
+  podAnnotations: {}
+  # Required when vault.enabled: true — provide the DATABASE_URL directly
+  # so the migration job can connect without the Vault sidecar.
+  databaseUrl: ""
+  # Used only when vault.enabled: true. Migrations never talk to Redis, but
+  # Hanami validates keyvalue_url at boot, so a reachable-looking value must
+  # be present. Override if your environment rejects the placeholder.
+  keyvalueUrl: "redis://localhost:6379/0"
+
+persistence:
+  uploads:
+    storageClass: ""
+    size: 5Gi
+  fonts:
+    storageClass: ""
+    size: 500Mi
+
+resources:
+  web:
+    limits:
+      memory: 1Gi
+      cpu: "1"
+    requests:
+      memory: 512Mi
+      cpu: "250m"
+  worker:
+    limits:
+      memory: 512Mi
+      cpu: "500m"
+    requests:
+      memory: 256Mi
+      cpu: "100m"
+
+livenessProbe:
+  web:
+    httpGet:
+      path: /up
+      port: http
+    initialDelaySeconds: 45
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  worker:
+    exec:
+      command: ["pgrep", "-f", "sidekiq"]
+    initialDelaySeconds: 45
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+readinessProbe:
+  web:
+    httpGet:
+      path: /up
+      port: http
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# HPA targets the web deployment (worker runs as sidecar in the same pod).
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: ""
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

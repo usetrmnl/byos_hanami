@@ -1,0 +1,51 @@
+Terminus has been deployed successfully.
+
+Web URL:
+{{- if .Values.route.enabled }}
+  http{{ if .Values.route.host }}s{{ end }}://{{ .Values.route.host }}
+{{- else if .Values.ingress.enabled }}
+  http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}
+{{- else }}
+  export POD=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "terminus.name" . }},app.kubernetes.io/component=web" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD 2345:{{ .Values.config.hanamiPort }}
+  Visit http://127.0.0.1:2345
+{{- end }}
+
+Components deployed:
+  - Deployment {{ include "terminus.fullname" . }}-web
+      - web    (Puma)
+      - worker (Sidekiq sidecar)
+{{- if .Values.migrate.enabled }}
+  - Job {{ include "terminus.fullname" . }}-migrate (pre-install/pre-upgrade hook)
+{{- end }}
+{{- if .Values.database.enabled }}
+  - Deployment {{ include "terminus.fullname" . }}-database (bundled PostgreSQL, single instance)
+{{- end }}
+{{- if .Values.keyvalue.enabled }}
+  - Deployment {{ include "terminus.fullname" . }}-keyvalue (bundled Valkey, single instance)
+{{- end }}
+{{- if or .Values.database.enabled .Values.keyvalue.enabled }}
+
+Bundled datastores have no replication, backups or failover. Take your own
+backups, and prefer managed services for production.
+{{- end }}
+
+{{- if .Values.vault.enabled }}
+
+Secrets: managed by Vault Agent Injector
+  Path: {{ .Values.vault.secretPath }}
+  Role: {{ .Values.vault.role }}
+{{- else }}
+Secrets: stored in Kubernetes Secret
+  Name: {{ include "terminus.fullname" . }}
+{{- end }}
+
+{{- if .Values.autoscaling.enabled }}
+
+Autoscaling: enabled (scales the pod — web + worker sidecar scale together)
+  Min: {{ .Values.autoscaling.minReplicas }} / Max: {{ .Values.autoscaling.maxReplicas }}
+{{- end }}
+
+Troubleshooting:
+  kubectl logs -n {{ .Release.Namespace }} deployment/{{ include "terminus.fullname" . }}-web -c web
+  kubectl logs -n {{ .Release.Namespace }} deployment/{{ include "terminus.fullname" . }}-web -c worker

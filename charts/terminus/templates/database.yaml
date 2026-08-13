@@ -1,0 +1,139 @@
+{{- if .Values.database.enabled -}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "terminus.fullname" . }}-database
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+type: Opaque
+data:
+  POSTGRES_USER: {{ .Values.database.auth.username | b64enc | quote }}
+  POSTGRES_DB: {{ .Values.database.auth.database | b64enc | quote }}
+  POSTGRES_PASSWORD: {{ .Values.database.auth.password | b64enc | quote }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "terminus.fullname" . }}-database
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  {{- with .Values.database.persistence.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.database.persistence.size }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "terminus.fullname" . }}-database
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.database.port }}
+      targetPort: postgres
+      protocol: TCP
+      name: postgres
+  selector:
+    {{- include "terminus.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "terminus.fullname" . }}-database
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  replicas: 1
+  # Recreate, not RollingUpdate: the data PVC is ReadWriteOnce and two
+  # postgres processes must never share one data directory.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "terminus.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: database
+  template:
+    metadata:
+      labels:
+        {{- include "terminus.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: database
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.database.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: postgres
+          image: "{{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}"
+          imagePullPolicy: {{ .Values.database.image.pullPolicy }}
+          args: ["-p", "{{ .Values.database.port }}"]
+          ports:
+            - name: postgres
+              containerPort: {{ .Values.database.port }}
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: {{ include "terminus.fullname" . }}-database
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - --username={{ .Values.database.auth.username }}
+                - --dbname={{ .Values.database.auth.database }}
+                - --port={{ .Values.database.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+                - --username={{ .Values.database.auth.username }}
+                - --dbname={{ .Values.database.auth.database }}
+                - --port={{ .Values.database.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            # Matches the mount path used by compose.yml.
+            - name: data
+              mountPath: /var/lib/postgresql
+          {{- with .Values.database.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "terminus.fullname" . }}-database
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

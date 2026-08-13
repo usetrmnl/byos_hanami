@@ -1,0 +1,90 @@
+{{- if .Values.migrate.enabled -}}
+{{- $vaultInject := and .Values.vault.enabled .Values.vault.migrateInject -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "terminus.fullname" . }}-migrate
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migrate
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-1"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        {{- include "terminus.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: migrate
+      {{- if or $vaultInject .Values.migrate.podAnnotations }}
+      annotations:
+        {{- with .Values.migrate.podAnnotations }}
+        {{- include "terminus.stringMap" . | trim | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      {{- if $vaultInject }}
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: {{ .Values.vault.role | quote }}
+        # Init container only, no sidecar. A sidecar never exits and would keep
+        # the Job from ever reaching Completed.
+        vault.hashicorp.com/agent-pre-populate-only: "true"
+        vault.hashicorp.com/agent-run-as-user: {{ .Values.vault.agentRunAsUser | quote }}
+        vault.hashicorp.com/agent-inject-secret-terminus-env: {{ .Values.vault.secretPath | quote }}
+        vault.hashicorp.com/agent-inject-template-terminus-env: |
+          {{`{{- with secret "`}}{{ .Values.vault.secretPath }}{{`" -}}`}}
+          export DATABASE_URL="{{`{{ .Data.data.database_url }}`}}"
+          export KEYVALUE_URL="{{`{{ .Data.data.keyvalue_url }}`}}"
+          export APP_SECRET="{{`{{ .Data.data.app_secret }}`}}"
+          {{`{{- end }}`}}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $vaultInject }}
+      # The Vault Agent authenticates with this ServiceAccount's token, so the
+      # token must be mounted. A dedicated hook-scoped ServiceAccount is used
+      # because the chart's own is an ordinary release resource that does not
+      # exist yet at pre-install time.
+      serviceAccountName: {{ include "terminus.fullname" . }}-migrate
+      {{- else }}
+      # Migrations make no Kubernetes API calls, so the Job deliberately uses
+      # the namespace default ServiceAccount. The chart's own ServiceAccount is
+      # an ordinary release resource and does not exist yet at pre-install time.
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if $vaultInject }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - ". /vault/secrets/terminus-env && exec bundle exec hanami db migrate"
+          {{- else }}
+          command: ["bundle", "exec", "hanami", "db", "migrate"]
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- if and .Values.vault.enabled (not $vaultInject) }}
+          # No Vault Agent here: values are supplied directly instead. Enable
+          # vault.migrateInject to read them from Vault at run time.
+          env:
+            - name: DATABASE_URL
+              value: {{ .Values.migrate.databaseUrl | quote }}
+            # Unused by migrations, but Hanami validates it during boot.
+            - name: KEYVALUE_URL
+              value: {{ .Values.migrate.keyvalueUrl | quote }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "terminus.fullname" . }}-migrate
+            {{- if not .Values.vault.enabled }}
+            - secretRef:
+                name: {{ include "terminus.fullname" . }}-migrate
+            {{- end }}
+{{- end }}

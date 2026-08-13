@@ -1,0 +1,150 @@
+{{- if .Values.keyvalue.enabled -}}
+{{- $fullName := include "terminus.fullname" . -}}
+{{- if .Values.keyvalue.auth.password }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $fullName }}-keyvalue
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keyvalue
+type: Opaque
+data:
+  VALKEY_PASSWORD: {{ .Values.keyvalue.auth.password | b64enc | quote }}
+---
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $fullName }}-keyvalue
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keyvalue
+spec:
+  accessModes:
+    - ReadWriteOnce
+  {{- with .Values.keyvalue.persistence.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.keyvalue.persistence.size }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-keyvalue
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keyvalue
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.keyvalue.port }}
+      targetPort: valkey
+      protocol: TCP
+      name: valkey
+  selector:
+    {{- include "terminus.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: keyvalue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}-keyvalue
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keyvalue
+spec:
+  replicas: 1
+  # Recreate, not RollingUpdate: the data PVC is ReadWriteOnce.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "terminus.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: keyvalue
+  template:
+    metadata:
+      labels:
+        {{- include "terminus.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: keyvalue
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.keyvalue.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: valkey
+          image: "{{ .Values.keyvalue.image.repository }}:{{ .Values.keyvalue.image.tag }}"
+          imagePullPolicy: {{ .Values.keyvalue.image.pullPolicy }}
+          {{- if .Values.keyvalue.auth.password }}
+          # The password is read from the environment at startup rather than
+          # passed as an argument, which would expose it in the process list.
+          command: ["/bin/sh", "-c"]
+          args:
+            - >-
+              exec valkey-server
+              --requirepass "$VALKEY_PASSWORD"
+              --maxmemory {{ .Values.keyvalue.maxmemory }}
+              --maxmemory-policy {{ .Values.keyvalue.maxmemoryPolicy }}
+              --port {{ .Values.keyvalue.port }}
+          envFrom:
+            - secretRef:
+                name: {{ $fullName }}-keyvalue
+          {{- else }}
+          args:
+            - valkey-server
+            - --maxmemory
+            - {{ .Values.keyvalue.maxmemory | quote }}
+            - --maxmemory-policy
+            - {{ .Values.keyvalue.maxmemoryPolicy | quote }}
+            - --port
+            - {{ .Values.keyvalue.port | quote }}
+          {{- end }}
+          ports:
+            - name: valkey
+              containerPort: {{ .Values.keyvalue.port }}
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: valkey
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: valkey
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          {{- with .Values.keyvalue.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-keyvalue
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

@@ -1,0 +1,24 @@
+{{- if .Values.migrate.enabled -}}
+{{/*
+Hook-scoped copy of the main ConfigMap. The migrate Job runs as a pre-install
+hook, which executes before ordinary release resources exist, so it cannot
+reference the release-managed ConfigMap.
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "terminus.fullname" . }}-migrate
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migrate
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: before-hook-creation
+data:
+  API_URI: {{ .Values.config.apiUri | quote }}
+  TZ: {{ .Values.config.tz | quote }}
+  # The Job invokes `hanami db migrate` directly rather than going through the
+  # entrypoint, so the startup setup routine must not run here as well.
+  APP_SETUP: "false"
+{{- end }}

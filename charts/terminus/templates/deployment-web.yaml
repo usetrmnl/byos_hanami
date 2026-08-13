@@ -1,0 +1,199 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "terminus.fullname" . }}-web
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: web
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  # Recreate required — uploads PVC is ReadWriteOnce; RollingUpdate would
+  # leave the old pod holding the volume while the new pod tries to mount it.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "terminus.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        {{- include "terminus.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: web
+        {{- with .Values.podLabels }}
+        {{- include "terminus.stringMap" . | trim | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- include "terminus.stringMap" . | trim | nindent 8 }}
+        {{- end }}
+        {{- if .Values.vault.enabled }}
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: {{ .Values.vault.role | quote }}
+        vault.hashicorp.com/agent-pre-populate: "false"
+        vault.hashicorp.com/agent-inject-status: "update"
+        vault.hashicorp.com/agent-run-as-user: {{ .Values.vault.agentRunAsUser | quote }}
+        vault.hashicorp.com/agent-inject-secret-terminus-env: {{ .Values.vault.secretPath | quote }}
+        vault.hashicorp.com/agent-inject-template-terminus-env: |
+          {{`{{- with secret "`}}{{ .Values.vault.secretPath }}{{`" -}}`}}
+          export DATABASE_URL="{{`{{ .Data.data.database_url }}`}}"
+          export KEYVALUE_URL="{{`{{ .Data.data.keyvalue_url }}`}}"
+          export APP_SECRET="{{`{{ .Data.data.app_secret }}`}}"
+          {{`{{- end }}`}}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "terminus.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- $waitDb := and .Values.database.enabled .Values.database.waitForReady }}
+{{- $waitKv := and .Values.keyvalue.enabled .Values.keyvalue.waitForReady }}
+      {{- if or $waitDb $waitKv }}
+      # Kubernetes has no equivalent of compose's depends_on/service_healthy,
+      # and scripts/docker/entrypoint ignores the exit status of `db migrate`.
+      # Without these gates the app would start against an unready database
+      # and silently serve an unmigrated schema.
+      #
+      # Init containers cannot reach the mesh: they run before istio-proxy
+      # starts, so their egress is redirected to an Envoy that is not
+      # listening. See database.waitForReady in values.yaml.
+      initContainers:
+        {{- if $waitDb }}
+        - name: wait-for-database
+          image: "{{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}"
+          imagePullPolicy: {{ .Values.database.image.pullPolicy }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - >-
+              until pg_isready
+              --host={{ include "terminus.fullname" . }}-database.{{ .Release.Namespace }}.svc.cluster.local
+              --port={{ .Values.database.port }}
+              --username={{ .Values.database.auth.username }}
+              --dbname={{ .Values.database.auth.database }};
+              do echo "waiting for database"; sleep 2; done
+        {{- end }}
+        {{- if $waitKv }}
+        - name: wait-for-keyvalue
+          image: "{{ .Values.keyvalue.image.repository }}:{{ .Values.keyvalue.image.tag }}"
+          imagePullPolicy: {{ .Values.keyvalue.image.pullPolicy }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - >-
+              until valkey-cli
+              -h {{ include "terminus.fullname" . }}-keyvalue.{{ .Release.Namespace }}.svc.cluster.local
+              -p {{ .Values.keyvalue.port }} ping;
+              do echo "waiting for keyvalue"; sleep 2; done
+        {{- end }}
+      {{- end }}
+      containers:
+        # ── Web (Puma) ────────────────────────────────────────────────────────
+        - name: web
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.vault.enabled }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - ". /vault/secrets/terminus-env && exec scripts/docker/entrypoint bundle exec puma --config ./config/puma.rb"
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.config.hanamiPort }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "terminus.fullname" . }}
+            {{- if not .Values.vault.enabled }}
+            - secretRef:
+                name: {{ include "terminus.fullname" . }}
+            {{- end }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe.web }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe.web }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/public/uploads
+            - name: fonts
+              mountPath: /app/public/fonts
+            - name: fonts
+              mountPath: /usr/share/fonts/terminus
+          {{- with .Values.resources.web }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+
+        # ── Worker (Sidekiq sidecar) ──────────────────────────────────────────
+        - name: worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.vault.enabled }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - ". /vault/secrets/terminus-env && exec bundle exec sidekiq -r ./config/sidekiq.rb"
+          {{- else }}
+          args: ["bundle", "exec", "sidekiq", "-r", "./config/sidekiq.rb"]
+          {{- end }}
+          env:
+            - name: APP_SETUP
+              value: "false"
+          envFrom:
+            - configMapRef:
+                name: {{ include "terminus.fullname" . }}
+            {{- if not .Values.vault.enabled }}
+            - secretRef:
+                name: {{ include "terminus.fullname" . }}
+            {{- end }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe.worker }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/public/uploads
+            - name: fonts
+              mountPath: /app/public/fonts
+            - name: fonts
+              mountPath: /usr/share/fonts/terminus
+          {{- with .Values.resources.worker }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: {{ include "terminus.fullname" . }}-uploads
+        - name: fonts
+          persistentVolumeClaim:
+            claimName: {{ include "terminus.fullname" . }}-fonts
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

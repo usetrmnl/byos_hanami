@@ -1,0 +1,13 @@
+{{- include "terminus.validateValues" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "terminus.fullname" . }}
+  labels:
+    {{- include "terminus.labels" . | nindent 4 }}
+data:
+  HANAMI_PORT: {{ .Values.config.hanamiPort | quote }}
+  API_URI: {{ .Values.config.apiUri | quote }}
+  APP_SETUP: {{ .Values.config.appSetup | quote }}
+  TZ: {{ .Values.config.tz | quote }}
+  RACK_ATTACK_ALLOWED_SUBNETS: {{ .Values.config.rackAttackAllowedSubnets | quote }}
