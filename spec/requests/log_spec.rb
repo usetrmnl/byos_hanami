@@ -73,7 +73,7 @@ RSpec.describe "/api/log", :db do
 
   context "with invalid ID header" do
     before do
-      headers.delete "HTTP_ID"
+      headers.delete "HTTP_ACCESS_TOKEN"
       post routes.path(:api_log), payload.to_json, **headers
     end
 
