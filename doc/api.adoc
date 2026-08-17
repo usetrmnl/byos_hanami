@@ -31,15 +31,6 @@ In truth, the design of this API request should have been a POST request but the
 [source,bash]
 ----
 curl "https://localhost:2443/api/display" \
-     -H 'ID: <redacted>' \
-     -H 'Content-Type: application/json'
-----
-
-You can also use `ACCESS_TOKEN` but `ID` is recommended. Example:
-
-[source,bash]
-----
-curl "https://localhost:2443/api/display" \
      -H 'ACCESS_TOKEN: <redacted>' \
      -H 'Content-Type: application/json'
 ----
@@ -108,7 +99,7 @@ Used by device firmware to log information about your device. Mostly used for de
 [source,bash]
 ----
 curl -X "POST" "https://localhost:2443/api/log" \
-     -H 'ID: <redacted>' \
+     -H 'ACCESS_TOKEN: <redacted>' \
      -H 'Content-Type: application/json' \
      -d $'{
   "logs": [
@@ -134,6 +125,8 @@ curl -X "POST" "https://localhost:2443/api/log" \
   ]
 }'
 ----
+
+The `ACCESS_TOKEN` header is _required_ while the `ID` header is _optional_. The `ACCESS_TOKEN` value must be the API key originally asigned to the device when auto-provisioning the device in order to properly authenticate and record the device log.
 ====
 
 .Response
@@ -155,15 +148,6 @@ curl "https://localhost:2443/api/setup" \
      -H 'ID: <redacted>' \
      -H 'Content-Type: application/json'
 ----
-
-You can also use `ACCESS_TOKEN` but `ID` is recommended. Example:
-
-[source,bash]
-----
-curl "https://localhost:2443/api/setup" \
-     -H 'ACCESS_TOKEN: <redacted>' \
-     -H 'Content-Type: application/json'
-----
 ====
 
 .Response
@@ -178,6 +162,8 @@ curl "https://localhost:2443/api/setup" \
   "status": 200
 }
 ----
+
+The API key will be an empty string if the device has already been setup.
 ====
 
 == Server
