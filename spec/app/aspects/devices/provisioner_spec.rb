@@ -10,7 +10,11 @@ RSpec.describe Terminus::Aspects::Devices::Provisioner, :db do
       device = Factory[:device, mac_address: "02:A1:B2:C3:D4:E5"]
       result = provisioner.call mac_address: device.mac_address
 
-      expect(result.success).to have_attributes(playlist_id: nil, mac_address: "02:A1:B2:C3:D4:E5")
+      expect(result.success).to have_attributes(
+        playlist_id: nil,
+        api_key: "",
+        mac_address: "02:A1:B2:C3:D4:E5"
+      )
     end
 
     context "with new device" do

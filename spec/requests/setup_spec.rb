@@ -27,7 +27,7 @@ RSpec.describe "/api/setup", :db do
     get routes.path(:api_setup), {}, **headers
 
     expect(json_payload).to match(
-      api_key: device.api_key,
+      api_key: "",
       image_url: %(#{settings.api_uri}/assets/setup.bmp),
       message: "Welcome to Terminus!",
       status: 200

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "dry/monads"
 require "pipeable"
 
@@ -22,12 +23,17 @@ module Terminus
         def call(mac_address: MACAddressBuilder.call, **)
           device = repository.find_by(mac_address:)
 
-          return Success device if device
+          return redact device if device
 
           process(mac_address, **)
         end
 
         private
+
+        def redact device
+          device.define_singleton_method(:api_key) { Core::EMPTY_STRING }
+          Success device
+        end
 
         def process(mac_address, **)
           cached_device = nil
