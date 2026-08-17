@@ -14,9 +14,7 @@ module Terminus
 
         halted = catch :halt do
           rodauth.require_account
-          # simplecov:disable
           nil
-          # simplecov:enable
         end
 
         halted || application.call(environment)
