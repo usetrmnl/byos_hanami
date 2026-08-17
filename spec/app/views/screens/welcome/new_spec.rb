@@ -5,15 +5,15 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Screens::Welcome::New do
   subject(:view) { described_class.new }
 
-  let(:device) { Factory.structs[:device] }
+  let(:device) { Factory.structs[:device, id: 1] }
 
   describe "#call" do
     it "includes greeting" do
       expect(view.call(device:).to_s).to include("Welcome to Terminus!")
     end
 
-    it "includes MAC Address" do
-      expect(view.call(device:).to_s).to include(%(<dd class="value">A1:B2:C3:D4:E5:F6</dd>))
+    it "includes ID" do
+      expect(view.call(device:).to_s).to include(%(<dd class="value">1</dd>))
     end
   end
 end
