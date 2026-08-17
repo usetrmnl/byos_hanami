@@ -10,13 +10,14 @@ module Terminus
   # The application base routes.
   # rubocop:todo Metrics/ClassLength
   class Routes < Hanami::Routes
-    slice(:authentication, at: "/") { use Authentication::Middleware }
+    slice :authentication, at: "/" do
+      use Authentication::Middleware
+      mount Middleware::SidekiqAuth.new(Sidekiq::Web), at: "/sidekiq"
+    end
 
     use Aspects::Designs::Middleware, pattern: %r(/preview/(?<id>.+))
     use Rack::Deflater
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/fonts", "/uploads"]
-
-    mount Sidekiq::Web, at: "/sidekiq"
 
     get "/", to: "dashboard.show", as: :root
 
