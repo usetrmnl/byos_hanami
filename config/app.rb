@@ -2,7 +2,6 @@
 
 require "hanami"
 require "petail"
-require "rack/attack"
 
 require_relative "initializers/universal_logger_patch"
 
@@ -32,7 +31,5 @@ module Terminus
                                 expire_after: 3_600 # 1 hour.
                               }
     # rubocop:enable Layout/FirstArrayElementLineBreak
-
-    config.middleware.use Rack::Attack
   end
 end
