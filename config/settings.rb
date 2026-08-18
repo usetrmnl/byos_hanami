@@ -31,6 +31,7 @@ module Terminus
     setting :http_timeout_write, constructor: Types::Params::Integer.constrained(gt: 0), default: 10
     setting :keyvalue_url, constructor: Types::Params::String.constrained(filled: true)
     setting :model_synchronizer, constructor: Types::Params::Bool, default: true
+    setting :rack_attack_allowed_subnets, constructor: Types::Params::String, default: ""
     setting :sensors_path,
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/sensors.json")
