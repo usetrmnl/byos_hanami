@@ -1,0 +1,90 @@
+# frozen_string_literal: true
+
+require "hanami_helper"
+
+RSpec.describe Terminus::Providers::RackAttack do
+  subject(:provider) { described_class.new provider_container:, target_container:, slice: }
+
+  let(:provider_container) { Dry::Core::Container.new }
+  let(:target_container) { Dry::Core::Container.new }
+  let(:slice) { Hanami.app }
+
+  include_context "with application dependencies"
+
+  describe "#start" do
+    before do
+      provider.prepare
+      provider.start
+    end
+
+    let(:rack_attack) { provider_container[:rack_attack] }
+
+    it "answers cache client" do
+      expect(rack_attack.cache.store).to be_a(Rack::Attack::StoreProxy::RedisProxy)
+    end
+
+    it "answers true for allowed subnet" do
+      request = Data.define(:ip).new "::1"
+      result = rack_attack.safelists["allowed_subnets"].block.call request
+
+      expect(result).to be(true)
+    end
+
+    it "answers true for custom subnet" do
+      allow(settings).to receive(:rack_attack_allowed_subnets).and_return("255.255.255.255")
+
+      request = Data.define(:ip).new "255.255.255.255"
+      result = rack_attack.safelists["allowed_subnets"].block.call request
+
+      expect(result).to be(true)
+    end
+
+    it "answers false for unknown subnet" do
+      request = Data.define(:ip).new "255.255.255.255"
+      result = rack_attack.safelists["allowed_subnets"].block.call request
+
+      expect(result).to be(false)
+    end
+
+    it "answers safe lists" do
+      expect(rack_attack.safelists).to match("allowed_subnets" => kind_of(Rack::Attack::Safelist))
+    end
+
+    it "answers throttled response" do
+      expect(rack_attack.throttled_responder.call).to eq([503, {}, ["Server Error"]])
+    end
+
+    it "answers throttles" do
+      expect(rack_attack.throttles).to match(
+        "ip" => kind_of(Rack::Attack::Throttle),
+        "login" => kind_of(Rack::Attack::Throttle),
+        "api_setup" => kind_of(Rack::Attack::Throttle)
+      )
+    end
+
+    it "answers email (without spaces) when throttled login path and verb match" do
+      request = Data.define(:params, :path, :post?).new(
+        {"login" => "test @ test.io"},
+        "/login",
+        true
+      )
+
+      expect(rack_attack.throttles["login"].block.call(request)).to eq("test@test.io")
+    end
+
+    it "answers nil when throttled login path and verb don't match" do
+      request = Data.define(:params, :path, :post?).new({}, "/login", false)
+      expect(rack_attack.throttles["login"].block.call(request)).to be(nil)
+    end
+
+    it "answers IP address when throttled API setup path matches" do
+      request = Data.define(:ip, :path).new("1.2.3.4", "/api/setup")
+      expect(rack_attack.throttles["api_setup"].block.call(request)).to eq("1.2.3.4")
+    end
+
+    it "answers nil when throttled API setup path doesn't match" do
+      request = Data.define(:ip, :path).new("1.2.3.4", "/api/other")
+      expect(rack_attack.throttles["api_setup"].block.call(request)).to be(nil)
+    end
+  end
+end
