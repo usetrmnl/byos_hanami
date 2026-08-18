@@ -36,6 +36,7 @@ gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 2.0"
 gem "puma", "~> 8.0"
 gem "rack-attack", "~> 6.7"
+gem "redis", "~> 6.0"
 gem "refinements", "~> 14.0"
 gem "rodauth", "~> 2.41"
 gem "rom", "~> 5.4"
