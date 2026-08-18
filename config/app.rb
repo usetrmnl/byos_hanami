@@ -2,8 +2,8 @@
 
 require "hanami"
 require "petail"
+require "rack/attack"
 
-require_relative "initializers/rack_attack"
 require_relative "initializers/universal_logger_patch"
 
 module Terminus
