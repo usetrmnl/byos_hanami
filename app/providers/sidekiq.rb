@@ -47,10 +47,6 @@ module Terminus
         # simplecov:enable
       end
 
-      def sidekiq
-        @sidekiq ||= resolver.call
-      end
-
       # simplecov:disable
       def load_schedule
         jobs = YAML.load_file slice.root.join("config/sidekiq_scheduler.yml")
@@ -64,6 +60,10 @@ module Terminus
         end
       end
       # simplecov:enable
+
+      def sidekiq
+        @sidekiq ||= resolver.call
+      end
     end
   end
 end
