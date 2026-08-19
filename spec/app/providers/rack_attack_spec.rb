@@ -12,12 +12,13 @@ RSpec.describe Terminus::Providers::RackAttack do
   include_context "with application dependencies"
 
   describe "#start" do
+    let(:rack_attack) { provider_container[:rack_attack] }
+    let(:request) { Rack::Attack::Request.new({}) }
+
     before do
       provider.prepare
       provider.start
     end
-
-    let(:rack_attack) { provider_container[:rack_attack] }
 
     it "answers cache client" do
       expect(rack_attack.cache.store).to be_a(Rack::Attack::StoreProxy::RedisProxy)
@@ -28,7 +29,7 @@ RSpec.describe Terminus::Providers::RackAttack do
     end
 
     it "answers true for allowed subnet" do
-      request = Data.define(:ip).new "::1"
+      allow(request).to receive(:ip).and_return "::1"
       result = rack_attack.safelists["allowed_subnets"].block.call request
 
       expect(result).to be(true)
@@ -36,29 +37,28 @@ RSpec.describe Terminus::Providers::RackAttack do
 
     it "answers true for custom subnet" do
       allow(settings).to receive(:rack_attack_allowed_subnets).and_return("255.255.255.255")
-
-      request = Data.define(:ip).new "255.255.255.255"
+      allow(request).to receive(:ip).and_return "255.255.255.255"
       result = rack_attack.safelists["allowed_subnets"].block.call request
 
       expect(result).to be(true)
     end
 
     it "answers false for unknown subnet" do
-      request = Data.define(:ip).new "255.255.255.255"
+      allow(request).to receive(:ip).and_return "255.255.255.255"
       result = rack_attack.safelists["allowed_subnets"].block.call request
 
       expect(result).to be(false)
     end
 
     it "blocks user agent when blank" do
-      request = Data.define(:user_agent, :path).new user_agent: " \r\n\t", path: "/"
+      allow(request).to receive_messages(user_agent: " \r\n\t", path: "/")
       result = rack_attack.blocklists["block_blank_agents"].block.call request
 
       expect(result).to be(true)
     end
 
     it "doesn't block when user agent exists" do
-      request = Data.define(:user_agent, :path).new user_agent: "Test", path: "/"
+      allow(request).to receive_messages(user_agent: "Test", path: "/")
       result = rack_attack.blocklists["block_blank_agents"].block.call request
 
       expect(result).to be(false)
@@ -77,27 +77,27 @@ RSpec.describe Terminus::Providers::RackAttack do
     end
 
     it "answers email (without spaces) when throttled login path and verb match" do
-      request = Data.define(:params, :path, :post?).new(
-        {"login" => "test @ test.io"},
-        "/login",
-        true
+      allow(request).to receive_messages(
+        params: {"login" => "test @ test.io"},
+        path: "/login",
+        post?: true
       )
 
       expect(rack_attack.throttles["login"].block.call(request)).to eq("test@test.io")
     end
 
     it "answers nil when throttled login path and verb don't match" do
-      request = Data.define(:params, :path, :post?).new({}, "/login", false)
+      allow(request).to receive_messages(params: {}, path: "/login", post?: false)
       expect(rack_attack.throttles["login"].block.call(request)).to be(nil)
     end
 
     it "answers IP address when throttled API setup path matches" do
-      request = Data.define(:ip, :path).new("1.2.3.4", "/api/setup")
+      allow(request).to receive_messages(ip: "1.2.3.4", path: "/api/setup")
       expect(rack_attack.throttles["api_setup"].block.call(request)).to eq("1.2.3.4")
     end
 
     it "answers nil when throttled API setup path doesn't match" do
-      request = Data.define(:ip, :path).new("1.2.3.4", "/api/other")
+      allow(request).to receive_messages(ip: "1.2.3.4", path: "/api/other")
       expect(rack_attack.throttles["api_setup"].block.call(request)).to be(nil)
     end
   end
