@@ -379,7 +379,7 @@ GEM
     rexml (3.4.4)
     roda (3.107.0)
       rack
-    rodauth (2.45.0)
+    rodauth (2.46.0)
       roda (>= 2.6.0)
       sequel (>= 4)
     rom (5.4.3)
@@ -475,7 +475,7 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-ast (>= 1.44.0, < 2.0)
     ruby-progressbar (1.13.0)
-    rubyzip (3.4.1)
+    rubyzip (3.5.0)
     rufus-scheduler (3.9.2)
       fugit (~> 1.1, >= 1.11.1)
     runcom (13.3.0)
@@ -492,7 +492,7 @@ GEM
     shrine (3.9.0)
       content_disposition (~> 1.0)
       down (~> 5.1)
-    sidekiq (8.1.6)
+    sidekiq (8.1.7)
       connection_pool (>= 3.0.0)
       json (>= 2.16.0)
       logger (>= 1.7.0)
@@ -786,7 +786,7 @@ CHECKSUMS
   repl_type_completor (0.1.16) sha256=f7048de5e758504c04a6c80d02ff4c7c4c6ff2785151928b830a6ac0ed416b5b
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   roda (3.107.0) sha256=bf40c7a0f1fcd037ec10589a1dc98fc52ced1aece803670194ec7af0f0c77c06
-  rodauth (2.45.0) sha256=0f202a761b08059a926ec77ef15670c7af36051f64e55b1bd66ff641b83cddf8
+  rodauth (2.46.0) sha256=f70992b6d9dabb8332970b9eb8e1062f8be33fef7997a5b8738d0bacca5f275a
   rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
   rom-core (5.4.0) sha256=a08264e40892cf86a57e32f6c09803b30e4fb3b1da86a64d41e71d92575df08f
@@ -812,14 +812,14 @@ CHECKSUMS
   rubocop-sequel (0.4.1) sha256=f325dc470c1e3191a616b41a4bf8cfbb2c3c2f4fbc2eee6286de019ca1f7c113
   rubocop-thread_safety (0.7.3) sha256=067cdd52fbf5deffc18995437e45b5194236eaff4f71de3375a1f6052e48f431
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
-  rubyzip (3.4.1) sha256=0a79e745b5c25872ebd148457df5665da8530ed8626c993b01457128f173ca02
+  rubyzip (3.5.0) sha256=f77c49d737a849b662f6ca4de473f31b4ecd8288f1c9f901a5c820641f0f8d7c
   rufus-scheduler (3.9.2) sha256=55fa9e4db0ff69d7f38c804f17baba0c9bce5cba39984ae3c5cf6c039d1323b9
   runcom (13.3.0) sha256=12dd4ce9ea16a5a0f1f60a152b9ecbd52c00a21eab5b03819f4db8da3ec660e6
   samovar (2.5.1) sha256=8a9fc41eb8868084f0321eb41678c485cfbc7d282fb306c0be67c3284b1d2394
   sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
   sequel (5.107.0) sha256=019629313205295b007f6df2c5eab19ddc40710d549fd445ac300f2853a370db
   shrine (3.9.0) sha256=3ccc2dd1cff89efc034449675f6524017084485b8b387059d68b4f303c848aa7
-  sidekiq (8.1.6) sha256=be20cd051124b1a16cf97ea9157137abbd30a515c16a5ae9312d2eadd045e40f
+  sidekiq (8.1.7) sha256=91ad48c7e6c32e1846bf1d5b74c27948758049b93fed0cb539f8d586c7de3415
   sidekiq-scheduler (6.0.2) sha256=1065f1a989e750849de1d23d1f34338c104ed6ec5a6dc22a2620c5af54a2d6fc
   simplecov (1.1.1) sha256=25825ef13f0b2e74694d769817dad6ab8e90131dabdaa666e522fea105521e78
   sod (2.4.0) sha256=e948a13d2f8231568bb1252661a4f6d85228dd77e86097ea8daa87a6733ab11e
