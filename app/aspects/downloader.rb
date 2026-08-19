@@ -1,17 +1,35 @@
 # frozen_string_literal: true
 
 require "dry/monads"
+require "initable"
+require "uri"
 
 module Terminus
   module Aspects
     # A simple content downloader.
     class Downloader
       include Deps[:http, :logger]
+      include Initable[
+        allowed_domains: %w[trmnl.com trmnl-fw.s3.us-east-2.amazonaws.com],
+        parser: URI
+      ]
       include Dry::Monads[:result]
 
-      def call(uri) = get(uri).tap { log it, uri }
+      def call raw_uri
+        uri = parser.parse raw_uri.to_s
+
+        check(uri).bind { get uri }
+                  .tap { log it, uri }
+      end
 
       private
+
+      def check uri
+        return Failure "Invalid scheme (use HTTPS): #{uri}." unless uri.scheme == "https"
+
+        allowed_domains.any? { uri.host == it }
+                       .then { it ? Success() : Failure("Blocked domain: #{uri}.") }
+      end
 
       def get uri
         http.get(uri).then do |response|

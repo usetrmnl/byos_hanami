@@ -4,7 +4,7 @@ require "hanami_helper"
 require "http"
 
 RSpec.describe Terminus::Aspects::Downloader do
-  subject(:downloader) { described_class.new http: }
+  subject(:downloader) { described_class.new http:, allowed_domains: ["test.io"] }
 
   include_context "with application dependencies"
 
@@ -20,6 +20,25 @@ RSpec.describe Terminus::Aspects::Downloader do
     it "logs info" do
       downloader.call uri
       expect(logger.reread).to match(/INFO.+Downloaded: #{uri}\./)
+    end
+
+    context "with blocked domain" do
+      subject(:downloader) { described_class.new http: }
+
+      it "answers failure when scheme isn't HTTPS" do
+        expect(downloader.call("http://test.io")).to be_failure(
+          "Invalid scheme (use HTTPS): http://test.io."
+        )
+      end
+
+      it "answers failure when blocked" do
+        expect(downloader.call(uri)).to be_failure("Blocked domain: https://test.io/test.txt.")
+      end
+
+      it "logs error" do
+        downloader.call uri
+        expect(logger.reread).to match(/ERROR.+Blocked domain/)
+      end
     end
 
     context "with download failure" do
