@@ -1,11 +1,15 @@
 # auto_register: false
 # frozen_string_literal: true
 
+require "refinements/string"
+
 module Terminus
   module Providers
     # The Rack Attack provider.
     class RackAttack < Hanami::Provider::Source
       RESOLVER = proc { Object.const_get "Rack::Attack" }
+
+      using Refinements::String
 
       def initialize(resolver: RESOLVER, **)
         @resolver = resolver
@@ -22,6 +26,7 @@ module Terminus
         rack_attack.cache.store = Redis.new url: slice[:settings].keyvalue_url
 
         allow_subnets
+        block_blank_agents
         throttle
         register :rack_attack, rack_attack
       end
@@ -45,6 +50,10 @@ module Terminus
           IPAddr.new("::1"),
           *slice[:settings].rack_attack_allowed_subnets.split(/,\s*/).map { IPAddr.new it }
         ]
+      end
+
+      def block_blank_agents
+        rack_attack.blocklist("block_blank_agents") { it.user_agent.to_s.blank? }
       end
 
       def throttle

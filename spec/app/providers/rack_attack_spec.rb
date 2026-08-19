@@ -23,6 +23,10 @@ RSpec.describe Terminus::Providers::RackAttack do
       expect(rack_attack.cache.store).to be_a(Rack::Attack::StoreProxy::RedisProxy)
     end
 
+    it "answers safe lists" do
+      expect(rack_attack.safelists).to match("allowed_subnets" => kind_of(Rack::Attack::Safelist))
+    end
+
     it "answers true for allowed subnet" do
       request = Data.define(:ip).new "::1"
       result = rack_attack.safelists["allowed_subnets"].block.call request
@@ -46,8 +50,18 @@ RSpec.describe Terminus::Providers::RackAttack do
       expect(result).to be(false)
     end
 
-    it "answers safe lists" do
-      expect(rack_attack.safelists).to match("allowed_subnets" => kind_of(Rack::Attack::Safelist))
+    it "blocks user agent when blank" do
+      request = Data.define(:user_agent, :path).new user_agent: " \r\n\t", path: "/"
+      result = rack_attack.blocklists["block_blank_agents"].block.call request
+
+      expect(result).to be(true)
+    end
+
+    it "doesn't block when user agent exists" do
+      request = Data.define(:user_agent, :path).new user_agent: "Test", path: "/"
+      result = rack_attack.blocklists["block_blank_agents"].block.call request
+
+      expect(result).to be(false)
     end
 
     it "answers throttled response" do
