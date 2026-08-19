@@ -12,7 +12,7 @@ module Terminus
           # Downloads and decompresses a TRMNL plugin archive.
           class Extractor
             include Deps["aspects.downloader", "aspects.unzipper"]
-            include Initable[uri: "https://usetrmnl.com/api/plugin_settings/%<id>s/archive"]
+            include Initable[uri: "https://trmnl.com/api/plugin_settings/%<id>s/archive"]
             include Dry::Monads[:result]
 
             using Refinements::Pathname
