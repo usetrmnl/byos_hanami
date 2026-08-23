@@ -377,6 +377,9 @@ GEM
       prism (~> 1.0)
       rbs (>= 2.7.0)
     rexml (3.4.4)
+    rfc-api-problem (0.0.0)
+      rack (~> 3.0)
+      rexml (~> 3.4)
     roda (3.107.0)
       rack
     rodauth (2.46.0)
@@ -626,6 +629,7 @@ DEPENDENCIES
   reek (~> 6.5)
   refinements (~> 14.0)
   repl_type_completor (~> 0.1)
+  rfc-api-problem (~> 0.0)
   rodauth (~> 2.41)
   rom (~> 5.4)
   rom-factory (~> 0.13)
@@ -785,6 +789,7 @@ CHECKSUMS
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   repl_type_completor (0.1.16) sha256=f7048de5e758504c04a6c80d02ff4c7c4c6ff2785151928b830a6ac0ed416b5b
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
+  rfc-api-problem (0.0.0) sha256=34926fe184693636d3f1ca86367475143b50026771a0d936abdf5800c466a346
   roda (3.107.0) sha256=bf40c7a0f1fcd037ec10589a1dc98fc52ced1aece803670194ec7af0f0c77c06
   rodauth (2.46.0) sha256=f70992b6d9dabb8332970b9eb8e1062f8be33fef7997a5b8738d0bacca5f275a
   rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
