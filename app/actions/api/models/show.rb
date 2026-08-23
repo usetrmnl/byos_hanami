@@ -15,7 +15,7 @@ module Terminus
             response.body = if model
                               {data: serializer.new(model).to_h}.to_json
                             else
-                              petail[status: :not_found].to_json
+                              problem[status: :not_found].to_json
                             end
           end
         end

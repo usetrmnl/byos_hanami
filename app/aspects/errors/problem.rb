@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 require "functionable"
-require "petail"
 require "refinements/array"
 require "refinements/hash"
+require "rfc/api/problem"
 
 module Terminus
   module Aspects
@@ -21,7 +21,7 @@ module Terminus
                               .named_captures
                               .values_at "key", "value"
 
-          Petail[
+          RFC::API::Problem[
             type: "/problem_details#duplicate_value",
             status: :conflict,
             detail: "#{key.capitalize} must be unique. " \
@@ -36,7 +36,7 @@ module Terminus
                               .values_at "key", "value"
           allowed = JSON(message[/\[".+?"\]/m]).to_usage :or
 
-          Petail[
+          RFC::API::Problem[
             type: "/problem_details#invalid_enum",
             status: :unprocessable_content,
             detail: "Invalid value for #{key}: #{value.inspect}. Use: #{allowed}.",
@@ -49,7 +49,7 @@ module Terminus
                               .named_captures
                               .values_at "key", "value"
 
-          Petail[
+          RFC::API::Problem[
             type: "/problem_details#invalid_foreign_key",
             status: :unprocessable_content,
             detail: "Invalid `#{key}` value: #{value}. Does not exist.",

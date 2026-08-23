@@ -56,7 +56,7 @@ module Terminus
           end
 
           def unprocessable_download uri, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#firmware_payload",
               status: :unprocessable_content,
               detail: "Invalid URI: #{uri}.",
@@ -67,7 +67,7 @@ module Terminus
           end
 
           def unprocessable_content parameters, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#firmware_payload",
               status: :unprocessable_content,
               detail: "Validation failed.",

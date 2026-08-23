@@ -14,7 +14,7 @@ RSpec.describe Terminus::Aspects::Errors::Problem do
       CONTENT
 
       expect(problem_detail.duplicate(message, "/api/test")).to eq(
-        Petail[
+        RFC::API::Problem[
           type: "/problem_details#duplicate_value",
           status: :conflict,
           detail: %(Label must be unique. Please use a value other than "Demo".),
@@ -32,7 +32,7 @@ RSpec.describe Terminus::Aspects::Errors::Problem do
       CONTENT
 
       expect(problem_detail.enum(message, "/api/test")).to eq(
-        Petail[
+        RFC::API::Problem[
           type: "/problem_details#invalid_enum",
           status: :unprocessable_content,
           detail: %(Invalid value for mode: "other". Use: "automatic" or "manual".),
@@ -51,7 +51,7 @@ RSpec.describe Terminus::Aspects::Errors::Problem do
       CONTENT
 
       expect(problem_detail.foreign_key(message, "/api/test")).to eq(
-        Petail[
+        RFC::API::Problem[
           type: "/problem_details#invalid_foreign_key",
           status: :unprocessable_content,
           detail: "Invalid `playlist_id` value: 29. Does not exist.",

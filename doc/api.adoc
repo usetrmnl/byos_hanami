@@ -4,7 +4,7 @@
 
 :core_link: link:https://trmnl.com[Core]
 :image_magick_geometry_link: link:https://www.imagemagick.org/script/command-line-processing.php#geometry[ImageMagick Geometry]
-:petail_link: link:https://alchemists.io/projects/petail[Petail]
+:rfc_api_problem_link: link:https://alchemists.io/projects/rfc-api-problem[RFC API Problem]
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :trmnl_api_gem_link: link:https://github.com/usetrmnl/trmnl-api[TRMNL API]
 :trmnl_firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[TRMNL Firmware]
@@ -173,7 +173,7 @@ The API key will be an empty string if the device has already been setup.
 These endpoints are unique to this server implementation and allow you to interact via your favorite JSON Data API client. The following features are supported:
 
 * All endpoints require authentication using JWT tokens which is explained below.
-* All error responses adhere to link:https://www.rfc-editor.org/rfc/rfc9457[RFC 9457 (Problem Details for HTTP APIs)] as implemented by the {petail_link} gem which allows you to quickly parse the error responses in your own application if desired.
+* All error responses use the {rfc_api_problem_link} gem to quickly parse the error responses in your own application if desired.
 
 === Authentication
 

@@ -78,7 +78,7 @@ RSpec.describe "/api/firmware", :db do
         "HTTP_AUTHORIZATION" => access_token,
         "CONTENT_TYPE" => "application/json"
 
-    expect(json_payload).to eq(Petail[status: :not_found].to_h)
+    expect(json_payload).to eq(RFC::API::Problem[status: :not_found].to_h)
   end
 
   it "creates firmware when valid" do
@@ -108,7 +108,7 @@ RSpec.describe "/api/firmware", :db do
          "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#firmware_payload",
       status: :unprocessable_content,
       detail: "Invalid URI: bogus.",
@@ -124,7 +124,7 @@ RSpec.describe "/api/firmware", :db do
          "HTTP_AUTHORIZATION" => access_token,
          "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#firmware_payload",
       status: :unprocessable_content,
       detail: "Validation failed.",
@@ -189,7 +189,7 @@ RSpec.describe "/api/firmware", :db do
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#firmware_payload",
       status: :unprocessable_content,
       detail: "Invalid URI: bogus.",
@@ -205,7 +205,7 @@ RSpec.describe "/api/firmware", :db do
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#firmware_payload",
       status: :unprocessable_content,
       detail: "Validation failed.",

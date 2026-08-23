@@ -62,7 +62,7 @@ module Terminus
           end
 
           def not_found response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#device_id",
               status: __method__,
               detail: "Invalid device ID.",
@@ -76,7 +76,7 @@ module Terminus
           def unprocessable_content parameters, response
             errors = parameters.errors.to_h
 
-            payload = petail[
+            payload = problem[
               type: "/problem_details#log_payload",
               status: __method__,
               detail: "Validation failed due to incorrect or invalid payload.",

@@ -20,7 +20,7 @@ RSpec.describe Terminus::Actions::API::Base do
       end
 
       it "answers problem details" do
-        problem_detail = Petail.from_json Rack::MockRequest.new(action).get("").body
+        problem_detail = RFC::API::Problem.from_json Rack::MockRequest.new(action).get("").body
         expect(problem_detail).to have_attributes(type: /duplicate_value/)
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe Terminus::Actions::API::Base do
       end
 
       it "answers problem details" do
-        problem_detail = Petail.from_json Rack::MockRequest.new(action).get("").body
+        problem_detail = RFC::API::Problem.from_json Rack::MockRequest.new(action).get("").body
         expect(problem_detail).to have_attributes(type: /invalid_enum/)
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe Terminus::Actions::API::Base do
       end
 
       it "answers problem details" do
-        problem_detail = Petail.from_json Rack::MockRequest.new(action).get("").body
+        problem_detail = RFC::API::Problem.from_json Rack::MockRequest.new(action).get("").body
         expect(problem_detail).to have_attributes(type: /invalid_foreign_key/)
       end
     end

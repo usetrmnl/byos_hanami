@@ -44,7 +44,7 @@ module Terminus
           def find_model_id(name) = model_repository.find_by(name:).then { it.id if it }
 
           def not_found error, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#device_setup",
               status: __method__,
               detail: error,
@@ -55,7 +55,7 @@ module Terminus
           end
 
           def unprocessable_content errors, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#device_setup",
               status: __method__,
               detail: "Invalid request headers.",

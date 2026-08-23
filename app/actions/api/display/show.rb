@@ -84,7 +84,7 @@ module Terminus
           end
 
           def not_found response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#api_key",
               status: __method__,
               detail: "Invalid API key.",

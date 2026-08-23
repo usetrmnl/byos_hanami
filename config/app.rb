@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "hanami"
-require "petail"
+require "rfc/api/problem"
 
 require_relative "initializers/universal_logger_patch"
 
@@ -21,7 +21,7 @@ module Terminus
       csp[:script_src] += " 'unsafe-eval' 'unsafe-inline' https://trmnl.com"
     end
 
-    config.actions.formats.register :problem_details, Petail::MEDIA_TYPE_JSON
+    config.actions.formats.register :problem_details, RFC::API::Problem::MEDIA_TYPE_JSON
 
     # rubocop:todo Layout/FirstArrayElementLineBreak
     config.actions.sessions = :cookie,

@@ -60,7 +60,7 @@ module Terminus
           end
 
           def unprocessable_content_for_parameters errors, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#screen_payload",
               status: :unprocessable_content,
               detail: "Validation failed.",
@@ -72,7 +72,7 @@ module Terminus
           end
 
           def unprocessable_content_for_creation result, response
-            payload = petail[
+            payload = problem[
               type: "/problem_details#screen_payload",
               status: :unprocessable_content,
               detail: result.failure,

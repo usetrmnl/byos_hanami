@@ -78,7 +78,7 @@ RSpec.describe "/api/log", :db do
     end
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#device_id",
         status: 404,
         title: "Not Found",
@@ -105,7 +105,7 @@ RSpec.describe "/api/log", :db do
     end
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#log_payload",
         status: :unprocessable_content,
         detail: "Validation failed due to incorrect or invalid payload.",

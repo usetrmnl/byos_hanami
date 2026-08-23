@@ -103,7 +103,7 @@ RSpec.describe "/api/display", :db do
     before { get routes.path(:api_display) }
 
     it "answers not found problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#api_key",
         status: :not_found,
         detail: "Invalid API key.",
@@ -118,7 +118,7 @@ RSpec.describe "/api/display", :db do
     before { get routes.path(:api_display), {}, **firmware_headers }
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#api_key",
         status: :not_found,
         detail: "Invalid API key.",

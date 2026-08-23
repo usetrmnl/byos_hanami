@@ -25,7 +25,7 @@ module Terminus
           end
 
           def failure response
-            payload = petail[status: :not_found]
+            payload = problem[status: :not_found]
             response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
         end

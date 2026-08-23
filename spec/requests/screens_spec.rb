@@ -195,7 +195,7 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#screen_payload",
         status: 422,
         title: "Unprocessable Content",
@@ -216,7 +216,7 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#screen_payload",
         status: 422,
         title: "Unprocessable Content",
@@ -244,7 +244,7 @@ RSpec.describe "/api/screens", :db do
     end
 
     it "answers problem details" do
-      problem = Petail[
+      problem = RFC::API::Problem[
         type: "/problem_details#screen_payload",
         status: :unprocessable_content,
         detail: "Validation failed.",
@@ -319,7 +319,7 @@ RSpec.describe "/api/screens", :db do
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#screen_payload",
       status: 422,
       title: "Unprocessable Content",
@@ -336,7 +336,7 @@ RSpec.describe "/api/screens", :db do
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#screen_payload",
       status: 422,
       title: "Unprocessable Content",
@@ -353,7 +353,7 @@ RSpec.describe "/api/screens", :db do
           "HTTP_AUTHORIZATION" => access_token,
           "CONTENT_TYPE" => "application/json"
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#screen_payload",
       status: 422,
       title: "Unprocessable Content",

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "petail"
+require "rfc/api/problem"
 
 require_relative "../../aspects/errors/problem"
 
@@ -16,15 +16,15 @@ module Terminus
 
         using Refines::Actions::Response
 
-        def initialize(petail: Petail, problem: Aspects::Errors::Problem, **)
-          @petail = petail
+        def initialize(problem: RFC::API::Problem, problem_detail: Aspects::Errors::Problem, **)
           @problem = problem
+          @problem_detail = problem_detail
           super(**)
         end
 
         protected
 
-        attr_reader :petail
+        attr_reader :problem
 
         # simplecov:disable
         def verify_csrf_token?(*) = false
@@ -32,20 +32,20 @@ module Terminus
 
         private
 
-        attr_reader :problem
+        attr_reader :problem_detail
 
         def detail_duplicate request, response, error
-          payload = problem.duplicate error.message, request.path
+          payload = problem_detail.duplicate error.message, request.path
           response.with body: payload.to_json, format: :problem_details, status: payload.status
         end
 
         def detail_enum request, response, error
-          payload = problem.enum error.message, request.path
+          payload = problem_detail.enum error.message, request.path
           response.with body: payload.to_json, format: :problem_details, status: payload.status
         end
 
         def detail_foreign_key request, response, error
-          payload = problem.foreign_key error.message, request.path
+          payload = problem_detail.foreign_key error.message, request.path
           response.with body: payload.to_json, format: :problem_details, status: payload.status
         end
       end

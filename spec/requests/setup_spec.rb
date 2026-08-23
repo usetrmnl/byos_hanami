@@ -37,7 +37,7 @@ RSpec.describe "/api/setup", :db do
   it "answers problem details when model for device doesn't exist" do
     get routes.path(:api_setup), {}, **headers
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#device_setup",
       status: :not_found,
       detail: %(Null value in column "model_id" of relation "device" violates not-null constraint.),
@@ -51,7 +51,7 @@ RSpec.describe "/api/setup", :db do
     headers["HTTP_FW_VERSION"] = "bogus"
     get routes.path(:api_setup), {}, **headers
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#device_setup",
       status: :unprocessable_content,
       detail: "Invalid request headers.",
@@ -70,7 +70,7 @@ RSpec.describe "/api/setup", :db do
     headers["HTTP_ID"] = "bogus"
     get routes.path(:api_setup), {}, **headers
 
-    problem = Petail[
+    problem = RFC::API::Problem[
       type: "/problem_details#device_setup",
       status: :unprocessable_content,
       detail: "Invalid request headers.",
