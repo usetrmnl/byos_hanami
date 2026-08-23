@@ -318,9 +318,6 @@ GEM
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
-    petail (1.3.0)
-      rack (>= 2.2, < 4.0)
-      rexml (~> 3.4)
     pg (1.6.3)
     pipeable (2.3.0)
       containable (~> 2.3)
@@ -618,7 +615,6 @@ DEPENDENCIES
   marcel (~> 1.0)
   mini_magick (~> 5.2)
   nori (~> 2.7)
-  petail (~> 1.0)
   pg (~> 1.6)
   pipeable (~> 2.0)
   puma (~> 8.0)
@@ -761,7 +757,6 @@ CHECKSUMS
   optparse (0.8.1) sha256=42bea10d53907ccff4f080a69991441d611fbf8733b60ed1ce9ee365ce03bd1a
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
-  petail (1.3.0) sha256=9f2c2ae64d64bb55312968149e0e0527bad1e91c95f46795369f3447ac6afb96
   pg (1.6.3) sha256=1388d0563e13d2758c1089e35e973a3249e955c659592d10e5b77c468f628a99
   pipeable (2.3.0) sha256=47ae7b83fd2fc360715a6a86bc59bc87b04ef15cda17c17d9dc3e918560a72ff
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570

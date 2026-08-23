@@ -31,7 +31,6 @@ gem "liquid", "~> 5.9"
 gem "marcel", "~> 1.0"
 gem "mini_magick", "~> 5.2"
 gem "nori", "~> 2.7"
-gem "petail", "~> 1.0"
 gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 2.0"
 gem "puma", "~> 8.0"
