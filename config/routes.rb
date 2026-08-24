@@ -9,7 +9,7 @@ require_relative "../app/aspects/designs/middleware"
 
 module Terminus
   # The application base routes.
-  # rubocop:todo Metrics/ClassLength
+  # rubocop:todo-next Metrics/ClassLength
   class Routes < Hanami::Routes
     use Rack::Deflater
     use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/fonts", "/uploads"]
@@ -22,7 +22,7 @@ module Terminus
 
     get "/", to: "dashboard.show", as: :root
 
-    # rubocop:todo Metrics/BlockLength
+    # rubocop:todo-next Metrics/BlockLength
     scope "api" do
       get "/devices", to: "api.devices.index", as: :devices
       get "/devices/:id", to: "api.devices.show", as: :device
@@ -59,7 +59,6 @@ module Terminus
 
       resource :setup, to: "api.setup", only: :show
     end
-    # rubocop:enable Metrics/BlockLength
 
     scope "bulk" do
       delete "/devices/:device_id/logs", to: "bulk.devices.logs.delete", as: :device_log
@@ -197,5 +196,4 @@ module Terminus
 
     slice(:health, at: "/up") { root to: "show" }
   end
-  # rubocop:enable Metrics/ClassLength
 end

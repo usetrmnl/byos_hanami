@@ -32,7 +32,7 @@ module Terminus
             end
 
             # :reek:TooManyStatements
-            # rubocop:todo Metrics/AbcSize
+            # rubocop:todo-next Metrics/AbcSize
             def call io, attributes: {}
               unzipper.call(io)
                       .fmap { |entries| transform entries }
@@ -42,7 +42,6 @@ module Terminus
                       .bind { extension_creator.call attributes }
                       .bind { create_exchanges it, attributes }
             end
-            # rubocop:enable Metrics/AbcSize
 
             private
 

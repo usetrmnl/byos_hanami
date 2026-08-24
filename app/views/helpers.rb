@@ -30,11 +30,10 @@ module Terminus
                .then { it ? [it.public_send(label), it.public_send(id)] : Core::EMPTY_ARRAY }
       end
 
-      # rubocop:todo Metrics/ParameterLists
+      # rubocop:todo-next Metrics/ParameterLists
       def field_included? key, value, attributes, record = nil
         ((record && record.public_send(key)) || attributes[key]).include? value
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def field_for key, attributes, record = nil
         return attributes[key] unless record

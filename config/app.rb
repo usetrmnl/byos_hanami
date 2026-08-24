@@ -23,13 +23,12 @@ module Terminus
 
     config.actions.formats.register :problem_details, RFC::API::Problem::MEDIA_TYPE_JSON
 
-    # rubocop:todo Layout/FirstArrayElementLineBreak
+    # rubocop:todo-next Layout/FirstArrayElementLineBreak
     config.actions.sessions = :cookie,
                               {
                                 key: "terminus.session",
                                 secret: settings.app_secret,
                                 expire_after: 3_600 # 1 hour.
                               }
-    # rubocop:enable Layout/FirstArrayElementLineBreak
   end
 end

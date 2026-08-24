@@ -71,16 +71,15 @@ module Terminus
 
       def with_associations = extension.combine :devices, :models
 
-      # rubocop:todo Metrics/ParameterLists
+      # rubocop:todo-next Metrics/ParameterLists
       def create_associations name, record, foreign_key, values
         associations = values.map { |id| {extension_id: record.id, foreign_key => id} }
         __send__(name).changeset(:create, associations).commit
       end
-      # rubocop:enable Metrics/ParameterLists
 
       # :reek:FeatureEnvy
       # :reek:TooManyStatements
-      # rubocop:todo Metrics/ParameterLists
+      # rubocop:todo-next Metrics/ParameterLists
       def update_associations name, id, foreign_key, values
         association = __send__ name
 
@@ -92,7 +91,6 @@ module Terminus
 
         association.changeset(:create, associations).commit
       end
-      # rubocop:enable Metrics/ParameterLists
     end
   end
 end
