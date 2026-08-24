@@ -142,7 +142,8 @@ RSpec.describe Terminus::Structs::Device, :db do
         refresh_rate: 20,
         temperature_profile: "default",
         touchbar_mode: "tap",
-        update_firmware: true
+        update_firmware: true,
+        reset_firmware: false
       )
     end
   end
