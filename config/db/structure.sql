@@ -302,7 +302,8 @@ CREATE TABLE public.device (
     touch_bar text DEFAULT 'tap'::text NOT NULL,
     wifi_band double precision DEFAULT 0 NOT NULL,
     api_key text,
-    command text DEFAULT 'none'::text NOT NULL
+    command text DEFAULT 'none'::text NOT NULL,
+    firmware_reset boolean DEFAULT false NOT NULL
 );
 
 
@@ -1810,4 +1811,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260721160742_rename_device_log_function_columan_as_command.rb'),
 ('20260805142625_alter_screen_device_id_constraint.rb'),
 ('20260810100653_add_screen_extension_id_column.rb'),
-('20260810102551_drop_screen_device_id_and_kind_index.rb');
+('20260810102551_drop_screen_device_id_and_kind_index.rb'),
+('20260824132105_add_device_firmware_reset_column.rb');
