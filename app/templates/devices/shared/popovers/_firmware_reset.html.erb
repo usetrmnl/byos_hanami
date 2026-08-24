@@ -1,0 +1,10 @@
+<%= scope(:popover_default_content, name: :firmware_reset, label: "Firmware Reset").render do %>
+  <p>When enabled, allows your device's firmware to be reset to factory defaults. This works similar to manually reseting the physical device.</p>
+
+  <p>Once reset, the original API Key for your device will be available via the Setup API should you decide to re-provision the device with this server. Re-provisioning your device will automatically ensure the firmware reset is <code>false</code> as well. If you don't want this behavior, you can do either of the following:</p>
+
+  <ul>
+    <li>Delete this device.</li>
+    <li>Manually set the firmware reset to <code>false</code> immediately after the device is reset and then make this device a <em>virtual</em> device by changing the MAC address and API key for this device so it's unique.</li>
+  </ul>
+<% end %>
