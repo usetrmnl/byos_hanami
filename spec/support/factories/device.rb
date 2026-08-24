@@ -9,6 +9,7 @@ Factory.define :device, relation: :device do |factory|
   factory.display_compatibility false
   factory.display_profile "default"
   factory.firmware_update true
+  factory.firmware_reset false
   factory.firmware_version "1.2.3"
   factory.label "Test"
   factory.mac_address "A1:B2:C3:D4:E5:F6"
