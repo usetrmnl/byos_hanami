@@ -92,6 +92,12 @@
         <dd class="value"><%= boolean device.firmware_update %></dd>
 
         <dt class="key">
+          Firmware Reset
+          <%= scope(:popover_trigger_button, tip: :info, target: :firmware_reset).render %>
+        </dt>
+        <dd class="value"><%= boolean device.firmware_reset %></dd>
+
+        <dt class="key">
           Firmware Profile
           <%= scope(:popover_trigger_button, tip: :info, target: :firmware_profile).render %>
         </dt>
