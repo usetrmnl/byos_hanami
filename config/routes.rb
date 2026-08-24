@@ -11,9 +11,11 @@ module Terminus
   # The application base routes.
   # rubocop:todo-next Metrics/ClassLength
   class Routes < Hanami::Routes
-    use Rack::Deflater
-    use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/fonts", "/uploads"]
+    # Order matters.
+    use Rack::Attack
     use Aspects::Designs::Middleware, pattern: %r(/preview/(?<id>.+))
+    use Rack::Static, root: "public", urls: ["/.well-known/security.txt", "/fonts", "/uploads"]
+    use Rack::Deflater
 
     slice :authentication, at: "/" do
       use Authentication::Middleware
