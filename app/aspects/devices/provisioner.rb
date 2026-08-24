@@ -23,15 +23,20 @@ module Terminus
         def call(mac_address: MACAddressBuilder.call, **)
           device = repository.find_by(mac_address:)
 
-          return redact device if device
+          return maybe_redact_api_key device if device
 
           process(mac_address, **)
         end
 
         private
 
-        def redact device
-          device.define_singleton_method(:api_key) { Core::EMPTY_STRING }
+        def maybe_redact_api_key device
+          if device.firmware_reset
+            repository.update device.id, firmware_reset: false
+          else
+            device.define_singleton_method(:api_key) { Core::EMPTY_STRING }
+          end
+
           Success device
         end
 

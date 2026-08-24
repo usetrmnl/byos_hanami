@@ -66,6 +66,7 @@ detectors:
       - Terminus::Actions::Playlists::Screens::Show#view_settings
       - Terminus::Actions::Playlists::Update#error
       - Terminus::Actions::Users::Update#error
+      - Terminus::Aspects::Devices::Provisioner#maybe_redact_api_key
       - Terminus::Aspects::Errors::Problem#enum
       - Terminus::Aspects::Extensions::Cloner#build_attributes
       - Terminus::Aspects::Extensions::Exchanges::Refresher#fetch

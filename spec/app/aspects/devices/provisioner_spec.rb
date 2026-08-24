@@ -6,7 +6,7 @@ RSpec.describe Terminus::Aspects::Devices::Provisioner, :db do
   subject(:provisioner) { described_class.new }
 
   describe "#call" do
-    it "answers existing device" do
+    it "answers existing device with redacted API key" do
       device = Factory[:device, mac_address: "02:A1:B2:C3:D4:E5"]
       result = provisioner.call mac_address: device.mac_address
 
@@ -15,6 +15,31 @@ RSpec.describe Terminus::Aspects::Devices::Provisioner, :db do
         api_key: "",
         mac_address: "02:A1:B2:C3:D4:E5"
       )
+    end
+
+    context "with firmware reset" do
+      let(:device) { Factory[:device, mac_address: "02:A1:B2:C3:D4:E5", firmware_reset: true] }
+
+      it "answers existing device with API key when firmware reset is enabled" do
+        result = provisioner.call mac_address: device.mac_address
+
+        expect(result.success).to have_attributes(
+          playlist_id: nil,
+          api_key: device.api_key,
+          mac_address: "02:A1:B2:C3:D4:E5"
+        )
+      end
+
+      it "answers existing device with redacted API key after firmware reset is disabled" do
+        provisioner.call mac_address: device.mac_address
+        result = provisioner.call mac_address: device.mac_address
+
+        expect(result.success).to have_attributes(
+          playlist_id: nil,
+          api_key: "",
+          mac_address: "02:A1:B2:C3:D4:E5"
+        )
+      end
     end
 
     context "with new device" do
