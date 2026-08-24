@@ -14,6 +14,7 @@ module Terminus
         api_key
         firmware_profile
         firmware_update
+        firmware_reset
         firmware_version
         wifi_band
         wifi_signal

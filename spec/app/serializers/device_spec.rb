@@ -21,6 +21,7 @@ RSpec.describe Terminus::Serializers::Device do
       api_key: "abc123",
       firmware_profile: true,
       firmware_update: true,
+      firmware_reset: true,
       firmware_version: "1.2.3",
       wake_reason: nil,
       wake_duration: 125,
