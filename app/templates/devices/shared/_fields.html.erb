@@ -108,6 +108,19 @@
     </label>
   <% end %>
 
+  <%= scope(:form_field, key: :firmware_reset, errors:).render do %>
+    <%= form.check_box :firmware_reset,
+                       id: :device_firmware_reset,
+                       checked: field_for(:firmware_reset, fields, device),
+                       switch: true,
+                       class: :checkbox %>
+
+    <label class="key" for="device_firmware_reset">
+      Firmware Reset
+      <%= scope(:popover_trigger_button, tip: :info, target: :firmware_reset).render %>
+    </label>
+  <% end %>
+
   <%= scope(:form_field, key: :display_compatibility, errors:).render do %>
     <%= form.check_box :display_compatibility,
                        id: :device_display_compatibility,
