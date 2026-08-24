@@ -42,7 +42,7 @@ module Terminus
 
           def success device, screen, response
             attributes = {
-              filename: screen.image_name_with_checksum,
+              filename: screen.image_name_with_timestamp,
               image_url: screen.image_uri(host: settings.api_uri)
             }
 

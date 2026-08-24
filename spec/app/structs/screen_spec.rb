@@ -72,9 +72,9 @@ RSpec.describe Terminus::Structs::Screen, :db do
     end
   end
 
-  describe "#image_name_with_checksum" do
-    it "answers name" do
-      expect(screen.image_name_with_checksum).to match_md5_checksum(suffix: ".png")
+  describe "#image_name_with_timestamp" do
+    it "answers name with timestamp" do
+      expect(screen.image_name_with_timestamp).to match(/test-\d{10}/)
     end
   end
 

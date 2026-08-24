@@ -73,7 +73,7 @@ The following is an example of the response sent back to the device which also h
 [source,json]
 ----
 {
-  "filename": "demo.png",
+  "filename": "demo-1787592144",
   "firmware_url": null,
   "firmware_version": null,
   "image_url": "http://192.168.0.13:2300/uploads/66584f02f7d0477b0b549efd234296e6.png",

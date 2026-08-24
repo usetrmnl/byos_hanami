@@ -22,7 +22,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to match(
-      filename: /welcome_#{device.id}-\h{32}\.png/,
+      filename: /welcome_#{device.id}-\d{10}/,
       firmware_url: "memory://abc123.bin",
       firmware_version: "0.0.0",
       image_url: %r(memory://\h{32}\.png),
@@ -43,7 +43,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to match(
-      filename: /welcome_#{device.id}-\h{32}\.png/,
+      filename: /welcome_#{device.id}-\d{10}/,
       firmware_url: "memory://abc123.bin",
       firmware_version: "0.0.0",
       image_url: %r(memory://\h{32}\.png),
@@ -64,7 +64,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to match(
-      filename: /welcome_#{device.id}-\h{32}\.png/,
+      filename: /welcome_#{device.id}-\d{10}/,
       firmware_url: nil,
       firmware_version: nil,
       image_url: %r(memory://\h{32}\.png),
@@ -84,7 +84,7 @@ RSpec.describe "/api/display", :db do
     get routes.path(:api_display), {}, **firmware_headers
 
     expect(json_payload).to match(
-      filename: /welcome_#{device.id}-\h{32}\.png/,
+      filename: /welcome_#{device.id}-\d{10}/,
       firmware_url: nil,
       firmware_version: nil,
       image_url: %r(memory://\h{32}\.png),
