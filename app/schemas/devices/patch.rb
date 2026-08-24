@@ -17,6 +17,7 @@ module Terminus
         optional(:display_compatibility).filled :bool
         optional(:display_profile).filled :string
         optional(:firmware_update).filled :bool
+        optional(:firmware_reset).filled :bool
         optional(:firmware_profile).filled :bool
         optional(:firmware_version).filled Types::Version
         optional(:charging).maybe :bool
