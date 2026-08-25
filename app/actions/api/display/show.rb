@@ -13,7 +13,7 @@ module Terminus
             :settings,
             "aspects.devices.synchronizer",
             "aspects.screens.rotator",
-            "aspects.screens.gaffer",
+            "aspects.screens.interrupts.error",
             firmware_repository: "repositories.firmware"
           ]
 
@@ -50,7 +50,7 @@ module Terminus
           end
 
           def error_for device, message, response
-            gaffer.call(device, message).bind { |screen| any_error device, screen, response }
+            error.call(device, message).bind { |screen| any_error device, screen, response }
           end
 
           def build_payload device, attributes

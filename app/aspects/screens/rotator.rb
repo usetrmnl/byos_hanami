@@ -8,7 +8,7 @@ module Terminus
       # Updates a device's current playlist item by rotating to next screen.
       class Rotator
         include Deps[
-          "aspects.screens.sleeper",
+          "aspects.screens.interrupts.sleep",
           playlist_repository: "repositories.playlist",
           item_repository: "repositories.playlist_item"
         ]
@@ -16,7 +16,7 @@ module Terminus
 
         def call device
           if device.asleep?
-            sleeper.call device
+            sleep.call device
           else
             find_playlist(device.playlist_id).fmap { |playlist| advance_current_item playlist }
                                              .bind { |item| obtain_screen item }

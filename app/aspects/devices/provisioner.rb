@@ -11,7 +11,7 @@ module Terminus
       class Provisioner
         include Deps[
           "aspects.devices.defaulter",
-          "aspects.screens.welcomer",
+          "aspects.screens.interrupts.welcome",
           repository: "repositories.device",
           playlist_repository: "repositories.playlist",
           item_repository: "repositories.playlist_item"
@@ -46,7 +46,7 @@ module Terminus
           pipe(
             create(mac_address, **),
             fmap { cached_device = it },
-            bind { |device| welcomer.call device },
+            bind { |device| welcome.call device },
             fmap { |screen| configure cached_device, screen }
           )
         end

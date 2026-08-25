@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Screens::Sleeper, :db do
+RSpec.describe Terminus::Aspects::Screens::Interrupts::Sleep, :db do
   subject(:sleeper) { described_class.new }
 
   describe "#call" do

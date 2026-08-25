@@ -8,7 +8,7 @@ module Terminus
       # Fetches a device's current screen.
       class Fetcher
         include Deps[
-          "aspects.screens.sleeper",
+          "aspects.screens.interrupts.sleep",
           playlist_repository: "repositories.playlist",
           playlist_item_repository: "repositories.playlist_item"
         ]
@@ -16,7 +16,7 @@ module Terminus
 
         def call device
           if device.asleep?
-            sleeper.call device
+            sleep.call device
           else
             find_playlist(device.playlist_id).bind { |playlist| find_current_item playlist }
                                              .fmap(&:screen)
