@@ -107,6 +107,19 @@ RSpec.describe Terminus::Repositories::PlaylistItem, :db do
     end
   end
 
+  describe "#previous" do
+    it "answers previous item" do
+      playlist_id = Factory[:playlist].id
+      one = Factory[:playlist_item, playlist_id:, position: 1]
+      two = Factory[:playlist_item, playlist_id:, position: 2]
+
+      expect(repository.previous(playlist_id:, position: two.position)).to have_attributes(
+        position: one.position,
+        screen: kind_of(Terminus::Structs::Screen)
+      )
+    end
+  end
+
   describe "#subsequent" do
     it "answers next item" do
       playlist_id = Factory[:playlist].id
@@ -114,6 +127,32 @@ RSpec.describe Terminus::Repositories::PlaylistItem, :db do
       two = Factory[:playlist_item, playlist_id:, position: 2]
 
       expect(repository.subsequent(playlist_id:, position: one.position)).to have_attributes(
+        position: two.position,
+        screen: kind_of(Terminus::Structs::Screen)
+      )
+    end
+  end
+
+  describe "#first" do
+    it "answers first item" do
+      playlist_id = Factory[:playlist].id
+      Factory[:playlist_item, playlist_id:, position: 2]
+      one = Factory[:playlist_item, playlist_id:, position: 1]
+
+      expect(repository.first(playlist_id:)).to have_attributes(
+        position: one.position,
+        screen: kind_of(Terminus::Structs::Screen)
+      )
+    end
+  end
+
+  describe "#last" do
+    it "answers last item" do
+      playlist_id = Factory[:playlist].id
+      two = Factory[:playlist_item, playlist_id:, position: 2]
+      Factory[:playlist_item, playlist_id:, position: 1]
+
+      expect(repository.last(playlist_id:)).to have_attributes(
         position: two.position,
         screen: kind_of(Terminus::Structs::Screen)
       )
