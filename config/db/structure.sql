@@ -149,20 +149,6 @@ CREATE TYPE public.playlist_mode_enum AS ENUM (
 
 
 --
--- Name: screen_kind_enum; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE public.screen_kind_enum AS ENUM (
-    'error',
-    'general',
-    'notification',
-    'sleep',
-    'wake',
-    'welcome'
-);
-
-
---
 -- Name: wake_reason_enum; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -761,7 +747,7 @@ CREATE TABLE public.screen (
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     device_id integer,
-    kind public.screen_kind_enum DEFAULT 'general'::public.screen_kind_enum NOT NULL,
+    kind text DEFAULT 'general'::text NOT NULL,
     template_id integer,
     extension_id integer
 );
@@ -1812,4 +1798,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260805142625_alter_screen_device_id_constraint.rb'),
 ('20260810100653_add_screen_extension_id_column.rb'),
 ('20260810102551_drop_screen_device_id_and_kind_index.rb'),
-('20260824132105_add_device_firmware_reset_column.rb');
+('20260824132105_add_device_firmware_reset_column.rb'),
+('20260825130920_drop_screen_kind_enum.rb');
