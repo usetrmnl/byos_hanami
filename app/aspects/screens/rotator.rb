@@ -37,8 +37,10 @@ module Terminus
         def advance_current_item playlist
           return playlist.current_item if playlist.manual?
 
-          item_repository.next_item(after: playlist.current_item_position, playlist_id: playlist.id)
-                         .tap { |item| playlist_repository.update_current_item playlist, item }
+          item_repository.subsequent(
+            playlist_id: playlist.id,
+            position: playlist.current_item_position
+          ).tap { |item| playlist_repository.update_current_item playlist, item }
         end
 
         def obtain_screen item

@@ -107,13 +107,13 @@ RSpec.describe Terminus::Repositories::PlaylistItem, :db do
     end
   end
 
-  describe "#next_item" do
+  describe "#subsequent" do
     it "answers next item" do
       playlist_id = Factory[:playlist].id
       one = Factory[:playlist_item, playlist_id:, position: 1]
       two = Factory[:playlist_item, playlist_id:, position: 2]
 
-      expect(repository.next_item(after: one.position, playlist_id:)).to have_attributes(
+      expect(repository.subsequent(playlist_id:, position: one.position)).to have_attributes(
         position: two.position,
         screen: kind_of(Terminus::Structs::Screen)
       )
