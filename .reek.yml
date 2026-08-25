@@ -10,6 +10,7 @@ detectors:
     exclude:
       - Terminus::Aspects::PasswordEncryptor#call
       - Terminus::Aspects::Playlists::SlideWindow#screens
+      - Terminus::Aspects::Screens::Interrupter#call
   DataClump:
     exclude:
       - Terminus::Actions::API::Base
@@ -120,6 +121,7 @@ detectors:
       - Terminus::Aspects::Screens::Compressor#call
       - Terminus::Aspects::Screens::Converters::Color#convert
       - Terminus::Aspects::Screens::Converters::Monochrome#convert
+      - Terminus::Aspects::Screens::Interrupter#interrupt
       - Terminus::Aspects::Screens::Placeholder#initialize
       - Terminus::Aspects::Screens::Shoter#save
       - Terminus::Providers::Sidekiq#load_schedule
