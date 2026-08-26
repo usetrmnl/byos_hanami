@@ -47,13 +47,13 @@ RSpec.describe Terminus::Relations::PlaylistItem, :db do
       )
     end
 
-    it "answers first item when at first position" do
+    it "answers last item when at first position" do
       playlist_id = Factory[:playlist].id
       Factory[:playlist_item, playlist_id:, position: 1]
       Factory[:playlist_item, playlist_id:, position: 2]
 
       expect(relation.previous(playlist_id:, position: 1)).to include(
-        position: 1,
+        position: 2,
         screen: kind_of(Hash)
       )
     end
