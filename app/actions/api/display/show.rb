@@ -12,7 +12,7 @@ module Terminus
           include Deps[
             :settings,
             "aspects.devices.synchronizer",
-            "aspects.screens.rotator",
+            "aspects.screens.interrupter",
             "aspects.screens.interrupts.error",
             firmware_repository: "repositories.firmware"
           ]
@@ -22,8 +22,10 @@ module Terminus
           using Refines::Actions::Response
 
           def handle request, response
-            case synchronizer.call request.env
-              in Success(device) then rotate device, response
+            environment = request.env
+
+            case synchronizer.call environment
+              in Success(device) then interrupt device, environment["HTTP_UPDATE_SOURCE"], response
               else not_found response
             end
           end
@@ -34,10 +36,10 @@ module Terminus
 
           private
 
-          def rotate device, response
-            rotator.call(device)
-                   .either -> screen { success device, screen, response },
-                           -> message { error_for device, message, response }
+          def interrupt device, trigger, response
+            interrupter.call(device, trigger:)
+                       .either -> screen { success device, screen, response },
+                               -> message { error_for device, message, response }
           end
 
           def success device, screen, response
