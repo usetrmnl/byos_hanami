@@ -13,7 +13,7 @@ Factory.define :device, relation: :device do |factory|
   factory.firmware_version "1.2.3"
   factory.label "Test"
   factory.mac_address "A1:B2:C3:D4:E5:F6"
-  factory.command "none"
+  factory.command "screen_forward"
   factory.touch_bar "tap"
   factory.wifi_band 0
   factory.wifi_signal(-44)

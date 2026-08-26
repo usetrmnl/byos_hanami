@@ -66,7 +66,7 @@ RSpec.describe Terminus::Views::Parts::Device, :db do
 
   describe "#translated_command" do
     it "answers translation" do
-      expect(part.translated_command).to eq("None")
+      expect(part.translated_command).to eq("Next Screen")
     end
   end
 
