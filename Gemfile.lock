@@ -637,6 +637,7 @@ DEPENDENCIES
   rom (~> 5.4)
   rom-factory (~> 0.13)
   rom-sql (~> 3.7)
+  rqrcode (~> 3.2)
   rspec (~> 3.13)
   rubocop-sequel (~> 0.3)
   rubyzip (~> 3.2)
