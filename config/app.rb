@@ -12,7 +12,7 @@ module Terminus
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
-    config.inflections { it.acronym "DEFAULTS", "HTML", "IP", "MAC", "URI" }
+    config.inflections { it.acronym "DEFAULTS", "HTML", "IP", "MAC", "QR", "URI" }
 
     config.actions.content_security_policy.then do |csp|
       csp[:connect_src] += " https://trmnl.com"
