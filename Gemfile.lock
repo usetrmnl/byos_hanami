@@ -542,11 +542,6 @@ GEM
       inspectable (~> 1.0)
       pipeable (~> 2.0)
       zeitwerk (~> 2.8)
-    trmnl-liquid (0.8.2)
-      liquid (~> 5.12)
-      redcarpet (~> 3.6)
-      rqrcode (~> 3.2)
-      tzinfo (~> 2.0)
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -617,7 +612,6 @@ DEPENDENCIES
   irb-kit (~> 2.0)
   jwt (~> 3.1)
   launchy (~> 3.1)
-  liquid (~> 5.9)
   localhost (~> 1.3)
   marcel (~> 2.1)
   mini_magick (~> 5.2)
@@ -650,7 +644,6 @@ DEPENDENCIES
   simplecov (~> 1.0)
   superfluid (~> 0.0)
   trmnl-api (~> 0.20)
-  trmnl-liquid (~> 0.8)
   versionaire (~> 15.3)
   warning (~> 1.5)
   wholeable (~> 2.1)
@@ -842,7 +835,6 @@ CHECKSUMS
   tone (3.3.0) sha256=a54f826802b9c5424c607a2b052cc22df3404d7dd7c40e9340f2ac5bfab42ba0
   transproc (1.1.1) sha256=b2f9a85ecaf7064f0b3893ffac929de9fd713b13f5aaf822b0bd091fd6f5c8c2
   trmnl-api (0.20.0) sha256=d7263f1d35b90ca3703dd727858abab334fb7078def1dd9481af9d4ce9e438c6
-  trmnl-liquid (0.8.2) sha256=ad47dc74afed5e2dffedee35928739950e6435584e004d340e48428860b25232
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   unicode-display_width (3.2.0) sha256=0cdd96b5681a5949cdbc2c55e7b420facae74c4aaf9a9815eee1087cb1853c42
