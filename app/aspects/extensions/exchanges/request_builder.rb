@@ -8,7 +8,7 @@ module Terminus
       module Exchanges
         # Builds fully rendereed requests.
         class RequestBuilder
-          include Deps["aspects.extensions.contextualizer", renderer: "liquid.basic"]
+          include Deps["aspects.extensions.contextualizer", renderer: "superfluid.default"]
           include Initable[request: Fetcher::Request]
 
           def call exchange, extension

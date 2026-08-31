@@ -9,7 +9,7 @@ module Terminus
       module Generators
         # Uses Liquid template to render static data.
         class Static
-          include Deps[renderer: "liquid.sanitize"]
+          include Deps[renderer: "superfluid.sanitize"]
           include Dry::Monads[:result]
 
           def call extension, context: Core::EMPTY_HASH

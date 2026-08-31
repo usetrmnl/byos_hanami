@@ -13,7 +13,7 @@ module Terminus
           include Deps[
             "aspects.extensions.exchanges.refresher",
             exchange_repository: "repositories.extension_exchange",
-            renderer: "liquid.sanitize"
+            renderer: "superfluid.sanitize"
           ]
           include Dry::Monads[:result]
           include Initable[coalescer: proc { Terminus::Aspects::Extensions::Exchanges::Coalescer }]
