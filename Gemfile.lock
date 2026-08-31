@@ -518,6 +518,12 @@ GEM
       zeitwerk (~> 2.8)
     stringio (3.2.0)
     strscan (3.1.8)
+    superfluid (0.0.0)
+      base64 (~> 0.3)
+      core (~> 3.3)
+      liquid (~> 5.13)
+      refinements (~> 14.0)
+      zeitwerk (~> 2.8)
     temple (0.10.7)
     tilt (2.9.0)
     tone (3.3.0)
@@ -639,6 +645,7 @@ DEPENDENCIES
   sidekiq (~> 8.0)
   sidekiq-scheduler (~> 6.0)
   simplecov (~> 1.0)
+  superfluid (~> 0.0)
   trmnl-api (~> 0.20)
   trmnl-liquid (~> 0.8)
   versionaire (~> 15.3)
@@ -826,6 +833,7 @@ CHECKSUMS
   spek (5.4.0) sha256=c163b87135c04c1ce10f6455e3686eae4f91e1cc61753fcb64bfae0830e74975
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   strscan (3.1.8) sha256=aae2db611a225559f21ffbb71765c9a4e60fd262534a9ea84f4f11c7f32f679e
+  superfluid (0.0.0) sha256=8f09c1dacb6453bfff52501f186584cffe94938321c15bfc37cb252dd1be6f85
   temple (0.10.7) sha256=369fe560adb6534674ce232899c2232df614bcb29c5359b05efedff7a57ed9c0
   tilt (2.9.0) sha256=da5735d0280bba96e9a91041bb14aee435ccad5c17b0fa519249ae543d9aa3a5
   tone (3.3.0) sha256=a54f826802b9c5424c607a2b052cc22df3404d7dd7c40e9340f2ac5bfab42ba0
