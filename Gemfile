@@ -35,6 +35,7 @@ gem "pg", "~> 1.6", force_ruby_platform: true
 gem "pipeable", "~> 2.0"
 gem "puma", "~> 8.0"
 gem "rack-attack", "~> 6.7"
+gem "redcarpet", "~> 3.6"
 gem "redis", "~> 6.0"
 gem "refinements", "~> 14.0"
 gem "rfc-api-problem", "~> 0.0"

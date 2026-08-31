@@ -627,6 +627,7 @@ DEPENDENCIES
   rack-attack (~> 6.7)
   rack-test (~> 2.2)
   rake (~> 13.4)
+  redcarpet (~> 3.6)
   redis (~> 6.0)
   reek (~> 6.5)
   refinements (~> 14.0)
