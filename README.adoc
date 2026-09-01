@@ -10,6 +10,7 @@
 :doc_development_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/development.adoc[Development]
 :doc_docker_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/docker.adoc[Docker]
 :doc_extensions_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/extensions.adoc[Extensions]
+:doc_internationalization_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/internationalization.adoc[Internationalization]
 :doc_jobs_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/jobs.adoc[Jobs]
 :doc_kubernetes_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/kubernetes.adoc[Kubernetes]
 :doc_raspberry_pi_link: link:https://github.com/usetrmnl/terminus/blob/main/doc/raspberry_pi.adoc[Raspberry PI]
@@ -226,6 +227,10 @@ See {doc_kubernetes_link} documentation for details.
 === Render
 
 See {doc_render_link} documentation for details.
+
+=== Internationalization
+
+See {doc_internationalization_link} documentation for details.
 
 == Development
 

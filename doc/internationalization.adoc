@@ -1,0 +1,31 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+:i18n_link: link:https://github.com/ruby-i18n/i18n[I18n]
+:documenation_link: link:https://hanakai.org/learn/hanami/v3.0/i18n[Hanami Internationalization]
+
+= Internationalization
+
+The default locale for this application is English but the goal is to support multiple languages in the future. Some of that work has begun but there is a ways to go in order to have this supported throughout the entire application.
+
+== Roadmap
+
+We are going through the process of exposing keys for all translated strings. Some of that work has started already but there is a ways to go before all keys are in place for anyone to help translate.
+
+== Configuration
+
+Hanami provides internationalization out of the box and is already enabled for this application. See {documenation_link} documentation for further details.
+
+== Backend
+
+For the backend, the {i18n_link} gem is used for translations. These can be found in the following folder:
+
+[source,]
+----
+config/i18n
+----
+
+== Contributions
+
+Feel free to contribute translations especially if your native language isn't represented or you have corrections you'd like to make to existing translations.
