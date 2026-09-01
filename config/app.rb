@@ -12,6 +12,7 @@ module Terminus
     Dry::Schema.load_extensions :monads
     Dry::Validation.load_extensions :monads
 
+    config.i18n.fallbacks = true
     config.inflections { it.acronym "DEFAULTS", "HTML", "IP", "MAC", "QR", "URI" }
 
     config.actions.content_security_policy.then do |csp|
