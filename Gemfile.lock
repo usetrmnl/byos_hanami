@@ -453,6 +453,9 @@ GEM
     rubocop-disable_syntax (0.2.0)
       lint_roller
       rubocop (>= 1.72.0)
+    rubocop-i18n (3.3.0)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1)
     rubocop-packaging (0.6.0)
       lint_roller (~> 1.1.0)
       rubocop (>= 1.72.1, < 2.0)
@@ -634,6 +637,7 @@ DEPENDENCIES
   rom-sql (~> 3.7)
   rqrcode (~> 3.2)
   rspec (~> 3.13)
+  rubocop-i18n (~> 3.3)
   rubocop-sequel (~> 0.3)
   rubyzip (~> 3.2)
   sanitize (~> 7.0)
@@ -808,6 +812,7 @@ CHECKSUMS
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
   rubocop-capybara (2.23.0) sha256=f9ea1ba3a7561ee8e88cf76fc378ce517ce5327155f305ee7b5c2500e5aee357
   rubocop-disable_syntax (0.2.0) sha256=1e61645773b3fc2f74e995ec65f605f7db59437c274fdfd4f385f60bf86af73e
+  rubocop-i18n (3.3.0) sha256=6cd5977aeac9eb9e34962c0d2bd8e0225a4b43117d21b7e315dc56500c38a96b
   rubocop-packaging (0.6.0) sha256=fb92bd0fb48e6f8cdb1648d2249b0cd51c2497dcc87340132d22f01edbf558a7
   rubocop-performance (1.27.0) sha256=eeeb1374d062a368ee1c787b70eb0b0cc4b184cb1f8565f424760946146d61ce
   rubocop-rake (0.7.1) sha256=3797f2b6810c3e9df7376c26d5f44f3475eda59eb1adc38e6f62ecf027cbae4d

@@ -81,6 +81,7 @@ group :test do
   gem "rack-test", "~> 2.2"
   gem "rom-factory", "~> 0.13"
   gem "rspec", "~> 3.13"
+  gem "rubocop-i18n", "~> 3.3"
   gem "warning", "~> 1.5"
 end
 
