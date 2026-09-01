@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "core"
-require "rqrcode"
-
 module Terminus
   module Aspects
     module Superfluid
