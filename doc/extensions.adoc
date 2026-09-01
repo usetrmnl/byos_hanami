@@ -5,9 +5,9 @@
 :core_link: link:https://trmnl.com[Core]
 :firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :framework_link: link:https://trmnl.com/framework[Framework]
-:liquid_link: link:https://shopify.github.io/liquid/[Liquid]
+:liquid_link: link:https://shopify.github.io/liquid[Liquid]
 :rfc_2626_link: link:https://www.rfc-editor.org/rfc/rfc822[RFC 2616]
-:trmnl_liquid_gem_link: link:https://github.com/usetrmnl/trmnl-liquid[TRMNL Liquid]
+:superfluid_link: link:https://alchemists.io/projects/superfluid[Superfluid]
 :trmnl_sensor_scanner_link: link:https://github.com/usetrmnl/sensor_scanner[Sensor Scanner]
 
 = Extensions
@@ -78,9 +78,41 @@ To help you get started, let's walk through a scenario building an extension:
 
 At this point you can schedule when your extension will automatically rebuilt or you can click the _Build_ button to force an immediate build. All output will show up via the _Screens_ page.
 
-== Liquid Templates
+== Liquid
 
-All extensions use {liquid_link} templates which allows you to format and style raw data into HTML for rendering as a screen. This includes default functionality and enhanced functionality as provided by the {trmnl_liquid_gem_link} gem.
+All extensions use {liquid_link} templates as powered by the {superfluid_link} gem. This means you have access to all Liquid's default filters and tags plus the additional filters and templates listed below.
+
+=== Filters
+
+The following tags are supported within your Liquid templates:
+
+* `append_random`
+* `days_ago`
+* `find_by`
+* `parse_json`
+* `group_by`
+* `l_date`
+* `l_word`
+* `map_to_i`
+* `markdown_to_html`
+* `number_to_currency`
+* `number_with_delimiter`
+* `ordinalize`
+* `pluralize`
+* `qr_code`
+* `random_number`
+* `sample`
+* `json`
+
+More documentation (including example usage) will be added in the future.
+
+=== Tags
+
+The following tags are supported within your Liquid templates:
+
+* `template`
+
+More documentation (including example usage) will be added in the future.
 
 == Schedules
 
