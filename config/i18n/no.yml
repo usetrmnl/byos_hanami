@@ -1,0 +1,47 @@
+'no':
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: rundt %{count} time
+          other: rundt %{count} timer
+        about_x_months:
+          one: rundt %{count} måned
+          other: rundt %{count} måneder
+        about_x_years:
+          one: rundt %{count} år
+          other: rundt %{count} år
+        almost_x_years:
+          one: nesten %{count} år
+          other: nesten %{count} år
+        half_a_minute: et halvt minutt
+        less_than_x_minutes:
+          one: mindre enn %{count} minutt
+          other: mindre enn %{count} minutter
+        less_than_x_seconds:
+          one: mindre enn %{count} sekund
+          other: mindre enn %{count} sekunder
+        over_x_years:
+          one: over %{count} år
+          other: over %{count} år
+        x_days:
+          one: "%{count} dag"
+          other: "%{count} dager"
+        x_minutes:
+          one: "%{count} minutt"
+          other: "%{count} minutter"
+        x_months:
+          one: "%{count} måned"
+          other: "%{count} måneder"
+        x_seconds:
+          one: "%{count} sekund"
+          other: "%{count} sekunder"
+      future: om %{time}
+      past: "%{time} siden"
+  time:
+    formats:
+      shorter: "%-H.%M"
+    start_of_week: 1

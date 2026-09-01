@@ -1,0 +1,69 @@
+pl:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: około godziny
+          other: około %{count} godzin
+          few: około %{count} godziny
+          many: około %{count} godzin
+        about_x_months:
+          one: około miesiąca
+          other: około %{count} miesięcy
+          few: około %{count} miesiące
+          many: około %{count} miesięcy
+        about_x_years:
+          one: około rok
+          other: około %{count} lat
+          few: około %{count} lata
+          many: około %{count} lat
+        almost_x_years:
+          one: prawie rok
+          other: prawie %{count} lat
+          few: prawie %{count} lata
+          many: prawie %{count} lat
+        half_a_minute: pół minuty
+        less_than_x_minutes:
+          one: mniej niż minutę
+          other: mniej niż %{count} minut
+          few: mniej niż %{count} minuty
+          many: mniej niż %{count} minut
+        less_than_x_seconds:
+          one: mniej niż sekundę
+          other: mniej niż %{count} sekund
+          few: mniej niż %{count} sekundy
+          many: mniej niż %{count} sekund
+        over_x_years:
+          one: ponad rok
+          other: ponad %{count} lat
+          few: ponad %{count} lata
+          many: ponad %{count} lat
+        x_days:
+          one: "%{count} dzień"
+          other: "%{count} dni"
+          few: "%{count} dni"
+          many: "%{count} dni"
+        x_minutes:
+          one: "%{count} minuta"
+          other: "%{count} minut"
+          few: "%{count} minuty"
+          many: "%{count} minut"
+        x_months:
+          one: "%{count} miesiąc"
+          other: "%{count} miesięcy"
+          few: "%{count} miesiące"
+          many: "%{count} miesięcy"
+        x_seconds:
+          one: "%{count} sekunda"
+          other: "%{count} sekund"
+          few: "%{count} sekundy"
+          many: "%{count} sekund"
+      future: za %{time}
+      past: "%{time} temu"
+  time:
+    formats:
+      shorter: "%-H:%M"
+    start_of_week: 1

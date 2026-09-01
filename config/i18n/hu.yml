@@ -1,0 +1,47 @@
+hu:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: kb. %{count} órája
+          other: kb. %{count} órája
+        about_x_months:
+          one: kb. %{count} hónapja
+          other: kb. %{count} hónapja
+        about_x_years:
+          one: kb. %{count} éve
+          other: kb. %{count} éve
+        almost_x_years:
+          one: majdnem %{count} éve
+          other: majdnem %{count} éve
+        half_a_minute: fél perce
+        less_than_x_minutes:
+          one: kevesebb, mint %{count} perce
+          other: kevesebb, mint %{count} perce
+        less_than_x_seconds:
+          one: kevesebb, mint %{count} másodperce
+          other: kevesebb, mint %{count} másodperce
+        over_x_years:
+          one: több, mint %{count} éve
+          other: több, mint %{count} éve
+        x_days:
+          one: "%{count} napja"
+          other: "%{count} napja"
+        x_minutes:
+          one: "%{count} perce"
+          other: "%{count} perce"
+        x_months:
+          one: "%{count} hónapja"
+          other: "%{count} hónapja"
+        x_seconds:
+          one: "%{count} másodperce"
+          other: "%{count} másodperce"
+      future: in %{time}
+      past: "%{time} ago"
+  time:
+    formats:
+      shorter: "%-I:%M %p"
+    start_of_week: 0

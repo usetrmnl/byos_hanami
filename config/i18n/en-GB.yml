@@ -1,4 +1,4 @@
-en:
+en-GB:
   date:
     formats:
       day_month_long: "%A, %B %-d"
@@ -32,31 +32,16 @@ en:
           other: "%{count} days"
         x_minutes:
           one: "%{count} minute"
-        x_months:
-          one: "%{count} month"
-          other: "%{count} months"
           other: "%{count} minutes"
         x_seconds:
           one: "%{count} second"
           other: "%{count} seconds"
+        x_months:
+          one: "%{count} month"
+          other: "%{count} months"
       future: in %{time}
       past: "%{time} ago"
-  devices:
-    shared:
-      _fields:
-        commands:
-          identify: Identify
-          screen_backward: Previous Screen
-          screen_first: First Screen
-          screen_forward: Next Screen
-          screen_last: Last Screen
-  dry_validation:
-    errors:
-      extension:
-        hash?: "must be a JSON object"
-      model:
-        hash?: "must be a JSON object"
   time:
     formats:
-      shorter: "%-I:%M %p"
-    start_of_week: 0
+      shorter: "%-H:%M"
+    start_of_week: 1

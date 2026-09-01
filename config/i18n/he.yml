@@ -1,0 +1,49 @@
+he:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: בערך שעה אחת
+          other: בערך %{count} שעות
+        about_x_months:
+          one: בערך חודש אחד
+          other: בערך %{count} חודשים
+        about_x_years:
+          one: בערך שנה אחת
+          other: בערך %{count} שנים
+        almost_x_years:
+          one: כמעט שנה
+          other: כמעט %{count} שנים
+        half_a_minute: חצי דקה
+        less_than_x_minutes:
+          one: פחות מדקה אחת
+          other: פחות מ- %{count} דקות
+          zero: פחות מדקה אחת
+        less_than_x_seconds:
+          one: פחות משניה אחת
+          other: פחות מ- %{count} שניות
+          zero: פחות משניה אחת
+        over_x_years:
+          one: מעל שנה אחת
+          other: מעל %{count} שנים
+        x_days:
+          one: יום אחד
+          other: "%{count} ימים"
+        x_minutes:
+          one: דקה אחת
+          other: "%{count} דקות"
+        x_months:
+          one: חודש אחד
+          other: "%{count} חודשים"
+        x_seconds:
+          one: שניה אחת
+          other: "%{count} שניות"
+      future: בעוד %{time}
+      past: לפני %{time}
+  time:
+    formats:
+      shorter: "%-H:%M"
+    start_of_week: 0

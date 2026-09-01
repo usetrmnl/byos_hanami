@@ -1,0 +1,47 @@
+lt:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: maždaug %{count} valanda
+          other: maždaug %{count} valandos
+        about_x_months:
+          one: maždaug %{count} mėnesis
+          other: maždaug %{count} mėnesiai
+        about_x_years:
+          one: maždaug %{count} metai
+          other: maždaug %{count} metai
+        almost_x_years:
+          one: beveik %{count} metai
+          other: beveik %{count} metai
+        half_a_minute: pusė minutės
+        less_than_x_minutes:
+          one: mažiau nei minutė
+          other: mažiau nei %{count} minutės
+        less_than_x_seconds:
+          one: mažiau nei %{count} sekundė
+          other: mažiau nei %{count} sekundės
+        over_x_years:
+          one: virš %{count} metų
+          other: virš %{count} metų
+        x_days:
+          one: "%{count} diena"
+          other: "%{count} dienos"
+        x_minutes:
+          one: "%{count} minutė"
+          other: "%{count} minutės"
+        x_months:
+          one: "%{count} mėnesis"
+          other: "%{count} mėnesiai"
+        x_seconds:
+          one: "%{count} sekundė"
+          other: "%{count} sekundės"
+      future: po %{time}
+      past: prieš %{time}
+  time:
+    formats:
+      shorter: "%-I:%M %p"
+    start_of_week: 1

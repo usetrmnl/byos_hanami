@@ -1,0 +1,69 @@
+uk:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: близько %{count} години
+          other: близько %{count} години
+          few: близько %{count} годин
+          many: близько %{count} годин
+        about_x_months:
+          one: близько %{count} місяця
+          other: близько %{count} місяця
+          few: близько %{count} місяців
+          many: близько %{count} місяців
+        about_x_years:
+          one: близько %{count} року
+          other: близько %{count} року
+          few: близько %{count} років
+          many: близько %{count} років
+        almost_x_years:
+          one: майже %{count} рік
+          other: майже %{count} років
+          few: майже %{count} роки
+          many: майже %{count} років
+        half_a_minute: пів хвилини
+        less_than_x_minutes:
+          one: менше %{count} хвилини
+          other: менше %{count} хвилини
+          few: менше %{count} хвилин
+          many: менше %{count} хвилин
+        less_than_x_seconds:
+          one: менше %{count} секунди
+          other: менше %{count} секунди
+          few: менше %{count} секунд
+          many: менше %{count} секунд
+        over_x_years:
+          one: більше %{count} року
+          other: більше %{count} року
+          few: більше %{count} років
+          many: більше %{count} років
+        x_days:
+          one: "%{count} день"
+          other: "%{count} дня"
+          few: "%{count} дні"
+          many: "%{count} днів"
+        x_minutes:
+          one: "%{count} хвилина"
+          other: "%{count} хвилини"
+          few: "%{count} хвилини"
+          many: "%{count} хвилин"
+        x_months:
+          one: "%{count} місяць"
+          other: "%{count} місяця"
+          few: "%{count} місяці"
+          many: "%{count} місяців"
+        x_seconds:
+          one: "%{count} секунда"
+          other: "%{count} секунди"
+          few: "%{count} секунди"
+          many: "%{count} секунд"
+      future: через %{time}
+      past: "%{time} тому"
+  time:
+    formats:
+      shorter: "%-H:%M"
+    start_of_week: 1

@@ -1,0 +1,47 @@
+da:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: cirka en time
+          other: cirka %{count} timer
+        about_x_months:
+          one: cirka en måned
+          other: cirka %{count} måneder
+        about_x_years:
+          one: cirka et år
+          other: cirka %{count} år
+        almost_x_years:
+          one: næsten et år
+          other: næsten %{count} år
+        half_a_minute: et halvt minut
+        less_than_x_minutes:
+          one: mindre end et minut
+          other: mindre end %{count} minutter
+        less_than_x_seconds:
+          one: mindre end et sekund
+          other: mindre end %{count} sekunder
+        over_x_years:
+          one: mere end et år
+          other: mere end %{count} år
+        x_days:
+          one: en dag
+          other: "%{count} dage"
+        x_minutes:
+          one: et minut
+          other: "%{count} minutter"
+        x_months:
+          one: en måned
+          other: "%{count} måneder"
+        x_seconds:
+          one: et sekund
+          other: "%{count} sekunder"
+      future: om %{time}
+      past: "%{time} siden"
+  time:
+    formats:
+      shorter: "%-H.%M"
+    start_of_week: 1

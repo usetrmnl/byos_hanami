@@ -1,0 +1,47 @@
+es-ES:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: alrededor de %{count} hora
+          other: alrededor de %{count} horas
+        about_x_months:
+          one: alrededor de %{count} mes
+          other: alrededor de %{count} meses
+        about_x_years:
+          one: alrededor de %{count} año
+          other: alrededor de %{count} años
+        almost_x_years:
+          one: casi %{count} año
+          other: casi %{count} años
+        half_a_minute: medio minuto
+        less_than_x_minutes:
+          one: menos de %{count} minuto
+          other: menos de %{count} minutos
+        less_than_x_seconds:
+          one: menos de %{count} segundo
+          other: menos de %{count} segundos
+        over_x_years:
+          one: más de %{count} año
+          other: más de %{count} años
+        x_days:
+          one: "%{count} día"
+          other: "%{count} días"
+        x_minutes:
+          one: "%{count} minuto"
+          other: "%{count} minutos"
+        x_months:
+          one: "%{count} mes"
+          other: "%{count} meses"
+        x_seconds:
+          one: "%{count} segundo"
+          other: "%{count} segundos"
+      future: en %{time}
+      past: hace %{time}
+  time:
+    formats:
+      shorter: "%-H:%M"
+    start_of_week: 1

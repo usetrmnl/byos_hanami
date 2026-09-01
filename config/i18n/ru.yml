@@ -1,0 +1,69 @@
+ru:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: около %{count} часа
+          other: около %{count} часов
+          few: около %{count} часов
+          many: около %{count} часов
+        about_x_months:
+          one: около %{count} месяца
+          other: около %{count} месяцев
+          few: около %{count} месяцев
+          many: около %{count} месяцев
+        about_x_years:
+          one: около %{count} года
+          other: около %{count} лет
+          few: около %{count} лет
+          many: около %{count} лет
+        almost_x_years:
+          one: почти %{count} год
+          other: почти %{count} лет
+          few: почти %{count} года
+          many: почти %{count} лет
+        half_a_minute: полминуты
+        less_than_x_seconds:
+          one: меньше %{count} секунды
+          other: меньше %{count} секунд
+          few: меньше %{count} секунд
+          many: меньше %{count} секунд
+        over_x_years:
+          one: больше %{count} года
+          other: больше %{count} лет
+          few: больше %{count} лет
+          many: больше %{count} лет
+        less_than_x_minutes:
+          one: меньше %{count} минуты
+          other: меньше %{count} минут
+          few: меньше %{count} минут
+          many: меньше %{count} минут
+        x_days:
+          one: "%{count} день"
+          other: "%{count} дней"
+          few: "%{count} дня"
+          many: "%{count} дней"
+        x_minutes:
+          one: "%{count} минута"
+          other: "%{count} минут"
+          few: "%{count} минуты"
+          many: "%{count} минут"
+        x_months:
+          one: "%{count} месяц"
+          other: "%{count} месяцев"
+          few: "%{count} месяца"
+          many: "%{count} месяцев"
+        x_seconds:
+          one: "%{count} секунда"
+          other: "%{count} секунд"
+          few: "%{count} секунды"
+          many: "%{count} секунд"
+      future: через %{time}
+      past: "%{time} назад"
+  time:
+    formats:
+      shorter: "%-I:%M %p"
+    start_of_week: 1

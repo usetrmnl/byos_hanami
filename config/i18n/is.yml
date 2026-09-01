@@ -1,0 +1,47 @@
+is:
+  date:
+    formats:
+      day_month_long: "%A, %B %-d"
+  datetime:
+    relative:
+      distance_in_words:
+        about_x_hours:
+          one: u.þ.b. %{count} klukkustund
+          other: u.þ.b. %{count} klukkustundir
+        about_x_months:
+          one: u.þ.b. %{count} mánuður
+          other: u.þ.b. %{count} mánuðir
+        about_x_years:
+          one: u.þ.b. %{count} ár
+          other: u.þ.b. %{count} ár
+        almost_x_years:
+          one: næstum %{count} ár
+          other: næstum %{count} ár
+        half_a_minute: hálf mínúta
+        less_than_x_minutes:
+          one: minna en %{count} mínúta
+          other: minna en %{count} mínútur
+        less_than_x_seconds:
+          one: minna en %{count} sekúnda
+          other: minna en %{count} sekúndur
+        over_x_years:
+          one: meira en %{count} ár
+          other: meira en %{count} ár
+        x_days:
+          one: "%{count} dagur"
+          other: "%{count} dagar"
+        x_minutes:
+          one: "%{count} mínúta"
+          other: "%{count} mínútur"
+        x_months:
+          one: "%{count} mánuður"
+          other: "%{count} mánuðir"
+        x_seconds:
+          one: "%{count} sekúnda"
+          other: "%{count} sekúndur"
+      future: in %{time}
+      past: "%{time} ago"
+  time:
+    formats:
+      shorter: "%-H:%M"
+    start_of_week: 0
