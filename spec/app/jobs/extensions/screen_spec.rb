@@ -40,13 +40,16 @@ RSpec.describe Terminus::Jobs::Extensions::Screen, :db do
       job.perform extension.id, model.id
 
       expect(logger.reread).to match(
-        /INFO.+Enqueued screen upsert for extension ID: #{extension.id}./
+        /INFO.+Enqueued extension screen upsert.+extension_id.+\d+.+model_id.+\d+.+device_id.+null/
       )
     end
 
     it "logs error when extension can't be found" do
       job.perform 666, model.id
-      expect(logger.reread).to match(/ERROR.+Unable to find by extension ID: 666\./)
+
+      expect(logger.reread).to match(
+        /ERROR.+Unable to find extension.+extension_id.+\d+.+model_id.+\d+.+device_id.+null/
+      )
     end
   end
 end
