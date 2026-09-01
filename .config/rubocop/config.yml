@@ -1,8 +1,16 @@
 inherit_gem:
   caliber: config/all.yml
 
-plugins: rubocop-sequel
+inherit_from: issues.yml
 
+plugins:
+  - rubocop-i18n
+  - rubocop-sequel
+
+I18n/GetText:
+  Enabled: false
+I18n/RailsI18n:
+  Enabled: true
 Metrics/AbcSize:
   Exclude:
     - app/aspects/extensions/importers/remote/transformer.rb
