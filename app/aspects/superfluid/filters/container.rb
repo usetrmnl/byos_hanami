@@ -15,10 +15,8 @@ module Terminus
           register :find_by, FindBy
           register :parse_json, FromJSON
           register :group_by, GroupBy
-
           register(:l_date) { LocalizeDate.new }
           register(:l_word) { LocalizeWord.new }
-
           register :map_to_i, MapToI
           register(:markdown_to_html) { Markdown.new }
           register(:number_to_currency) { NumberToCurrency.new }
