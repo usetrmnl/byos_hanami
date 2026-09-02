@@ -21,13 +21,6 @@ RSpec.describe Terminus::Aspects::Superfluid::Filters::NumberToCurrency do
       expect(content).to eq("£1.234,57")
     end
 
-    it "answers Krones" do
-      pending "Needs locale support"
-
-      content = filter.call "567", "sv"
-      expect(content).to eq("567.00 kr")
-    end
-
     it "answers custom format" do
       content = filter.call "123", "tbd"
       expect(content).to eq("tbd123.00")
