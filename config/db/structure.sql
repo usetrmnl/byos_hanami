@@ -308,7 +308,7 @@ CREATE TABLE public.device_log (
     wifi_signal integer DEFAULT 0 CONSTRAINT device_logs_wifi_signal_not_null NOT NULL,
     wifi_status public.wifi_status_enum DEFAULT 'disconnected'::public.wifi_status_enum CONSTRAINT device_logs_wifi_status_not_null NOT NULL,
     refresh_rate integer DEFAULT 0 CONSTRAINT device_logs_refresh_rate_not_null NOT NULL,
-    sleep_duration integer DEFAULT 0 CONSTRAINT device_logs_sleep_duration_not_null NOT NULL,
+    sleep_duration bigint DEFAULT 0 CONSTRAINT device_logs_sleep_duration_not_null NOT NULL,
     firmware_version text CONSTRAINT device_logs_firmware_version_not_null NOT NULL,
     command text CONSTRAINT device_logs_special_function_not_null NOT NULL,
     wake_reason public.wake_reason_enum DEFAULT 'timer'::public.wake_reason_enum CONSTRAINT device_logs_wake_reason_not_null NOT NULL,
@@ -1799,4 +1799,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260810100653_add_screen_extension_id_column.rb'),
 ('20260810102551_drop_screen_device_id_and_kind_index.rb'),
 ('20260824132105_add_device_firmware_reset_column.rb'),
-('20260825130920_drop_screen_kind_enum.rb');
+('20260825130920_drop_screen_kind_enum.rb'),
+('20260902101629_alter_device_log_sleep_duration_type.rb');
