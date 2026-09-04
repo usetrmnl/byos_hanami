@@ -13,7 +13,6 @@ module Terminus
           register :append_random, AppendRandom
           register :days_ago, DaysAgo
           register :find_by, FindBy
-          register :parse_json, FromJSON
           register :group_by, GroupBy
           register(:l_date) { LocalizeDate.new }
           register(:l_word) { LocalizeWord.new }
@@ -22,11 +21,9 @@ module Terminus
           register(:number_to_currency) { NumberToCurrency.new }
           register(:number_with_delimiter) { NumberWithDelimiter.new }
           register(:ordinalize) { Ordinalize.new }
-          register :pluralize, Pluralize
           register :qr_code, QRCode
           register :random_number, RandomNumber
           register :sample, Sample
-          register :json, ToJSON
         end
       end
     end
