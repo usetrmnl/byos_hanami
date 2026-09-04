@@ -53,15 +53,15 @@ GEM
       fiber-annotation
       fiber-local (~> 1.1)
       json
-    containable (2.4.0)
+    containable (2.5.0)
       concurrent-ruby (~> 1.3)
     content_disposition (1.0.0)
-    core (3.3.0)
+    core (3.4.0)
     crass (1.0.7)
     csv (3.3.6)
-    cuprite (0.17)
+    cuprite (0.18)
       capybara (~> 3.0)
-      ferrum (~> 0.17.0)
+      ferrum (~> 0.18.0)
     database_cleaner-core (2.0.1)
     database_cleaner-sequel (2.0.2)
       database_cleaner-core (~> 2.0.0)
@@ -71,7 +71,7 @@ GEM
       reline (>= 0.3.8)
     debug_inspector (1.2.0)
     diff-lcs (1.6.2)
-    domain_name (0.6.20260829)
+    domain_name (0.6.20260902)
     dotenv (3.2.0)
     down (5.6.0)
       addressable (~> 2.8)
@@ -156,11 +156,10 @@ GEM
       zeitwerk (~> 2.8)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    ferrum (0.17.2)
+    ferrum (0.18.0)
       addressable (~> 2.5)
       base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
-      webrick (~> 1.7)
       websocket-driver (~> 0.7)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
@@ -169,7 +168,7 @@ GEM
     fugit (1.13.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
-    functionable (1.3.0)
+    functionable (1.4.0)
     git-lint (11.1.0)
       cogger (~> 2.3)
       containable (~> 2.3)
@@ -319,8 +318,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3)
-    pipeable (2.3.0)
+    pipeable (2.4.0)
       containable (~> 2.3)
+      core (~> 3.4)
       dry-monads (~> 1.9)
       marameters (~> 5.0)
       refinements (~> 14.0)
@@ -504,7 +504,7 @@ GEM
     sidekiq-scheduler (6.0.2)
       rufus-scheduler (~> 3.2)
       sidekiq (>= 7.3, < 9)
-    simplecov (1.1.1)
+    simplecov (1.2.0)
     sod (2.4.0)
       cogger (~> 2.3)
       containable (~> 2.3)
@@ -521,9 +521,11 @@ GEM
       zeitwerk (~> 2.8)
     stringio (3.2.0)
     strscan (3.1.8)
-    superfluid (0.0.0)
+    superfluid (0.1.0)
       base64 (~> 0.3)
-      core (~> 3.3)
+      containable (~> 2.5)
+      core (~> 3.4)
+      functionable (~> 1.4)
       liquid (~> 5.13)
       refinements (~> 14.0)
       zeitwerk (~> 2.8)
@@ -554,7 +556,6 @@ GEM
     versionaire (15.4.0)
       refinements (~> 14.0)
     warning (1.6.0)
-    webrick (1.9.2)
     websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
@@ -671,18 +672,18 @@ CHECKSUMS
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   console (1.37.0) sha256=8093b286c2595a063849c098594fee5155ecc7967d36f3aa8cbe7569c8f3efd7
-  containable (2.4.0) sha256=7d8915952e8fbcdc4061463506c919bb0e40b6c0a76a137a52e88f71aa74ab4f
+  containable (2.5.0) sha256=aad105d589fabd935b96c0857f475e4c8760d7a5771fa9f3afc7f6a00ef46d2c
   content_disposition (1.0.0) sha256=aa153da9c1543a45413a3f5f281d8dd50384bb0fba864fe1bd42ba80d88da516
-  core (3.3.0) sha256=e7d0d72101e1037d3e390195f93116b05016946de484378f533ff0924b531c9f
+  core (3.4.0) sha256=aa1ea6706ab422f5890cca2b7f4b727eaedfec21210648fbfd9261d1b134fa7b
   crass (1.0.7) sha256=94868719948664c89ddcaf0a37c65048413dfcb1c869470a5f7a7ceb5390b295
   csv (3.3.6) sha256=aba61e7e507a66f03d45cb1f3c4b6359861c3504038b422962875dce099e4456
-  cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
+  cuprite (0.18) sha256=32c3203a492f25dbd5a3525716ae09610bcef8936ddd32ff39f34477a98062b2
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
   database_cleaner-sequel (2.0.2) sha256=f1e6566a1a34d7425ff94b447e2c16181bc215555aff3dfe463b7977b621d4bf
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
-  domain_name (0.6.20260829) sha256=a9c1aa678423b9db3a4193b300fd76b9c21cb2a5f60d7dcf0a832b82d13764f0
+  domain_name (0.6.20260902) sha256=4fac7f8e0a77dc85ec02f6534fdeff38e143d434ab8a86528fe68ca5bc45a042
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   down (5.6.0) sha256=48ec6ddb078cbf3b425d02596bb388303316f976143c6e94a7b3169d6712b593
   dry-auto_inject (1.2.1) sha256=dedddc8a13fcdf320def7d6741ce7d6da48d749c6d43175ef0072c0be2ba47c8
@@ -708,12 +709,12 @@ CHECKSUMS
   et-orbi (1.4.2) sha256=bb555dae668419cb24caa2a293a170e58be6d4df1e017c51f5030bdc133cd20c
   etcher (4.4.0) sha256=99f9bf7a77954ca7ec01e0b96719e2f2a1c0d38383f5f24bd1fcfef6ef06d713
   faker (3.8.0) sha256=c147b308df73a90f27a4fc84f18d4c22ef0ad9c2a64b2b61c86fd0ca71753efc
-  ferrum (0.17.2) sha256=2c2540a850b211a46f4d81de21bfd62048f507e4c327d1807225c3823c17e6ee
+  ferrum (0.18.0) sha256=4cb8be16e352fc1d75f087e9214b34ec1b93ba932410c730a4724909ca89d7c6
   fiber-annotation (0.2.0) sha256=7abfadf1d119f508867d4103bf231c0354d019cc39a5738945dec2edadaf6c03
   fiber-local (1.1.0) sha256=c885f94f210fb9b05737de65d511136ea602e00c5105953748aa0f8793489f06
   fiber-storage (1.0.1) sha256=f48e5b6d8b0be96dac486332b55cee82240057065dc761c1ea692b2e719240e1
   fugit (1.13.0) sha256=a4f093fce740da52f216740a5041e2a594ea763cdb89e8b2754ca4399634ab18
-  functionable (1.3.0) sha256=d7793254cb68720480697a5ecca1a3445add03a6bb56f644b4099e11662e0e86
+  functionable (1.4.0) sha256=df9ad55f270b14ecba058d9befb6c96962e0393a076721dd2ed0153e9d40fdaf
   git-lint (11.1.0) sha256=b7a8e8d7b6b2808e69f626fd505145f609d77abc9ad689bf4f49be62d981c257
   gitt (5.4.0) sha256=1aaa2fd73d52bcf00a87bd715df2c746529722e1eefe40aee7945cd3fb692df5
   hanami (3.0.2) sha256=4fb9180c24fb1edd8932efc71848e9fe2e41e366286a0bf59a7938904a194e2b
@@ -765,7 +766,7 @@ CHECKSUMS
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
   pg (1.6.3) sha256=1388d0563e13d2758c1089e35e973a3249e955c659592d10e5b77c468f628a99
-  pipeable (2.3.0) sha256=47ae7b83fd2fc360715a6a86bc59bc87b04ef15cda17c17d9dc3e918560a72ff
+  pipeable (2.4.0) sha256=d13b1722e44011a987be115ae3d10850cb97510eb9b74b4e713b8397f393591c
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
@@ -829,12 +830,12 @@ CHECKSUMS
   shrine (3.9.0) sha256=3ccc2dd1cff89efc034449675f6524017084485b8b387059d68b4f303c848aa7
   sidekiq (8.1.7) sha256=91ad48c7e6c32e1846bf1d5b74c27948758049b93fed0cb539f8d586c7de3415
   sidekiq-scheduler (6.0.2) sha256=1065f1a989e750849de1d23d1f34338c104ed6ec5a6dc22a2620c5af54a2d6fc
-  simplecov (1.1.1) sha256=25825ef13f0b2e74694d769817dad6ab8e90131dabdaa666e522fea105521e78
+  simplecov (1.2.0) sha256=ea6acd05eece5a41990e2a5171c57d15700d329326c7666c85ee8c6a0dd0977e
   sod (2.4.0) sha256=e948a13d2f8231568bb1252661a4f6d85228dd77e86097ea8daa87a6733ab11e
   spek (5.4.0) sha256=c163b87135c04c1ce10f6455e3686eae4f91e1cc61753fcb64bfae0830e74975
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   strscan (3.1.8) sha256=aae2db611a225559f21ffbb71765c9a4e60fd262534a9ea84f4f11c7f32f679e
-  superfluid (0.0.0) sha256=8f09c1dacb6453bfff52501f186584cffe94938321c15bfc37cb252dd1be6f85
+  superfluid (0.1.0) sha256=aa306cb3309d79e1fb188e3253024a80d3bc8accb95f9a40873f86ed65f9a9c2
   temple (0.10.7) sha256=369fe560adb6534674ce232899c2232df614bcb29c5359b05efedff7a57ed9c0
   tilt (2.9.0) sha256=da5735d0280bba96e9a91041bb14aee435ccad5c17b0fa519249ae543d9aa3a5
   tone (3.3.0) sha256=a54f826802b9c5424c607a2b052cc22df3404d7dd7c40e9340f2ac5bfab42ba0
@@ -846,7 +847,6 @@ CHECKSUMS
   unicode-emoji (4.2.0) sha256=519e69150f75652e40bf736106cfbc8f0f73aa3fb6a65afe62fefa7f80b0f80f
   versionaire (15.4.0) sha256=08c5847f82a015ce7ae8512236a2218316d4dfeda5f9246fd8aec9e5f3e6ba15
   warning (1.6.0) sha256=a49cdfae19fb77d19afff2efbe45f8ab759e9cd25b4e4ce2c79dbaf46bdb6c9e
-  webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
   websocket-driver (0.8.2) sha256=97c556b019bf3410b4961002ac501621e9322d3f8a7bc02161a09301cc4c4146
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
   wholeable (2.3.0) sha256=b26ebeeac82659323dee0e7a6cbd481dee25aef6d513aaf90a187d4480601743
