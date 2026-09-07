@@ -245,12 +245,12 @@ Allows you to manage your devices.
 ====
 [source,bash]
 ----
-# All devices.
+# Multiple
 curl "https://localhost:2443/api/devices" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
-# Single device.
+# Single.
 curl "https://localhost:2443/api/devices/1" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
@@ -262,7 +262,7 @@ curl "https://localhost:2443/api/devices/1" \
 ====
 [source,json]
 ----
-# All devices.
+# Multiple.
 {
   "data": [
     {
@@ -301,7 +301,7 @@ curl "https://localhost:2443/api/devices/1" \
   ]
 }
 
-# Single device.
+# Single.
 {
   "data": {
     "id": 1,
@@ -578,12 +578,12 @@ Manages firmware records for keeping devices up-to-date. By default, firmware is
 ====
 [source,bash]
 ----
-# All records.
+# Multiple.
 curl "https://localhost:2443/api/firmware" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
-# Single record.
+# Single.
 curl "https://localhost:2443/api/firmware/1" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
@@ -595,7 +595,7 @@ curl "https://localhost:2443/api/firmware/1" \
 ====
 [source,json]
 ----
-# All records.
+# Multiple.
 {
   "data": [
     {
@@ -612,7 +612,7 @@ curl "https://localhost:2443/api/firmware/1" \
   ]
 }
 
-# Single record.
+# Single.
 {
   "data": {
     "id": 1,
@@ -759,12 +759,12 @@ The following provides details on all requests and responses.
 ====
 [source,bash]
 ----
-# All models.
+# Multiple.
 curl "https://localhost:2443/api/models" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
-# Single model.
+# Single.
 curl "https://localhost:2443/api/models/1" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
@@ -776,7 +776,7 @@ curl "https://localhost:2443/api/models/1" \
 ====
 [source,json]
 ----
-# All models.
+# Multiple.
 {
   "data": [
     {
@@ -834,7 +834,7 @@ curl "https://localhost:2443/api/models/1" \
   ]
 }
 
-# Single model.
+# Single.
 "data": {
   "default_palette_id": 1,
   "id": 1,
@@ -1066,12 +1066,12 @@ Provides playlist information. The following provides details on all requests an
 ====
 [source,bash]
 ----
-# All playlists
+# Multiple.
 curl "https://localhost:2443/api/playlists" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 
-# Single playlist.
+# Single.
 curl "https://localhost:2443/api/playlists/1" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
@@ -1083,7 +1083,7 @@ curl "https://localhost:2443/api/playlists/1" \
 ====
 [source,json]
 ----
-# All playlists.
+# Multiple.
 {
   "data": [
     {
@@ -1114,7 +1114,7 @@ curl "https://localhost:2443/api/playlists/1" \
   ]
 }
 
-# Single playlist.
+# Single.
 {
   "data": {
     "id": 1,
@@ -1333,7 +1333,13 @@ Used for managing device screens by supplying content for rendering, screenshott
 ====
 [source,bash]
 ----
+# Multiple.
 curl "https://localhost:2443/api/screens" \
+     -H 'Authorization: <redacted>' \
+     -H 'Content-Type: application/json'
+
+# Single.
+curl "https://localhost:2443/api/screens/1" \
      -H 'Authorization: <redacted>' \
      -H 'Content-Type: application/json'
 ----
@@ -1344,6 +1350,7 @@ curl "https://localhost:2443/api/screens" \
 ====
 [source,json]
 ----
+# Multiple.
 {
   "data": [
     {
@@ -1362,6 +1369,25 @@ curl "https://localhost:2443/api/screens" \
       "uri": "/uploads/9fb384c1aa9043ccfee781ab21d99aa0.bmp"
     }
   ]
+}
+
+# Single.
+{
+  "data": {
+    "id": 3,
+    "model_id": 1,
+    "label": "Moon",
+    "name": "plugin-6e6740",
+    "created_at": "2025-07-29T16:29:02+00:00",
+    "updated_at": "2025-07-29T16:29:02+00:00",
+    "filename": "plugin-6e6740.bmp",
+    "mime_type": "image/bmp",
+    "bit_depth": 1,
+    "width": 800,
+    "height": 480,
+    "size": 48062,
+    "uri": "/uploads/9fb384c1aa9043ccfee781ab21d99aa0.bmp"
+  }
 }
 ----
 ====
