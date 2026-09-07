@@ -80,39 +80,113 @@ At this point you can schedule when your extension will automatically rebuilt or
 
 == Liquid
 
-All extensions use {liquid_link} templates as powered by the {superfluid_link} gem. This means you have access to all Liquid's default filters and tags plus the additional filters and templates listed below.
+All extensions use {liquid_link} templates as powered by the {superfluid_link} gem. This means you have access to all filters and tags supported by the following gems and this application:
+
+* {liquid_link}: The base layer and unique to Liquid.
+* {superfluid_link}: Unique to Superfluid.
+* *Terminus*: Unique to this application only (not part of Liquid or Superfluid).
 
 === Filters
 
-The following tags are supported within your Liquid templates:
+The following filters are supported:
 
-* `append_random`
-* `days_ago`
-* `find_by`
+* `abs`
+* `append`
+* `at_least`
+* `at_most`
+* `base64_decode`
+* `base64_encode`
+* `base64_url_safe_decode`
+* `base64_url_safe_encode`
+* `capitalize`
+* `ceil`
+* `compact`
+* `concat`
+* `date`
+* `default`
+* `divided_by`
+* `downcase`
+* `escape`
+* `escape_once`
+* `find`
+* `find_index`
+* `first`
+* `floor`
+* `h`
+* `has`
+* `join`
+* `jsonify`
+* `last`
+* `lstrip`
+* `map`
+* `minus`
+* `modulo`
+* `newline_to_br`
 * `parse_json`
-* `group_by`
-* `l_date`
-* `l_word`
-* `map_to_i`
-* `markdown_to_html`
-* `number_to_currency`
-* `number_with_delimiter`
-* `ordinalize`
 * `pluralize`
-* `qr_code`
-* `random_number`
-* `sample`
-* `json`
+* `plus`
+* `prepend`
+* `reject`
+* `remove`
+* `remove_first`
+* `remove_last`
+* `replace`
+* `replace_first`
+* `replace_last`
+* `reverse`
+* `round`
+* `rstrip`
+* `singularize`
+* `size`
+* `slice`
+* `sort`
+* `sort_natural`
+* `split`
+* `squish`
+* `strip`
+* `strip_html`
+* `strip_newlines`
+* `sum`
+* `times`
+* `trim_end`
+* `trim_middle`
+* `truncate`
+* `truncatewords`
+* `uniq`
+* `upcase`
+* `url_decode`
+* `url_encode`
+* `where`
 
-More documentation (including example usage) will be added in the future.
+You can find documentation for the above via the {liquid_link} and {superfluid_link} gems. More documentation for the filters, that are unique to Terminus, will be provided in the future.
 
 === Tags
 
 The following tags are supported within your Liquid templates:
 
+* `#`
+* `assign`
+* `break`
+* `capture`
+* `case`
+* `comment`
+* `continue`
+* `cycle`
+* `decrement`
+* `doc`
+* `echo`
+* `for`
+* `if`
+* `ifchanged`
+* `include`
+* `increment`
+* `raw`
+* `render`
+* `tablerow`
 * `template`
+* `unless`
 
-More documentation (including example usage) will be added in the future.
+You can find documentation for the above via the {liquid_link} and {superfluid_link} gems. More documentation for the tags, that are unique to Terminus, will be provided in the future.
 
 == Schedules
 
