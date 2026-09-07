@@ -25,6 +25,7 @@ detectors:
       - Terminus::Views::Helpers#default_option
   FeatureEnvy:
     exclude:
+      - Hanami::Action::Response#with_details
       - Terminus::Action#authorize
       - Terminus::Actions::API::Base#detail_duplicate
       - Terminus::Actions::API::Base#detail_enum
