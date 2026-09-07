@@ -55,6 +55,7 @@ module Terminus
       delete "/playlists/:id", to: "api.playlists.delete", as: :playlist
 
       get "/screens", to: "api.screens.index", as: :screens
+      get "/screens/:id", to: "api.screens.show", as: :screen
       post "/screens", to: "api.screens.create", as: :screens
       patch "/screens/:id", to: "api.screens.patch", as: :screen
       delete "/screens/:id", to: "api.screens.delete", as: :screen

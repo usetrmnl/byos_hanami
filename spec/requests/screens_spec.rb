@@ -4,6 +4,7 @@ require "hanami_helper"
 
 RSpec.describe "/api/screens", :db do
   using Refinements::Pathname
+  using Refinements::Hash
 
   include_context "with JWT"
 
@@ -47,6 +48,40 @@ RSpec.describe "/api/screens", :db do
         "CONTENT_TYPE" => "application/json"
 
     expect(json_payload).to eq(data: [])
+  end
+
+  it "answers existing screen" do
+    get routes.path(:api_screen, id: screen.id),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to match(
+      data: {
+        model_id: model.id,
+        id: screen.id,
+        label: screen.label,
+        name: screen.name,
+        filename: "test.png",
+        uri: "memory://abc123.png",
+        mime_type: "image/png",
+        bit_depth: 1,
+        size: kind_of(Integer),
+        width: 1,
+        height: 1,
+        created_at: match_rfc_3339,
+        updated_at: match_rfc_3339
+      }
+    )
+  end
+
+  it "answers not found error with invalid ID" do
+    get routes.path(:api_screen, id: 666),
+        {},
+        "HTTP_AUTHORIZATION" => access_token,
+        "CONTENT_TYPE" => "application/json"
+
+    expect(json_payload).to eq(RFC::API::Problem[status: :not_found].to_h)
   end
 
   it "creates with playlist ID and mode" do
