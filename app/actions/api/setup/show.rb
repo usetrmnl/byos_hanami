@@ -44,26 +44,22 @@ module Terminus
           def find_model_id(name) = model_repository.find_by(name:).then { it.id if it }
 
           def not_found error, response
-            payload = problem[
+            response.with_details problem[
               type: "/problem_details#device_setup",
               status: __method__,
               detail: error,
               instance: "/api/setup"
             ]
-
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
 
           def unprocessable_content errors, response
-            payload = problem[
+            response.with_details problem[
               type: "/problem_details#device_setup",
               status: __method__,
               detail: "Invalid request headers.",
               instance: "/api/setup",
               extensions: {errors:}
             ]
-
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
         end
       end

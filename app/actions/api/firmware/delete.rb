@@ -24,10 +24,7 @@ module Terminus
             response.body = {data: serializer.new(firmware).to_h}.to_json
           end
 
-          def failure response
-            payload = problem[status: :not_found]
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
-          end
+          def failure(response) = response.with_details problem[status: :not_found]
         end
       end
     end

@@ -86,14 +86,12 @@ module Terminus
           end
 
           def not_found response
-            payload = problem[
+            response.with_details problem[
               type: "/problem_details#api_key",
               status: __method__,
               detail: "Invalid API key.",
               instance: "/api/display"
             ]
-
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
         end
       end

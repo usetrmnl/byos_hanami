@@ -46,15 +46,13 @@ module Terminus
           end
 
           def unprocessable_content parameters, response
-            payload = problem[
+            response.with_details problem[
               type: "/problem_details#playlist_payload",
               status: :unprocessable_content,
               detail: "Validation failed.",
               instance: "/api/playlists",
               extensions: {errors: parameters.errors.to_h}
             ]
-
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
         end
       end

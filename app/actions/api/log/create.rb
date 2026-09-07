@@ -62,30 +62,28 @@ module Terminus
           end
 
           def not_found response
-            payload = problem[
+            logger.error "Unable to find device."
+
+            response.with_details problem[
               type: "/problem_details#device_id",
               status: __method__,
               detail: "Invalid device ID.",
               instance: "/api/log"
             ]
-
-            logger.error "Unable to find device."
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
 
           def unprocessable_content parameters, response
             errors = parameters.errors.to_h
 
-            payload = problem[
+            logger.error errors
+
+            response.with_details problem[
               type: "/problem_details#log_payload",
               status: __method__,
               detail: "Validation failed due to incorrect or invalid payload.",
               instance: "/api/log",
               extensions: {errors:}
             ]
-
-            logger.error errors
-            response.with body: payload.to_json, format: :problem_details, status: payload.status
           end
         end
       end
