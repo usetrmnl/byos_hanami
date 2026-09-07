@@ -35,7 +35,7 @@ module Terminus
 
         def save parameters
           attributes = parameters[:extension]
-          model_ids, device_ids = attributes.values_at :model_ids, :device_ids
+          model_ids, device_ids = parameters.to_h.values_at :model_ids, :device_ids
           extension = repository.create_with_models attributes, Array(model_ids)
 
           repository.update_with_devices extension.id, {}, Array(device_ids)

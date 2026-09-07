@@ -14,6 +14,7 @@ detectors:
   DataClump:
     exclude:
       - Terminus::Actions::API::Base
+      - Terminus::Actions::Extensions::Update
       - Terminus::Aspects::Croner
       - Terminus::Aspects::Errors::Problem
       - Terminus::Aspects::Screens::Shoter

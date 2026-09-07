@@ -29,20 +29,18 @@ module Terminus
         private
 
         def render extension, parameters, response
-          update extension, parameters[:extension]
+          update extension, parameters
 
           response.flash[:notice] = "Changes saved."
           response.redirect_to routes.path(:extension_edit, id: extension.id)
         end
 
-        def update extension, attributes
+        def update extension, parameters
           id = extension.id
-          model_ids, device_ids = attributes.values_at :model_ids, :device_ids
+          model_ids, device_ids = parameters.to_h.values_at :model_ids, :device_ids
+          extension = repository.update_with_models id, parameters[:extension], Array(model_ids)
 
-          repository.update_with_devices id, attributes, Array(device_ids)
-
-          extension = repository.update_with_models id, attributes, Array(model_ids)
-
+          repository.update_with_devices id, {}, Array(device_ids)
           schedule.upsert(*extension.to_schedule, old_name: extension.screen_name)
         end
 

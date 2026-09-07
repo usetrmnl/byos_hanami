@@ -24,7 +24,9 @@ RSpec.describe Terminus::Contracts::Extensions::Create do
           days: [],
           last_day_of_month: false,
           start_at: "2025-01-01T00:00:00"
-        }
+        },
+        model_ids: [1, 2],
+        device_ids: [3, 4]
       }
     end
 
