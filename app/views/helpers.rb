@@ -35,16 +35,19 @@ module Terminus
         ((record && record.public_send(key)) || attributes[key]).include? value
       end
 
-      def field_for key, attributes, record = nil
+      # rubocop:todo-next Metrics/ParameterLists
+      def field_for key, attributes, record = nil, errors: Core::EMPTY_HASH, prefix: "formatted_"
+        real_key = String(key).delete_prefix(prefix).to_sym
+
         return attributes[key] unless record
 
-        value = attributes.fetch_value key, record.public_send(key)
+        value = if errors.key? real_key
+                  attributes[real_key]
+                else
+                  attributes.fetch_value key, record.public_send(key)
+                end
 
-        case value
-          when Sequel::SQLTime then value.strftime("%H:%M:%S")
-          when Time then value.strftime("%Y-%m-%dT%H:%M")
-          else value
-        end
+        to_time value
       end
 
       def git_link kernel: Kernel
@@ -106,7 +109,15 @@ module Terminus
         defaults.merge(key_map).values_at :label, :id
       end
 
-      private_class_method :build_label_and_id
+      def to_time value
+        case value
+          when Sequel::SQLTime then value.strftime("%H:%M:%S")
+          when Time then value.strftime("%Y-%m-%dT%H:%M")
+          else value
+        end
+      end
+
+      private_class_method :build_label_and_id, :to_time
     end
   end
 end

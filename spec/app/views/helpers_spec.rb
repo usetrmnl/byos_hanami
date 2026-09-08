@@ -30,7 +30,7 @@ RSpec.describe Terminus::Views::Helpers do
   end
 
   describe ".field_for" do
-    let(:record) { Data.define(:label).new label: "Test" }
+    let(:record) { Data.define(:label, :formatted_label).new label: "One", formatted_label: "" }
     let(:attributes) { {label: "Other"} }
 
     it "answers nil for missing attributes key and no record" do
@@ -43,7 +43,12 @@ RSpec.describe Terminus::Views::Helpers do
 
     it "answers record value when attribute is missing" do
       attributes.clear
-      expect(helper.field_for(:label, attributes, record)).to eq("Test")
+      expect(helper.field_for(:label, attributes, record)).to eq("One")
+    end
+
+    it "answers attributes value when key includes prefix and errors are present" do
+      errors = {label: "danger"}
+      expect(helper.field_for(:formatted_label, attributes, record, errors:)).to eq("Other")
     end
 
     it "answers formatted Sequel time string when an instance of SQL Time" do
