@@ -6,7 +6,7 @@ module Terminus
       module Screens
         # The delete action.
         class Delete < Base
-          include Deps[:settings, repository: "repositories.screen"]
+          include Deps[repository: "repositories.screen"]
           include Initable[serializer: Serializers::Screen]
 
           using Refines::Actions::Response
