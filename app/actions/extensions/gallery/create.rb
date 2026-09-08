@@ -8,16 +8,11 @@ module Terminus
       module Gallery
         # The create action.
         class Create < Action
-          include Deps["aspects.extensions.importers.remote.creator"]
+          include Deps["aspects.errors.detailer", "aspects.extensions.importers.remote.creator"]
 
           using Refinements::Array
 
           params { required(:id).filled :integer }
-
-          def initialize(error_joiner: Aspects::Errors::ResultJoiner, **)
-            @error_joiner = error_joiner
-            super(**)
-          end
 
           def handle request, response
             case import request.params
@@ -30,8 +25,6 @@ module Terminus
           end
 
           private
-
-          attr_reader :error_joiner
 
           def notice extension
             path = routes.path :extension_edit, id: extension.id
@@ -50,7 +43,7 @@ module Terminus
           end
 
           def render_errors result, response
-            response.flash[:alert] = error_joiner.call "Gallery", result
+            response.flash[:alert] = detailer.call result, "Gallery "
             response.redirect_to routes.path(:extensions_gallery)
           end
         end

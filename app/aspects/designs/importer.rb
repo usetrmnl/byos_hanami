@@ -11,7 +11,12 @@ module Terminus
     module Designs
       # Imports (creates) screen template from zip file.
       class Importer
-        include Deps["aspects.unzipper", :logger, repository: "repositories.screen_template"]
+        include Deps[
+          "aspects.unzipper",
+          "aspects.errors.detailer",
+          :logger,
+          repository: "repositories.screen_template"
+        ]
         include Initable[
           key_map: {
             "configuration.yml" => :configuration,
@@ -22,13 +27,8 @@ module Terminus
         include Dry::Monads[:result]
         include Pipeable
 
-        def initialize(
-          schema: Schemas::Designs::Import,
-          error_joiner: Aspects::Errors::ResultJoiner,
-          **
-        )
+        def initialize(schema: Schemas::Designs::Import, **)
           @schema = schema
-          @error_joiner = error_joiner
           super(**)
         end
 
@@ -40,14 +40,14 @@ module Terminus
 
         private
 
-        attr_reader :schema, :error_joiner
+        attr_reader :schema
 
         def process io
           pipe(
             unzipper.call(io),
             fmap { |entries| transform entries },
             validate(schema),
-            amap { error_joiner.call "Import", it },
+            amap { detailer.call it, "Import " },
             fmap { create it.to_h }
           )
         end

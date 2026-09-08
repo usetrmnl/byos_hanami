@@ -10,25 +10,28 @@ module Terminus
           module Creators
             # Creates exchange.
             class Exchange
-              include Deps[:logger, repository: "repositories.extension_exchange"]
+              include Deps[
+                "aspects.errors.detailer",
+                :logger,
+                repository: "repositories.extension_exchange"
+              ]
               include Initable[job: Terminus::Jobs::Extensions::ExchangeRefresh]
 
-              def initialize(schema: Schemas::Exchange, error_joiner: Errors::ResultJoiner, **)
+              def initialize(schema: Schemas::Exchange, **)
                 @schema = schema
-                @error_joiner = error_joiner
                 super(**)
               end
 
               def call attributes
                 schema.call(attributes)
                       .to_monad
-                      .alt_map { error_joiner.call "Exchange", it }
+                      .alt_map { detailer.call it, "Exchange " }
                       .fmap { create it.to_h }
               end
 
               private
 
-              attr_reader :schema, :error_joiner
+              attr_reader :schema
 
               def create attributes
                 repository.create(attributes).tap do |exchange|

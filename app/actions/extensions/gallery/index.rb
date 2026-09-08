@@ -6,17 +6,12 @@ module Terminus
       module Gallery
         # The index action.
         class Index < Action
-          include Deps[:htmx, trmnl_api: :trmnl_api_recipes]
+          include Deps["aspects.errors.detailer", :htmx, trmnl_api: :trmnl_api_recipes]
           include Initable[empty_recipe: proc { TRMNL::API::Models::Recipe.empty }]
 
           params do
             optional(:query).filled :string
             optional(:page).filled :integer
-          end
-
-          def initialize(error_joiner: Aspects::Errors::ResultJoiner, **)
-            @error_joiner = error_joiner
-            super(**)
           end
 
           def handle request, response
@@ -34,8 +29,6 @@ module Terminus
           end
 
           private
-
-          attr_reader :error_joiner
 
           def load parameters
             case parameters
@@ -64,7 +57,7 @@ module Terminus
           end
 
           def render_errors result, parameters, response
-            response.flash.now[:alert] = error_joiner.call "Gallery", result
+            response.flash.now[:alert] = detailer.call result, "Gallery "
             response.render view, recipe: empty_recipe, **parameters.to_h.slice(:query, :page)
           end
         end
