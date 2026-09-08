@@ -5,7 +5,7 @@
   </label>
 
   <%= form.text_area :headers,
-                     field_for(:formatted_headers, fields, exchange),
+                     field_for(:formatted_headers, fields, exchange, errors:),
                      id: :exchange_headers,
                      class: "bit-editor",
                      autocomplete: :off,
@@ -45,7 +45,7 @@
   </label>
 
   <%= form.text_area :body,
-                     field_for(:formatted_body, fields, exchange),
+                     field_for(:formatted_body, fields, exchange, errors:),
                      id: :exchange_body,
                      class: "bit-editor",
                      autocomplete: :off,
@@ -71,7 +71,7 @@
 
   <%= scope(:form_field, key: :data, errors:, alpine: {show: "response === 'data'"}).render do %>
     <%= form.text_area :data,
-                       field_for(:formatted_data, fields, exchange),
+                       field_for(:formatted_data, fields, exchange, errors:),
                        id: :exchange_data,
                        class: "bit-editor",
                        autocomplete: :off,
@@ -80,7 +80,7 @@
 
   <%= scope(:form_field, key: :errors, errors:, alpine: {show: "response === 'errors'"}).render do %>
     <%= form.text_area :data,
-                       field_for(:formatted_errors, fields, exchange),
+                       field_for(:formatted_errors, fields, exchange, errors:),
                        id: :exchange_errors,
                        class: "bit-editor",
                        autocomplete: :off,

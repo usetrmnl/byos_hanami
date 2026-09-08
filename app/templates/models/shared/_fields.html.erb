@@ -166,7 +166,7 @@
     </label>
 
     <%= form.text_area :css,
-                       field_for(:formatted_css, fields, model),
+                       field_for(:formatted_css, fields, model, errors:),
                        id: :model_css,
                        class: "bit-editor",
                        autocomplete: :off,

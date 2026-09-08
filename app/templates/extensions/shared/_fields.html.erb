@@ -138,7 +138,7 @@
         </label>
 
         <%= form.text_area :static_body,
-                           field_for(:formatted_static_body, fields, extension),
+                           field_for(:formatted_static_body, fields, extension, errors:),
                            id: :extension_static_body,
                            class: "bit-editor",
                            autocomplete: :off,
@@ -391,19 +391,19 @@
     <% end %>
   <% end %>
 
-  <%= scope(:form_field, key: :data, errors:, alpine: {show: "input === 'data'"}).render do %>
-    <%= form.text_area :data,
-                       field_for(:formatted_data, fields, extension),
-                       id: :extension_data,
+  <%= scope(:form_field, key: :fields, errors:, alpine: {show: "input === 'fields'"}).render do %>
+    <%= form.text_area :fields,
+                       field_for(:formatted_fields, fields, extension, errors:),
+                       id: :extension_fields,
                        class: "bit-editor",
                        autocomplete: :off,
                        data: {language: :json} %>
   <% end %>
 
-  <%= scope(:form_field, key: :fields, errors:, alpine: {show: "input === 'fields'"}).render do %>
-    <%= form.text_area :fields,
-                       field_for(:formatted_fields, fields, extension),
-                       id: :extension_fields,
+  <%= scope(:form_field, key: :data, errors:, alpine: {show: "input === 'data'"}).render do %>
+    <%= form.text_area :data,
+                       field_for(:formatted_data, fields, extension, errors:),
+                       id: :extension_data,
                        class: "bit-editor",
                        autocomplete: :off,
                        data: {language: :json} %>
