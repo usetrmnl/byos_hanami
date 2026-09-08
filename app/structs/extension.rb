@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "refinements/time"
 
 module Terminus
@@ -30,14 +31,7 @@ module Terminus
       end
 
       def liquid_attributes
-        all_fields = Array fields
-
-        values = all_fields.each.with_object({}) do |item, all|
-          key, value = item.values_at "keyname", "default"
-          all[key] = Hash(data).dig("values", key) || value
-        end
-
-        {"label" => label, "fields" => all_fields, "values" => values, "data" => data}
+        {"label" => label, "fields" => fields, "values" => field_values, "data" => data}
       end
 
       def screen_label = "Extension #{label}"
@@ -67,6 +61,18 @@ module Terminus
             description: "The #{label} extension update schedule."
           }
         ]
+      end
+
+      private
+
+      def field_values
+        return Core::EMPTY_HASH unless fields.is_a? Array
+        return Core::EMPTY_HASH unless fields.all? Hash
+
+        fields.each.with_object({}) do |item, all|
+          key, value = item.values_at "keyname", "default"
+          all[key] = Hash(data).dig("values", key) || value
+        end
       end
     end
   end

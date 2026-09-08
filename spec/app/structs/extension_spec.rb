@@ -46,6 +46,28 @@ RSpec.describe Terminus::Structs::Extension do
       )
     end
 
+    it "answers empty values when fields are not an array" do
+      extension = Factory.structs[:extension, label: "Test", fields: "bogus", data: {}]
+
+      expect(extension.liquid_attributes).to eq(
+        "label" => "Test",
+        "fields" => "bogus",
+        "values" => {},
+        "data" => {}
+      )
+    end
+
+    it "answers empty values when fields are not an array of hashes" do
+      extension = Factory.structs[:extension, label: "Test", fields: [1], data: {}]
+
+      expect(extension.liquid_attributes).to eq(
+        "label" => "Test",
+        "fields" => [1],
+        "values" => {},
+        "data" => {}
+      )
+    end
+
     it "answers all attributes when filled" do
       extension = Factory.structs[
         :extension,
