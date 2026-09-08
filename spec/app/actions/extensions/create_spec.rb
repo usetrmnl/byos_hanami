@@ -14,6 +14,7 @@ RSpec.describe Terminus::Actions::Extensions::Create, :db do
           name: "test",
           description: nil,
           kind: "poll",
+          mode: "text",
           tags: nil,
           static_body: nil,
           fields: nil,

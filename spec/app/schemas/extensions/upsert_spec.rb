@@ -12,6 +12,7 @@ RSpec.describe Terminus::Schemas::Extensions::Upsert do
         label: "Test",
         description: "A test.",
         kind: "pull",
+        mode: "text",
         tags: "one two three",
         static_body: %({"test": "example"}),
         template: "A full test.",
