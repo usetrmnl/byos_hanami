@@ -9,7 +9,7 @@ module Terminus
         # The create action.
         class Create < Action
           include Deps[
-            :htmx,
+            "aspects.errors.detailer",
             extension_repository: "repositories.extension",
             repository: "repositories.extension_exchange"
           ]
@@ -41,11 +41,13 @@ module Terminus
 
           def error parameters, response
             extension_id, fields = parameters.to_h.values_at :extension_id, :exchange
+            errors = parameters.errors[:exchange]
 
+            response.flash.now[:alert] = detailer.call errors, "Exchange "
             response.render view,
                             extension: extension_repository.find(extension_id),
                             fields:,
-                            errors: parameters.errors[:exchange]
+                            errors:
           end
         end
       end

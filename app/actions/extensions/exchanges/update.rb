@@ -9,6 +9,7 @@ module Terminus
         # The update action.
         class Update < Action
           include Deps[
+            "aspects.errors.detailer",
             extension_repository: "repositories.extension",
             repository: "repositories.extension_exchange"
           ]
@@ -43,11 +44,14 @@ module Terminus
           end
 
           def error exchange, parameters, response
+            errors = parameters.errors[:exchange]
+
+            response.flash.now[:alert] = detailer.call errors, "Exchange "
             response.render view,
                             extension: extension_repository.find(exchange.extension_id),
                             exchange:,
                             fields: parameters[:exchange],
-                            errors: parameters.errors[:exchange]
+                            errors:
           end
         end
       end
