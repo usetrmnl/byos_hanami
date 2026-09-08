@@ -3,8 +3,6 @@
 require "hanami_helper"
 
 RSpec.describe "/api/display", :db do
-  using Refinements::Pathname
-
   include_context "with firmware headers"
 
   let :device do

@@ -3,9 +3,6 @@
 require "hanami_helper"
 
 RSpec.describe "/api/screens", :db do
-  using Refinements::Pathname
-  using Refinements::Hash
-
   include_context "with JWT"
 
   let(:palette) { Factory[:palette] }
