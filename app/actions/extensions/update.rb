@@ -7,7 +7,11 @@ module Terminus
     module Extensions
       # The update action.
       class Update < Action
-        include Deps["aspects.jobs.schedule", repository: "repositories.extension"]
+        include Deps[
+          "aspects.jobs.schedule",
+          "aspects.errors.detailer",
+          repository: "repositories.extension"
+        ]
 
         using Refinements::Hash
 
@@ -45,11 +49,13 @@ module Terminus
         end
 
         def error extension, parameters, response
+          errors = parameters.errors[:extension]
           fields = parameters[:extension].transform_with!(
             start_at: -> value { value.strftime("%Y-%m-%dT%H:%M:%S") }
           )
 
-          response.render view, extension:, fields:, errors: parameters.errors[:extension]
+          response.flash.now[:alert] = detailer.call errors, "Extension "
+          response.render view, extension:, fields:, errors:
         end
       end
     end

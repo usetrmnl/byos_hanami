@@ -31,7 +31,8 @@ RSpec.describe "Extensions", :db do
     fill_in "extension[label]", with: nil
     click_button "Save"
 
-    expect(page).to have_text("must be filled")
+    expect(page).to have_text("Extension label must be filled")
+    expect(page).to have_text(/Label.+must be filled/m)
 
     fill_in "extension[label]", with: "Edit Test"
     click_button "Save"
